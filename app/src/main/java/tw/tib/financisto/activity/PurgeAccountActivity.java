@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -26,6 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import android.app.DatePickerDialog;
+
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -56,6 +61,16 @@ public class PurgeAccountActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purge_account);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.purge_account_base), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    | WindowInsetsCompat.Type.ime());
+            var lp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            lp.topMargin = insets.top;
+            lp.bottomMargin = insets.bottom;
+            v.setLayoutParams(lp);
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         df = DateUtils.getLongDateFormat(this);
 
