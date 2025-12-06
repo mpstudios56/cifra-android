@@ -13,7 +13,7 @@
 	<HorizontalScrollView
 		android:id="@+id/suggestedCategoriesBarView"
 		android:visibility="gone"
-		android:background="#FFF"
+		style="@style/BottomBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
@@ -40,7 +40,7 @@
 		android:layout_height="wrap_content" android:layout_weight="1"
 		android:gravity="center" android:text="@string/no_categories" />
 	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:background="#FFF"
+		android:layout_width="fill_parent" style="@style/BottomBar"
 		android:paddingTop="2dp">
 		<Button android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

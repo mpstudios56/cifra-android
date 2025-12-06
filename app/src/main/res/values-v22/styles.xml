@@ -2,11 +2,15 @@
 <resources>
     <style name="AppTheme" parent="android:Theme.Holo">
         <item name="android:alertDialogTheme">@android:style/Theme.DeviceDefault.Dialog.Alert</item>
-        <item name="android:buttonStyle">@android:style/Widget.Holo.Light.Button</item>
+        <item name="android:buttonStyle">@style/Button</item>
         <item name="android:imageButtonStyle">@android:style/Widget.Holo.Light.ImageButton</item>
         <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/TextViewSpinnerDropDownItem</item>
         <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="Monospaced" parent="AppTheme">
