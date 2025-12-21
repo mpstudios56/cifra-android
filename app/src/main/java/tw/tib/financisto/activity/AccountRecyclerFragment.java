@@ -73,7 +73,9 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     private TextView emptyText;
     private ProgressBar progressBar;
     private ImageButton bSearch;
+    private ImageButton bShowSortOrder;
     private String filter;
+    private boolean showSortOrder;
 
     private long selectedId = -1;
 
@@ -171,6 +173,19 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                         saveFilter();
                     }
                 });
+            });
+        }
+
+        bShowSortOrder = view.findViewById(R.id.bShowSortOrder);
+        if (bShowSortOrder != null) {
+            bShowSortOrder.setColorFilter(getResources().getColor(R.color.bottom_bar_tint));
+
+            bShowSortOrder.setOnClickListener(v -> {
+                showSortOrder = !showSortOrder;
+                bShowSortOrder.setColorFilter(showSortOrder ?
+                        getResources().getColor(R.color.holo_blue_dark) :
+                        getResources().getColor(R.color.bottom_bar_tint));
+                recreateCursor();
             });
         }
     }
@@ -341,7 +356,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     @Override
     protected AccountRecyclerAdapter createAdapter(Cursor cursor) {
         long t1 = System.nanoTime();
-        var a = new AccountRecyclerAdapter(getContext(), cursor, clickedView -> {
+        var a = new AccountRecyclerAdapter(getContext(), cursor, showSortOrder, clickedView -> {
             selectedId = (long) clickedView.getTag(R.id.account);
             if (MyPreferences.isQuickMenuEnabledForAccount(getContext())) {
                 prepareAccountActionGrid();

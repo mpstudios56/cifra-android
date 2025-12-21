@@ -81,13 +81,29 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/balance_touch">
 
-            <TextView android:id="@+id/top"
-                android:text="top"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1sp"
-                android:singleLine="true"
-                android:textAppearance="@style/ListSecondary" />
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/sort_order"
+                    android:text="sort_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1sp"
+                    android:layout_marginEnd="3sp"
+                    android:singleLine="true"
+                    android:textColor="@color/transaction_payee"
+                    android:textAppearance="@style/ListSecondary" />
+
+                <TextView android:id="@+id/top"
+                    android:text="top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1sp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/ListSecondary" />
+            </LinearLayout>
 
             <TextView android:id="@+id/center"
                 android:text="center"

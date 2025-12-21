@@ -44,15 +44,17 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
     private DateFormat df;
     private MyPreferences.AccountListDateType accountListDateType;
     private boolean blurBalances;
+    private boolean showSortOrder;
     private View.OnClickListener onClickListener = null;
     private View.OnLongClickListener onLongClickListener = null;
 
-    public AccountRecyclerAdapter(Context context, Cursor c, View.OnClickListener onClickListener,
+    public AccountRecyclerAdapter(Context context, Cursor c, boolean showSortOrder, View.OnClickListener onClickListener,
                                   View.OnLongClickListener onLongClickListener) {
         this.u = new Utils(context);
         this.df = DateUtils.getShortDateFormat(context);
         this.accountListDateType = MyPreferences.getAccountListDateType(context);
         this.blurBalances = MyPreferences.isBlurBalances(context);
+        this.showSortOrder = showSortOrder;
         this.context = context;
         this.cursor = c;
         this.onClickListener = onClickListener;
@@ -126,6 +128,14 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             v.icon.getDrawable().mutate().setAlpha(0x77);
             v.iconText.setAlpha(0.5f);
             v.activeIcon.setVisibility(View.VISIBLE);
+        }
+
+        if (showSortOrder) {
+            v.sortOrder.setVisibility(View.VISIBLE);
+            v.sortOrder.setText(Integer.toString(a.sortOrder));
+        }
+        else {
+            v.sortOrder.setVisibility(View.GONE);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -241,6 +251,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         public final View centerTouch;
         public final View accent;
         public final ImageView activeIcon;
+        public final TextView sortOrder;
         public final TextView top;
         public final TextView bottom;
         public final View balanceTouch;
@@ -259,6 +270,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             iconText = v.findViewById(R.id.icon_text);
             centerTouch = v.findViewById(R.id.center_touch);
             activeIcon = v.findViewById(R.id.active_icon);
+            sortOrder = v.findViewById(R.id.sort_order);
             top = v.findViewById(R.id.top);
             bottom = v.findViewById(R.id.bottom);
             balanceTouch = v.findViewById(R.id.balance_touch);
