@@ -42,6 +42,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-google-api-client.txt'
             signingConfig = signingConfigs.debug
         }
+        debug {
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
     }
     packagingOptions {
         pickFirst 'META-INF/LICENSE'
