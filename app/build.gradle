@@ -18,7 +18,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId "tw.tib.financisto"
+        applicationId "io.github.mpstudios56.cifra"
         minSdkVersion 23
         targetSdkVersion 36
         multiDexEnabled = true

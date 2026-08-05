@@ -1,0 +1,18 @@
+Cifra - authors and attribution
+
+Cifra is a fork of Financisto Holo, which is itself a fork of Financisto.
+It is distributed under the GNU General Public License, version 2.
+
+Upstream authors
+
+  Denis Solonenko          - original author of Financisto
+  Tiberius Teng            - author of Financisto Holo
+  Financisto contributors  - see the upstream commit history
+
+Cifra
+
+  Marcello Pandolfo        - maintainer
+
+Cifra is not affiliated with, endorsed by, or connected to Financisto,
+Financisto Holo, or their respective authors. The Cifra name and logo
+are not covered by the GNU General Public License.
