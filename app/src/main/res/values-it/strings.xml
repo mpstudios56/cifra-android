@@ -232,8 +232,13 @@
   <string name="drafts">Bozze</string>
   <string name="no_drafts">Nessun inserimento lasciato a metà</string>
   <string name="draft_left_at">Lasciata il %1$s</string>
-  <string name="delete_draft_title">Buttare questa bozza?</string>
   <string name="delete_draft_message">Quello che avevi scritto andrà perso. Nei tuoi conti non è mai stato aggiunto nulla.</string>
+  <string name="drafts_selected">%1$d selezionate</string>
+  <string name="select_all_drafts">Seleziona tutte</string>
+  <plurals name="delete_drafts_title">
+    <item quantity="one">Buttare questa bozza?</item>
+    <item quantity="other">Buttare %1$d bozze?</item>
+  </plurals>
   <string name="delete_picture_file_title">Eliminare il file della foto?</string>
   <string name="delete_picture_file_message">La foto verrà comunque staccata da questa transazione. Il suo file può anche essere eliminato dalla memoria, così non resta inutilizzato.</string>
   <string name="keep_picture_file">Conserva il file</string>

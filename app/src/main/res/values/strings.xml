@@ -315,8 +315,13 @@
     <string name="drafts">Drafts</string>
     <string name="no_drafts">Nothing left unfinished</string>
     <string name="draft_left_at">Left at %1$s</string>
-    <string name="delete_draft_title">Discard this draft?</string>
     <string name="delete_draft_message">What was typed will be lost. Nothing was ever added to your accounts.</string>
+    <string name="drafts_selected">%1$d selected</string>
+    <string name="select_all_drafts">Select all</string>
+    <plurals name="delete_drafts_title">
+        <item quantity="one">Discard this draft?</item>
+        <item quantity="other">Discard %1$d drafts?</item>
+    </plurals>
     <string name="delete_picture_file_title">Delete the picture file?</string>
     <string name="delete_picture_file_message">The picture will be detached from this transaction either way. Its file can also be deleted from storage, so it is not left behind unused.</string>
     <string name="keep_picture_file">Keep the file</string>

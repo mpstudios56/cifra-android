@@ -9,9 +9,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,7 +65,81 @@ public class DraftListFragment extends ListFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setEmptyText(getString(R.string.no_drafts));
-        registerForContextMenu(getListView());
+        enableMultiSelect();
+    }
+
+    /**
+     * Long press starts a selection, and further taps add to it, so several drafts
+     * can be cleared in one go rather than one confirmation at a time.
+     */
+    private void enableMultiSelect() {
+        ListView list = getListView();
+        list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                mode.setTitle(getString(R.string.drafts_selected,
+                        getListView().getCheckedItemCount()));
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.draft_list_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.delete_selected_drafts) {
+                    confirmDeleteSelected(mode);
+                    return true;
+                }
+                if (id == R.id.select_all_drafts) {
+                    for (int i = 0; i < getListView().getCount(); i++) {
+                        getListView().setItemChecked(i, true);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+            }
+        });
+    }
+
+    private void confirmDeleteSelected(ActionMode mode) {
+        List<TransactionDraft.Entry> selected = new ArrayList<>();
+        SparseBooleanArray checked = getListView().getCheckedItemPositions();
+        for (int i = 0; i < checked.size(); i++) {
+            if (checked.valueAt(i) && checked.keyAt(i) < drafts.size()) {
+                selected.add(drafts.get(checked.keyAt(i)));
+            }
+        }
+        if (selected.isEmpty()) {
+            mode.finish();
+            return;
+        }
+        new AlertDialog.Builder(getContext())
+                .setTitle(getResources().getQuantityString(
+                        R.plurals.delete_drafts_title, selected.size(), selected.size()))
+                .setMessage(R.string.delete_draft_message)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    for (TransactionDraft.Entry entry : selected) {
+                        TransactionDraft.delete(getContext(), entry.id);
+                    }
+                    mode.finish();
+                    reload();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     @Override
@@ -80,6 +159,12 @@ public class DraftListFragment extends ListFragment {
             rows.add(new String[]{describe(entry), whenAndWhere(entry)});
         }
         setListAdapter(new DraftAdapter(getContext(), rows));
+        // Clearing the last draft takes this tab away with it, and nothing else
+        // would notice: this list lives inside the main screen, which is not
+        // resumed while its own tab is being used.
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).refreshTabs();
+        }
     }
 
     /** What was being entered: the amount, and whatever names it. */
@@ -132,35 +217,10 @@ public class DraftListFragment extends ListFragment {
         startActivity(intent);
     }
 
-    @Override
-    public void onCreateContextMenu(@NonNull android.view.ContextMenu menu, @NonNull View v,
-                                    android.view.ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        android.widget.AdapterView.AdapterContextMenuInfo info =
-                (android.widget.AdapterView.AdapterContextMenuInfo) menuInfo;
-        TransactionDraft.Entry entry = drafts.get(info.position);
-        menu.setHeaderTitle(R.string.drafts);
-        menu.add(R.string.delete).setOnMenuItemClickListener(item -> {
-            confirmDelete(entry);
-            return true;
-        });
-    }
-
-    private void confirmDelete(TransactionDraft.Entry entry) {
-        new AlertDialog.Builder(getContext())
-                .setTitle(R.string.delete_draft_title)
-                .setMessage(R.string.delete_draft_message)
-                .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    TransactionDraft.delete(getContext(), entry.id);
-                    reload();
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
-    }
-
     private static class DraftAdapter extends ArrayAdapter<String[]> {
         DraftAdapter(Context context, List<String[]> rows) {
-            super(context, android.R.layout.simple_list_item_2, android.R.id.text1, rows);
+            // The activated variant shows which rows are picked during a selection.
+            super(context, android.R.layout.simple_list_item_activated_2, android.R.id.text1, rows);
         }
 
         @NonNull
@@ -168,7 +228,7 @@ public class DraftListFragment extends ListFragment {
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = convertView != null ? convertView
                     : LayoutInflater.from(getContext())
-                    .inflate(android.R.layout.simple_list_item_2, parent, false);
+                    .inflate(android.R.layout.simple_list_item_activated_2, parent, false);
             String[] row = getItem(position);
             ((TextView) view.findViewById(android.R.id.text1)).setText(row[0]);
             ((TextView) view.findViewById(android.R.id.text2)).setText(row[1]);

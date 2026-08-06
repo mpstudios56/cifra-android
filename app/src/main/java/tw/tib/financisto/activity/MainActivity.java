@@ -127,6 +127,24 @@ public class MainActivity extends AppCompatActivity {
             public int getItemCount() {
                 return visibleTabs.size();
             }
+
+            // Identify pages by which tab they are, not by where they sit. With the
+            // default position-based ids, removing a tab from the middle leaves the
+            // cached pages bound to the old positions and the later tabs stop working.
+            @Override
+            public long getItemId(int position) {
+                return visibleTabs.get(position).ordinal();
+            }
+
+            @Override
+            public boolean containsItem(long itemId) {
+                for (MainTab tab : visibleTabs) {
+                    if (tab.ordinal() == itemId) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         };
         viewPager.setAdapter(pagerAdapter);
 
@@ -201,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
      * dealt with, or a tab was switched off in the preferences. Keeps whichever tab
      * was open where possible, since positions shift underneath.
      */
-    private void refreshTabs() {
+    public void refreshTabs() {
         List<MainTab> wanted = buildVisibleTabs();
         if (wanted.equals(visibleTabs)) {
             return;
@@ -213,9 +231,13 @@ public class MainActivity extends AppCompatActivity {
         // The mediator caches the tab count, so it has to be rebuilt around the new one.
         attachTabs();
         int restored = current != null ? positionOf(current) : -1;
-        if (restored >= 0) {
-            viewPager.setCurrentItem(restored, false);
+        if (restored < 0) {
+            // The tab being viewed is the one that just went away, which happens on
+            // clearing the last draft. Fall back to the entries rather than landing
+            // on whatever slid into that slot.
+            restored = Math.max(positionOf(MainTab.BLOTTER.tag), 0);
         }
+        viewPager.setCurrentItem(restored, false);
     }
 
     @Override
