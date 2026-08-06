@@ -28,6 +28,7 @@ import tw.tib.financisto.export.Export;
 import tw.tib.financisto.export.csv.CsvExportOptions;
 import tw.tib.financisto.export.csv.CsvExportTask;
 import tw.tib.financisto.export.csv.CsvImportTask;
+import tw.tib.financisto.export.SettingsExportTask;
 import tw.tib.financisto.utils.EntityEnum;
 import tw.tib.financisto.utils.EnumUtils;
 
@@ -127,6 +128,24 @@ public enum MenuListItem implements SummaryEntityEnum {
             t.execute((Uri[]) null);
         }
     },
+    MENU_EXPORT_SETTINGS(R.string.export_settings, R.string.export_settings_summary, R.drawable.actionbar_settings_export) {
+        @Override
+        public void call(Fragment fragment) {
+            if (!checkBackupFolderConfigured(fragment.getContext())) return;
+            ProgressDialog d = ProgressDialog.show(fragment.getContext(), null, fragment.getString(R.string.export_settings_inprogress), true);
+            new SettingsExportTask(fragment.getContext(), d).execute();
+        }
+    },
+    MENU_IMPORT_SETTINGS(R.string.import_settings, R.string.import_settings_summary, R.drawable.actionbar_settings_import) {
+        @Override
+        public void call(Fragment fragment) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Export.getBackupFolder(fragment.getContext()));
+            fragment.startActivityForResult(intent, ACTIVITY_IMPORT_SETTINGS);
+        }
+    },
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Fragment fragment) {
@@ -217,6 +236,7 @@ public enum MenuListItem implements SummaryEntityEnum {
     public static final int ACTIVITY_QIF_IMPORT = 5;
     public static final int ACTIVITY_CHANGE_PREFERENCES = 6;
     public static final int ACTIVITY_RESTORE_DATABASE = 7;
+    public static final int ACTIVITY_IMPORT_SETTINGS = 8;
 
     public abstract void call(Fragment fragment);
 

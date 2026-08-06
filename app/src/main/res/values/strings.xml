@@ -308,6 +308,14 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="export_settings">Export Settings</string>
+    <string name="export_settings_inprogress">Exporting settings…</string>
+    <string name="import_settings">Import Settings</string>
+    <string name="import_settings_inprogress">Reading settings…</string>
+    <string name="import_settings_confirm">%1$d settings will be applied. Continue?</string>
+    <string name="import_settings_nothing_to_apply">All settings already match this file.</string>
+    <string name="import_settings_success">%1$d settings have been applied.</string>
+    <string name="import_settings_invalid_file">This file is not a valid Cifra settings file.</string>
     <string name="gdocs_connection_failed">Can not connect to Google Drive.</string>
     <string name="gdocs_folder_not_found">The backup folder on Google Drive was not found.</string>
     <string name="gdocs_credentials_not_configured">Please set Google account login and password in the preferences.</string>
@@ -1145,6 +1153,8 @@
     <string name="backup_database_online_dropbox_summary">Backup database to Dropbox</string>
     <string name="restore_database_online_dropbox_summary">Restore database from Dropbox</string>
     <string name="backup_database_to_summary">Send database backup to email, etc</string>
+    <string name="export_settings_summary">Save application settings to the local storage, without the data</string>
+    <string name="import_settings_summary">Apply application settings from a previously exported file</string>
     <string name="import_export_summary">Import/export database to another format like csv, qif, etc</string>
     <string name="mass_operations_summary">Apply operations to multiple transactions</string>
     <string name="planner_summary">View monthly planner</string>

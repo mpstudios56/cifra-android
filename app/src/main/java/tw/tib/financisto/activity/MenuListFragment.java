@@ -30,6 +30,7 @@ import tw.tib.financisto.R;
 import tw.tib.financisto.adapter.SummaryEntityListAdapter;
 import tw.tib.financisto.bus.GreenRobotBus;
 import tw.tib.financisto.export.BackupImportTask;
+import tw.tib.financisto.export.SettingsImportTask;
 import tw.tib.financisto.export.csv.CsvExportOptions;
 import tw.tib.financisto.export.csv.CsvImportOptions;
 import tw.tib.financisto.export.drive.GoogleDriveBackupTask;
@@ -78,6 +79,14 @@ public class MenuListFragment extends ListFragment {
             Log.i("Financisto", "ACTIVITY_RESTORE_DATABASE uri: " + backupFileUri.toString());
             ProgressDialog d = ProgressDialog.show(getContext(), null, getString(R.string.restore_database_inprogress), true);
             new BackupImportTask(getActivity(), d).execute(backupFileUri);
+        }
+    }
+
+    @OnActivityResult(MenuListItem.ACTIVITY_IMPORT_SETTINGS)
+    public void onImportSettings(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null) {
+            ProgressDialog d = ProgressDialog.show(getContext(), null, getString(R.string.import_settings_inprogress), true);
+            new SettingsImportTask(getActivity(), d).execute(data.getData());
         }
     }
 

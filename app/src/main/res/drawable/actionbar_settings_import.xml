@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Settings import icon for Cifra.
+  Outlined gear with a badged arrow, matching actionbar_db_backup/restore.
+  Literal colours, not @android:color/white: build-time PNG generation rejects
+  a resource reference in strokeColor. The menu list tints it via the ImageView.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <group>
+        <clip-path android:pathData="M0,0L96,0L96,96L0,96ZM48.03,24.97A23,23 0 0,0 94.03,24.97A23,23 0 0,0 48.03,24.97Z" />
+        <path
+            android:strokeColor="#FFFFFFFF"
+            android:strokeWidth="6"
+            android:strokeLineJoin="round"
+            android:pathData="M59.51,56.26A25,25 0 0,1 59.51,65.8L51.66,64.27A17,17 0 0,1 49.06,70.54L55.7,75.01A25,25 0 0,1 48.95,81.76L44.48,75.12A17,17 0 0,1 38.21,77.72L39.74,85.57A25,25 0 0,1 30.2,85.57L31.73,77.72A17,17 0 0,1 25.46,75.12L20.99,81.76A25,25 0 0,1 14.24,75.01L20.88,70.54A17,17 0 0,1 18.28,64.27L10.43,65.8A25,25 0 0,1 10.43,56.26L18.28,57.79A17,17 0 0,1 20.88,51.52L14.24,47.05A25,25 0 0,1 20.99,40.3L25.46,46.94A17,17 0 0,1 31.73,44.34L30.2,36.49A25,25 0 0,1 39.74,36.49L38.21,44.34A17,17 0 0,1 44.48,46.94L48.95,40.3A25,25 0 0,1 55.7,47.05L49.06,51.52A17,17 0 0,1 51.66,57.79L59.51,56.26ZM27.97,61.03A7,7 0 0,1 41.97,61.03A7,7 0 0,1 27.97,61.03Z" />
+    </group>
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M53.03,24.97A18,18 0 0,1 89.03,24.97A18,18 0 0,1 53.03,24.97ZM67.83,34.97L74.23,34.97L74.23,24.97L79.53,24.97L71.03,14.97L62.53,24.97L67.83,24.97Z" />
+</vector>

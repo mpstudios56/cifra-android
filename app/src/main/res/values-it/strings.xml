@@ -225,6 +225,16 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="export_settings">Esporta impostazioni</string>
+  <string name="export_settings_summary">Salva le impostazioni dell\'app nella memoria locale, senza i dati</string>
+  <string name="export_settings_inprogress">Esportazione impostazioni...</string>
+  <string name="import_settings">Importa impostazioni</string>
+  <string name="import_settings_summary">Applica le impostazioni da un file esportato in precedenza</string>
+  <string name="import_settings_inprogress">Lettura impostazioni...</string>
+  <string name="import_settings_confirm">Verranno applicate %1$d impostazioni. Continuare?</string>
+  <string name="import_settings_nothing_to_apply">Tutte le impostazioni corrispondono già a questo file.</string>
+  <string name="import_settings_success">Applicate %1$d impostazioni.</string>
+  <string name="import_settings_invalid_file">Questo file non è un file di impostazioni Cifra valido.</string>
   <string name="gdocs_connection_failed">Connessione a Google Drive non riuscita.</string>
   <string name="gdocs_folder_not_found">Cartella di backup su Google Drive non trovata.</string>
   <string name="gdocs_credentials_not_configured">Imposta un account Google dalle preferenze.</string>
