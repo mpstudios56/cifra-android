@@ -398,6 +398,16 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
     }
 
+    @Override
+    protected boolean isDraftSupported() {
+        return true;
+    }
+
+    @Override
+    protected void updateTransactionFromUIForDraft() {
+        updateTransactionFromUI();
+    }
+
     private void updateTransactionFromUI() {
         updateTransactionFromUI(transaction);
         transaction.fromAccountId = selectedAccount.id;

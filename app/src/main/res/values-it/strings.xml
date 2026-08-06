@@ -225,6 +225,10 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="resume_draft_title">Inserimento lasciato a metà</string>
+  <string name="resume_draft_message">L\'ultima volta hai lasciato un inserimento incompleto. Vuoi riprenderlo o ricominciare da capo?</string>
+  <string name="resume_draft_resume">Riprendi</string>
+  <string name="resume_draft_discard">Ricomincia</string>
   <string name="delete_picture_file_title">Eliminare il file della foto?</string>
   <string name="delete_picture_file_message">La foto verrà comunque staccata da questa transazione. Il suo file può anche essere eliminato dalla memoria, così non resta inutilizzato.</string>
   <string name="keep_picture_file">Conserva il file</string>

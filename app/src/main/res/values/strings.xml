@@ -308,6 +308,10 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="resume_draft_title">Unfinished entry</string>
+    <string name="resume_draft_message">You left an entry half filled in last time. Carry on with it, or start from scratch?</string>
+    <string name="resume_draft_resume">Carry on</string>
+    <string name="resume_draft_discard">Start fresh</string>
     <string name="delete_picture_file_title">Delete the picture file?</string>
     <string name="delete_picture_file_message">The picture will be detached from this transaction either way. Its file can also be deleted from storage, so it is not left behind unused.</string>
     <string name="keep_picture_file">Keep the file</string>

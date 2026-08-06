@@ -50,6 +50,7 @@ import tw.tib.financisto.utils.EnumUtils;
 import tw.tib.financisto.export.Export;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PicturesUtil;
+import tw.tib.financisto.utils.TransactionDraft;
 import tw.tib.financisto.utils.TransactionUtils;
 import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.view.AttributeView;
@@ -176,6 +177,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	// Pictures the user agreed to delete from storage, applied once the transaction
 	// is saved so that cancelling the edit leaves them where they are.
 	private final List<String> picturesToDeleteOnSave = new ArrayList<>();
+
+	// Set once the entry has been written, so leaving the screen afterwards is not
+	// mistaken for abandoning it and does not leave a draft behind.
+	private boolean transactionSaved = false;
 
 	protected Transaction transaction = new Transaction();
 
@@ -398,6 +403,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			if (transaction.isScheduled()) {
 				selectStatus(TransactionStatus.PN);
 			}
+			offerToResumeDraft();
 		}
 
 		if (isShowTakePicture) {
@@ -473,6 +479,8 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			if (isNew) {
 				MyPreferences.setLastAccount(transaction.fromAccountId);
 			}
+			transactionSaved = true;
+			TransactionDraft.clear(this, getDraftKey());
 			deletePicturesConfirmedForRemoval();
 			AccountWidget.updateWidgets(this);
 			return id;
@@ -732,6 +740,101 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 				removePicture();
 			}
 		}
+	}
+
+	/**
+	 * One draft per screen, so a half-filled expense and a half-filled transfer do
+	 * not overwrite each other.
+	 */
+	private String getDraftKey() {
+		return getClass().getSimpleName();
+	}
+
+	/**
+	 * Whether anything worth keeping has been typed. Opening the screen and backing
+	 * straight out must not leave a draft to be offered later.
+	 */
+	private boolean isWorthKeepingAsDraft(Transaction draft) {
+		return draft.fromAmount != 0
+				|| draft.categoryId > 0
+				|| draft.payeeId > 0
+				|| (draft.note != null && !draft.note.trim().isEmpty())
+				|| draft.attachedPicture != null;
+	}
+
+	/**
+	 * Called as the screen goes away for any reason, including the camera opening on
+	 * top of it. That is harmless: the draft is only ever read when the screen is
+	 * opened afresh, and it is cleared as soon as the entry is saved.
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+		saveDraftIfAbandoned();
+	}
+
+	/**
+	 * Opted into by screens that can both fill a Transaction from what is on display
+	 * and rebuild the display from one. The transfer screen collects its amounts
+	 * inline while validating, so it cannot do the first half yet.
+	 */
+	protected boolean isDraftSupported() {
+		return false;
+	}
+
+	/**
+	 * Copies the screen into {@link #transaction} without validating anything, which
+	 * is what separates a draft from a save.
+	 */
+	protected void updateTransactionFromUIForDraft() {
+	}
+
+	private void saveDraftIfAbandoned() {
+		// Only new entries. Editing an existing transaction and walking away must
+		// leave the stored transaction alone rather than turn it into a draft.
+		if (!isDraftSupported() || transactionSaved
+				|| transaction.id != -1 || transaction.isTemplate != 0) {
+			return;
+		}
+		// Splits live in the screen's own map, not in the transaction, and would be
+		// silently lost. Better to keep no draft than to offer a mutilated one.
+		if (categorySelector != null && categorySelector.isSplitCategorySelected()) {
+			return;
+		}
+		try {
+			updateTransactionFromUIForDraft();
+			if (isWorthKeepingAsDraft(transaction)) {
+				TransactionDraft.save(this, getDraftKey(), transaction);
+			} else {
+				TransactionDraft.clear(this, getDraftKey());
+			}
+		} catch (Exception e) {
+			// Never let a draft get in the way of leaving the screen.
+			Log.e(TAG, "could not build draft", e);
+		}
+	}
+
+	private void offerToResumeDraft() {
+		if (!isDraftSupported()) {
+			return;
+		}
+		Transaction draft = TransactionDraft.load(this, getDraftKey());
+		if (draft == null) {
+			return;
+		}
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.resume_draft_title)
+				.setMessage(R.string.resume_draft_message)
+				.setPositiveButton(R.string.resume_draft_resume, (dialog, which) -> {
+					draft.id = -1;
+					transaction = draft;
+					editTransaction(draft);
+					TransactionDraft.clear(this, getDraftKey());
+				})
+				.setNegativeButton(R.string.resume_draft_discard, (dialog, which) ->
+						TransactionDraft.clear(this, getDraftKey()))
+				.setCancelable(false)
+				.show();
 	}
 
 	/**
