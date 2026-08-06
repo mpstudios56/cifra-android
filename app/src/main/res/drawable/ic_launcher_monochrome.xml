@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cifra launcher icon. Generated geometry: a wallet with a plain card and a
+  credit card fanned out of it. Literal colours, not resource references:
+  build-time PNG generation cannot resolve references.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group>
+        <clip-path android:pathData="M0,0 H108 V108 H0 ZM23.50,37.50L23.50,74.50L84.50,74.50L84.50,37.50Z" />
+        <group android:rotation="9" android:pivotX="54" android:pivotY="47">
+            <path android:fillColor="#FF000000" android:pathData="M48,26 H75 A3,3 0 0,1 78,29 V44 A3,3 0 0,1 75,47 H48 A3,3 0 0,1 45,44 V29 A3,3 0 0,1 48,26 Z" />
+        </group>
+    </group>
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M34,40 H74 A8,8 0 0,1 82,48 V64 A8,8 0 0,1 74,72 H34 A8,8 0 0,1 26,64 V48 A8,8 0 0,1 34,40 ZM26,50.5 H82 A0,0 0 0,1 82,50.5 V53.0 A0,0 0 0,1 82,53.0 H26 A0,0 0 0,1 26,53.0 V50.5 A0,0 0 0,1 26,50.5 ZM66,62 A5,5 0 0,1 76,62 A5,5 0 0,1 66,62 Z" />
+</vector>
