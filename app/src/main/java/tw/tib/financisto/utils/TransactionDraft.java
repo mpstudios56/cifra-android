@@ -14,24 +14,37 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import tw.tib.financisto.model.Transaction;
 
 /**
- * Keeps the half-filled transaction a user walked away from, so closing the screen
+ * Keeps the half-filled transactions a user walked away from, so closing the screen
  * or having the app killed in the background does not throw the entry away.
  * <p>
  * Held in its own preferences file rather than the database: a draft is scratch
- * state, it must never appear in reports or backups, and it has to survive the
- * process being killed without a transaction being written.
- * <p>
- * One draft per screen: a second unfinished entry of the same kind replaces the
- * first, which keeps the offer to resume unambiguous.
+ * state, it must never appear in reports, totals or backups, and it has to survive
+ * the process being killed without a transaction ever being written.
  */
 public class TransactionDraft {
 
     private static final String TAG = "TransactionDraft";
     private static final String PREFS_NAME = "transaction_drafts";
+    private static final String KEY_PREFIX = "draft_";
+
+    /** A stored draft together with the id needed to replace or remove it. */
+    public static class Entry {
+        public final long id;
+        public final Transaction transaction;
+
+        Entry(long id, Transaction transaction) {
+            this.id = id;
+            this.transaction = transaction;
+        }
+    }
 
     private TransactionDraft() {
     }
@@ -40,24 +53,37 @@ public class TransactionDraft {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public static void save(Context context, String key, Transaction transaction) {
+    private static String key(long id) {
+        return KEY_PREFIX + id;
+    }
+
+    /**
+     * Stores a draft, replacing the one with this id. Pass a new id to add one.
+     * Returns the id it was stored under, or 0 if it could not be stored.
+     */
+    public static long save(Context context, long id, Transaction transaction) {
+        long draftId = id > 0 ? id : System.currentTimeMillis();
         try {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             try (ObjectOutputStream out = new ObjectOutputStream(bytes)) {
                 out.writeObject(transaction);
             }
             prefs(context).edit()
-                    .putString(key, Base64.encodeToString(bytes.toByteArray(), Base64.NO_WRAP))
+                    .putString(key(draftId), Base64.encodeToString(bytes.toByteArray(), Base64.NO_WRAP))
                     .apply();
-            Log.i(TAG, "saved draft " + key);
+            return draftId;
         } catch (Exception e) {
             // A draft is a convenience: failing to store one must never break the screen.
-            Log.e(TAG, "could not save draft " + key, e);
+            Log.e(TAG, "could not save draft " + draftId, e);
+            return 0;
         }
     }
 
-    public static Transaction load(Context context, String key) {
-        String encoded = prefs(context).getString(key, null);
+    public static Transaction load(Context context, long id) {
+        return decode(context, id, prefs(context).getString(key(id), null));
+    }
+
+    private static Transaction decode(Context context, long id, String encoded) {
         if (encoded == null) {
             return null;
         }
@@ -67,18 +93,45 @@ public class TransactionDraft {
                 return (Transaction) in.readObject();
             }
         } catch (Exception e) {
-            // Most likely a draft written by an older version whose model has changed.
-            Log.e(TAG, "could not read draft " + key + ", discarding it", e);
-            clear(context, key);
+            // Most likely written by an older version whose model has since changed.
+            Log.e(TAG, "could not read draft " + id + ", discarding it", e);
+            delete(context, id);
             return null;
         }
     }
 
-    public static void clear(Context context, String key) {
-        prefs(context).edit().remove(key).apply();
+    /** Newest first, which is the order they are worth offering back in. */
+    public static List<Entry> list(Context context) {
+        List<Entry> entries = new ArrayList<>();
+        for (Map.Entry<String, ?> stored : prefs(context).getAll().entrySet()) {
+            if (!stored.getKey().startsWith(KEY_PREFIX)) {
+                continue;
+            }
+            try {
+                long id = Long.parseLong(stored.getKey().substring(KEY_PREFIX.length()));
+                Transaction transaction = decode(context, id, (String) stored.getValue());
+                if (transaction != null) {
+                    entries.add(new Entry(id, transaction));
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "ignoring unreadable draft key " + stored.getKey(), e);
+            }
+        }
+        Collections.sort(entries, (a, b) -> Long.compare(b.id, a.id));
+        return entries;
     }
 
-    public static boolean exists(Context context, String key) {
-        return prefs(context).contains(key);
+    public static int count(Context context) {
+        int n = 0;
+        for (String key : prefs(context).getAll().keySet()) {
+            if (key.startsWith(KEY_PREFIX)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+    public static void delete(Context context, long id) {
+        prefs(context).edit().remove(key(id)).apply();
     }
 }

@@ -87,6 +87,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	public static final String TEMPLATE_EXTRA = "isTemplate";
 	public static final String DATETIME_EXTRA = "dateTimeExtra";
 	public static final String NEW_FROM_TEMPLATE_EXTRA = "newFromTemplateExtra";
+	public static final String DRAFT_ID_EXTRA = "draftId";
 
 	private static final int RECURRENCE_REQUEST = 4003;
 	private static final int NOTIFICATION_REQUEST = 4004;
@@ -181,6 +182,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	// Set once the entry has been written, so leaving the screen afterwards is not
 	// mistaken for abandoning it and does not leave a draft behind.
 	private boolean transactionSaved = false;
+
+	// Identifies the draft this screen owns, so leaving it repeatedly updates the
+	// same one. Zero until something worth keeping has been typed.
+	private long draftId = 0;
 
 	protected Transaction transaction = new Transaction();
 
@@ -403,7 +408,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			if (transaction.isScheduled()) {
 				selectStatus(TransactionStatus.PN);
 			}
-			offerToResumeDraft();
+			long resumeId = intent != null ? intent.getLongExtra(DRAFT_ID_EXTRA, 0) : 0;
+			if (resumeId > 0) {
+				resumeDraft(resumeId);
+			}
 		}
 
 		if (isShowTakePicture) {
@@ -480,7 +488,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 				MyPreferences.setLastAccount(transaction.fromAccountId);
 			}
 			transactionSaved = true;
-			TransactionDraft.clear(this, getDraftKey());
+			if (draftId > 0) {
+				TransactionDraft.delete(this, draftId);
+				draftId = 0;
+			}
 			deletePicturesConfirmedForRemoval();
 			AccountWidget.updateWidgets(this);
 			return id;
@@ -743,14 +754,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	}
 
 	/**
-	 * One draft per screen, so a half-filled expense and a half-filled transfer do
-	 * not overwrite each other.
-	 */
-	private String getDraftKey() {
-		return getClass().getSimpleName();
-	}
-
-	/**
 	 * Whether anything worth keeping has been typed. Opening the screen and backing
 	 * straight out must not leave a draft to be offered later.
 	 */
@@ -804,9 +807,13 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 		try {
 			updateTransactionFromUIForDraft();
 			if (isWorthKeepingAsDraft(transaction)) {
-				TransactionDraft.save(this, getDraftKey(), transaction);
-			} else {
-				TransactionDraft.clear(this, getDraftKey());
+				// Reuses the id when this screen came from a draft, so carrying on
+				// with one and leaving again updates it rather than piling up copies.
+				draftId = TransactionDraft.save(this, draftId, transaction);
+			} else if (draftId > 0) {
+				// Emptied out by hand: the draft is no longer worth offering back.
+				TransactionDraft.delete(this, draftId);
+				draftId = 0;
 			}
 		} catch (Exception e) {
 			// Never let a draft get in the way of leaving the screen.
@@ -814,27 +821,16 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 		}
 	}
 
-	private void offerToResumeDraft() {
-		if (!isDraftSupported()) {
-			return;
-		}
-		Transaction draft = TransactionDraft.load(this, getDraftKey());
+	/** Fills the screen from a draft opened out of the drafts list. */
+	private void resumeDraft(long id) {
+		Transaction draft = TransactionDraft.load(this, id);
 		if (draft == null) {
 			return;
 		}
-		new AlertDialog.Builder(this)
-				.setTitle(R.string.resume_draft_title)
-				.setMessage(R.string.resume_draft_message)
-				.setPositiveButton(R.string.resume_draft_resume, (dialog, which) -> {
-					draft.id = -1;
-					transaction = draft;
-					editTransaction(draft);
-					TransactionDraft.clear(this, getDraftKey());
-				})
-				.setNegativeButton(R.string.resume_draft_discard, (dialog, which) ->
-						TransactionDraft.clear(this, getDraftKey()))
-				.setCancelable(false)
-				.show();
+		draft.id = -1;
+		transaction = draft;
+		draftId = id;
+		editTransaction(draft);
 	}
 
 	/**

@@ -15,6 +15,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import tw.tib.financisto.utils.TransactionDraft;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String, TabLayout.Tab> tabs;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
+    private FragmentStateAdapter pagerAdapter;
+    private TabLayoutMediator tabLayoutMediator;
+    private boolean draftsTabVisible;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -82,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
         tabs = new HashMap<>();
 
-        viewPager.setAdapter(new FragmentStateAdapter(this) {
+        // Drafts sit last so the earlier positions keep their meaning: the startup
+        // screen preference and GO_TO_SCREEN both address tabs by index.
+        pagerAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position)
@@ -92,15 +99,18 @@ public class MainActivity extends AppCompatActivity {
                     case 1: return new BlotterFragment(true);
                     case 2: return new BudgetListFragment();
                     case 3: return new ReportsListFragment();
+                    case 5: return new DraftListFragment();
                     default: return new MenuListFragment_();
                 }
             }
 
             @Override
             public int getItemCount() {
-                return 5;
+                return draftsTabVisible ? 6 : 5;
             }
-        });
+        };
+        draftsTabVisible = TransactionDraft.count(this) > 0;
+        viewPager.setAdapter(pagerAdapter);
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -109,36 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new TabLayoutMediator(tabLayout, viewPager, true, false,
-                (tab, position) -> {
-                    switch (position) {
-                        case 0:
-                            tab/*.setText(getString(R.string.accounts))*/
-                                    .setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_accounts, getTheme()));
-                            tabs.put("accounts", tab);
-                            break;
-                        case 1:
-                            tab/*.setText(getString(R.string.blotter))*/
-                                    .setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_blotter, getTheme()));
-                            tabs.put("blotter", tab);
-                            break;
-                        case 2:
-                            tab/*.setText(getString(R.string.budgets))*/
-                                    .setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_budgets, getTheme()));
-                            tabs.put("budgets", tab);
-                            break;
-                        case 3:
-                            tab/*.setText(getString(R.string.reports))*/
-                                    .setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_reports, getTheme()));
-                            tabs.put("reports", tab);
-                            break;
-                        case 4:
-                            tab/*.setText(getString(R.string.menu))*/
-                                    .setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_menu, getTheme()));
-                            tabs.put("menu", tab);
-                            break;
-                    }
-                }).attach();
+        attachTabs();
 
         var intent = getIntent();
         if (intent != null) {
@@ -150,9 +131,64 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void attachTabs() {
+        if (tabLayoutMediator != null) {
+            tabLayoutMediator.detach();
+        }
+        tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, true, false,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_accounts, getTheme()));
+                            tabs.put("accounts", tab);
+                            break;
+                        case 1:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_blotter, getTheme()));
+                            tabs.put("blotter", tab);
+                            break;
+                        case 2:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_budgets, getTheme()));
+                            tabs.put("budgets", tab);
+                            break;
+                        case 3:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_reports, getTheme()));
+                            tabs.put("reports", tab);
+                            break;
+                        case 4:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_menu, getTheme()));
+                            tabs.put("menu", tab);
+                            break;
+                        case 5:
+                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_drafts, getTheme()));
+                            tabs.put("drafts", tab);
+                            break;
+                    }
+                });
+        tabLayoutMediator.attach();
+    }
+
+    /**
+     * The drafts tab only exists while something has been left unfinished, so it
+     * costs no room once there is nothing to come back to.
+     */
+    private void refreshDraftsTab() {
+        boolean shouldShow = TransactionDraft.count(this) > 0;
+        if (shouldShow == draftsTabVisible) {
+            return;
+        }
+        draftsTabVisible = shouldShow;
+        if (!shouldShow) {
+            tabs.remove("drafts");
+        }
+        pagerAdapter.notifyDataSetChanged();
+        // The mediator caches the tab count, so it has to be rebuilt around the new one.
+        attachTabs();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        refreshDraftsTab();
         greenRobotBus.register(this);
         PinProtection.unlock(this);
         if (PinProtection.isUnlocked()) {
