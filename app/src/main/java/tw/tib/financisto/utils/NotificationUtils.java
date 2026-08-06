@@ -41,7 +41,7 @@ public class NotificationUtils {
     @Nullable
     private static PendingIntent getTransactionPendingIntent(Context context, TransactionInfo t) {
         Intent mainScreenIntent = new Intent(context, MainActivity.class);
-        mainScreenIntent.putExtra(MainActivity.GO_TO_SCREEN, MyPreferences.StartupScreen.BLOTTER.ordinal());
+        mainScreenIntent.putExtra(MainActivity.GO_TO_SCREEN, MyPreferences.StartupScreen.BLOTTER.tag);
 
         Intent transactionIntent = new Intent(context, t.getActivity());
         transactionIntent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, t.id);

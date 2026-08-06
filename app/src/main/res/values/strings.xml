@@ -308,6 +308,10 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="show_budgets_tab">Budgets tab</string>
+    <string name="show_budgets_tab_summary">Show the budgets tab in the main screen</string>
+    <string name="show_reports_tab">Reports tab</string>
+    <string name="show_reports_tab_summary">Show the reports tab in the main screen</string>
     <string name="drafts">Drafts</string>
     <string name="no_drafts">Nothing left unfinished</string>
     <string name="draft_left_at">Left at %1$s</string>

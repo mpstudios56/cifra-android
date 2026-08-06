@@ -26,6 +26,18 @@
             android:key="startup_screen"
             android:summary="@string/startup_screen_summary"
             android:title="@string/startup_screen" />
+        <CheckBoxPreference
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="show_budgets_tab"
+            android:summary="@string/show_budgets_tab_summary"
+            android:title="@string/show_budgets_tab" />
+        <CheckBoxPreference
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="show_reports_tab"
+            android:summary="@string/show_reports_tab_summary"
+            android:title="@string/show_reports_tab" />
         <Preference
             app:singleLineTitle="false"
             android:summary="@string/accounts_list_screen_summary"

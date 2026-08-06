@@ -25,7 +25,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import tw.tib.financisto.R;
 import tw.tib.financisto.bus.GreenRobotBus;
@@ -50,7 +52,25 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
     private TabLayoutMediator tabLayoutMediator;
-    private boolean draftsTabVisible;
+    private List<MainTab> visibleTabs = new ArrayList<>();
+
+    /** The tabs this screen can show, in the order they appear when all are on. */
+    private enum MainTab {
+        ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
+        BLOTTER("blotter", R.drawable.ic_tab_blotter),
+        DRAFTS("drafts", R.drawable.ic_tab_drafts),
+        BUDGETS("budgets", R.drawable.ic_tab_budgets),
+        REPORTS("reports", R.drawable.ic_tab_reports),
+        MENU("menu", R.drawable.ic_tab_menu);
+
+        final String tag;
+        final int iconId;
+
+        MainTab(String tag, int iconId) {
+            this.tag = tag;
+            this.iconId = iconId;
+        }
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -87,29 +107,27 @@ public class MainActivity extends AppCompatActivity {
 
         tabs = new HashMap<>();
 
-        // Drafts sit last so the earlier positions keep their meaning: the startup
-        // screen preference and GO_TO_SCREEN both address tabs by index.
+        visibleTabs = buildVisibleTabs();
         pagerAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position)
             {
-                switch (position) {
-                    case 0: return new AccountRecyclerFragment();
-                    case 1: return new BlotterFragment(true);
-                    case 2: return new BudgetListFragment();
-                    case 3: return new ReportsListFragment();
-                    case 5: return new DraftListFragment();
+                switch (visibleTabs.get(position)) {
+                    case ACCOUNTS: return new AccountRecyclerFragment();
+                    case BLOTTER: return new BlotterFragment(true);
+                    case DRAFTS: return new DraftListFragment();
+                    case BUDGETS: return new BudgetListFragment();
+                    case REPORTS: return new ReportsListFragment();
                     default: return new MenuListFragment_();
                 }
             }
 
             @Override
             public int getItemCount() {
-                return draftsTabVisible ? 6 : 5;
+                return visibleTabs.size();
             }
         };
-        draftsTabVisible = TransactionDraft.count(this) > 0;
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -121,74 +139,89 @@ public class MainActivity extends AppCompatActivity {
 
         attachTabs();
 
+        // Addressed by name, not by index: a hidden tab would otherwise send this
+        // to whichever screen happened to slide into that position.
         var intent = getIntent();
-        if (intent != null) {
-            int screen = intent.getIntExtra(GO_TO_SCREEN, MyPreferences.getStartupScreen().ordinal());
-            viewPager.setCurrentItem(screen, false);
+        String wanted = intent != null ? intent.getStringExtra(GO_TO_SCREEN) : null;
+        if (wanted == null) {
+            wanted = MyPreferences.getStartupScreen().tag;
         }
-        else {
-            viewPager.setCurrentItem(MyPreferences.getStartupScreen().ordinal(), false);
+        int start = positionOf(wanted);
+        viewPager.setCurrentItem(Math.max(start, 0), false);
+    }
+
+    /**
+     * Which tabs to show, in order. Budgets and reports can be turned off by anyone
+     * who does not use them, and drafts appear only while something is unfinished,
+     * so nothing here can be assumed from a position alone.
+     */
+    private List<MainTab> buildVisibleTabs() {
+        List<MainTab> result = new ArrayList<>();
+        result.add(MainTab.ACCOUNTS);
+        result.add(MainTab.BLOTTER);
+        if (TransactionDraft.count(this) > 0) {
+            result.add(MainTab.DRAFTS);
         }
+        if (MyPreferences.isShowBudgetsTab(this)) {
+            result.add(MainTab.BUDGETS);
+        }
+        if (MyPreferences.isShowReportsTab(this)) {
+            result.add(MainTab.REPORTS);
+        }
+        result.add(MainTab.MENU);
+        return result;
     }
 
     private void attachTabs() {
         if (tabLayoutMediator != null) {
             tabLayoutMediator.detach();
         }
+        tabs.clear();
         tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, true, false,
                 (tab, position) -> {
-                    switch (position) {
-                        case 0:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_accounts, getTheme()));
-                            tabs.put("accounts", tab);
-                            break;
-                        case 1:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_blotter, getTheme()));
-                            tabs.put("blotter", tab);
-                            break;
-                        case 2:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_budgets, getTheme()));
-                            tabs.put("budgets", tab);
-                            break;
-                        case 3:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_reports, getTheme()));
-                            tabs.put("reports", tab);
-                            break;
-                        case 4:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_menu, getTheme()));
-                            tabs.put("menu", tab);
-                            break;
-                        case 5:
-                            tab.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_tab_drafts, getTheme()));
-                            tabs.put("drafts", tab);
-                            break;
-                    }
+                    MainTab which = visibleTabs.get(position);
+                    tab.setIcon(ResourcesCompat.getDrawable(getResources(), which.iconId, getTheme()));
+                    tabs.put(which.tag, tab);
                 });
         tabLayoutMediator.attach();
     }
 
+    /** Position of a tab by name, or -1 when it is not currently shown. */
+    private int positionOf(String tag) {
+        for (int i = 0; i < visibleTabs.size(); i++) {
+            if (visibleTabs.get(i).tag.equals(tag)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
-     * The drafts tab only exists while something has been left unfinished, so it
-     * costs no room once there is nothing to come back to.
+     * Rebuilds the strip when what belongs on it has changed: a draft was started or
+     * dealt with, or a tab was switched off in the preferences. Keeps whichever tab
+     * was open where possible, since positions shift underneath.
      */
-    private void refreshDraftsTab() {
-        boolean shouldShow = TransactionDraft.count(this) > 0;
-        if (shouldShow == draftsTabVisible) {
+    private void refreshTabs() {
+        List<MainTab> wanted = buildVisibleTabs();
+        if (wanted.equals(visibleTabs)) {
             return;
         }
-        draftsTabVisible = shouldShow;
-        if (!shouldShow) {
-            tabs.remove("drafts");
-        }
+        String current = visibleTabs.isEmpty() ? null
+                : visibleTabs.get(Math.min(viewPager.getCurrentItem(), visibleTabs.size() - 1)).tag;
+        visibleTabs = wanted;
         pagerAdapter.notifyDataSetChanged();
         // The mediator caches the tab count, so it has to be rebuilt around the new one.
         attachTabs();
+        int restored = current != null ? positionOf(current) : -1;
+        if (restored >= 0) {
+            viewPager.setCurrentItem(restored, false);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        refreshDraftsTab();
+        refreshTabs();
         greenRobotBus.register(this);
         PinProtection.unlock(this);
         if (PinProtection.isUnlocked()) {

@@ -746,6 +746,14 @@ public class MyPreferences {
 		return StartupScreen.valueOf(screen);
 	}
 
+	public static boolean isShowBudgetsTab(Context context) {
+		return getBoolean("show_budgets_tab", true);
+	}
+
+	public static boolean isShowReportsTab(Context context) {
+		return getBoolean("show_reports_tab", true);
+	}
+
 	public static ExchangeRateProvider createExchangeRatesProvider(Context context) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Application.getInstance());
 		ExchangeRateProviderFactory factory = getExchangeRateProviderFactory();

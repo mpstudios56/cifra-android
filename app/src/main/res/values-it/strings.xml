@@ -225,6 +225,10 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="show_budgets_tab">Scheda budget</string>
+  <string name="show_budgets_tab_summary">Mostra la scheda dei budget nella schermata principale</string>
+  <string name="show_reports_tab">Scheda report</string>
+  <string name="show_reports_tab_summary">Mostra la scheda dei report nella schermata principale</string>
   <string name="drafts">Bozze</string>
   <string name="no_drafts">Nessun inserimento lasciato a metà</string>
   <string name="draft_left_at">Lasciata il %1$s</string>
