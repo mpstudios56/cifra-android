@@ -410,7 +410,9 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
     private void updateTransactionFromUI() {
         updateTransactionFromUI(transaction);
-        transaction.fromAccountId = selectedAccount.id;
+        // Saving checks an account was picked before getting here, but a draft is
+        // taken whenever the screen is left, including before anything was chosen.
+        transaction.fromAccountId = selectedAccount != null ? selectedAccount.id : 0;
         long amount = rateView.getFromAmount();
         if (isUpdateBalanceMode) {
             amount -= currentBalance;
@@ -436,7 +438,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     private boolean isDifferentCurrency() {
-        return selectedOriginCurrencyId > 0 && selectedOriginCurrencyId != selectedAccount.currency.id;
+        return selectedOriginCurrencyId > 0 && selectedAccount != null
+                && selectedOriginCurrencyId != selectedAccount.currency.id;
     }
 
     @Override

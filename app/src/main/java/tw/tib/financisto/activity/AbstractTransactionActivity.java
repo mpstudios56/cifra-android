@@ -769,10 +769,14 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	 * Called as the screen goes away for any reason, including the camera opening on
 	 * top of it. That is harmless: the draft is only ever read when the screen is
 	 * opened afresh, and it is cleared as soon as the entry is saved.
+	 * <p>
+	 * Deliberately onPause rather than onStop: the screen behind is resumed before
+	 * this one is stopped, so a draft written in onStop would arrive too late for
+	 * the main screen to notice it and show the drafts tab.
 	 */
 	@Override
-	protected void onStop() {
-		super.onStop();
+	protected void onPause() {
+		super.onPause();
 		saveDraftIfAbandoned();
 	}
 
