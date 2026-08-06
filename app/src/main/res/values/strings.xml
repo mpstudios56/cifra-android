@@ -308,6 +308,9 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="backup_folder_needed_title">Choose a folder first</string>
+    <string name="backup_folder_needed_for_picture">Pictures are kept in the backup folder, and one has not been chosen yet. Choose it now and the picture will be attached straight after.</string>
+    <string name="backup_folder_needed_choose">Choose folder</string>
     <string name="export_settings">Export Settings</string>
     <string name="export_settings_inprogress">Exporting settings…</string>
     <string name="import_settings">Import Settings</string>

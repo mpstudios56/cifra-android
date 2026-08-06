@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 
@@ -46,6 +47,7 @@ import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.recur.NotificationOptions;
 import tw.tib.financisto.recur.Recurrence;
 import tw.tib.financisto.utils.EnumUtils;
+import tw.tib.financisto.export.Export;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PicturesUtil;
 import tw.tib.financisto.utils.TransactionUtils;
@@ -157,9 +159,18 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
 	protected ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 	protected ActivityResultLauncher<Uri> takePicture;
+	protected ActivityResultLauncher<Uri> selectBackupFolder;
 
 	protected static final String NEW_PICTURE_URI = "newPictureUri";
 	protected Uri newPictureUri;
+
+	// Pictures live in the backup folder, so attaching one needs that folder picked
+	// first. Remembered here so the tap that triggered the prompt can be resumed
+	// once the folder is chosen, instead of making the user find the button again.
+	private static final int PICTURE_ACTION_NONE = 0;
+	private static final int PICTURE_ACTION_TAKE_PHOTO = 1;
+	private static final int PICTURE_ACTION_PICK_FROM_ALBUM = 2;
+	private int pendingPictureAction = PICTURE_ACTION_NONE;
 
 	protected Transaction transaction = new Transaction();
 
@@ -407,6 +418,20 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 				PicturesUtil.backupPictureFile(this, newPictureUri);
 				selectPicture(DocumentFile.fromSingleUri(this, newPictureUri).getName());
 			});
+
+			selectBackupFolder = registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
+				int action = pendingPictureAction;
+				pendingPictureAction = PICTURE_ACTION_NONE;
+				if (uri == null) return;
+				getContentResolver().takePersistableUriPermission(uri,
+						Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+				MyPreferences.setDatabaseBackupFolder(uri.toString());
+				if (action == PICTURE_ACTION_TAKE_PHOTO) {
+					takePhoto();
+				} else if (action == PICTURE_ACTION_PICK_FROM_ALBUM) {
+					pickFromAlbum();
+				}
+			});
 		}
 
 		long t1 = System.currentTimeMillis();
@@ -537,18 +562,13 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			}
 		}
 		else if (id == R.id.select_from_album) {
-			if (PicturesUtil.getPictureFolderUri(this) != null) {
-				transaction.blobKey = null;
-				pickMedia.launch(new PickVisualMediaRequest.Builder()
-						.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-						.build());
+			if (requireBackupFolder(PICTURE_ACTION_PICK_FROM_ALBUM)) {
+				pickFromAlbum();
 			}
 		}
 		else if (id ==R.id.take_photo) {
-			if (PicturesUtil.getPictureFolderUri(this) != null) {
-				transaction.blobKey = null;
-				newPictureUri = PicturesUtil.createPictureFile(this);
-				takePicture.launch(newPictureUri);
+			if (requireBackupFolder(PICTURE_ACTION_TAKE_PHOTO)) {
+				takePhoto();
 			}
 		}
 		else if (id == R.id.delete_picture) {
@@ -690,6 +710,43 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 				removePicture();
 			}
 		}
+	}
+
+	/**
+	 * Attaching a picture writes it into the backup folder, so that folder has to be
+	 * picked first. Rather than refusing with a message that leads nowhere, offer to
+	 * pick it here and carry on with what was asked afterwards.
+	 */
+	private boolean requireBackupFolder(int action) {
+		if (Export.isBackupFolderConfigured(this)) {
+			return true;
+		}
+		pendingPictureAction = action;
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.backup_folder_needed_title)
+				.setMessage(R.string.backup_folder_needed_for_picture)
+				.setPositiveButton(R.string.backup_folder_needed_choose, (dialog, which) ->
+						selectBackupFolder.launch(null))
+				.setNegativeButton(R.string.cancel, (dialog, which) ->
+						pendingPictureAction = PICTURE_ACTION_NONE)
+				.setOnCancelListener(dialog -> pendingPictureAction = PICTURE_ACTION_NONE)
+				.show();
+		return false;
+	}
+
+	private void takePhoto() {
+		if (PicturesUtil.getPictureFolderUri(this) == null) return;
+		transaction.blobKey = null;
+		newPictureUri = PicturesUtil.createPictureFile(this);
+		takePicture.launch(newPictureUri);
+	}
+
+	private void pickFromAlbum() {
+		if (PicturesUtil.getPictureFolderUri(this) == null) return;
+		transaction.blobKey = null;
+		pickMedia.launch(new PickVisualMediaRequest.Builder()
+				.setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+				.build());
 	}
 
 	private void selectPicture(String pictureFileName) {

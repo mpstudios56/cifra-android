@@ -225,6 +225,9 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="backup_folder_needed_title">Scegli prima una cartella</string>
+  <string name="backup_folder_needed_for_picture">Le foto vengono conservate nella cartella dei backup, che non è ancora stata scelta. Sceglila adesso e la foto verrà allegata subito dopo.</string>
+  <string name="backup_folder_needed_choose">Scegli cartella</string>
   <string name="export_settings">Esporta impostazioni</string>
   <string name="export_settings_summary">Salva le impostazioni dell\'app nella memoria locale, senza i dati</string>
   <string name="export_settings_inprogress">Esportazione impostazioni...</string>

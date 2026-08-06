@@ -16,6 +16,8 @@ import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.util.Log;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -101,6 +103,24 @@ public abstract class Export {
         String backupFolderUri = MyPreferences.getDatabaseBackupFolder();
         Log.i("Financisto", "getBackupFolder: " + backupFolderUri);
         return backupFolderUri;
+    }
+
+    /**
+     * Whether a backup folder has been picked and is still writable. Until one is,
+     * the preference holds a plain filesystem path rather than a document tree, so
+     * everything built on DocumentsContract fails.
+     */
+    public static boolean isBackupFolderConfigured(Context context) {
+        try {
+            Uri backupFolderUri = Uri.parse(getBackupFolder(context));
+            String backupFolderId = DocumentsContract.getTreeDocumentId(backupFolderUri);
+            Uri dirUri = DocumentsContract.buildDocumentUriUsingTree(backupFolderUri, backupFolderId);
+            DocumentFile dir = DocumentFile.fromTreeUri(context, dirUri);
+            return dir != null && dir.canWrite();
+        } catch (Exception e) {
+            Log.i("Financisto", "backup folder not usable: " + e);
+            return false;
+        }
     }
 
     public static void uploadBackupFileToDropbox(Context context, Uri backupFileUri) throws Exception {
