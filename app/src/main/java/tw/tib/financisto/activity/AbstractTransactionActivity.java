@@ -59,6 +59,7 @@ import tw.tib.financisto.widget.RateLayoutView;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static tw.tib.financisto.activity.RequestPermission.isRequestingPermission;
@@ -171,6 +172,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	private static final int PICTURE_ACTION_TAKE_PHOTO = 1;
 	private static final int PICTURE_ACTION_PICK_FROM_ALBUM = 2;
 	private int pendingPictureAction = PICTURE_ACTION_NONE;
+
+	// Pictures the user agreed to delete from storage, applied once the transaction
+	// is saved so that cancelling the edit leaves them where they are.
+	private final List<String> picturesToDeleteOnSave = new ArrayList<>();
 
 	protected Transaction transaction = new Transaction();
 
@@ -468,10 +473,27 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			if (isNew) {
 				MyPreferences.setLastAccount(transaction.fromAccountId);
 			}
+			deletePicturesConfirmedForRemoval();
 			AccountWidget.updateWidgets(this);
 			return id;
 		}
 		return -1;
+	}
+
+	/**
+	 * Runs once the transaction is stored, so a cancelled edit leaves the files alone.
+	 */
+	private void deletePicturesConfirmedForRemoval() {
+		if (picturesToDeleteOnSave.isEmpty()) {
+			return;
+		}
+		List<String> fileNames = new ArrayList<>(picturesToDeleteOnSave);
+		picturesToDeleteOnSave.clear();
+		Application.getExecutor().execute(() -> {
+			for (String fileName : fileNames) {
+				PicturesUtil.deletePictureFile(this, fileName);
+			}
+		});
 	}
 
 	private List<TransactionAttribute> getAttributes() {
@@ -769,9 +791,17 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 		if (pictureView == null) {
 			return;
 		}
-		// TODO: delete (potentially multiple) removed pictures or not-saved new pictures
-		//  when saving and cancel creating
-		// can't just delete here, since it should be only committed when explicitly pressed "Save"
+		// Detaching is only committed when Save is pressed, so the file cannot be
+		// deleted here: the edit may still be cancelled. Ask now, act on save.
+		String detached = transaction.attachedPicture;
+		if (detached != null) {
+			new AlertDialog.Builder(this)
+					.setTitle(R.string.delete_picture_file_title)
+					.setMessage(R.string.delete_picture_file_message)
+					.setPositiveButton(R.string.delete, (dialog, which) -> picturesToDeleteOnSave.add(detached))
+					.setNegativeButton(R.string.keep_picture_file, null)
+					.show();
+		}
 		transaction.attachedPicture = null;
 		transaction.blobKey = null;
 		pictureView.setImageBitmap(null);

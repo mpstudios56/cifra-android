@@ -308,6 +308,9 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="delete_picture_file_title">Delete the picture file?</string>
+    <string name="delete_picture_file_message">The picture will be detached from this transaction either way. Its file can also be deleted from storage, so it is not left behind unused.</string>
+    <string name="keep_picture_file">Keep the file</string>
     <string name="backup_folder_needed_title">Choose a folder first</string>
     <string name="backup_folder_needed_for_picture">Pictures are kept in the backup folder, and one has not been chosen yet. Choose it now and the picture will be attached straight after.</string>
     <string name="backup_folder_needed_choose">Choose folder</string>

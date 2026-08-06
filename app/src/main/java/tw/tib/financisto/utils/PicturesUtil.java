@@ -179,6 +179,22 @@ public class PicturesUtil {
         return pictureUri;
     }
 
+    /**
+     * Deletes a picture from the pictures folder. Nothing else in the app removes
+     * these files, so without this they pile up for as long as the folder exists.
+     */
+    public static boolean deletePictureFile(Context context, String fileName) {
+        try {
+            boolean deleted = DocumentsContract.deleteDocument(context.getContentResolver(),
+                    getPictureFileUri(fileName));
+            Log.i(TAG, "deletePictureFile " + fileName + ": " + deleted);
+            return deleted;
+        } catch (Exception e) {
+            Log.e(TAG, "deletePictureFile " + fileName + " failed", e);
+            return false;
+        }
+    }
+
     public static String generateFileName() {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd'_'HHmmss'_'SSS");
         return df.format(new Date());

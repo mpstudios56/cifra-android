@@ -225,6 +225,9 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="delete_picture_file_title">Eliminare il file della foto?</string>
+  <string name="delete_picture_file_message">La foto verrà comunque staccata da questa transazione. Il suo file può anche essere eliminato dalla memoria, così non resta inutilizzato.</string>
+  <string name="keep_picture_file">Conserva il file</string>
   <string name="backup_folder_needed_title">Scegli prima una cartella</string>
   <string name="backup_folder_needed_for_picture">Le foto vengono conservate nella cartella dei backup, che non è ancora stata scelta. Sceglila adesso e la foto verrà allegata subito dopo.</string>
   <string name="backup_folder_needed_choose">Scegli cartella</string>
