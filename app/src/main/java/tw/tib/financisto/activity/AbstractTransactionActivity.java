@@ -1005,8 +1005,16 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
 	protected void updateTransactionFromUI(Transaction transaction) {
 		transaction.categoryId = categorySelector.getSelectedCategoryId();
-		transaction.projectId = projectSelector.getSelectedEntityId();
-		transaction.locationId = locationSelector.getSelectedEntityId();
+		// Only write back what the screen actually offered. A selector whose field is
+		// switched off reports nothing selected, so writing it unconditionally wiped
+		// the project or location of any older transaction merely by opening and
+		// saving it. Payee and note were already guarded this way.
+		if (isShowProject) {
+			transaction.projectId = projectSelector.getSelectedEntityId();
+		}
+		if (isShowLocation) {
+			transaction.locationId = locationSelector.getSelectedEntityId();
+		}
 		if (transaction.isScheduled()) {
 			DateUtils.zeroSeconds(dateTime);
 		}
