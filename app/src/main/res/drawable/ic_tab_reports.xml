@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- selected state -->
-    <item android:drawable="@drawable/ic_tab_reports_selected"
-          android:state_selected="true"
-          android:state_pressed="false" />
-    <!-- unselected state (default) -->
-    <item android:drawable="@drawable/ic_tab_reports_unselected" />
-</selector>
+<!--
+  reports tab icon for Cifra. One outline set at a single stroke weight, replacing
+  bitmaps that only existed up to hdpi and were upscaled on modern screens.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The tab strip tints it for the selected and normal states.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.2,19.6 L19.8,19.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M7.4,17.6 L7.4,13.4" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,17.6 L12,8.4" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M16.6,17.6 L16.6,10.8" />
+</vector>

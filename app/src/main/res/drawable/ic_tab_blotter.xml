@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (c) 2010 Denis Solonenko.
-  All rights reserved. This program and the accompanying materials
-  are made available under the terms of the GNU Public License v2.0
-  which accompanies this distribution, and is available at
-  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
-  Contributors:
-      Denis Solonenko - initial API and implementation
+  blotter tab icon for Cifra. One outline set at a single stroke weight, replacing
+  bitmaps that only existed up to hdpi and were upscaled on modern screens.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The tab strip tints it for the selected and normal states.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:state_pressed="false" android:drawable="@drawable/ic_tab_blotter_selected" />
-    <item android:drawable="@drawable/ic_tab_blotter_unselected" />
-</selector>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.6"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,7 L4.6,7" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.6"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,12 L4.6,12" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.6"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,17 L4.6,17" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M8.4,7 L19.8,7" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M8.4,12 L19.8,12" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M8.4,17 L19.8,17" />
+</vector>

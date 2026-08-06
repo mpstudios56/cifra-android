@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Drafts tab: a page with a folded corner, left part written.
+  drafts tab icon for Cifra. One outline set at a single stroke weight, replacing
+  bitmaps that only existed up to hdpi and were upscaled on modern screens.
   Literal colours, not resource references: build-time PNG generation cannot
   resolve those. The tab strip tints it for the selected and normal states.
 -->
@@ -24,11 +25,13 @@
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
         android:strokeLineCap="round"
         android:pathData="M8.2,12.4 L14.5,12.4" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
         android:strokeLineCap="round"
         android:pathData="M8.2,16.2 L11.8,16.2" />
 </vector>
