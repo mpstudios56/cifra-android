@@ -18,3 +18,8 @@ keystore.properties
 build/
 app/build/
 .gradle/
+
+# R8/ProGuard output written next to the module during release builds
+app/seeds.txt
+app/usage.txt
+app/mapping.txt
