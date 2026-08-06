@@ -13,6 +13,26 @@ configurations {
 
 apply plugin: 'com.android.application'
 
+// Release signing. The key and its passwords live in keystore.properties, which is
+// deliberately kept out of git: losing control of them means someone else can ship
+// updates that phones accept as genuine. Without that file the build falls back to
+// the debug key, so a fresh clone still builds - it just cannot be published.
+// Parsed by hand rather than with java.util.Properties: naming JDK classes here
+// makes Groovy load them, and the JDK shipped with Android Studio is newer than
+// this Gradle can read, which fails the build before it starts.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def hasReleaseKey = keystorePropertiesFile.exists()
+def keystoreProperties = [:]
+if (hasReleaseKey) {
+    keystorePropertiesFile.eachLine { line ->
+        def trimmed = line.trim()
+        def sep = trimmed.indexOf('=')
+        if (sep > 0 && !trimmed.startsWith('#')) {
+            keystoreProperties[trimmed.substring(0, sep).trim()] = trimmed.substring(sep + 1).trim()
+        }
+    }
+}
+
 android {
     namespace = 'tw.tib.financisto'
     compileSdk = 36
@@ -36,11 +56,22 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            if (hasReleaseKey) {
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-google-api-client.txt'
-            signingConfig = signingConfigs.debug
+            signingConfig = hasReleaseKey ? signingConfigs.release : signingConfigs.debug
         }
         debug {
             applicationIdSuffix ".dev"

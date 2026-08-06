@@ -8,6 +8,12 @@ captures/
 gradlew*
 local.properties
 *.apk
+*.aab
+
+# Signing material for published builds. Never commit these.
+keystore.properties
+*.jks
+*.keystore
 .idea/
 build/
 app/build/
