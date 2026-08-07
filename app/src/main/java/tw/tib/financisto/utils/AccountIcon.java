@@ -35,7 +35,25 @@ public enum AccountIcon {
     WALLET("wallet", R.drawable.account_type_digital_wallet, R.string.account_type_electronic),
     ASSET("asset", R.drawable.account_type_asset, R.string.account_type_asset),
     LIABILITY("liability", R.drawable.account_type_liability, R.string.account_type_liability),
-    OTHER("other", R.drawable.account_type_other, R.string.account_type_other);
+    OTHER("other", R.drawable.account_type_other, R.string.account_type_other),
+
+    // The card and service marks, so an account can be marked by who it is with
+    // rather than by what kind it is. Never tinted: they carry their own colours,
+    // and a recoloured logo is a wrong logo.
+    VISA("visa", R.drawable.account_type_card_visa, R.string.card_issuer_visa, false),
+    MASTERCARD("mastercard", R.drawable.account_type_card_mastercard, R.string.card_issuer_mastercard, false),
+    MAESTRO("maestro", R.drawable.account_type_card_maestro, R.string.card_issuer_maestro, false),
+    AMEX("amex", R.drawable.account_type_card_amex, R.string.card_issuer_amex, false),
+    DINERS("diners", R.drawable.account_type_card_diners, R.string.card_issuer_diners, false),
+    DISCOVER("discover", R.drawable.account_type_card_discover, R.string.card_issuer_discover, false),
+    JCB("jcb", R.drawable.account_type_card_jcb, R.string.card_issuer_jcb, false),
+    UNIONPAY("unionpay", R.drawable.account_type_card_unionpay, R.string.card_issuer_unionpay, false),
+    PAYPAL("paypal", R.drawable.electronic_type_paypal, R.string.electronic_type_paypal, false),
+    REVOLUT("revolut", R.drawable.electronic_type_revolut, R.string.electronic_type_revolut, false),
+    BITCOIN("bitcoin", R.drawable.electronic_type_bitcoin, R.string.electronic_type_bitcoin, false),
+    GOOGLE_WALLET("gwallet", R.drawable.electronic_type_google_wallet, R.string.electronic_type_google_wallet, false),
+    AMAZON("amazon", R.drawable.electronic_type_amazon, R.string.electronic_type_amazon, false),
+    ALIPAY("alipay", R.drawable.electronic_type_alipay, R.string.electronic_type_alipay, false);
 
     /** No emoji begins with this, so stored text is never mistaken for a symbol. */
     public static final String MARKER = "@";
@@ -64,11 +82,18 @@ public enum AccountIcon {
     public final String tag;
     @DrawableRes public final int iconId;
     @StringRes public final int titleId;
+    /** Whether the accent colour may be applied. Brand marks must not be. */
+    public final boolean tintable;
 
     AccountIcon(String tag, int iconId, int titleId) {
+        this(tag, iconId, titleId, true);
+    }
+
+    AccountIcon(String tag, int iconId, int titleId, boolean tintable) {
         this.tag = tag;
         this.iconId = iconId;
         this.titleId = titleId;
+        this.tintable = tintable;
     }
 
     public String toStoredValue(Target target) {

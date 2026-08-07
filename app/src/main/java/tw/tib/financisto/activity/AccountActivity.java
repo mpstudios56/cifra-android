@@ -422,7 +422,11 @@ public class AccountActivity extends AbstractActivity {
 						GridView.LayoutParams.MATCH_PARENT, 150));
 				view.setPadding(16, 16, 16, 16);
 				view.setImageResource(icons[position].iconId);
-				view.setColorFilter(tint);
+				if (icons[position].tintable) {
+					view.setColorFilter(tint);
+				} else {
+					view.clearColorFilter();
+				}
 				return view;
 			}
 		});
@@ -523,8 +527,12 @@ public class AccountActivity extends AbstractActivity {
 			label.setText(chosen.titleId);
 			preview.setVisibility(View.VISIBLE);
 			preview.setImageResource(chosen.iconId);
-			preview.setColorFilter(currentTarget() == AccountIcon.Target.BAR
-					? Color.parseColor("#FFC9CDD2") : currentAccentColor());
+			if (!chosen.tintable) {
+				preview.clearColorFilter();
+			} else {
+				preview.setColorFilter(currentTarget() == AccountIcon.Target.BAR
+						? Color.parseColor("#FFC9CDD2") : currentAccentColor());
+			}
 		} else if (!Utils.isEmpty(stored)) {
 			label.setText(stored);
 			preview.setVisibility(View.INVISIBLE);

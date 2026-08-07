@@ -111,7 +111,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             v.iconText.setVisibility(View.INVISIBLE);
             v.icon.setImageResource(chosen.iconId);
             AccountIcon.Target target = AccountIcon.parseTarget(a.icon);
-            if (target == AccountIcon.Target.BAR) {
+            if (!chosen.tintable || target == AccountIcon.Target.BAR) {
                 v.icon.clearColorFilter();
             } else {
                 v.icon.setColorFilter(accentOrNull(a.accentColor));
