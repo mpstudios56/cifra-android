@@ -921,4 +921,6 @@
   <string name="accent_target_bar">Sulla striscia della riga</string>
   <string name="accent_target_both">Su entrambi</string>
   <string name="electronic_type_revolut">Revolut</string>
+  <string name="account_icon">Icona</string>
+  <string name="account_icon_none">Nessuna</string>
 </resources>

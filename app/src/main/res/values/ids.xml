@@ -11,6 +11,9 @@
 <resources>
 	<item name="account" type="id" />
 	<item name="icon_picker" type="id" />
+	<item name="accent_target" type="id" />
+	<item name="accent_color" type="id" />
+	<item name="account_icon" type="id" />
 	<item name="account_clear" type="id" />
 	<item name="account_from" type="id" />
 	<item name="account_to" type="id" />

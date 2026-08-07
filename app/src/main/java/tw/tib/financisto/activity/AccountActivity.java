@@ -92,6 +92,9 @@ public class AccountActivity extends AbstractActivity {
 	private EditText paymentDayText;
 	private View closingDayNode;
 	private View paymentDayNode;
+	private View accountIconNode;
+	private View accentColorNode;
+	private View accentTargetNode;
 
 	private EntityEnumAdapter<AccountType> accountTypeAdapter;
 	private EntityEnumAdapter<CardIssuer> cardIssuerAdapter;
@@ -208,49 +211,19 @@ public class AccountActivity extends AbstractActivity {
 		noteText.setLines(2);
 		x.addEditNode(layout, R.string.note, noteText);
 
+		// Three rows of their own, none of them tied to the kind of account: the
+		// symbol says which institution, the colour distinguishes it, and the third
+		// says which of the two the colour paints.
+		accountIconNode = x.addListNodeIcon(layout, R.id.account_icon, R.string.account_icon, R.string.account_icon_none);
+		accentColorNode = x.addListNodeIcon(layout, R.id.accent_color, R.string.accent_color, R.string.account_icon_none);
+		accentTargetNode = x.addListNodeIcon(layout, R.id.accent_target, R.string.accent_target_title, R.string.accent_target_both);
+
+		// Kept, hidden: an emoji typed in earlier still has to survive a save.
 		iconText = new EditText(this);
 		iconText.setSingleLine();
-		// The field still takes any text, so an emoji typed by hand keeps working;
-		// the button offers the app's own symbols, which the accent colour tints.
-		x.addIconEditNode(layout, R.string.icon_text, R.id.icon_picker,
-				clicked -> showIconPicker(), iconText);
 
 		accentColor = new EditText(this);
 		accentColor.setSingleLine();
-		accentColor.setHint("yellow, teal, #a52a2a");
-		x.addColorEditNode(layout, R.string.accent_color, R.id.palette, clicked -> {
-			String[] colors = {
-					"#000000", "#ffffff", "#ff0000", "#800000", "#ff00ff", "#ffc0cb", "#00ffff",
-					"#add8e6", "#0000ff", "#00008b", "#c0c0c0", "#808080", "#ffa500", "#a52a2a",
-					"#ffff00", "#800080", "#00ff00", "#7fffd4", "#008000", "#808000"
-			};
-			var adapter = new ArrayAdapter<>(this, R.layout.select_entry_color_row, colors)
-			{
-				@Override
-				public View getView(int position, View convertView,	ViewGroup parent) {
-					View v;
-					final var inflater = LayoutInflater.from(getContext());
-					if (convertView == null) {
-						convertView = inflater.inflate(R.layout.select_entry_color_row, parent, false);
-						v = convertView.findViewById(R.id.color_patch);
-						convertView.setTag(v);
-					}
-					else {
-						v = (View) convertView.getTag();
-					}
-					v.setBackground(new ColorDrawable(Color.parseColor(colors[position])));
-					return convertView;
-				}
-			};
-			var builder = new AlertDialog.Builder(this);
-					builder.setTitle(R.string.select_color)
-					.setAdapter(adapter, (dialog, which) -> {
-						accentColor.setText(colors[which]);
-						dialog.cancel();
-					})
-					.create()
-					.show();
-		}, accentColor);
 
 		x.addEditNode(layout, R.string.sort_order, sortOrderText);
 		isIncludedIntoTotals = x.addCheckboxNode(layout,
@@ -348,6 +321,15 @@ public class AccountActivity extends AbstractActivity {
 			case R.id.is_included_into_reports:
 				isIncludedIntoReports.performClick();
 				break;
+			case R.id.account_icon:
+				showIconPicker();
+				break;
+			case R.id.accent_color:
+				showColorPicker();
+				break;
+			case R.id.accent_target:
+				showAccentTargetPicker();
+				break;
 			case R.id.account_type:
 				x.selectPosition(this, R.id.account_type, R.string.account_type, accountTypeAdapter, AccountType.valueOf(account.type).ordinal());
 				break;
@@ -393,6 +375,15 @@ public class AccountActivity extends AbstractActivity {
 	@Override
 	public void onSelectedPos(int id, int selectedPos) {
 		switch (id) {
+			case R.id.account_icon:
+				showIconPicker();
+				break;
+			case R.id.accent_color:
+				showColorPicker();
+				break;
+			case R.id.accent_target:
+				showAccentTargetPicker();
+				break;
 			case R.id.account_type:
 				AccountType type = AccountType.values()[selectedPos];
 				selectAccountType(type);
@@ -410,18 +401,11 @@ public class AccountActivity extends AbstractActivity {
 
 	/**
 	 * Symbols the account can carry regardless of its kind, so a current account and
-	 * a securities account at the same institution can be marked the same way and
-	 * told apart from everything else by their accent colour.
+	 * a securities account at the same institution can be marked the same way.
 	 */
 	private void showIconPicker() {
 		final AccountIcon[] icons = AccountIcon.values();
-		int accent = Color.WHITE;
-		try {
-			accent = Color.parseColor(accentColor.getText().toString().trim());
-		} catch (Exception e) {
-			// no accent chosen yet, or not a colour: show the symbols plain
-		}
-		final int tint = accent;
+		final int tint = currentAccentColor();
 
 		GridView grid = new GridView(this);
 		grid.setNumColumns(4);
@@ -443,23 +427,60 @@ public class AccountActivity extends AbstractActivity {
 		});
 
 		final AlertDialog dialog = new AlertDialog.Builder(this)
-				.setTitle(R.string.icon_picker_title)
+				.setTitle(R.string.account_icon)
 				.setView(grid)
-				.setNeutralButton(R.string.icon_picker_clear, (d, which) -> iconText.setText(""))
+				.setNeutralButton(R.string.account_icon_none, (d, which) -> {
+					iconText.setText("");
+					showIconOnNode();
+				})
 				.setNegativeButton(R.string.cancel, null)
 				.create();
 		grid.setOnItemClickListener((parent, view, position, id) -> {
+			iconText.setText(icons[position].toStoredValue(currentTarget()));
+			showIconOnNode();
 			dialog.dismiss();
-			askWhereTheColourGoes(icons[position]);
 		});
 		dialog.show();
 	}
 
-	/**
-	 * Colouring the symbol and the row stripe together is rarely what is wanted:
-	 * one marks which institution, the other how the row reads at a glance.
-	 */
-	private void askWhereTheColourGoes(final AccountIcon icon) {
+	private void showColorPicker() {
+		final String[] colors = {
+				"#000000", "#ffffff", "#ff0000", "#800000", "#ff00ff", "#ffc0cb", "#00ffff",
+				"#add8e6", "#0000ff", "#00008b", "#c0c0c0", "#808080", "#ffa500", "#a52a2a",
+				"#ffff00", "#800080", "#00ff00", "#7fffd4", "#008000", "#808000"
+		};
+		var adapter = new ArrayAdapter<>(this, R.layout.select_entry_color_row, colors) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View v;
+				final var inflater = LayoutInflater.from(getContext());
+				if (convertView == null) {
+					convertView = inflater.inflate(R.layout.select_entry_color_row, parent, false);
+					v = convertView.findViewById(R.id.color_patch);
+					convertView.setTag(v);
+				} else {
+					v = (View) convertView.getTag();
+				}
+				v.setBackground(new ColorDrawable(Color.parseColor(colors[position])));
+				return convertView;
+			}
+		};
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.select_color)
+				.setAdapter(adapter, (dialog, which) -> {
+					accentColor.setText(colors[which]);
+					showColorOnNode();
+					showIconOnNode();
+				})
+				.setNeutralButton(R.string.account_icon_none, (d, which) -> {
+					accentColor.setText("");
+					showColorOnNode();
+					showIconOnNode();
+				})
+				.show();
+	}
+
+	private void showAccentTargetPicker() {
 		final AccountIcon.Target[] targets = {
 				AccountIcon.Target.ICON, AccountIcon.Target.BAR, AccountIcon.Target.BOTH};
 		final String[] labels = {
@@ -468,9 +489,76 @@ public class AccountActivity extends AbstractActivity {
 				getString(R.string.accent_target_both)};
 		new AlertDialog.Builder(this)
 				.setTitle(R.string.accent_target_title)
-				.setItems(labels, (d, which) ->
-						iconText.setText(icon.toStoredValue(targets[which])))
+				.setItems(labels, (d, which) -> {
+					AccountIcon chosen = AccountIcon.parse(iconText.getText().toString());
+					if (chosen != null) {
+						iconText.setText(chosen.toStoredValue(targets[which]));
+					}
+					showTargetOnNode();
+					showIconOnNode();
+				})
 				.show();
+	}
+
+	/** The accent as a colour, or the symbols' own grey when none is set. */
+	private int currentAccentColor() {
+		try {
+			return Color.parseColor(accentColor.getText().toString().trim());
+		} catch (Exception e) {
+			return Color.parseColor("#FFC9CDD2");
+		}
+	}
+
+	private AccountIcon.Target currentTarget() {
+		return AccountIcon.parseTarget(iconText.getText().toString());
+	}
+
+	private void showIconOnNode() {
+		String stored = iconText.getText().toString();
+		AccountIcon chosen = AccountIcon.parse(stored);
+		TextView label = accountIconNode.findViewById(R.id.data);
+		ImageView preview = accountIconNode.findViewById(R.id.icon);
+		if (chosen != null) {
+			label.setText(chosen.titleId);
+			preview.setVisibility(View.VISIBLE);
+			preview.setImageResource(chosen.iconId);
+			preview.setColorFilter(currentTarget() == AccountIcon.Target.BAR
+					? Color.parseColor("#FFC9CDD2") : currentAccentColor());
+		} else if (!Utils.isEmpty(stored)) {
+			label.setText(stored);
+			preview.setVisibility(View.INVISIBLE);
+		} else {
+			label.setText(R.string.account_icon_none);
+			preview.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	private void showColorOnNode() {
+		String value = accentColor.getText().toString().trim();
+		TextView label = accentColorNode.findViewById(R.id.data);
+		ImageView preview = accentColorNode.findViewById(R.id.icon);
+		if (Utils.isEmpty(value)) {
+			label.setText(R.string.account_icon_none);
+			preview.setVisibility(View.INVISIBLE);
+			return;
+		}
+		label.setText(value);
+		try {
+			preview.setVisibility(View.VISIBLE);
+			preview.setImageResource(R.drawable.account_type_cash);
+			preview.setColorFilter(Color.parseColor(value));
+		} catch (Exception e) {
+			preview.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	private void showTargetOnNode() {
+		TextView label = accentTargetNode.findViewById(R.id.data);
+		switch (currentTarget()) {
+			case ICON: label.setText(R.string.accent_target_icon); break;
+			case BAR: label.setText(R.string.accent_target_bar); break;
+			default: label.setText(R.string.accent_target_both); break;
+		}
 	}
 
 	private void selectAccountType(AccountType type) {
@@ -553,6 +641,9 @@ public class AccountActivity extends AbstractActivity {
 		noteText.setText(account.note);
 		accentColor.setText(account.accentColor);
 		iconText.setText(account.icon);
+		showIconOnNode();
+		showColorOnNode();
+		showTargetOnNode();
 	}
 
 	@Override
