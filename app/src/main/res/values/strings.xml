@@ -1298,4 +1298,5 @@
     <string name="accent_target_icon">On the symbol</string>
     <string name="accent_target_bar">On the row stripe</string>
     <string name="accent_target_both">On both</string>
+  <string name="electronic_type_revolut">Revolut</string>
 </resources>

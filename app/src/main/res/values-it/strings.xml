@@ -920,4 +920,5 @@
   <string name="accent_target_icon">Sul simbolo</string>
   <string name="accent_target_bar">Sulla striscia della riga</string>
   <string name="accent_target_both">Su entrambi</string>
+  <string name="electronic_type_revolut">Revolut</string>
 </resources>

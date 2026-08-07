@@ -8,9 +8,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="200.0"
-    android:viewportHeight="200.0">
-    <group android:translateX="0.00" android:translateY="22.20">
+    android:viewportWidth="224.00000000000003"
+    android:viewportHeight="224.00000000000003">
+    <group android:translateX="12.00" android:translateY="34.20">
         <path
         android:fillColor="#FF00A2E5"
         android:pathData="M198.1,100.1v-2.4h-0.6l-0.7,1.6l-0.7-1.6h-0.6v2.4h0.4v-1.8l0.7,1.6h0.5l0.7-1.6v1.8H198.1z M194.1,100.1    v-2h0.8v-0.4h-2v0.4h0.8v2H194.1z" />
