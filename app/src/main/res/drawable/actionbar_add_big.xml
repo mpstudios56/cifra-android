@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  actionbar_add_big for Cifra. Part of the outline set, at the heavier weight used for the
+  bar buttons: these are primary actions shown larger than the menu icons.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The buttons tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,4.6 L12,19.4" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,12 L19.4,12" />
+</vector>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  actionbar_transfer for Cifra. Part of the outline set, at the heavier weight used for the
+  bar buttons: these are primary actions shown larger than the menu icons.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The buttons tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.2,8.8 L19.8,8.8" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M16.4,5.4 L19.8,8.8 L16.4,12.2" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M19.8,15.2 L4.2,15.2" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M7.6,11.8 L4.2,15.2 L7.6,18.6" />
+</vector>
