@@ -844,8 +844,8 @@
   <string name="reset_copied_transaction_status_to_summary">Marcar las copias como: %s</string>
   <string name="round_up_amount">Completar los decimales</string>
   <string name="round_up_amount_summary">Completar automáticamente los decimales del importe según la divisa elegida</string>
-  <string name="secure_window">Proteger el contenido</string>
-  <string name="secure_window_summary">Oculta el contenido en las aplicaciones recientes y antes del desbloqueo, e impide las capturas de pantalla (requiere reiniciar)</string>
+  <string name="secure_window">Bloquear las capturas de pantalla</string>
+  <string name="secure_window_summary">Impide capturas y grabaciones de pantalla, y oculta la aplicación entre las recientes y antes del desbloqueo (reinicia la aplicación para aplicar)</string>
   <string name="set_focus_on_amount_field">Empezar por el importe</string>
   <string name="set_focus_on_amount_field_summary">Situar el cursor directamente en el importe en las transacciones nuevas</string>
   <string name="show_account_balance_on_selector">Mostrar el saldo</string>

@@ -878,8 +878,8 @@
   <string name="reset_copied_transaction_status_to_summary">Segna le copie come: %s</string>
   <string name="round_up_amount">Completa i decimali</string>
   <string name="round_up_amount_summary">Completa automaticamente i decimali dell\'importo secondo la valuta scelta</string>
-  <string name="secure_window">Proteggi il contenuto</string>
-  <string name="secure_window_summary">Nasconde il contenuto nelle app recenti e prima dello sblocco, e impedisce le schermate (richiede il riavvio)</string>
+  <string name="secure_window">Blocca le schermate</string>
+  <string name="secure_window_summary">Impedisce schermate e registrazioni dello schermo, e nasconde l\'app fra le recenti e prima dello sblocco (riavvia l\'app per applicare)</string>
   <string name="set_focus_on_amount_field">Parti dall\'importo</string>
   <string name="set_focus_on_amount_field_summary">Nei nuovi movimenti il cursore si posiziona subito sull\'importo</string>
   <string name="show_account_balance_on_selector">Mostra il saldo</string>

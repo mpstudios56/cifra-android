@@ -13,6 +13,11 @@
     <path
         android:fillColor="#FFFFFFFF"
         android:pathData="M16.17,0 H64.69 A16.17,16.17 0 0,1 80.86,16.17 V64.69 A16.17,16.17 0 0,1 64.69,80.86 H16.17 A16.17,16.17 0 0,1 0,64.69 V16.17 A16.17,16.17 0 0,1 16.17,0 Z" />
+    <group
+        android:scaleX="0.8060"
+        android:scaleY="0.8060"
+        android:translateX="7.845"
+        android:translateY="7.845">
     <group android:translateX="4.33" android:translateY="35.33">
         <path
         android:fillColor="#FF000000"
@@ -47,5 +52,6 @@
         <path
         android:fillColor="#FF000000"
         android:pathData="M0,10L16.4,10L16.4,6L0,6Z" />
+    </group>
     </group>
 </vector>

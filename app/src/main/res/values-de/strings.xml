@@ -844,8 +844,8 @@
   <string name="reset_copied_transaction_status_to_summary">Kopien markieren als: %s</string>
   <string name="round_up_amount">Nachkommastellen ergänzen</string>
   <string name="round_up_amount_summary">Ergänzt die Nachkommastellen des Betrags automatisch entsprechend der gewählten Währung</string>
-  <string name="secure_window">Inhalt schützen</string>
-  <string name="secure_window_summary">Verbirgt den Inhalt in der Übersicht der letzten Apps und vor dem Entsperren und verhindert Bildschirmfotos (Neustart erforderlich)</string>
+  <string name="secure_window">Bildschirmfotos sperren</string>
+  <string name="secure_window_summary">Verhindert Bildschirmfotos und Bildschirmaufnahmen und verbirgt die App in der Übersicht der letzten Apps und vor dem Entsperren (App neu starten)</string>
   <string name="set_focus_on_amount_field">Mit dem Betrag beginnen</string>
   <string name="set_focus_on_amount_field_summary">Setzt den Cursor bei neuen Transaktionen direkt in das Betragsfeld</string>
   <string name="show_account_balance_on_selector">Saldo anzeigen</string>

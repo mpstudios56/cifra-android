@@ -805,8 +805,8 @@
   <string name="reset_copied_transaction_status_to_summary">Marquer les copies comme : %s</string>
   <string name="round_up_amount">Compléter les décimales</string>
   <string name="round_up_amount_summary">Compléter automatiquement les décimales du montant selon la devise choisie</string>
-  <string name="secure_window">Protéger le contenu</string>
-  <string name="secure_window_summary">Masque le contenu dans les applications récentes et avant le déverrouillage, et empêche les captures d\'écran (redémarrage nécessaire)</string>
+  <string name="secure_window">Bloquer les captures d\'écran</string>
+  <string name="secure_window_summary">Empêche les captures et l\'enregistrement de l\'écran, et masque l\'application dans les récentes et avant le déverrouillage (redémarrer l\'application pour appliquer)</string>
   <string name="set_focus_on_amount_field">Commencer par le montant</string>
   <string name="set_focus_on_amount_field_summary">Placer directement le curseur sur le montant pour une nouvelle opération</string>
   <string name="show_account_balance_on_selector">Afficher le solde</string>

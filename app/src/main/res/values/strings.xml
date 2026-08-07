@@ -284,8 +284,8 @@
         <item>Newer to Older</item>
         <item>Older to Newer</item>
     </string-array>
-    <string name="secure_window">Secure window content</string>
-    <string name="secure_window_summary">Hide content in recent apps view and before PIN lock, also prevents taking screenshots (requires restart)</string>
+    <string name="secure_window">Block screenshots</string>
+    <string name="secure_window_summary">Blocks screenshots and screen recording, and hides the app in the recent apps view and before the PIN lock (restart the app to apply)</string>
     <string name="more_products">More products…</string>
     <string name="pin_protection">PIN Protection</string>
     <string name="pin_protection_summary">Check to protect access with PIN</string>
