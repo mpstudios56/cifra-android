@@ -536,6 +536,9 @@
   <string name="no_payee">Kein Empfänger</string>
   <string name="report_no_payee">Es existiert kein Empfänger um den Bericht zu filtern.</string>
   <string name="donate">Spendier mir einen Kaffee</string>
+  <string name="donate_go">Zu PayPal</string>
+  <string name="donate_later">Später</string>
+  <string name="donate_never">Nicht mehr fragen</string>
   <string name="donate_error">Kein Browser auf diesem Gerät verfügbar</string>
   <string name="type">Typ</string>
   <string name="qif_export">QIF Export</string>

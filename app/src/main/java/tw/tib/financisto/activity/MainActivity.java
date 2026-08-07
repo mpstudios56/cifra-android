@@ -38,6 +38,7 @@ import tw.tib.financisto.db.DatabaseHelper;
 import tw.tib.financisto.dialog.WebViewDialog;
 import tw.tib.financisto.bus.GreenRobotBus_;
 import tw.tib.financisto.utils.CurrencyCache;
+import tw.tib.financisto.utils.DonatePrompt;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
 
@@ -253,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
         PinProtection.unlock(this);
         if (PinProtection.isUnlocked()) {
             WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this);
+            DonatePrompt.maybeAsk(this);
         }
     }
 

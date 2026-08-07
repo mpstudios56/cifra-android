@@ -570,6 +570,9 @@
   <string name="no_payee">Nessun beneficiario</string>
   <string name="report_no_payee">Non ci sono beneficiari disponibili per filtrare il rapporto.</string>
   <string name="donate">Offrimi un caffè</string>
+  <string name="donate_go">Vai a PayPal</string>
+  <string name="donate_later">Più tardi</string>
+  <string name="donate_never">Non chiedermelo più</string>
   <string name="donate_error">Nessun browser disponibile sul dispositivo</string>
   <string name="type">Tipo</string>
   <string name="qif_export">Esportazione QIF</string>

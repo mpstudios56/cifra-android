@@ -709,6 +709,9 @@
     <string name="no_payees">No payees</string>
     <string name="report_no_payee">There is no payee available for filtering in the report.</string>
     <string name="donate">Buy me a coffee</string>
+    <string name="donate_go">Go to PayPal</string>
+    <string name="donate_later">Later</string>
+    <string name="donate_never">Don\'t ask again</string>
     <string name="donate_error">No browser available on your device</string>
     <!-- The address the donation entry opens. Not translated: it is a URL. -->
     <string name="donate_url" translatable="false">https://paypal.me/MP56</string>

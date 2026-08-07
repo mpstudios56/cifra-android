@@ -29,6 +29,7 @@ import tw.tib.financisto.export.csv.CsvExportOptions;
 import tw.tib.financisto.export.csv.CsvExportTask;
 import tw.tib.financisto.export.csv.CsvImportTask;
 import tw.tib.financisto.export.SettingsExportTask;
+import tw.tib.financisto.utils.DonatePrompt;
 import tw.tib.financisto.utils.EntityEnum;
 import tw.tib.financisto.utils.EnumUtils;
 
@@ -188,12 +189,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             // Opens a payment page in the browser rather than asking for anything
             // inside the app: a voluntary donation buys nothing here, and nothing
             // in the app is withheld until one is made.
-            try {
-                fragment.startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(fragment.getString(R.string.donate_url))));
-            } catch (Exception ex) {
-                Toast.makeText(fragment.getContext(), R.string.donate_error, Toast.LENGTH_LONG).show();
-            }
+            DonatePrompt.open(fragment.getContext());
         }
     },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {

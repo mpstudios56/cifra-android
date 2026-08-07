@@ -535,6 +535,9 @@
   <string name="no_payee">Aucun bénéficiaire</string>
   <string name="report_no_payee">Pas de bénéficiaire pour ce rapport.</string>
   <string name="donate">Offrez-moi un café</string>
+  <string name="donate_go">Aller sur PayPal</string>
+  <string name="donate_later">Plus tard</string>
+  <string name="donate_never">Ne plus demander</string>
   <string name="donate_error">Aucun navigateur disponible sur cet appareil</string>
   <string name="type">Type</string>
   <string name="qif_export">Exportation QIF</string>
