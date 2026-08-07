@@ -28,6 +28,7 @@ import tw.tib.financisto.model.AccountType;
 import tw.tib.financisto.model.CardIssuer;
 import tw.tib.financisto.model.ElectronicPaymentType;
 import tw.tib.financisto.utils.MyPreferences;
+import tw.tib.financisto.utils.AccountIcon;
 import tw.tib.financisto.utils.Utils;
 import tw.tib.orb.EntityManager;
 
@@ -100,12 +101,24 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
 
         AccountType type = AccountType.valueOf(a.type);
 
-        if (!Utils.isEmpty(a.icon)) {
+        // Falls back to the icon's own grey when no accent is set or it is not a
+        // colour, rather than leaving the symbol invisible.
+        AccountIcon chosen = AccountIcon.parse(a.icon);
+        if (chosen != null) {
+            // A symbol picked for this account, whatever kind it is, tinted with the
+            // accent colour so two accounts at the same institution look related.
+            v.icon.setVisibility(View.VISIBLE);
+            v.iconText.setVisibility(View.INVISIBLE);
+            v.icon.setImageResource(chosen.iconId);
+            v.icon.setColorFilter(accentOrNull(a.accentColor));
+        }
+        else if (!Utils.isEmpty(a.icon)) {
             v.icon.setVisibility(View.INVISIBLE);
             v.iconText.setVisibility(View.VISIBLE);
             v.iconText.setText(a.icon);
         }
         else {
+            v.icon.clearColorFilter();
             v.icon.setVisibility(View.VISIBLE);
             v.iconText.setVisibility(View.INVISIBLE);
 
@@ -298,6 +311,18 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         @Override
         public void onItemClear() {
 
+        }
+    }
+
+    /**
+     * The accent colour, or the symbol's own grey when none is set or the value is
+     * not a colour: a symbol nobody can see would be worse than an uncoloured one.
+     */
+    private static int accentOrNull(String accentColor) {
+        try {
+            return Color.parseColor(accentColor.trim());
+        } catch (Exception e) {
+            return Color.parseColor("#FFC9CDD2");
         }
     }
 }

@@ -364,6 +364,20 @@ public class ActivityLayout {
 		return b.withLabel(labelId).create();
 	}
 
+	/**
+	 * Same shape as the colour node - a field with a button that opens a chooser -
+	 * without the swatch, which has nothing to preview here.
+	 */
+	public View addIconEditNode(LinearLayout layout, int labelId, int buttonId, View.OnClickListener onClickListener, EditText editText) {
+		EditColorBuilder b = inflater.new EditColorBuilder(layout, editText);
+		View view = b.withPaletteButtonId(buttonId, onClickListener).withLabel(labelId).create();
+		View preview = view.findViewById(R.id.color_preview);
+		if (preview != null) {
+			preview.setVisibility(View.GONE);
+		}
+		return view;
+	}
+
 	public View addColorEditNode(LinearLayout layout, int labelId, int buttonId, View.OnClickListener onClickListener, EditText editText) {
 		EditColorBuilder b = inflater.new EditColorBuilder(layout, editText);
 		var view = b.withPaletteButtonId(buttonId, onClickListener).withLabel(labelId).create();

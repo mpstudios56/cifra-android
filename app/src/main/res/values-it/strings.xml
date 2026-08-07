@@ -914,4 +914,6 @@
   <string name="account_type_investment">Conto Titoli</string>
   <string name="account_type_pension">Fondo Pensione</string>
   <string name="account_type_loan">Prestito o Mutuo</string>
+  <string name="icon_picker_title">Scegli un simbolo</string>
+  <string name="icon_picker_clear">Nessun simbolo</string>
 </resources>

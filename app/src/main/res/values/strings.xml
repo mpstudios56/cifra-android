@@ -1292,4 +1292,6 @@
   <string name="account_type_investment">Investment Account</string>
   <string name="account_type_pension">Pension</string>
   <string name="account_type_loan">Loan</string>
+    <string name="icon_picker_title">Choose a symbol</string>
+    <string name="icon_picker_clear">No symbol</string>
 </resources>

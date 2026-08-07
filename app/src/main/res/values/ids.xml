@@ -10,6 +10,7 @@
 -->
 <resources>
 	<item name="account" type="id" />
+	<item name="icon_picker" type="id" />
 	<item name="account_clear" type="id" />
 	<item name="account_from" type="id" />
 	<item name="account_to" type="id" />

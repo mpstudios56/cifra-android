@@ -33,6 +33,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -52,6 +54,7 @@ import tw.tib.financisto.model.MyEntity;
 import tw.tib.financisto.model.Transaction;
 import tw.tib.financisto.utils.EntityEnum;
 import tw.tib.financisto.utils.TransactionUtils;
+import tw.tib.financisto.utils.AccountIcon;
 import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.widget.AmountInput;
 import tw.tib.financisto.widget.AmountInput_;
@@ -207,7 +210,10 @@ public class AccountActivity extends AbstractActivity {
 
 		iconText = new EditText(this);
 		iconText.setSingleLine();
-		x.addEditNode(layout, R.string.icon_text, iconText);
+		// The field still takes any text, so an emoji typed by hand keeps working;
+		// the button offers the app's own symbols, which the accent colour tints.
+		x.addIconEditNode(layout, R.string.icon_text, R.id.icon_picker,
+				clicked -> showIconPicker(), iconText);
 
 		accentColor = new EditText(this);
 		accentColor.setSingleLine();
@@ -306,6 +312,7 @@ public class AccountActivity extends AbstractActivity {
 			account.note = Utils.text(noteText);
 			account.icon = iconText.getText().toString().trim();
 			account.accentColor = accentColor.getText().toString().trim();
+			// stored as written; see AccountIcon for the format
 
 			long accountId = db.saveAccount(account);
 			long amount = amountInput.getAmount();
@@ -399,6 +406,53 @@ public class AccountActivity extends AbstractActivity {
 				selectElectronicType(paymentType);
 				break;
 		}
+	}
+
+	/**
+	 * Symbols the account can carry regardless of its kind, so a current account and
+	 * a securities account at the same institution can be marked the same way and
+	 * told apart from everything else by their accent colour.
+	 */
+	private void showIconPicker() {
+		final AccountIcon[] icons = AccountIcon.values();
+		int accent = Color.WHITE;
+		try {
+			accent = Color.parseColor(accentColor.getText().toString().trim());
+		} catch (Exception e) {
+			// no accent chosen yet, or not a colour: show the symbols plain
+		}
+		final int tint = accent;
+
+		GridView grid = new GridView(this);
+		grid.setNumColumns(4);
+		grid.setPadding(24, 24, 24, 24);
+		grid.setAdapter(new BaseAdapter() {
+			@Override public int getCount() { return icons.length; }
+			@Override public Object getItem(int position) { return icons[position]; }
+			@Override public long getItemId(int position) { return position; }
+			@Override public View getView(int position, View convertView, ViewGroup parent) {
+				ImageView view = convertView instanceof ImageView
+						? (ImageView) convertView : new ImageView(AccountActivity.this);
+				view.setLayoutParams(new GridView.LayoutParams(
+						GridView.LayoutParams.MATCH_PARENT, 150));
+				view.setPadding(16, 16, 16, 16);
+				view.setImageResource(icons[position].iconId);
+				view.setColorFilter(tint);
+				return view;
+			}
+		});
+
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+				.setTitle(R.string.icon_picker_title)
+				.setView(grid)
+				.setNeutralButton(R.string.icon_picker_clear, (d, which) -> iconText.setText(""))
+				.setNegativeButton(R.string.cancel, null)
+				.create();
+		grid.setOnItemClickListener((parent, view, position, id) -> {
+			iconText.setText(icons[position].toStoredValue());
+			dialog.dismiss();
+		});
+		dialog.show();
 	}
 
 	private void selectAccountType(AccountType type) {
