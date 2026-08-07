@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The patch shown beside the accent colour row. A plain disc, tinted with the
+  chosen colour: reusing an account icon there said nothing about the colour and
+  looked like a leftover.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <size android:width="24dp" android:height="24dp" />
+    <solid android:color="#FFFFFFFF" />
+</shape>

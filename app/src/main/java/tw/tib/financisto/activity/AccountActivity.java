@@ -94,7 +94,7 @@ public class AccountActivity extends AbstractActivity {
 	private View paymentDayNode;
 	private View accountIconNode;
 	private View accentColorNode;
-	private View accentTargetNode;
+	private TextView accentTargetText;
 
 	private EntityEnumAdapter<AccountType> accountTypeAdapter;
 	private EntityEnumAdapter<CardIssuer> cardIssuerAdapter;
@@ -157,6 +157,14 @@ public class AccountActivity extends AbstractActivity {
 		ImageView icon = accountTypeNode.findViewById(R.id.icon);
 		icon.setColorFilter(ContextCompat.getColor(this, R.color.holo_gray_light));
 
+		// Directly under the kind of account, because this is the other half of how
+		// the row will look, and none of it depends on the kind.
+		accountIconNode = x.addListNodeIcon(layout, R.id.account_icon, R.string.account_icon, R.string.account_icon_none);
+		accentColorNode = x.addListNodeIcon(layout, R.id.accent_color, R.string.accent_color, R.string.account_icon_none);
+		// No icon on this one: it is a choice between three words, and the picture
+		// beside it said nothing.
+		accentTargetText = x.addListNode(layout, R.id.accent_target, R.string.accent_target_title, R.string.accent_target_both);
+
 		cardIssuerAdapter = new EntityEnumAdapter<>(this, CardIssuer.values(), false);
 		cardIssuerNode = x.addListNodeIcon(layout, R.id.card_issuer, R.string.card_issuer, R.string.card_issuer);
 		setVisibility(cardIssuerNode, View.GONE);
@@ -210,13 +218,6 @@ public class AccountActivity extends AbstractActivity {
 		noteText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 		noteText.setLines(2);
 		x.addEditNode(layout, R.string.note, noteText);
-
-		// Three rows of their own, none of them tied to the kind of account: the
-		// symbol says which institution, the colour distinguishes it, and the third
-		// says which of the two the colour paints.
-		accountIconNode = x.addListNodeIcon(layout, R.id.account_icon, R.string.account_icon, R.string.account_icon_none);
-		accentColorNode = x.addListNodeIcon(layout, R.id.accent_color, R.string.accent_color, R.string.account_icon_none);
-		accentTargetNode = x.addListNodeIcon(layout, R.id.accent_target, R.string.accent_target_title, R.string.accent_target_both);
 
 		// Kept, hidden: an emoji typed in earlier still has to survive a save.
 		iconText = new EditText(this);
@@ -545,7 +546,7 @@ public class AccountActivity extends AbstractActivity {
 		label.setText(value);
 		try {
 			preview.setVisibility(View.VISIBLE);
-			preview.setImageResource(R.drawable.account_type_cash);
+			preview.setImageResource(R.drawable.color_swatch);
 			preview.setColorFilter(Color.parseColor(value));
 		} catch (Exception e) {
 			preview.setVisibility(View.INVISIBLE);
@@ -553,11 +554,10 @@ public class AccountActivity extends AbstractActivity {
 	}
 
 	private void showTargetOnNode() {
-		TextView label = accentTargetNode.findViewById(R.id.data);
 		switch (currentTarget()) {
-			case ICON: label.setText(R.string.accent_target_icon); break;
-			case BAR: label.setText(R.string.accent_target_bar); break;
-			default: label.setText(R.string.accent_target_both); break;
+			case ICON: accentTargetText.setText(R.string.accent_target_icon); break;
+			case BAR: accentTargetText.setText(R.string.accent_target_bar); break;
+			default: accentTargetText.setText(R.string.accent_target_both); break;
 		}
 	}
 
