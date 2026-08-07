@@ -329,7 +329,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         try {
             return Color.parseColor(accentColor.trim());
         } catch (Exception e) {
-            return Color.parseColor("#FFC9CDD2");
+            return Color.parseColor("#FFFFFFFF");
         }
     }
 }

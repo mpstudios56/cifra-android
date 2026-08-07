@@ -8,13 +8,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="10.864"
-    android:viewportHeight="10.864">
+    android:viewportWidth="51.85754112"
+    android:viewportHeight="51.85754112">
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M2.17,0 H8.69 A2.17,2.17 0 0,1 10.86,2.17 V8.69 A2.17,2.17 0 0,1 8.69,10.86 H2.17 A2.17,2.17 0 0,1 0,8.69 V2.17 A2.17,2.17 0 0,1 2.17,0 Z" />
-    <group android:translateX="-1.92" android:translateY="-20.47">
-        <clip-path android:pathData="M2.50,21.48 H12.20 V30.32 H2.50 Z" />
+        android:pathData="M10.37,0 H41.49 A10.37,10.37 0 0,1 51.86,10.37 V41.49 A10.37,10.37 0 0,1 41.49,51.86 H10.37 A10.37,10.37 0 0,1 0,41.49 V10.37 A10.37,10.37 0 0,1 10.37,0 Z" />
+    <group android:translateX="2.78" android:translateY="21.35">
         <group android:translateX="-69.8315" android:translateY="-181.2961">
             <path
         android:fillColor="#FF000000"

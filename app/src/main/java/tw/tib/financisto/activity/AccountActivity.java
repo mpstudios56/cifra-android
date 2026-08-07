@@ -518,7 +518,7 @@ public class AccountActivity extends AbstractActivity {
 		try {
 			return Color.parseColor(accentColor.getText().toString().trim());
 		} catch (Exception e) {
-			return Color.parseColor("#FFC9CDD2");
+			return Color.parseColor("#FFFFFFFF");
 		}
 	}
 
@@ -539,7 +539,7 @@ public class AccountActivity extends AbstractActivity {
 				preview.clearColorFilter();
 			} else {
 				preview.setColorFilter(currentTarget() == AccountIcon.Target.BAR
-						? Color.parseColor("#FFC9CDD2") : currentAccentColor());
+						? Color.parseColor("#FFFFFFFF") : currentAccentColor());
 			}
 		} else if (!Utils.isEmpty(stored)) {
 			label.setText(stored);
