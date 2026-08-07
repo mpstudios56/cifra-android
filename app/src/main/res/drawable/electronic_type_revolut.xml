@@ -4,13 +4,20 @@
   Replaces a 144px bitmap that was upscaled on any modern screen.
   The drawing is public domain; the mark itself belongs to its owner and is used
   here only to say which card or service an account is.
+  On a white plate, because the mark is black and the app's theme is dark: on its
+  own it was a black R on a black row, invisible.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
     android:viewportWidth="35.84"
     android:viewportHeight="35.84">
-    <group android:translateX="5.72" android:translateY="1.92">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M7.17,0 H28.67 A7.17,7.17 0 0,1 35.84,7.17 V28.67 A7.17,7.17 0 0,1 28.67,35.84 H7.17 A7.17,7.17 0 0,1 0,28.67 V7.17 A7.17,7.17 0 0,1 7.17,0 Z" />
+    <group android:translateX="5.72" android:translateY="1.92"
+        android:scaleX="0.74" android:scaleY="0.74"
+        android:pivotX="12.20" android:pivotY="16.00">
         <clip-path android:pathData="M0.00,0.00 H24.40 V32.00 H0.00 Z" />
         <path
         android:fillColor="#FF000000"
