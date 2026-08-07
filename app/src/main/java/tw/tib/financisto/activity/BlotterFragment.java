@@ -424,20 +424,23 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                                 }
                             }
                             String likePattern = format("%%%s%%", text);
+                            // Everything the entry carries a name for. Searching only
+                            // note, payee and category left out project, location and
+                            // account, which is where a half-remembered word usually
+                            // is: "Amsterdam" is a project or a place, rarely a note.
+                            Criterion byName = Criterion.or(
+                                    Criterion.like(BlotterFilter.NOTE, likePattern),
+                                    Criterion.like(BlotterFilter.PAYEE, likePattern),
+                                    Criterion.like(BlotterFilter.CATEGORY_NAME, likePattern),
+                                    Criterion.like(BlotterFilter.PROJECT_NAME, likePattern),
+                                    Criterion.like(BlotterFilter.LOCATION_NAME, likePattern),
+                                    Criterion.like(BlotterFilter.ACCOUNT_NAME, likePattern)
+                            );
                             if (amount == null) {
-                                blotterFilter.eq(Criterion.or(
-                                        Criterion.like(BlotterFilter.NOTE, likePattern),
-                                        Criterion.like(BlotterFilter.PAYEE, likePattern),
-                                        Criterion.like(BlotterFilter.CATEGORY_NAME, likePattern)
-                                ));
+                                blotterFilter.eq(byName);
                             }
                             else {
-                                blotterFilter.eq(Criterion.or(
-                                        amount,
-                                        Criterion.like(BlotterFilter.NOTE, likePattern),
-                                        Criterion.like(BlotterFilter.PAYEE, likePattern),
-                                        Criterion.like(BlotterFilter.CATEGORY_NAME, likePattern)
-                                ));
+                                blotterFilter.eq(Criterion.or(amount, byName));
                             }
 
 

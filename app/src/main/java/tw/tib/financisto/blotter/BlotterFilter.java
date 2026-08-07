@@ -25,6 +25,10 @@ public interface BlotterFilter {
 	String PAYEE = BlotterColumns.payee.name();
 	String PAYEE_ID = BlotterColumns.payee_id.name();
 	String NOTE = BlotterColumns.note.name();
+	// Names rather than ids, for searching by what the user typed
+	String PROJECT_NAME = BlotterColumns.project.name();
+	String LOCATION_NAME = BlotterColumns.location.name();
+	String ACCOUNT_NAME = BlotterColumns.from_account_title.name();
 	String TEMPLATE_NAME = BlotterColumns.template_name.name();
 	String DATETIME = BlotterColumns.datetime.name();
 	String BUDGET_ID = "budget_id";
