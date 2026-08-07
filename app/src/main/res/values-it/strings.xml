@@ -225,6 +225,7 @@
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
   <string name="restore_database_success">Database ripristinato con successo.</string>
+  <string name="templates">Modelli</string>
   <string name="templates_as_tab">Scheda modelli</string>
   <string name="templates_as_tab_summary">Mostra i modelli come scheda a sé. Disattiva per tenere invece il pulsante nella schermata dei movimenti</string>
   <string name="show_budgets_tab">Scheda budget</string>

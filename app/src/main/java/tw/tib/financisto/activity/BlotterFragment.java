@@ -1203,6 +1203,13 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        // Re-read on every return: this fragment is cached by the pager and is not
+        // rebuilt when the templates tab is switched on or off in the preferences,
+        // so the button would stay hidden after the tab was turned back off.
+        if (bTemplate != null) {
+            bTemplate.setVisibility(MyPreferences.isTemplatesAsTab(getContext())
+                    ? View.GONE : View.VISIBLE);
+        }
         if (lastTxId != BEFORE_INITIAL_LOAD) {
             Application.getExecutor().execute(() -> {
                 long t1 = System.nanoTime();

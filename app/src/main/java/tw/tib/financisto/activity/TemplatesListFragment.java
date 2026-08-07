@@ -95,6 +95,14 @@ public class TemplatesListFragment extends BlotterFragment {
     protected void internalOnCreateTemplates() {
         // change empty list message
         ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.no_templates);
+        // As a tab there is no activity title to say what this list is, and the strip
+        // shows icons only. The period line is free here, since templates have no
+        // date range, so it names the screen instead.
+        TextView period = getView().findViewById(R.id.period);
+        if (period != null) {
+            period.setText(R.string.templates);
+            period.setVisibility(View.VISIBLE);
+        }
         // fix filter
         blotterFilter = new WhereFilter("templates");
         blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));

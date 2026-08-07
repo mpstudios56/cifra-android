@@ -308,6 +308,7 @@
     <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
+    <string name="templates">Templates</string>
     <string name="templates_as_tab">Templates tab</string>
     <string name="templates_as_tab_summary">Show templates as a tab of their own. Turn off to keep the button on the transactions screen instead</string>
     <string name="show_budgets_tab">Budgets tab</string>
