@@ -501,8 +501,8 @@
   <string name="closing_day_error">Journée de clôture invalide.</string>
   <string name="payment_day_error">Jour de paiement invalide.</string>
   <string name="statement_error">Merci de définir dates de paiment et de clotures (propriétés du compte).</string>
-  <string name="is_ccard_payment">Card Paiment par carte</string>
-  <string name="is_ccard_payment_summary">Ne pas inclure dans le total des factures par cartes</string>
+  <string name="is_ccard_payment">Exclure du total du relevé</string>
+  <string name="is_ccard_payment_summary">Pour les opérations qui seraient sinon comptées deux fois, comme le remboursement d\'une carte de crédit</string>
   <string name="header_payments">Paiements</string>
   <string name="header_credits">Divers crédits</string>
   <string name="header_expenses">Dépenses</string>
@@ -814,8 +814,8 @@
   <string name="show_account_balance_on_selector_summary">Afficher le solde du compte lors de sa sélection</string>
   <string name="show_go_to_today_button">Afficher « Aller à aujourd\'hui »</string>
   <string name="show_go_to_today_button_summary">Afficher le bouton « Aller à aujourd\'hui » pour rejoindre les opérations du jour</string>
-  <string name="show_is_ccard_payment">Afficher « Paiement carte de crédit »</string>
-  <string name="show_is_ccard_payment_summary">Afficher la case permettant de marquer les paiements de carte de crédit</string>
+  <string name="show_is_ccard_payment">Afficher « Exclure du total du relevé »</string>
+  <string name="show_is_ccard_payment_summary">Afficher la case qui tient une opération hors du total du relevé</string>
   <string name="show_menu_button_on_accounts_screen">Afficher le menu</string>
   <string name="show_menu_button_on_accounts_screen_summary">Afficher le bouton de menu sur l\'écran des comptes</string>
   <string name="show_payee_in_transfer">Bénéficiaire dans les virements</string>

@@ -536,8 +536,8 @@
   <string name="closing_day_error">Giorno di chiusura non valido.</string>
   <string name="payment_day_error">Giorno del pagamento non valido.</string>
   <string name="statement_error">Imposta i giorni di pagamento e chiusura per questa carta di credito nelle impostazioni del conto.</string>
-  <string name="is_ccard_payment">Pagamento carta di credito</string>
-  <string name="is_ccard_payment_summary">Non includere nell\'estratto conto</string>
+  <string name="is_ccard_payment">Non includere nel totale dell\'estratto conto</string>
+  <string name="is_ccard_payment_summary">Per i movimenti che verrebbero contati due volte, come il saldo di una carta di credito</string>
   <string name="header_payments">Pagamenti</string>
   <string name="header_credits">Crediti Vari</string>
   <string name="header_expenses">Spese</string>
@@ -887,8 +887,8 @@
   <string name="show_account_balance_on_selector_summary">Mostra il saldo del conto quando lo selezioni</string>
   <string name="show_go_to_today_button">Mostra «Vai a oggi»</string>
   <string name="show_go_to_today_button_summary">Mostra il pulsante «Vai a oggi» per saltare ai movimenti di oggi</string>
-  <string name="show_is_ccard_payment">Mostra «Pagamento carta di credito»</string>
-  <string name="show_is_ccard_payment_summary">Mostra la casella per contrassegnare i pagamenti della carta di credito</string>
+  <string name="show_is_ccard_payment">Mostra «Non includere nel totale»</string>
+  <string name="show_is_ccard_payment_summary">Mostra la casella che tiene un movimento fuori dal totale dell\'estratto conto</string>
   <string name="show_menu_button_on_accounts_screen">Mostra il menu</string>
   <string name="show_menu_button_on_accounts_screen_summary">Mostra il pulsante del menu nella schermata dei conti</string>
   <string name="show_payee_in_transfer">Beneficiario nei trasferimenti</string>

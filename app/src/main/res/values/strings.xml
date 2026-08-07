@@ -669,8 +669,8 @@
     <string name="closing_day_error">Closing day is not valid.</string>
     <string name="payment_day_error">Payment day is not valid.</string>
     <string name="statement_error">Please set payment and closing days for this credit card on account properties.</string>
-    <string name="is_ccard_payment">Credit Card Payment</string>
-    <string name="is_ccard_payment_summary">Not Include into bill total</string>
+    <string name="is_ccard_payment">Exclude from the statement total</string>
+    <string name="is_ccard_payment_summary">For entries that would otherwise be counted twice, such as paying off a credit card</string>
     <string name="header_payments">Payments</string>
     <string name="header_credits">Various Credits</string>
     <string name="header_expenses">Expenses</string>
@@ -1015,8 +1015,8 @@
 
     <string name="file_import_utf8_warning">Please make sure that the file is in UTF-8</string>
 
-    <string name="show_is_ccard_payment">Show \'Credit Card Payment\'</string>
-    <string name="show_is_ccard_payment_summary">Show checkbox to mark credit card payments</string>
+    <string name="show_is_ccard_payment">Show \'Exclude from the statement total\'</string>
+    <string name="show_is_ccard_payment_summary">Show the checkbox that keeps an entry out of the statement total</string>
     <string name="open_calculator_for_template_transactions">Open Calculator</string>
     <string name="open_calculator_for_template_transactions_summary">Open Calculator for transactions created from template</string>
 

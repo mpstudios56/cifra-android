@@ -502,8 +502,8 @@
   <string name="closing_day_error">El día del cierre no es válido.</string>
   <string name="payment_day_error">El día del pago no es válido.</string>
   <string name="statement_error">Debe fijar los días del pago y del cierre de esta tarjeta de crédito en las propiedades de su cuenta.</string>
-  <string name="is_ccard_payment">¿Pago Al Contado con Tarjeta?</string>
-  <string name="is_ccard_payment_summary">Excluir del cómputo total de su extracto mensual</string>
+  <string name="is_ccard_payment">Excluir del total del extracto</string>
+  <string name="is_ccard_payment_summary">Para las transacciones que si no se contarían dos veces, como el pago de una tarjeta de crédito</string>
   <string name="header_payments">Pagos</string>
   <string name="header_credits">Abonos</string>
   <string name="header_expenses">Cargos</string>
@@ -853,8 +853,8 @@
   <string name="show_account_balance_on_selector_summary">Mostrar el saldo de la cuenta al seleccionarla</string>
   <string name="show_go_to_today_button">Mostrar «Ir a hoy»</string>
   <string name="show_go_to_today_button_summary">Mostrar el botón «Ir a hoy» para saltar a las transacciones de hoy</string>
-  <string name="show_is_ccard_payment">Mostrar «Pago de tarjeta de crédito»</string>
-  <string name="show_is_ccard_payment_summary">Mostrar la casilla para marcar los pagos de la tarjeta de crédito</string>
+  <string name="show_is_ccard_payment">Mostrar «Excluir del total del extracto»</string>
+  <string name="show_is_ccard_payment_summary">Mostrar la casilla que deja una transacción fuera del total del extracto</string>
   <string name="show_menu_button_on_accounts_screen">Mostrar el menú</string>
   <string name="show_menu_button_on_accounts_screen_summary">Mostrar el botón de menú en la pantalla de cuentas</string>
   <string name="show_payee_in_transfer">Beneficiario en las transferencias</string>

@@ -502,8 +502,8 @@
   <string name="closing_day_error">Letzter Zahltag ist nicht gültig.</string>
   <string name="payment_day_error">Tag der Zahlung ist nicht gültig.</string>
   <string name="statement_error">Bitte den Zahlungstag sowie den letzten Zahlungstag für die Kreditkarte in den Eigenschaften setzen.</string>
-  <string name="is_ccard_payment">Kreditkartenzahlung</string>
-  <string name="is_ccard_payment_summary">Rechnung nicht in Gesamtrechnung einbeziehen</string>
+  <string name="is_ccard_payment">Nicht in die Abrechnungssumme aufnehmen</string>
+  <string name="is_ccard_payment_summary">Für Buchungen, die sonst doppelt gezählt würden, etwa der Ausgleich einer Kreditkarte</string>
   <string name="header_payments">Zahlungen</string>
   <string name="header_credits">Verschiedene Kredite</string>
   <string name="header_expenses">Ausgaben</string>
@@ -853,8 +853,8 @@
   <string name="show_account_balance_on_selector_summary">Zeigt den Saldo des Kontos bei dessen Auswahl</string>
   <string name="show_go_to_today_button">„Zu heute“ anzeigen</string>
   <string name="show_go_to_today_button_summary">Zeigt die Schaltfläche „Zu heute“, um zu den heutigen Transaktionen zu springen</string>
-  <string name="show_is_ccard_payment">„Kreditkartenzahlung“ anzeigen</string>
-  <string name="show_is_ccard_payment_summary">Zeigt das Kästchen, mit dem Kreditkartenzahlungen markiert werden</string>
+  <string name="show_is_ccard_payment">„Nicht in die Abrechnungssumme aufnehmen“ anzeigen</string>
+  <string name="show_is_ccard_payment_summary">Zeigt das Kästchen, das eine Buchung aus der Abrechnungssumme heraushält</string>
   <string name="show_menu_button_on_accounts_screen">Menü anzeigen</string>
   <string name="show_menu_button_on_accounts_screen_summary">Zeigt die Menü-Schaltfläche im Kontenbildschirm</string>
   <string name="show_payee_in_transfer">Empfänger bei Umbuchungen</string>
