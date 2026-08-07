@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  actionbar_db_backup for Cifra. Part of one outline set at a single stroke weight, replacing
+  a mix of solid and outlined bitmaps.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The views that show these tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group>
+        <clip-path android:pathData="M0,0L24,0L24,24L0,24ZM10.50,16.60 A6.90,6.90 0 0,0 24.30,16.60 A6.90,6.90 0 0,0 10.50,16.60 Z" />
+        <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,5.2 L12.6,5.2 A1.7,1.7 0 0,1 14.3,6.9 L14.3,9.1 A1.7,1.7 0 0,1 12.6,10.8 L4.6,10.8 A1.7,1.7 0 0,1 2.9,9.1 L2.9,6.9 A1.7,1.7 0 0,1 4.6,5.2 Z" />
+        <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M4.6,13.2 L12.6,13.2 A1.7,1.7 0 0,1 14.3,14.9 L14.3,17.1 A1.7,1.7 0 0,1 12.6,18.8 L4.6,18.8 A1.7,1.7 0 0,1 2.9,17.1 L2.9,14.9 A1.7,1.7 0 0,1 4.6,13.2 Z" />
+        <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M5.6,8 L8.2,8" />
+        <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M5.6,16 L8.2,16" />
+    </group>
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M12.20,16.60 A5.20,5.20 0 0,1 22.60,16.60 A5.20,5.20 0 0,1 12.20,16.60 ZM16.50,13.90L18.30,13.90L18.30,16.60L19.80,16.60L17.40,19.30L15.00,16.60L16.50,16.60Z" />
+</vector>

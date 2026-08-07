@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ic_action_line_chart for Cifra. Part of one outline set at a single stroke weight, replacing
+  a mix of solid and outlined bitmaps.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The views that show these tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M3.8,3.6 L3.8,19.4 L20.2,19.4" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M6.8,15.6 L11,10.6 L14.4,13.4 L19.4,7" />
+</vector>

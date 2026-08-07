@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  drawer_action_preferences for Cifra. Part of one outline set at a single stroke weight, replacing
+  a mix of solid and outlined bitmaps.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The views that show these tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M20.44,10.36A8.60,8.60 0 0,1 20.44,13.64L18.09,13.18A6.20,6.20 0 0,1 17.14,15.47L19.13,16.81A8.60,8.60 0 0,1 16.81,19.13L15.47,17.14A6.20,6.20 0 0,1 13.18,18.09L13.64,20.44A8.60,8.60 0 0,1 10.36,20.44L10.82,18.09A6.20,6.20 0 0,1 8.53,17.14L7.19,19.13A8.60,8.60 0 0,1 4.87,16.81L6.86,15.47A6.20,6.20 0 0,1 5.91,13.18L3.56,13.64A8.60,8.60 0 0,1 3.56,10.36L5.91,10.82A6.20,6.20 0 0,1 6.86,8.53L4.87,7.19A8.60,8.60 0 0,1 7.19,4.87L8.53,6.86A6.20,6.20 0 0,1 10.82,5.91L10.36,3.56A8.60,8.60 0 0,1 13.64,3.56L13.18,5.91A6.20,6.20 0 0,1 15.47,6.86L16.81,4.87A8.60,8.60 0 0,1 19.13,7.19L17.14,8.53A6.20,6.20 0 0,1 18.09,10.82L20.44,10.36ZM8.90,12.00 A3.10,3.10 0 0,1 15.10,12.00 A3.10,3.10 0 0,1 8.90,12.00 Z" />
+</vector>

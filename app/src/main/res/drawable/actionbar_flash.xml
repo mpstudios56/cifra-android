@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  actionbar_flash for Cifra. Part of one outline set at a single stroke weight, replacing
+  a mix of solid and outlined bitmaps.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The views that show these tint them.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M13.4,2.6 L5.4,13.4 L11.2,13.4 L10.6,21.4 L18.6,10.6 L12.8,10.6 Z" />
+</vector>
