@@ -15,8 +15,8 @@
     <style name="GreenDroid.Widget.QuickAction" />
     <style name="GreenDroid.Widget.QuickAction.Grid">
         <item name="android:padding">3dp</item>
-        <item name="android:listSelector">?android:attr/listChoiceBackgroundIndicator</item>
-        <item name="android:background">#f2f2f2</item>
+        <item name="android:listSelector">@drawable/gd_quick_action_grid_selector</item>
+        <item name="android:background">@color/quick_action_surface</item>
         <item name="android:gravity">center</item>
         <item name="android:fadingEdgeLength">0dp</item>
         <item name="android:stretchMode">columnWidth</item>

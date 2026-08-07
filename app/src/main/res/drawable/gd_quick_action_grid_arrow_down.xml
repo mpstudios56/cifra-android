@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The downward pointer, used when the bubble opens above the button it belongs
+  to. Mirror of gd_quick_action_arrow_up.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="11dp"
+    android:viewportWidth="20"
+    android:viewportHeight="11">
+    <path
+        android:fillColor="#FFF7F7F7"
+        android:pathData="M8.6,9.7 A2,2 0 0,0 11.4,9.7 L20,0 L0,0 Z" />
+</vector>

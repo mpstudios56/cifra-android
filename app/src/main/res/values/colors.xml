@@ -37,4 +37,7 @@
     <color name="draft_background">#40ffbb33</color>
 
     <color name="highlight_background">#ff052029</color>
+    <!-- The quick menu bubble. Light on purpose: the icons inside are forced to
+         black in MyQuickAction, so a dark bubble would swallow them. -->
+    <color name="quick_action_surface">#FFF7F7F7</color>
 </resources>

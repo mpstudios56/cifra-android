@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bottom edge of the quick menu bubble. See gd_quick_action_top_frame for why
+  this is a shape now and why it declares its own height.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size android:height="12dp" />
+    <solid android:color="@color/quick_action_surface" />
+    <corners
+        android:bottomLeftRadius="16dp"
+        android:bottomRightRadius="16dp" />
+</shape>
