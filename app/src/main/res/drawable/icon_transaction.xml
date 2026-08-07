@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Add-a-transaction icon, for the widgets and the home screen shortcut.
+  Replaces a 72px drawing of a shaded coin pile, which was blurred at any size
+  the widget actually uses. Coloured rather than a white outline: a shortcut
+  lands on the launcher, where a white icon disappears on a light wallpaper.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFE9A742"
+        android:pathData="M4,19 A15,15 0 1,0 34,19 A15,15 0 1,0 4,19 Z" />
+    <path
+        android:strokeColor="#FFC07C24"
+        android:strokeWidth="2.5"
+        android:pathData="M10,19 A9,9 0 1,0 28,19 A9,9 0 1,0 10,19 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M23,35 A12,12 0 1,0 47,35 A12,12 0 1,0 23,35 Z" />
+    <path
+        android:fillColor="#FF2F8F63"
+        android:pathData="M24.5,35 A10.5,10.5 0 1,0 45.5,35 A10.5,10.5 0 1,0 24.5,35 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M33,29.5 H37 V33 H40.5 V37 H37 V40.5 H33 V37 H29.5 V33 H33 Z" />
+</vector>

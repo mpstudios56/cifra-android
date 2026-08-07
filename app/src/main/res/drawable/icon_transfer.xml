@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Add-a-transfer icon, for the widgets and the home screen shortcut.
+  The red and green arrows of the old drawing say what a transfer is better
+  than anything else would, so they stay; only the shading goes.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFE9A742"
+        android:pathData="M1,24 A11,11 0 1,0 23,24 A11,11 0 1,0 1,24 Z" />
+    <path
+        android:strokeColor="#FFC07C24"
+        android:strokeWidth="2"
+        android:pathData="M5.5,24 A6.5,6.5 0 1,0 18.5,24 A6.5,6.5 0 1,0 5.5,24 Z" />
+    <path
+        android:fillColor="#FF3FA96F"
+        android:pathData="M26,15.5 H38 V11 L47,18 L38,25 V20.5 H26 Z" />
+    <path
+        android:fillColor="#FFD0453B"
+        android:pathData="M46,27.5 H34 V23 L25,30 L34,37 V32.5 H46 Z" />
+</vector>
