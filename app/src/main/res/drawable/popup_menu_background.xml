@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Background of the menus that open on long press. The platform theme this app
+  inherits is Material from 2014, whose popups are hard-edged rectangles; the
+  insets leave room for the shadow the popup draws around itself.
+-->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="4dp"
+    android:insetRight="4dp"
+    android:insetTop="4dp"
+    android:insetBottom="4dp">
+    <shape android:shape="rectangle">
+        <corners android:radius="14dp" />
+        <solid android:color="#FF303030" />
+    </shape>
+</inset>

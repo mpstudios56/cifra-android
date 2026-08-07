@@ -10,9 +10,22 @@
       Denis Solonenko - initial API and implementation
 -->
 <resources>
-	<style name="AppTheme" parent="android:Theme.Material" />
-	<style name="AppDialog" parent="android:Theme.Material.Dialog" />
-	<style name="AlertDialog" parent="android:Theme.Material.Dialog" />
+	<!-- The platform theme this inherits is Material from 2014: its popups and
+	     dialogs are hard-edged rectangles. Rounding them is all that separates
+	     them from what the rest of the app now looks like. -->
+	<style name="AppTheme" parent="android:Theme.Material">
+		<item name="android:popupMenuStyle">@style/AppPopupMenu</item>
+		<item name="android:alertDialogTheme">@style/AlertDialog</item>
+	</style>
+	<style name="AppPopupMenu" parent="android:Widget.Material.PopupMenu">
+		<item name="android:popupBackground">@drawable/popup_menu_background</item>
+	</style>
+	<style name="AppDialog" parent="android:Theme.Material.Dialog">
+		<item name="android:windowBackground">@drawable/dialog_background</item>
+	</style>
+	<style name="AlertDialog" parent="android:Theme.Material.Dialog">
+		<item name="android:windowBackground">@drawable/dialog_background</item>
+	</style>
 	<style name="CalculatorDialog" parent="android:Theme.Material.Dialog" />
 
 	<style name="CupcakeDialog" parent="android:Theme.Material.Dialog">
