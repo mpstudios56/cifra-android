@@ -862,4 +862,5 @@
   <string name="account_type_pension">Retraite</string>
   <string name="account_type_loan">Prêt ou crédit immobilier</string>
   <string name="electronic_type_revolut">Revolut</string>
+  <string name="electronic_type_coinbase">Coinbase</string>
 </resources>

@@ -1301,4 +1301,5 @@
   <string name="electronic_type_revolut">Revolut</string>
     <string name="account_icon">Icon</string>
     <string name="account_icon_none">None</string>
+  <string name="electronic_type_coinbase">Coinbase</string>
 </resources>

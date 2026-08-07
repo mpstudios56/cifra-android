@@ -18,6 +18,7 @@ public enum ElectronicPaymentType implements EntityEnum {
 
 	PAYPAL(R.string.electronic_type_paypal, R.drawable.electronic_type_paypal),
 	REVOLUT(R.string.electronic_type_revolut, R.drawable.electronic_type_revolut),
+	COINBASE(R.string.electronic_type_coinbase, R.drawable.electronic_type_coinbase),
 	AMAZON(R.string.electronic_type_amazon, R.drawable.electronic_type_amazon),
 	EBAY(R.string.electronic_type_ebay, R.drawable.electronic_type_ebay),
 	GOOGLE_WALLET(R.string.electronic_type_google_wallet, R.drawable.electronic_type_google_wallet),

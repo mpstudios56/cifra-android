@@ -53,7 +53,8 @@ public enum AccountIcon {
     BITCOIN("bitcoin", R.drawable.electronic_type_bitcoin, R.string.electronic_type_bitcoin, false),
     GOOGLE_WALLET("gwallet", R.drawable.electronic_type_google_wallet, R.string.electronic_type_google_wallet, false),
     AMAZON("amazon", R.drawable.electronic_type_amazon, R.string.electronic_type_amazon, false),
-    ALIPAY("alipay", R.drawable.electronic_type_alipay, R.string.electronic_type_alipay, false);
+    ALIPAY("alipay", R.drawable.electronic_type_alipay, R.string.electronic_type_alipay, false),
+    COINBASE("coinbase", R.drawable.electronic_type_coinbase, R.string.electronic_type_coinbase, false);
 
     /** No emoji begins with this, so stored text is never mistaken for a symbol. */
     public static final String MARKER = "@";
