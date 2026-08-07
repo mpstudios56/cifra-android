@@ -916,4 +916,8 @@
   <string name="account_type_loan">Prestito o Mutuo</string>
   <string name="icon_picker_title">Scegli un simbolo</string>
   <string name="icon_picker_clear">Nessun simbolo</string>
+  <string name="accent_target_title">Dove va il colore?</string>
+  <string name="accent_target_icon">Sul simbolo</string>
+  <string name="accent_target_bar">Sulla striscia della riga</string>
+  <string name="accent_target_both">Su entrambi</string>
 </resources>

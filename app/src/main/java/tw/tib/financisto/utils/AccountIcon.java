@@ -39,6 +39,27 @@ public enum AccountIcon {
 
     /** No emoji begins with this, so stored text is never mistaken for a symbol. */
     public static final String MARKER = "@";
+    private static final String TARGET_SEPARATOR = "+";
+
+    /** What the accent colour paints. Colouring both is rarely what is wanted. */
+    public enum Target {
+        BOTH(""), ICON("icon"), BAR("bar");
+
+        public final String tag;
+
+        Target(String tag) {
+            this.tag = tag;
+        }
+
+        static Target of(String tag) {
+            for (Target t : values()) {
+                if (t.tag.equals(tag)) {
+                    return t;
+                }
+            }
+            return BOTH;
+        }
+    }
 
     public final String tag;
     @DrawableRes public final int iconId;
@@ -50,16 +71,18 @@ public enum AccountIcon {
         this.titleId = titleId;
     }
 
-    public String toStoredValue() {
-        return MARKER + tag;
+    public String toStoredValue(Target target) {
+        return target == Target.BOTH
+                ? MARKER + tag
+                : MARKER + tag + TARGET_SEPARATOR + target.tag;
     }
 
     /** The symbol this account's icon field names, or null when it holds text. */
     public static AccountIcon parse(String stored) {
-        if (stored == null || !stored.startsWith(MARKER)) {
+        String tag = symbolTag(stored);
+        if (tag == null) {
             return null;
         }
-        String tag = stored.substring(MARKER.length());
         for (AccountIcon icon : values()) {
             if (icon.tag.equals(tag)) {
                 return icon;
@@ -67,5 +90,24 @@ public enum AccountIcon {
         }
         // Written by a later version that knows a symbol this one does not.
         return null;
+    }
+
+    /** What the accent colour should paint for this account. */
+    public static Target parseTarget(String stored) {
+        String tag = symbolTag(stored);
+        if (tag == null) {
+            return Target.BOTH;
+        }
+        int sep = stored.indexOf(TARGET_SEPARATOR);
+        return sep < 0 ? Target.BOTH : Target.of(stored.substring(sep + 1));
+    }
+
+    private static String symbolTag(String stored) {
+        if (stored == null || !stored.startsWith(MARKER)) {
+            return null;
+        }
+        String rest = stored.substring(MARKER.length());
+        int sep = rest.indexOf(TARGET_SEPARATOR);
+        return sep < 0 ? rest : rest.substring(0, sep);
     }
 }

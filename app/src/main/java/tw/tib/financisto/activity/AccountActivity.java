@@ -449,10 +449,28 @@ public class AccountActivity extends AbstractActivity {
 				.setNegativeButton(R.string.cancel, null)
 				.create();
 		grid.setOnItemClickListener((parent, view, position, id) -> {
-			iconText.setText(icons[position].toStoredValue());
 			dialog.dismiss();
+			askWhereTheColourGoes(icons[position]);
 		});
 		dialog.show();
+	}
+
+	/**
+	 * Colouring the symbol and the row stripe together is rarely what is wanted:
+	 * one marks which institution, the other how the row reads at a glance.
+	 */
+	private void askWhereTheColourGoes(final AccountIcon icon) {
+		final AccountIcon.Target[] targets = {
+				AccountIcon.Target.ICON, AccountIcon.Target.BAR, AccountIcon.Target.BOTH};
+		final String[] labels = {
+				getString(R.string.accent_target_icon),
+				getString(R.string.accent_target_bar),
+				getString(R.string.accent_target_both)};
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.accent_target_title)
+				.setItems(labels, (d, which) ->
+						iconText.setText(icon.toStoredValue(targets[which])))
+				.show();
 	}
 
 	private void selectAccountType(AccountType type) {

@@ -1294,4 +1294,8 @@
   <string name="account_type_loan">Loan</string>
     <string name="icon_picker_title">Choose a symbol</string>
     <string name="icon_picker_clear">No symbol</string>
+    <string name="accent_target_title">Where should the colour go?</string>
+    <string name="accent_target_icon">On the symbol</string>
+    <string name="accent_target_bar">On the row stripe</string>
+    <string name="accent_target_both">On both</string>
 </resources>

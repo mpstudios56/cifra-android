@@ -110,7 +110,12 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             v.icon.setVisibility(View.VISIBLE);
             v.iconText.setVisibility(View.INVISIBLE);
             v.icon.setImageResource(chosen.iconId);
-            v.icon.setColorFilter(accentOrNull(a.accentColor));
+            AccountIcon.Target target = AccountIcon.parseTarget(a.icon);
+            if (target == AccountIcon.Target.BAR) {
+                v.icon.clearColorFilter();
+            } else {
+                v.icon.setColorFilter(accentOrNull(a.accentColor));
+            }
         }
         else if (!Utils.isEmpty(a.icon)) {
             v.icon.setVisibility(View.INVISIBLE);
@@ -225,7 +230,9 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         }
 
         try {
-            if (!Utils.isEmpty(a.accentColor)) {
+            // Painting the symbol only means the stripe stays out of the way.
+            boolean stripeWanted = AccountIcon.parseTarget(a.icon) != AccountIcon.Target.ICON;
+            if (stripeWanted && !Utils.isEmpty(a.accentColor)) {
                 int color = Color.parseColor(a.accentColor);
                 v.accent.setVisibility(View.VISIBLE);
                 v.accent.setBackground(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
