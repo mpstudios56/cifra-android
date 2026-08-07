@@ -24,6 +24,7 @@ public enum AccountIcon {
 
     BANK("bank", R.drawable.account_type_bank, R.string.account_type_bank),
     SAVINGS("savings", R.drawable.account_type_savings, R.string.account_type_savings),
+    SAFE("safe", R.drawable.account_type_safe, R.string.account_type_safe),
     INVESTMENT("investment", R.drawable.account_type_investment, R.string.account_type_investment),
     PENSION("pension", R.drawable.account_type_pension, R.string.account_type_pension),
     LOAN("loan", R.drawable.account_type_loan, R.string.account_type_loan),

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  account_type_investment for Cifra. Account icons are shown untinted in the account list, unlike
+  account_type_safe for Cifra. Account icons are shown untinted in the account list, unlike
   the tabs and the menu, so this carries its own colour and has to read on
   either background.
   Literal colours, not resource references: build-time PNG generation cannot
   resolve those.
-
-  The trend line runs clear above the bars. It used to be a bent stub sitting
-  in the middle of them, which read as a mistake rather than a rising market.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
@@ -19,35 +16,53 @@
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M2.8,20.4 L21.2,20.4" />
+        android:pathData="M5.6,3.8 H18.4 A1.6,1.6 0 0,1 20,5.4 V17.8 A1.6,1.6 0 0,1 18.4,19.4 H5.6 A1.6,1.6 0 0,1 4,17.8 V5.4 A1.6,1.6 0 0,1 5.6,3.8 Z" />
     <path
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2.6"
+        android:strokeWidth="1.5"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M6.4,20.4 L6.4,16.2" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2.6"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M12,20.4 L12,13.4" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2.6"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M17.6,20.4 L17.6,10.6" />
+        android:pathData="M6.9,6.4 H17.4 V16.8 H6.9 Z" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M4.2,14.6 L19.4,4.4" />
+        android:pathData="M9.1,11.6 A2.9,2.9 0 1,1 14.9,11.6 A2.9,2.9 0 1,1 9.1,11.6 Z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,7.5 V8.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,14.6 V15.7" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M7.9,11.6 H9.0" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M15.0,11.6 H16.1" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M14.6,4.4 L19.4,4.4 L19.4,9.2" />
+        android:pathData="M7,19.4 V21.2" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M17,19.4 V21.2" />
 </vector>

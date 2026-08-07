@@ -17,43 +17,43 @@ import tw.tib.financisto.model.Currency;
 
 public enum ReportType {
 
-	BY_PERIOD(R.string.report_by_period, R.string.report_by_period_summary, R.drawable.report_icon_default){
+	BY_PERIOD(R.string.report_by_period, R.string.report_by_period_summary, R.drawable.report_by_period){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return new PeriodReport(context, currency);
 		}
 	},
-	BY_CATEGORY(R.string.report_by_category, R.string.report_by_category_summary, R.drawable.report_icon_default){
+	BY_CATEGORY(R.string.report_by_category, R.string.report_by_category_summary, R.drawable.report_by_category){
         @Override
         public Report createReport(Context context, Currency currency) {
             return new CategoryReport(context, currency);
         }
 	},
-	BY_SUB_CATEGORY(R.string.report_by_category, R.string.report_by_category_summary, R.drawable.report_icon_default){
+	BY_SUB_CATEGORY(R.string.report_by_category, R.string.report_by_category_summary, R.drawable.report_by_category){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return new SubCategoryReport(context, currency);
 		}
 	},
-    BY_PAYEE(R.string.report_by_payee, R.string.report_by_payee_summary, R.drawable.report_icon_default){
+    BY_PAYEE(R.string.report_by_payee, R.string.report_by_payee_summary, R.drawable.report_by_payee){
         @Override
         public Report createReport(Context context, Currency currency) {
             return new PayeesReport(context, currency);
         }
     },
-	BY_LOCATION(R.string.report_by_location, R.string.report_by_location_summary, R.drawable.report_icon_default){
+	BY_LOCATION(R.string.report_by_location, R.string.report_by_location_summary, R.drawable.report_by_location){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return new LocationsReport(context, currency);
 		}
 	},
-	BY_PROJECT(R.string.report_by_project, R.string.report_by_project_summary, R.drawable.report_icon_default){
+	BY_PROJECT(R.string.report_by_project, R.string.report_by_project_summary, R.drawable.report_by_project){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return new ProjectsReport(context, currency);
 		}
 	}, 
-	BY_ACCOUNT_BY_PERIOD(R.string.report_by_account_by_period, R.string.report_by_account_by_period_summary, R.drawable.report_icon_line){
+	BY_ACCOUNT_BY_PERIOD(R.string.report_by_account_by_period, R.string.report_by_account_by_period_summary, R.drawable.report_account_by_period){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;
@@ -64,7 +64,7 @@ public enum ReportType {
 			return false;
 		}
 	}, 
-	BY_CATEGORY_BY_PERIOD(R.string.report_by_category_by_period, R.string.report_by_category_by_period_summary, R.drawable.report_icon_line){
+	BY_CATEGORY_BY_PERIOD(R.string.report_by_category_by_period, R.string.report_by_category_by_period_summary, R.drawable.report_category_by_period){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;
@@ -75,7 +75,7 @@ public enum ReportType {
 			return false;
 		}
 	}, 
-    BY_PAYEE_BY_PERIOD(R.string.report_by_payee_by_period, R.string.report_by_payee_by_period_summary, R.drawable.report_icon_line){
+    BY_PAYEE_BY_PERIOD(R.string.report_by_payee_by_period, R.string.report_by_payee_by_period_summary, R.drawable.report_payee_by_period){
         @Override
         public Report createReport(Context context, Currency currency) {
             return null;
@@ -86,7 +86,7 @@ public enum ReportType {
             return false;
         }
     },
-	BY_LOCATION_BY_PERIOD(R.string.report_by_location_by_period, R.string.report_by_location_by_period_summary, R.drawable.report_icon_line){
+	BY_LOCATION_BY_PERIOD(R.string.report_by_location_by_period, R.string.report_by_location_by_period_summary, R.drawable.report_location_by_period){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;
@@ -97,7 +97,7 @@ public enum ReportType {
 			return false;
 		}
 	}, 
-	BY_PROJECT_BY_PERIOD(R.string.report_by_project_by_period, R.string.report_by_project_by_period_summary, R.drawable.report_icon_line){
+	BY_PROJECT_BY_PERIOD(R.string.report_by_project_by_period, R.string.report_by_project_by_period_summary, R.drawable.report_project_by_period){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;
@@ -108,7 +108,7 @@ public enum ReportType {
 			return false;
 		}
 	},
-	BY_ACCOUNT_BALANCE_BY_PERIOD(R.string.report_by_account_balance_by_period, R.string.report_by_account_balance_by_period_summary, R.drawable.report_icon_line){
+	BY_ACCOUNT_BALANCE_BY_PERIOD(R.string.report_by_account_balance_by_period, R.string.report_by_account_balance_by_period_summary, R.drawable.report_account_balance){
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;
@@ -119,7 +119,7 @@ public enum ReportType {
 			return false;
 		}
 	},
-	TOTAL_BALANCE_BY_PERIOD(R.string.report_total_balance_by_period, R.string.report_total_balance_by_period_summary, R.drawable.report_icon_line) {
+	TOTAL_BALANCE_BY_PERIOD(R.string.report_total_balance_by_period, R.string.report_total_balance_by_period_summary, R.drawable.report_total_balance) {
 		@Override
 		public Report createReport(Context context, Currency currency) {
 			return null;

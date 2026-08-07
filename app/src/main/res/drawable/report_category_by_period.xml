@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  report_category_by_period for Cifra. Part of one outline set at a single stroke weight; the subject
+  sits on the left, the chart it produces on the right.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M3.1,9.9 A1,1 0 0,1 4.1,8.9 L6.3,8.9 L7.4,10.5 L9.9,10.5 A1,1 0 0,1 10.9,11.5 L10.9,17.1 A1,1 0 0,1 9.9,18.1 L4.1,18.1 A1,1 0 0,1 3.1,17.1 Z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M13.4,16.6 L16,12.8 L18.3,14.8 L21.4,8.6" />
+</vector>

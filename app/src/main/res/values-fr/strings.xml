@@ -858,6 +858,7 @@
 
   <!-- Nuovi tipi di conto -->
   <string name="account_type_savings">Compte d\'épargne</string>
+  <string name="account_type_safe">Coffre-fort</string>
   <string name="account_type_investment">Compte-titres</string>
   <string name="account_type_pension">Retraite</string>
   <string name="account_type_loan">Prêt ou crédit immobilier</string>

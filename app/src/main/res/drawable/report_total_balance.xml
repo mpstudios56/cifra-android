@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  report_total_balance for Cifra. Part of one outline set at a single stroke weight; the subject
+  sits on the left, the chart it produces on the right.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M10.6,7.2 H3.6 L7.6,12.6 L3.6,18 H10.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M13.2,17.4 H15.3 V13.8 H17.5 V15.8 H19.5 V9.6 H21.5" />
+</vector>

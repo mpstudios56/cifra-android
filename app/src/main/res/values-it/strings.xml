@@ -911,6 +911,7 @@
 
   <!-- Nuovi tipi di conto -->
   <string name="account_type_savings">Conto Deposito</string>
+  <string name="account_type_safe">Cassaforte</string>
   <string name="account_type_investment">Conto Titoli</string>
   <string name="account_type_pension">Fondo Pensione</string>
   <string name="account_type_loan">Prestito o Mutuo</string>

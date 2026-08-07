@@ -887,6 +887,7 @@
 
   <!-- Nuovi tipi di conto -->
   <string name="account_type_savings">Cuenta de ahorro</string>
+  <string name="account_type_safe">Caja fuerte</string>
   <string name="account_type_investment">Cuenta de valores</string>
   <string name="account_type_pension">Plan de pensiones</string>
   <string name="account_type_loan">Préstamo o hipoteca</string>
