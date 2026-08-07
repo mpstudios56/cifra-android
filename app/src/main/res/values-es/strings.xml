@@ -535,8 +535,8 @@
   <string name="report_by_payee_by_period_summary">Informe de transacciones por beneficiario y periodo</string>
   <string name="no_payee">Sin beneficiarios</string>
   <string name="report_no_payee">No hay disponible ningún beneficiario para filtrar en el informe.</string>
-  <string name="donate">Hacer una donación</string>
-  <string name="donate_error">Android Market no está disponible en su dispositivo</string>
+  <string name="donate">Invítame a un café</string>
+  <string name="donate_error">No hay ningún navegador disponible en el dispositivo</string>
   <string name="type">Modalidad</string>
   <string name="qif_export">Exportar como QIF</string>
   <string name="qif_export_inprogress">Exportando datos en formato QIF...</string>
@@ -951,7 +951,7 @@
   <string name="delete_picture_confirm">¿Quitar la foto y eliminar su archivo?</string>
   <string name="delete_picture_file_message">La foto se desvinculará de esta transacción en cualquier caso. Su archivo también puede eliminarse de la memoria, para que no quede sin uso.</string>
   <string name="delete_picture_file_title">¿Eliminar el archivo de la foto?</string>
-  <string name="donate_summary">Haz una donación voluntaria para apoyar el proyecto</string>
+  <string name="donate_summary">Cifra es gratuita, sin anuncios y sin funciones de pago. Si te ahorra tiempo, invítame a un café o a una cerveza: con eso basta.</string>
   <string name="download_all_rates">Descargar todos los cambios actuales</string>
   <string name="downloading_picture_from_dropbox">Descargando de Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Descargando de Google Drive…</string>

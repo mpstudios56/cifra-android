@@ -535,8 +535,8 @@
   <string name="report_by_payee_by_period_summary">Transaktionsberichte nach Empfänger und Zeitraum</string>
   <string name="no_payee">Kein Empfänger</string>
   <string name="report_no_payee">Es existiert kein Empfänger um den Bericht zu filtern.</string>
-  <string name="donate">Spenden</string>
-  <string name="donate_error">Android Market ist auf dem Gerät nicht verfügbar</string>
+  <string name="donate">Spendier mir einen Kaffee</string>
+  <string name="donate_error">Kein Browser auf diesem Gerät verfügbar</string>
   <string name="type">Typ</string>
   <string name="qif_export">QIF Export</string>
   <string name="qif_export_inprogress">Exportiere Daten nach QIF...</string>
@@ -951,7 +951,7 @@
   <string name="delete_picture_confirm">Bild lösen und die Datei löschen?</string>
   <string name="delete_picture_file_message">Das Bild wird ohnehin von dieser Transaktion gelöst. Seine Datei kann zusätzlich aus dem Speicher gelöscht werden, damit sie nicht ungenutzt bleibt.</string>
   <string name="delete_picture_file_title">Bilddatei löschen?</string>
-  <string name="donate_summary">Freiwillig spenden und das Projekt unterstützen</string>
+  <string name="donate_summary">Cifra ist kostenlos, ohne Werbung und ohne Bezahlfunktionen. Wenn sie dir Zeit spart, spendier mir einen Kaffee oder ein Bier - das reicht völlig.</string>
   <string name="download_all_rates">Alle aktuellen Kurse laden</string>
   <string name="downloading_picture_from_dropbox">Wird von Dropbox geladen…</string>
   <string name="downloading_picture_from_google_drive">Wird von Google Drive geladen…</string>

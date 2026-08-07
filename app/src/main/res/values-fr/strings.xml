@@ -534,8 +534,8 @@
   <string name="report_by_payee_by_period_summary">Opérations rapport par le bénéficiaire et période</string>
   <string name="no_payee">Aucun bénéficiaire</string>
   <string name="report_no_payee">Pas de bénéficiaire pour ce rapport.</string>
-  <string name="donate">Faire un don</string>
-  <string name="donate_error">Android Market n\'est pas disponible sur votre appareil</string>
+  <string name="donate">Offrez-moi un café</string>
+  <string name="donate_error">Aucun navigateur disponible sur cet appareil</string>
   <string name="type">Type</string>
   <string name="qif_export">Exportation QIF</string>
   <string name="qif_export_inprogress">Export de la base de données en QIF...</string>
@@ -924,7 +924,7 @@
   <string name="delete_picture_confirm">Détacher la photo et supprimer son fichier ?</string>
   <string name="delete_picture_file_message">La photo sera détachée de cette opération dans tous les cas. Son fichier peut aussi être supprimé de la mémoire, pour ne pas rester inutilisé.</string>
   <string name="delete_picture_file_title">Supprimer le fichier de la photo ?</string>
-  <string name="donate_summary">Faites un don volontaire pour soutenir le projet</string>
+  <string name="donate_summary">Cifra est gratuite, sans publicité et sans fonction payante. Si elle vous fait gagner du temps, offrez-moi un café ou une bière : cela suffit.</string>
   <string name="download_all_rates">Télécharger tous les taux actuels</string>
   <string name="downloading_picture_from_dropbox">Téléchargement depuis Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Téléchargement depuis Google Drive…</string>

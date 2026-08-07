@@ -182,20 +182,20 @@ public enum MenuListItem implements SummaryEntityEnum {
             new IntegrityFixTask(fragment.getContext()).execute();
         }
     },
-//    MENU_DONATE(R.string.donate, R.string.donate_summary, R.drawable.actionbar_donate) {
-//        @Override
-//        public void call(Fragment fragment) {
-//            try {
-//                Intent browserIntent = new Intent("android.intent.action.VIEW",
-//                        Uri.parse("market://search?q=pname:tw.tib.financisto.support"));
-//                fragment.startActivity(browserIntent);
-//            } catch (Exception ex) {
-//                //eventually market is not available
-//                Toast.makeText(fragment.getContext(), R.string.donate_error, Toast.LENGTH_LONG).show();
-//            }
-//        }
-//
-//    },
+    MENU_DONATE(R.string.donate, R.string.donate_summary, R.drawable.actionbar_donate) {
+        @Override
+        public void call(Fragment fragment) {
+            // Opens a payment page in the browser rather than asking for anything
+            // inside the app: a voluntary donation buys nothing here, and nothing
+            // in the app is withheld until one is made.
+            try {
+                fragment.startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(fragment.getString(R.string.donate_url))));
+            } catch (Exception ex) {
+                Toast.makeText(fragment.getContext(), R.string.donate_error, Toast.LENGTH_LONG).show();
+            }
+        }
+    },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {
         @Override
         public void call(Fragment fragment) {

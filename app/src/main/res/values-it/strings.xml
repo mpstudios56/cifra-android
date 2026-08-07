@@ -569,8 +569,8 @@
   <string name="report_by_payee_by_period_summary">Rapporti transazioni per beneficiario e periodo</string>
   <string name="no_payee">Nessun beneficiario</string>
   <string name="report_no_payee">Non ci sono beneficiari disponibili per filtrare il rapporto.</string>
-  <string name="donate">Fai una donazione</string>
-  <string name="donate_error">Il Market Android non è disponibile nel tuo dispositivo</string>
+  <string name="donate">Offrimi un caffè</string>
+  <string name="donate_error">Nessun browser disponibile sul dispositivo</string>
   <string name="type">Tipo</string>
   <string name="qif_export">Esportazione QIF</string>
   <string name="qif_export_inprogress">Esportazione dei dati in QIF...</string>
@@ -971,7 +971,7 @@
   <string name="decimals_warning">I decimali diversi da 0, 1 e 2 sono sperimentali</string>
   <string name="delete_account">Elimina il conto</string>
   <string name="delete_picture_confirm">Staccare la foto ed eliminarne il file?</string>
-  <string name="donate_summary">Fai una donazione volontaria per sostenere il progetto</string>
+  <string name="donate_summary">Cifra è gratuita, senza pubblicità e senza funzioni a pagamento. Se ti fa risparmiare tempo, offrimi un caffè o una birra: bastano davvero.</string>
   <string name="download_all_rates">Scarica tutti i cambi attuali</string>
   <string name="downloading_picture_from_dropbox">Scaricamento da Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Scaricamento da Google Drive…</string>
