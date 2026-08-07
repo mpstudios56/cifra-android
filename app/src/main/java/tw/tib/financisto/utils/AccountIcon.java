@@ -45,8 +45,6 @@ public enum AccountIcon {
     MAESTRO("maestro", R.drawable.account_type_card_maestro, R.string.card_issuer_maestro, false),
     AMEX("amex", R.drawable.account_type_card_amex, R.string.card_issuer_amex, false),
     DINERS("diners", R.drawable.account_type_card_diners, R.string.card_issuer_diners, false),
-    DISCOVER("discover", R.drawable.account_type_card_discover, R.string.card_issuer_discover, false),
-    JCB("jcb", R.drawable.account_type_card_jcb, R.string.card_issuer_jcb, false),
     UNIONPAY("unionpay", R.drawable.account_type_card_unionpay, R.string.card_issuer_unionpay, false),
     PAYPAL("paypal", R.drawable.electronic_type_paypal, R.string.electronic_type_paypal, false),
     REVOLUT("revolut", R.drawable.electronic_type_revolut, R.string.electronic_type_revolut, false),

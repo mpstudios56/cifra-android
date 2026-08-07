@@ -4,12 +4,16 @@
   Replaces a 144px bitmap that was upscaled on any modern screen.
   The drawing is public domain; the mark itself belongs to its owner and is used
   here only to say which card or service an account is.
+  On a white plate: the wordmark is black and the theme is dark.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
     android:viewportWidth="1233.8368000000003"
     android:viewportHeight="1233.8368000000003">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M246.77,0 H987.07 A246.77,246.77 0 0,1 1233.84,246.77 V987.07 A246.77,246.77 0 0,1 987.07,1233.84 H246.77 A246.77,246.77 0 0,1 0,987.07 V246.77 A246.77,246.77 0 0,1 246.77,0 Z" />
     <group android:translateX="66.10" android:translateY="518.52">
         <path
         android:fillColor="#FF000000"
