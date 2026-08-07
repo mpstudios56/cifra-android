@@ -502,7 +502,6 @@
   <string name="payment_day_error">Betalingsfrist er ikke gyldig.</string>
   <string name="statement_error">Sæt betalingsfrist og lukkedag for dette kreditkort i kontoegenskaber.</string>
   <string name="is_ccard_payment">Kreditkort Betaling</string>
-  <string name="is_ccard_payment_summary">Inkluder ikke i regningen totalt</string>
   <string name="header_payments">Betalinger</string>
   <string name="header_credits">Diverse Kreditter</string>
   <string name="header_expenses">Udgifter</string>

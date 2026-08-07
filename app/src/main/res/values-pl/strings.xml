@@ -502,7 +502,6 @@
   <string name="payment_day_error">Dzień zapłaty nie jest poprawny.</string>
   <string name="statement_error">Proszę ustaw dzień zapłaty i zamknięcia dla tej karty kredytowej w preferencjach racunku.</string>
   <string name="is_ccard_payment">Płatność kartą kredytową</string>
-  <string name="is_ccard_payment_summary">Nie włączaj do sumy rachunku</string>
   <string name="header_payments">Płatności</string>
   <string name="header_credits">Różne kredyty</string>
   <string name="header_expenses">Wydatki</string>

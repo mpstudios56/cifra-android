@@ -543,7 +543,6 @@
   <string name="payment_day_error">Den platby je neplatný.</string>
   <string name="statement_error">Nastavte dny platby a uzávěrky pro tuto kreditní kartu na vlastnostech účtu.</string>
   <string name="is_ccard_payment">Platba kreditní kartou</string>
-  <string name="is_ccard_payment_summary">Nezahrnovat do zůstatku</string>
   <string name="header_payments">Platby</string>
   <string name="header_credits">Různé kredity</string>
   <string name="header_expenses">Výdaje</string>

@@ -503,7 +503,6 @@
   <string name="payment_day_error">Ziua de plată nu este validă.</string>
   <string name="statement_error">Stabileşte ziua de plată şi de închidere pentru acest card de credit în proprietăţile contului.</string>
   <string name="is_ccard_payment">Plată cu cardul de credit</string>
-  <string name="is_ccard_payment_summary">Nu include în totalul facturii</string>
   <string name="header_payments">Plăţi</string>
   <string name="header_credits">Diverse credite</string>
   <string name="header_expenses">Cheltuieli</string>

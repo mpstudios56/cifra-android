@@ -503,7 +503,6 @@
   <string name="payment_day_error">A fizetés napja nem érvényes.</string>
   <string name="statement_error">Kérjük, állítsa be a fizetés napját és a zárónapot ehhez a hitelkártyához a számlatulajdonságoknál!</string>
   <string name="is_ccard_payment">Hitelkártyás fizetés</string>
-  <string name="is_ccard_payment_summary">Ne számítsa bele a számlaösszesenbe</string>
   <string name="header_payments">Fizetések</string>
   <string name="header_credits">Különféle hitelek</string>
   <string name="header_expenses">Kiadások</string>

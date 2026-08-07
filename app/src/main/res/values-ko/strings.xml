@@ -502,7 +502,6 @@
   <string name="payment_day_error">지불 일자가 잘못되었습니다.</string>
   <string name="statement_error">계정 설정에서 이 신용카드의 지불 일자와 마감 일자를 설정하세요.</string>
   <string name="is_ccard_payment">신용 카드 지불</string>
-  <string name="is_ccard_payment_summary">총 청구 금액에 포함하지 않음</string>
   <string name="header_payments">지불</string>
   <string name="header_credits">신용 카드들</string>
   <string name="header_expenses">지출</string>

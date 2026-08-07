@@ -503,7 +503,6 @@
   <string name="payment_day_error">El dia del pagament no és vàlid.</string>
   <string name="statement_error">Has de fixar els dies del pagament i del tancament d\'aquesta targeta de crèdit a les propietats del teu compte.</string>
   <string name="is_ccard_payment">Pagament Al Comptat o amb Targeta?</string>
-  <string name="is_ccard_payment_summary">Excloure del còmput total del seu extracte mensual</string>
   <string name="header_payments">Pagaments</string>
   <string name="header_credits">Abonaments</string>
   <string name="header_expenses">Despeses</string>

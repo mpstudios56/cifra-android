@@ -503,7 +503,6 @@
   <string name="payment_day_error">Dia de pagamento não é válido.</string>
   <string name="statement_error">Favor registrar dias de pagamento e fechamento da fatura deste cartão nas propriedades da conta.</string>
   <string name="is_ccard_payment">Pagamento de Fatura</string>
-  <string name="is_ccard_payment_summary">Nao incluir no total da fatura</string>
   <string name="header_payments">Pagamentos</string>
   <string name="header_credits">Créditos Diversos</string>
   <string name="header_expenses">Despesas</string>

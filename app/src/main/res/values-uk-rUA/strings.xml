@@ -600,7 +600,6 @@
     <string name="payment_day_error">День сплати недійсний.</string>
     <string name="statement_error">Встановіть дні сплати та розрахунку для цієї кредитної картки у властивостях облікового запису.</string>
     <string name="is_ccard_payment">Сплата кредитною карткою</string>
-    <string name="is_ccard_payment_summary">Не враховувати у загальному підсумку</string>
     <string name="header_payments">Платежі</string>
     <string name="header_credits">Різні надхождення</string>
     <string name="header_expenses">Витрати</string>

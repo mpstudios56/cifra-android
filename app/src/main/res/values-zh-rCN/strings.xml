@@ -503,7 +503,6 @@
   <string name="payment_day_error">无效的还款日.</string>
   <string name="statement_error">请在账号属性里给这个信用卡设置对账单日和还款日</string>
   <string name="is_ccard_payment">信用卡付款</string>
-  <string name="is_ccard_payment_summary">不包含到总资产中</string>
   <string name="header_payments">付款</string>
   <string name="header_credits">不同的额度</string>
   <string name="header_expenses">支出</string>

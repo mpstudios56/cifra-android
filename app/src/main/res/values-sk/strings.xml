@@ -503,7 +503,6 @@
   <string name="payment_day_error">Neplatný deň splatnosti.</string>
   <string name="statement_error">Prosím, nastavte deň splatnosti a uzávierky pre túto kreditnú kartu v nastaveniach účtu.</string>
   <string name="is_ccard_payment">Platba kreditnou kartou</string>
-  <string name="is_ccard_payment_summary">Nezahrnúť do zostatku</string>
   <string name="header_payments">Platby</string>
   <string name="header_credits">Rôzne príjmy</string>
   <string name="header_expenses">Výdavky</string>

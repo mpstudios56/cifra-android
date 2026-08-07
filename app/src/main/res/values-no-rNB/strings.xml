@@ -502,7 +502,6 @@
   <string name="payment_day_error">Innbetalingsdato er ikke gyldig.</string>
   <string name="statement_error">Sett innbetalings og forfallsdato for dette kredittkortet på kontoinstillinger.</string>
   <string name="is_ccard_payment">Kredittkort betalinger</string>
-  <string name="is_ccard_payment_summary">Ikke inkluder regning i totalen.</string>
   <string name="header_payments">Betalinger</string>
   <string name="header_credits">Diverse kreditt</string>
   <string name="header_expenses">Utgifter</string>

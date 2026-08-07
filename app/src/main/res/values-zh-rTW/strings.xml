@@ -577,7 +577,6 @@
   <string name="payment_day_error">付款日有誤。</string>
   <string name="statement_error">請編輯帳戶設定關帳日與付款日。</string>
   <string name="is_ccard_payment">信用卡付款</string>
-  <string name="is_ccard_payment_summary">不納入帳單總金額</string>
   <string name="header_payments">付款</string>
   <string name="header_credits">扣抵</string>
   <string name="header_expenses">支出</string>
