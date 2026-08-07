@@ -77,7 +77,7 @@
     <PreferenceCategory android:title="@string/entity_selector_type">
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="search"
+            android:defaultValue="DROPDOWN"
             android:entries="@array/selector_type_entries"
             android:entryValues="@array/selector_type_values"
             android:key="payee_selector_type"
@@ -85,7 +85,7 @@
             android:summary="@string/payee_selector_type_summary" />
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="search"
+            android:defaultValue="DROPDOWN"
             android:entries="@array/selector_type_entries"
             android:entryValues="@array/selector_type_values"
             android:key="project_selector_type"
@@ -93,7 +93,7 @@
             android:summary="@string/project_selector_type_summary" />
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="search"
+            android:defaultValue="DROPDOWN"
             android:entries="@array/selector_type_entries"
             android:entryValues="@array/selector_type_values"
             android:key="location_selector_type"

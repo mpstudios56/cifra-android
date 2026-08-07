@@ -240,11 +240,13 @@ public class MyPreferences {
 	}
 
 	private static EntitySelectorType getEntitySelectorType(String key) {
-		String selectorType = getString(key, EntitySelectorType.SEARCH.name());
+		// Dropdown by default: search opens an empty box in place of the current
+		// value, which reads as the list being empty and the selection lost.
+		String selectorType = getString(key, EntitySelectorType.DROPDOWN.name());
 		try {
 			return EntitySelectorType.valueOf(selectorType);
 		} catch (IllegalArgumentException e) {
-			return EntitySelectorType.SEARCH;
+			return EntitySelectorType.DROPDOWN;
 		}
 	}
 
