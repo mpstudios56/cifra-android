@@ -10,6 +10,9 @@
     android:height="48dp"
     android:viewportWidth="155.6799776"
     android:viewportHeight="155.6799776">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M31.14,0 H124.54 A31.14,31.14 0 0,1 155.68,31.14 V124.54 A31.14,31.14 0 0,1 124.54,155.68 H31.14 A31.14,31.14 0 0,1 0,124.54 V31.14 A31.14,31.14 0 0,1 31.14,0 Z" />
     <group android:translateX="8.34" android:translateY="47.48">
         <path
         android:fillColor="#FF00b97f"

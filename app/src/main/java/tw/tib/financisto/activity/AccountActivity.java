@@ -408,9 +408,17 @@ public class AccountActivity extends AbstractActivity {
 		final AccountIcon[] icons = AccountIcon.values();
 		final int tint = currentAccentColor();
 
+		// Three columns of larger tiles rather than four small ones: several of the
+		// marks are words, and at four across they were unreadable. The dialog is
+		// given a height so the grid scrolls instead of running off the bottom -
+		// the marks added last were simply unreachable before.
 		GridView grid = new GridView(this);
-		grid.setNumColumns(4);
+		grid.setNumColumns(3);
 		grid.setPadding(24, 24, 24, 24);
+		grid.setVerticalScrollBarEnabled(true);
+		grid.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				(int) (getResources().getDisplayMetrics().heightPixels * 0.6)));
 		grid.setAdapter(new BaseAdapter() {
 			@Override public int getCount() { return icons.length; }
 			@Override public Object getItem(int position) { return icons[position]; }
@@ -419,8 +427,8 @@ public class AccountActivity extends AbstractActivity {
 				ImageView view = convertView instanceof ImageView
 						? (ImageView) convertView : new ImageView(AccountActivity.this);
 				view.setLayoutParams(new GridView.LayoutParams(
-						GridView.LayoutParams.MATCH_PARENT, 150));
-				view.setPadding(16, 16, 16, 16);
+						GridView.LayoutParams.MATCH_PARENT, 230));
+				view.setPadding(20, 20, 20, 20);
 				view.setImageResource(icons[position].iconId);
 				if (icons[position].tintable) {
 					view.setColorFilter(tint);
