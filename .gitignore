@@ -23,3 +23,6 @@ app/build/
 app/seeds.txt
 app/usage.txt
 app/mapping.txt
+
+# Copie pronte da caricare, rigenerabili
+rilascio/
