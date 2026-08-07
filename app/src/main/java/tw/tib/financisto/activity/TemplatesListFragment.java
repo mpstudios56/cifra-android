@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.os.BuildCompat;
 
 public class TemplatesListFragment extends BlotterFragment {
@@ -92,17 +94,25 @@ public class TemplatesListFragment extends BlotterFragment {
         return false;
     }
 
+    /**
+     * The blotter titles itself from the internal name of its filter, which here is
+     * the bare word "templates", under a "Transactions" subtitle that does not apply.
+     */
+    @Override
+    protected void applyFilter() {
+        super.applyFilter();
+        if (getActivity() instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(R.string.templates);
+                actionBar.setSubtitle(null);
+            }
+        }
+    }
+
     protected void internalOnCreateTemplates() {
         // change empty list message
         ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.no_templates);
-        // As a tab there is no activity title to say what this list is, and the strip
-        // shows icons only. The period line is free here, since templates have no
-        // date range, so it names the screen instead.
-        TextView period = getView().findViewById(R.id.period);
-        if (period != null) {
-            period.setText(R.string.templates);
-            period.setVisibility(View.VISIBLE);
-        }
         // fix filter
         blotterFilter = new WhereFilter("templates");
         blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));
