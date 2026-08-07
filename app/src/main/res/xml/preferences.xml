@@ -20,7 +20,7 @@
             android:title="@string/ui_language" />
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="ACCOUNTS"
+            android:defaultValue="BLOTTER"
             android:entries="@array/startup_screen_entities"
             android:entryValues="@array/startup_screen_values"
             android:key="startup_screen"

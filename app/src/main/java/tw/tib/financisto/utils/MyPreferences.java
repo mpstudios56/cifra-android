@@ -744,8 +744,14 @@ public class MyPreferences {
 	}
 
 	public static StartupScreen getStartupScreen() {
-		String screen = getString("startup_screen", StartupScreen.ACCOUNTS.name());
-		return StartupScreen.valueOf(screen);
+		// The transactions list is where the app is actually used, so that is where
+		// it opens unless told otherwise.
+		String screen = getString("startup_screen", StartupScreen.BLOTTER.name());
+		try {
+			return StartupScreen.valueOf(screen);
+		} catch (IllegalArgumentException e) {
+			return StartupScreen.BLOTTER;
+		}
 	}
 
 	/**
