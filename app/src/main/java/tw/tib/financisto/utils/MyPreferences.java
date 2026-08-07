@@ -748,6 +748,14 @@ public class MyPreferences {
 		return StartupScreen.valueOf(screen);
 	}
 
+	/**
+	 * Templates as a tab of their own rather than a button on the blotter, where it
+	 * sat among the buttons that create things while it only opens a chooser.
+	 */
+	public static boolean isTemplatesAsTab(Context context) {
+		return getBoolean("templates_as_tab", true);
+	}
+
 	public static boolean isShowBudgetsTab(Context context) {
 		return getBoolean("show_budgets_tab", true);
 	}

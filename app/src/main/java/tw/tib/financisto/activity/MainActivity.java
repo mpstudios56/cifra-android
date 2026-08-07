@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
         BLOTTER("blotter", R.drawable.ic_tab_blotter),
         DRAFTS("drafts", R.drawable.ic_tab_drafts),
+        TEMPLATES("templates", R.drawable.ic_tab_templates),
         BUDGETS("budgets", R.drawable.ic_tab_budgets),
         REPORTS("reports", R.drawable.ic_tab_reports),
         MENU("menu", R.drawable.ic_tab_menu);
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     case ACCOUNTS: return new AccountRecyclerFragment();
                     case BLOTTER: return new BlotterFragment(true);
                     case DRAFTS: return new DraftListFragment();
+                    case TEMPLATES: return new TemplatesListFragment();
                     case BUDGETS: return new BudgetListFragment();
                     case REPORTS: return new ReportsListFragment();
                     default: return new MenuListFragment_();
@@ -179,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
         result.add(MainTab.BLOTTER);
         if (TransactionDraft.count(this) > 0) {
             result.add(MainTab.DRAFTS);
+        }
+        if (MyPreferences.isTemplatesAsTab(this)) {
+            result.add(MainTab.TEMPLATES);
         }
         if (MyPreferences.isShowBudgetsTab(this)) {
             result.add(MainTab.BUDGETS);

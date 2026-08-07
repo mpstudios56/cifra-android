@@ -283,7 +283,10 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
             bTemplate = view.findViewById(R.id.bTemplate);
             if (bTemplate != null) {
-                bTemplate.setVisibility(View.VISIBLE);
+                // Hidden when templates have a tab of their own, so the same thing is
+                // not offered from two places at once.
+                boolean asTab = MyPreferences.isTemplatesAsTab(getContext());
+                bTemplate.setVisibility(asTab ? View.GONE : View.VISIBLE);
                 bTemplate.setOnClickListener(v -> createFromTemplate());
             }
         }
