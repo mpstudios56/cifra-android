@@ -884,4 +884,10 @@
   <string name="templates">Vorlagen</string>
   <string name="templates_as_tab">Vorlagen-Reiter</string>
   <string name="templates_as_tab_summary">Zeigt Vorlagen in einem eigenen Reiter. Ausschalten, um stattdessen die Schaltfläche im Transaktionsbildschirm zu behalten</string>
+
+  <!-- Nuovi tipi di conto -->
+  <string name="account_type_savings">Sparkonto</string>
+  <string name="account_type_investment">Wertpapierdepot</string>
+  <string name="account_type_pension">Altersvorsorge</string>
+  <string name="account_type_loan">Kredit oder Hypothek</string>
 </resources>

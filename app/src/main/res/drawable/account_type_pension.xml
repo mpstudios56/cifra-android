@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  account_type_pension for Cifra. Account icons are shown untinted in the account list, unlike
+  the tabs and the menu, so this carries its own colour and has to read on
+  either background.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFC9CDD2"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M2.6,12.4 A9.4,9.4 0 0,1 21.4,12.4 Z" />
+    <path
+        android:strokeColor="#FFC9CDD2"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,12.4 L12,18.4 A2.6,2.6 0 0,0 17.2,18.4" />
+    <path
+        android:strokeColor="#FFC9CDD2"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,3 L12,4.6" />
+</vector>

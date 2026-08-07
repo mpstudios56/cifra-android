@@ -51,11 +51,17 @@ public class QifAccount {
         AccountType t = AccountType.valueOf(type);
         switch (t) {
             case BANK:
+            case SAVINGS:
                 return "Bank";
             case CASH:
                 return "Cash";
             case CREDIT_CARD:
                 return "CCard";
+            // QIF has a type for securities; without this the new kinds would all
+            // fall through to "other liability", which is wrong for money held
+            case INVESTMENT:
+            case PENSION:
+                return "Invst";
             case ASSET:
                 return "Oth A";
             default:

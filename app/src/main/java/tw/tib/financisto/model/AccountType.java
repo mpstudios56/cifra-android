@@ -18,9 +18,17 @@ public enum AccountType implements EntityEnum {
 
     CASH(R.string.account_type_cash, R.drawable.account_type_cash, false, false, false, false, false),
     BANK(R.string.account_type_bank, R.drawable.account_type_bank, true, false, false, false, false),
-    DEBIT_CARD(R.string.account_type_debit_card, R.drawable.account_type_card, true, true, true, false, false),
-    CREDIT_CARD(R.string.account_type_credit_card, R.drawable.account_type_card, true, true, true, true, false),
+    // Interest-bearing money set aside, kept apart from the current account it
+    // usually sits beside, so the two can be told apart in the list at a glance
+    SAVINGS(R.string.account_type_savings, R.drawable.account_type_savings, true, false, false, false, false),
+    DEBIT_CARD(R.string.account_type_debit_card, R.drawable.account_type_debit_card, true, true, true, false, false),
+    CREDIT_CARD(R.string.account_type_credit_card, R.drawable.account_type_credit_card, true, true, true, true, false),
     ELECTRONIC(R.string.account_type_electronic, R.drawable.account_type_electronic, false, false, false, false, true),
+    // Securities: shares, funds, bonds. Was falling under the catch-all ASSET
+    INVESTMENT(R.string.account_type_investment, R.drawable.account_type_investment, true, false, false, false, false),
+    PENSION(R.string.account_type_pension, R.drawable.account_type_pension, true, false, false, false, false),
+    // Borrowed money with a schedule, as opposed to the general LIABILITY
+    LOAN(R.string.account_type_loan, R.drawable.account_type_loan, true, false, false, false, false),
     ASSET(R.string.account_type_asset, R.drawable.account_type_asset, false, false, false, false, false),
     LIABILITY(R.string.account_type_liability, R.drawable.account_type_liability, false, false, false, false, false),
     OTHER(R.string.account_type_other, R.drawable.account_type_other, false, false, false, false, false);

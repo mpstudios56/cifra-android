@@ -855,4 +855,10 @@
   <string name="templates">Modèles</string>
   <string name="templates_as_tab">Onglet des modèles</string>
   <string name="templates_as_tab_summary">Afficher les modèles dans un onglet à part. Désactivez pour garder le bouton sur l\'écran des opérations</string>
+
+  <!-- Nuovi tipi di conto -->
+  <string name="account_type_savings">Compte d\'épargne</string>
+  <string name="account_type_investment">Compte-titres</string>
+  <string name="account_type_pension">Retraite</string>
+  <string name="account_type_loan">Prêt ou crédit immobilier</string>
 </resources>

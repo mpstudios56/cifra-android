@@ -1286,4 +1286,10 @@
         <item>Only show split summary</item>
         <item>Only show split children</item>
     </string-array>
+
+  <!-- Nuovi tipi di conto -->
+  <string name="account_type_savings">Savings Account</string>
+  <string name="account_type_investment">Investment Account</string>
+  <string name="account_type_pension">Pension</string>
+  <string name="account_type_loan">Loan</string>
 </resources>

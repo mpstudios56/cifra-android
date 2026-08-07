@@ -884,4 +884,10 @@
   <string name="templates">Plantillas</string>
   <string name="templates_as_tab">Pestaña de plantillas</string>
   <string name="templates_as_tab_summary">Mostrar las plantillas en una pestaña propia. Desactívalo para mantener el botón en la pantalla de transacciones</string>
+
+  <!-- Nuovi tipi di conto -->
+  <string name="account_type_savings">Cuenta de ahorro</string>
+  <string name="account_type_investment">Cuenta de valores</string>
+  <string name="account_type_pension">Plan de pensiones</string>
+  <string name="account_type_loan">Préstamo o hipoteca</string>
 </resources>

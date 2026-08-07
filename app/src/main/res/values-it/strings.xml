@@ -908,4 +908,10 @@
   <string name="update_copied_transaction_project_summary">Le copie useranno il progetto più recente, se ne avevano uno</string>
   <string name="use_twin_date_picker">Doppio selettore di data</string>
   <string name="use_twin_date_picker_summary">Mostra sia il calendario sia le rotelle per scegliere la data</string>
+
+  <!-- Nuovi tipi di conto -->
+  <string name="account_type_savings">Conto Deposito</string>
+  <string name="account_type_investment">Conto Titoli</string>
+  <string name="account_type_pension">Fondo Pensione</string>
+  <string name="account_type_loan">Prestito o Mutuo</string>
 </resources>
