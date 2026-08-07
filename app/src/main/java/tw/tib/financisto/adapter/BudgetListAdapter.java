@@ -19,6 +19,8 @@ import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.utils.RecurUtils.Recur;
 import tw.tib.financisto.utils.RecurUtils.RecurInterval;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,6 +121,7 @@ public class BudgetListAdapter extends BaseAdapter {
                 v.progressBar.setMax((int)Math.abs(b.amount));
                 v.progressBar.setProgress((int)(spent-1));
             }
+			showPace(v.progressBar, b, balance);
 		} else {
 			v.bottomView.setText("*/*");
 			v.rightView1.setText(R.string.calculating);
@@ -129,6 +132,34 @@ public class BudgetListAdapter extends BaseAdapter {
 		}
 		v.progressBar.setVisibility(View.VISIBLE);
 		return convertView;
+	}
+
+	private static final int OVER = Color.parseColor("#FFD0453B");
+	private static final int BEHIND = Color.parseColor("#FFE9A742");
+	private static final int WITHIN = Color.parseColor("#FF3FA96F");
+
+	/**
+	 * Colours the bar by how the spending compares with how much of the period has
+	 * gone, and marks where it should stand today. Half a budget left on the last
+	 * day and half left on the first day are not the same thing, and the bar alone
+	 * could not tell them apart.
+	 */
+	private void showPace(ProgressBar bar, Budget b, long balance) {
+		long amount = Math.abs(b.amount);
+		if (amount == 0) {
+			return;
+		}
+		long span = b.endDate - b.startDate;
+		double elapsed = span > 0
+				? Math.max(0, Math.min(1, (System.currentTimeMillis() - b.startDate) / (double) span))
+				: 1;
+		// The bar counts down what is left, so at any moment this much should be.
+		long shouldRemain = (long) (amount * (1 - elapsed));
+		bar.setSecondaryProgress((int) shouldRemain);
+
+		long left = b.amount > 0 ? balance : amount + b.spent;
+		int color = left < 0 ? OVER : (left < shouldRemain ? BEHIND : WITHIN);
+		bar.setProgressTintList(ColorStateList.valueOf(color));
 	}
 
     private static class Holder {
