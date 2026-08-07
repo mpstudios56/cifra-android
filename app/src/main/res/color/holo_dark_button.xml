@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bar button fill. The pressed and focused states are gone: the ripple in
+  holo_dark_button_background handles touch now, and the focus state was the old
+  Holo blue, which no longer belongs anywhere in the app.
+-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_window_focused="false" android:state_enabled="true"
-        android:color="#ff707070" />
-    <item android:state_window_focused="false" android:state_enabled="false"
-        android:color="#ff404040" />
-    <item android:state_pressed="true"
-        android:color="#ff505050" />
-    <item android:state_focused="true" android:state_enabled="true"
-        android:color="#ffade1f5" />
-    <item android:state_enabled="true"
-        android:color="#ff707070" />
-    <item android:state_focused="true"
-        android:color="#ff33b5e5" />
-    <item
-        android:color="#ff404040" />
+    <item android:state_enabled="false" android:color="#FF404040" />
+    <item android:color="#FF6E6E6E" />
 </selector>
