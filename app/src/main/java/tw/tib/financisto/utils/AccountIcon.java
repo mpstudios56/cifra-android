@@ -62,7 +62,13 @@ public enum AccountIcon {
     CREDIT_AGRICOLE("creditagricole", R.drawable.bank_creditagricole, R.string.bank_creditagricole, false),
     DEUTSCHE_BANK("deutschebank", R.drawable.bank_deutschebank, R.string.bank_deutschebank, false),
     SONDRIO("sondrio", R.drawable.bank_sondrio, R.string.bank_sondrio, false),
-    UNICREDIT("unicredit", R.drawable.bank_unicredit, R.string.bank_unicredit, false);
+    UNICREDIT("unicredit", R.drawable.bank_unicredit, R.string.bank_unicredit, false),
+
+    // Investment platforms, for securities accounts held with them.
+    DEGIRO("degiro", R.drawable.broker_degiro, R.string.broker_degiro, false),
+    ETORO("etoro", R.drawable.broker_etoro, R.string.broker_etoro, false),
+    IBKR("ibkr", R.drawable.broker_ibkr, R.string.broker_ibkr, false),
+    TRADE_REPUBLIC("traderepublic", R.drawable.broker_traderepublic, R.string.broker_traderepublic, false);
 
     /** No emoji begins with this, so stored text is never mistaken for a symbol. */
     public static final String MARKER = "@";

@@ -1166,4 +1166,8 @@
   <string name="bank_deutschebank">Deutsche Bank</string>
   <string name="bank_sondrio">Banca Popolare di Sondrio</string>
   <string name="bank_unicredit">UniCredit</string>
+  <string name="broker_degiro">DEGIRO</string>
+  <string name="broker_etoro">eToro</string>
+  <string name="broker_ibkr">Interactive Brokers</string>
+  <string name="broker_traderepublic">Trade Republic</string>
 </resources>
