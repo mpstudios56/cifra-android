@@ -670,7 +670,6 @@
     <string name="payment_day_error">Payment day is not valid.</string>
     <string name="statement_error">Please set payment and closing days for this credit card on account properties.</string>
     <string name="is_ccard_payment">Exclude from the statement total</string>
-    <string name="is_ccard_payment_summary">For entries that would otherwise be counted twice, such as paying off a credit card</string>
     <string name="header_payments">Payments</string>
     <string name="header_credits">Various Credits</string>
     <string name="header_expenses">Expenses</string>

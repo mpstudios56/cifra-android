@@ -568,7 +568,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			// checkbox to register if the transaction is a credit card payment.
 			// this will be used to exclude from totals in bill preview
 			ccardPayment = x.addCheckboxNode(layout, R.id.is_ccard_payment,
-					R.string.is_ccard_payment, R.string.is_ccard_payment_summary, false);
+					R.string.is_ccard_payment, false);
 		}
 	}
 

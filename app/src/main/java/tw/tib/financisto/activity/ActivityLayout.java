@@ -172,6 +172,22 @@ public class ActivityLayout {
 		return b.withId(id, listener).create();
 	}
 
+	/**
+	 * A checkbox whose label says everything, with no second line under it. The
+	 * empty view would otherwise still take its height.
+	 */
+	public CheckBox addCheckboxNode(LinearLayout layout, int id, int labelId, boolean checked) {
+		CheckBoxBuilder b = inflater.new CheckBoxBuilder(layout);
+		View v = b.withCheckbox(checked).withLabel(labelId).withId(id, listener).create();
+		View data = v.findViewById(R.id.data);
+		if (data != null) {
+			data.setVisibility(View.GONE);
+		}
+		CheckBox checkbox = v.findViewById(R.id.checkbox);
+		checkbox.setTag(v);
+		return checkbox;
+	}
+
 	public CheckBox addCheckboxNode(LinearLayout layout, int id, int labelId, int dataId, boolean checked) {
 		CheckBoxBuilder b = inflater.new CheckBoxBuilder(layout);
 		View v = b.withCheckbox(checked).withLabel(labelId).withId(id, listener).withData(dataId).create();

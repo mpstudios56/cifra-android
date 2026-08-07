@@ -502,7 +502,6 @@
   <string name="payment_day_error">Jour de paiement invalide.</string>
   <string name="statement_error">Merci de définir dates de paiment et de clotures (propriétés du compte).</string>
   <string name="is_ccard_payment">Exclure du total du relevé</string>
-  <string name="is_ccard_payment_summary">Pour les opérations qui seraient sinon comptées deux fois, comme le remboursement d\'une carte de crédit</string>
   <string name="header_payments">Paiements</string>
   <string name="header_credits">Divers crédits</string>
   <string name="header_expenses">Dépenses</string>

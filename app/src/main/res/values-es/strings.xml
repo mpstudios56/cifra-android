@@ -503,7 +503,6 @@
   <string name="payment_day_error">El día del pago no es válido.</string>
   <string name="statement_error">Debe fijar los días del pago y del cierre de esta tarjeta de crédito en las propiedades de su cuenta.</string>
   <string name="is_ccard_payment">Excluir del total del extracto</string>
-  <string name="is_ccard_payment_summary">Para las transacciones que si no se contarían dos veces, como el pago de una tarjeta de crédito</string>
   <string name="header_payments">Pagos</string>
   <string name="header_credits">Abonos</string>
   <string name="header_expenses">Cargos</string>

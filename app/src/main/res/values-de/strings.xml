@@ -503,7 +503,6 @@
   <string name="payment_day_error">Tag der Zahlung ist nicht gültig.</string>
   <string name="statement_error">Bitte den Zahlungstag sowie den letzten Zahlungstag für die Kreditkarte in den Eigenschaften setzen.</string>
   <string name="is_ccard_payment">Nicht in die Abrechnungssumme aufnehmen</string>
-  <string name="is_ccard_payment_summary">Für Buchungen, die sonst doppelt gezählt würden, etwa der Ausgleich einer Kreditkarte</string>
   <string name="header_payments">Zahlungen</string>
   <string name="header_credits">Verschiedene Kredite</string>
   <string name="header_expenses">Ausgaben</string>

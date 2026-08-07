@@ -537,7 +537,6 @@
   <string name="payment_day_error">Giorno del pagamento non valido.</string>
   <string name="statement_error">Imposta i giorni di pagamento e chiusura per questa carta di credito nelle impostazioni del conto.</string>
   <string name="is_ccard_payment">Non includere nel totale dell\'estratto conto</string>
-  <string name="is_ccard_payment_summary">Per i movimenti che verrebbero contati due volte, come il saldo di una carta di credito</string>
   <string name="header_payments">Pagamenti</string>
   <string name="header_credits">Crediti Vari</string>
   <string name="header_expenses">Spese</string>
