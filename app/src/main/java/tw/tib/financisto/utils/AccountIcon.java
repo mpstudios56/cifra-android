@@ -52,7 +52,17 @@ public enum AccountIcon {
     GOOGLE_WALLET("gwallet", R.drawable.electronic_type_google_wallet, R.string.electronic_type_google_wallet, false),
     AMAZON("amazon", R.drawable.electronic_type_amazon, R.string.electronic_type_amazon, false),
     ALIPAY("alipay", R.drawable.electronic_type_alipay, R.string.electronic_type_alipay, false),
-    COINBASE("coinbase", R.drawable.electronic_type_coinbase, R.string.electronic_type_coinbase, false);
+    COINBASE("coinbase", R.drawable.electronic_type_coinbase, R.string.electronic_type_coinbase, false),
+
+    // Bank marks, for accounts held at these. Only the ones whose drawing is in
+    // the public domain and converts faithfully are here: a wrong logo is worse
+    // than none, and the symbol chooser covers every other bank anyway.
+    BBVA("bbva", R.drawable.bank_bbva, R.string.bank_bbva, false),
+    BPER("bper", R.drawable.bank_bper, R.string.bank_bper, false),
+    CREDIT_AGRICOLE("creditagricole", R.drawable.bank_creditagricole, R.string.bank_creditagricole, false),
+    DEUTSCHE_BANK("deutschebank", R.drawable.bank_deutschebank, R.string.bank_deutschebank, false),
+    SONDRIO("sondrio", R.drawable.bank_sondrio, R.string.bank_sondrio, false),
+    UNICREDIT("unicredit", R.drawable.bank_unicredit, R.string.bank_unicredit, false);
 
     /** No emoji begins with this, so stored text is never mistaken for a symbol. */
     public static final String MARKER = "@";

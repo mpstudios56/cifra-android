@@ -1169,4 +1169,10 @@
   <string name="upload_to_gdrive">Carica su\nGoogle Drive</string>
   <string name="use_exchange_rate_service_with_historical">Scegli un servizio di cambi che fornisca anche gli storici, come OpenExchangeRates.org</string>
   <string name="use_pin">Usa il codice</string>
+  <string name="bank_bbva">BBVA</string>
+  <string name="bank_bper">BPER Banca</string>
+  <string name="bank_creditagricole">Crédit Agricole</string>
+  <string name="bank_deutschebank">Deutsche Bank</string>
+  <string name="bank_sondrio">Banca Popolare di Sondrio</string>
+  <string name="bank_unicredit">UniCredit</string>
 </resources>
