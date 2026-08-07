@@ -951,7 +951,7 @@
   <string name="delete_picture_confirm">Bild lösen und die Datei löschen?</string>
   <string name="delete_picture_file_message">Das Bild wird ohnehin von dieser Transaktion gelöst. Seine Datei kann zusätzlich aus dem Speicher gelöscht werden, damit sie nicht ungenutzt bleibt.</string>
   <string name="delete_picture_file_title">Bilddatei löschen?</string>
-  <string name="donate_summary">Cifra ist kostenlos, ohne Werbung und ohne Bezahlfunktionen. Wenn sie dir Zeit spart, spendier mir einen Kaffee oder ein Bier - das reicht völlig.</string>
+  <string name="donate_summary">Cifra ist kostenlos, ohne Werbung und ohne Bezahlfunktionen. Wenn sie dir Zeit spart und dir im Alltag hilft, spendier mir einen Kaffee oder ein Bier - das reicht wirklich.\nIch werde sie immer weiter verbessern.</string>
   <string name="download_all_rates">Alle aktuellen Kurse laden</string>
   <string name="downloading_picture_from_dropbox">Wird von Dropbox geladen…</string>
   <string name="downloading_picture_from_google_drive">Wird von Google Drive geladen…</string>

@@ -951,7 +951,7 @@
   <string name="delete_picture_confirm">¿Quitar la foto y eliminar su archivo?</string>
   <string name="delete_picture_file_message">La foto se desvinculará de esta transacción en cualquier caso. Su archivo también puede eliminarse de la memoria, para que no quede sin uso.</string>
   <string name="delete_picture_file_title">¿Eliminar el archivo de la foto?</string>
-  <string name="donate_summary">Cifra es gratuita, sin anuncios y sin funciones de pago. Si te ahorra tiempo, invítame a un café o a una cerveza: con eso basta.</string>
+  <string name="donate_summary">Cifra es gratuita, sin anuncios y sin funciones de pago. Si te ahorra tiempo y te ayuda en el día a día, invítame a un café o a una cerveza: de verdad, con eso basta.\nYo la seguiré mejorando siempre.</string>
   <string name="download_all_rates">Descargar todos los cambios actuales</string>
   <string name="downloading_picture_from_dropbox">Descargando de Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Descargando de Google Drive…</string>

@@ -1183,7 +1183,7 @@
     <string name="mass_operations_summary">Apply operations to multiple transactions</string>
     <string name="planner_summary">View monthly planner</string>
     <string name="integrity_fix_summary">Fix internal problems when required</string>
-    <string name="donate_summary">Cifra is free, has no ads and holds nothing back. If it saves you time, a coffee or a beer is a fine way to say so.</string>
+    <string name="donate_summary">Cifra is free, has no adverts and no paid features. If it saves you time and helps you day to day, buy me a coffee or a beer: that really is enough.\nI will always keep making it better.</string>
     <string name="about_summary">Get more information about the project</string>
 
     <string name="pin_warning">Please make sure to remember the pin. There is no way to recover your information or turn off the protection if you lose or forget the pin.</string>

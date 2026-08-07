@@ -971,7 +971,7 @@
   <string name="decimals_warning">I decimali diversi da 0, 1 e 2 sono sperimentali</string>
   <string name="delete_account">Elimina il conto</string>
   <string name="delete_picture_confirm">Staccare la foto ed eliminarne il file?</string>
-  <string name="donate_summary">Cifra è gratuita, senza pubblicità e senza funzioni a pagamento. Se ti fa risparmiare tempo, offrimi un caffè o una birra: bastano davvero.</string>
+  <string name="donate_summary">Cifra è gratuita, senza pubblicità e senza funzioni a pagamento. Se ti fa risparmiare tempo e ti aiuta nella vita di tutti i giorni, offrimi un caffè o una birra: bastano davvero.\nIo la migliorerò sempre.</string>
   <string name="download_all_rates">Scarica tutti i cambi attuali</string>
   <string name="downloading_picture_from_dropbox">Scaricamento da Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Scaricamento da Google Drive…</string>

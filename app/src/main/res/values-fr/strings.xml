@@ -924,7 +924,7 @@
   <string name="delete_picture_confirm">Détacher la photo et supprimer son fichier ?</string>
   <string name="delete_picture_file_message">La photo sera détachée de cette opération dans tous les cas. Son fichier peut aussi être supprimé de la mémoire, pour ne pas rester inutilisé.</string>
   <string name="delete_picture_file_title">Supprimer le fichier de la photo ?</string>
-  <string name="donate_summary">Cifra est gratuite, sans publicité et sans fonction payante. Si elle vous fait gagner du temps, offrez-moi un café ou une bière : cela suffit.</string>
+  <string name="donate_summary">Cifra est gratuite, sans publicité et sans fonction payante. Si elle vous fait gagner du temps et vous aide au quotidien, offrez-moi un café ou une bière : cela suffit vraiment.\nJe continuerai toujours à l\'améliorer.</string>
   <string name="download_all_rates">Télécharger tous les taux actuels</string>
   <string name="downloading_picture_from_dropbox">Téléchargement depuis Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Téléchargement depuis Google Drive…</string>
