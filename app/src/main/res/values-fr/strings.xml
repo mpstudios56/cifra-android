@@ -1237,4 +1237,9 @@
   <string name="quick_bar">Boutons dans le volet des notifications</string>
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
   <string name="quick_bar_title">Nouvelle opération</string>
+  <string name="totals_accounts_title">Ce que vous avez</string>
+  <string name="totals_accounts_explained">La pastille additionne les soldes de tous les comptes comptés dans les totaux. Ci-dessous, ce qui a bougé ce mois-ci : autre question, autre chiffre.</string>
+  <string name="totals_blotter_title">Solde de ce qui est affiché</string>
+  <string name="totals_blotter_explained">La pastille additionne les opérations de cette liste. C\'est ce qui a bougé, pas ce que vous avez : elle ne correspondra pas au total des comptes.</string>
+  <string name="totals_blotter_explained_filtered">La pastille additionne les opérations qui passent le filtre en cours, pas toutes, et pas ce que vous avez.</string>
 </resources>

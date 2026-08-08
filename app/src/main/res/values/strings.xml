@@ -1384,4 +1384,9 @@
     <string name="quick_bar">Buttons in the notification shade</string>
     <string name="quick_bar_summary">A quiet notification carrying quick entry, transaction and transfer</string>
     <string name="quick_bar_title">New entry</string>
+    <string name="totals_accounts_title">What you have</string>
+    <string name="totals_accounts_explained">The chip adds up the balances of every account counted in the totals. Below is what moved this month - a different question, so a different figure.</string>
+    <string name="totals_blotter_title">Net of what is shown</string>
+    <string name="totals_blotter_explained">The chip adds up the transactions in this list. It is what moved, not what you have, so it will not match the total on the accounts screen.</string>
+    <string name="totals_blotter_explained_filtered">The chip adds up the transactions passing the filter in force, not all of them, and not what you have.</string>
 </resources>

@@ -20,12 +20,12 @@ import tw.tib.financisto.model.Currency;
 /**
  * What happens when the total is tapped.
  * <p>
- * It used to open a screen listing the total once per currency. With one
- * currency - which is nearly everyone - that screen showed a single line
- * repeating the figure already on the button, so tapping appeared to do
- * nothing. It still opens for anyone actually keeping accounts in more than one
- * currency; otherwise it answers the more useful question, which is what the
- * figure is made of.
+ * The two totals in the app are not the same kind of number and never will be.
+ * The one on the accounts screen is how much there is: a sum of balances, a
+ * standing figure. The one on the ledger is the net of the transactions being
+ * looked at, which moves with the filter and is a flow. Shown as identical
+ * chips they invite a comparison that cannot come out even, so each now says
+ * what it is before saying what it is made of.
  */
 public class TotalsPopup {
 
@@ -46,7 +46,8 @@ public class TotalsPopup {
     /** Income and spending behind the figure the ledger is showing. */
     public static void showBlotterBreakdown(Context context, DatabaseAdapter db, WhereFilter filter) {
         String selection = filter.getSelection();
-        String where = selection == null || selection.trim().isEmpty() ? "1=1" : selection;
+        boolean filtered = selection != null && !selection.trim().isEmpty();
+        String where = filtered ? selection : "1=1";
         String sql = "select"
                 + " coalesce(sum(case when from_amount > 0 then from_amount else 0 end), 0),"
                 + " coalesce(sum(case when from_amount < 0 then from_amount else 0 end), 0)"
@@ -60,7 +61,10 @@ public class TotalsPopup {
             }
         }
         Currency currency = CurrencyCache.getHomeCurrency();
-        show(context, R.string.total,
+        show(context, R.string.totals_blotter_title,
+                context.getString(filtered
+                        ? R.string.totals_blotter_explained_filtered
+                        : R.string.totals_blotter_explained),
                 context.getString(R.string.summary_income), income,
                 context.getString(R.string.summary_expense), expense,
                 context.getString(R.string.summary_saved), income + expense, currency);
@@ -94,17 +98,19 @@ public class TotalsPopup {
             }
         }
         Currency currency = CurrencyCache.getHomeCurrency();
-        show(context, R.string.total,
+        show(context, R.string.totals_accounts_title,
+                context.getString(R.string.totals_accounts_explained),
                 context.getString(R.string.summary_income), income,
                 context.getString(R.string.summary_expense), expense,
                 context.getString(R.string.summary_saved), income + expense, currency);
     }
 
-    private static void show(Context context, int titleId,
+    private static void show(Context context, int titleId, String explanation,
                              String firstLabel, long first,
                              String secondLabel, long second,
                              String thirdLabel, long third, Currency currency) {
-        String message = firstLabel + "\n" + Utils.amountToString(currency, first) + "\n\n"
+        String message = explanation + "\n\n"
+                + firstLabel + "\n" + Utils.amountToString(currency, first) + "\n\n"
                 + secondLabel + "\n" + Utils.amountToString(currency, second) + "\n\n"
                 + thirdLabel + "\n" + Utils.amountToString(currency, third);
         new AlertDialog.Builder(context)

@@ -1244,4 +1244,9 @@
   <string name="quick_bar">Tasten im Benachrichtigungsfeld</string>
   <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
   <string name="quick_bar_title">Neue Buchung</string>
+  <string name="totals_accounts_title">Was du hast</string>
+  <string name="totals_accounts_explained">Der Chip addiert die Salden aller Konten, die in die Summen zählen. Darunter steht, was sich diesen Monat bewegt hat: andere Frage, andere Zahl.</string>
+  <string name="totals_blotter_title">Saldo des Gezeigten</string>
+  <string name="totals_blotter_explained">Der Chip addiert die Buchungen dieser Liste. Das ist, was sich bewegt hat, nicht was du hast - er stimmt mit der Kontosumme nicht überein.</string>
+  <string name="totals_blotter_explained_filtered">Der Chip addiert die Buchungen, die durch den aktiven Filter kommen, nicht alle, und nicht was du hast.</string>
 </resources>
