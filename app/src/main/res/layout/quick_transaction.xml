@@ -6,6 +6,10 @@
   assumed - today's date, the chosen account, cleared status - and the keypad is
   on screen so the amount is typed without the system keyboard sliding over half
   the layout.
+
+  The two small labels are the least that stops the row of buttons from being a
+  guess, and "other" sits outside the scrolling strip so it is always in the
+  same place however many shortcuts there are.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/quick_base"
@@ -14,20 +18,28 @@
     android:orientation="vertical"
     android:padding="12dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/account"
+        android:textAllCaps="true"
+        android:textSize="11sp"
+        android:alpha="0.6" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/quick_account"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="start|center_vertical"
             android:singleLine="true"
-            android:ellipsize="end"
             android:text="@string/select_account" />
 
         <ToggleButton
@@ -43,36 +55,69 @@
         android:id="@+id/quick_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="6dp"
         android:gravity="end"
         android:singleLine="true"
         android:text="0,00"
-        android:textSize="48sp"
+        android:textSize="46sp"
         android:textStyle="bold" />
 
-    <HorizontalScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/quick_categories"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+            android:alpha="0.6"
+            android:text="@string/category"
+            android:textAllCaps="true"
+            android:textSize="11sp" />
 
-    <TextView
-        android:id="@+id/quick_chosen"
+        <TextView
+            android:id="@+id/quick_chosen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:singleLine="true"
+            android:text="@string/no_category"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:text="@string/no_category"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/quick_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/quick_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/other_categories" />
+    </LinearLayout>
 
     <GridLayout
         android:id="@+id/quick_keypad"

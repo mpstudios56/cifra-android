@@ -93,6 +93,10 @@ public class QuickTransactionActivity extends AppCompatActivity {
 
         accountButton.setOnClickListener(v -> pickAccount());
         findViewById(R.id.quick_save).setOnClickListener(v -> save());
+        // Outside the scrolling strip, so it stays put however many shortcuts there
+        // are: buried at the far right it was never found.
+        findViewById(R.id.quick_more).setOnClickListener(v -> startActivityForResult(
+                new Intent(this, CategorySelectorActivity.class), 1));
 
         buildKeypad();
         selectAccount(rememberedAccount());
@@ -234,11 +238,6 @@ public class QuickTransactionActivity extends AppCompatActivity {
             b.setOnClickListener(v -> chooseCategory(id, title));
             row.addView(b);
         }
-        Button more = new Button(this);
-        more.setText(R.string.other_categories);
-        more.setOnClickListener(v -> startActivityForResult(
-                new Intent(this, CategorySelectorActivity.class), 1));
-        row.addView(more);
     }
 
     private void chooseCategory(long id, String title) {
