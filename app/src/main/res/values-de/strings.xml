@@ -1194,7 +1194,7 @@
   <string name="summary_saved">Monatssaldo</string>
   <string name="summary_saved_share">%1$d%% der Einnahmen</string>
   <string name="summary_top_categories">Wohin es ging</string>
-  <string name="summary_net_worth">Alles zusammen</string>
+  <string name="summary_net_worth">Gesamt</string>
   <string name="summary_net_worth_note">Saldo aller Konten, die in die Summen zählen</string>
   <string name="summary_nothing_yet">Diesen Monat noch nichts</string>
   <string name="summary_category_line">%1$s  %2$d%%</string>

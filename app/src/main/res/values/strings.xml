@@ -1332,7 +1332,7 @@
     <string name="summary_saved">Monthly balance</string>
     <string name="summary_saved_share">%1$d%% of what came in</string>
     <string name="summary_top_categories">Where it went</string>
-    <string name="summary_net_worth">Everything together</string>
+    <string name="summary_net_worth">Total</string>
     <string name="summary_net_worth_note">Balance of every account counted in the totals</string>
     <string name="summary_nothing_yet">Nothing this month yet</string>
     <string name="summary_category_line">%1$s  %2$d%%</string>
