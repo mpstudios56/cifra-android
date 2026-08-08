@@ -206,13 +206,25 @@ public class DraftListFragment extends ListFragment {
         if (account != null) {
             sb.append(" · ").append(account.title);
         }
+        // Both ends of a transfer, or the row reads as an ordinary entry on the
+        // account the money was leaving.
+        if (entry.transaction.toAccountId > 0) {
+            Account to = db.getAccount(entry.transaction.toAccountId);
+            if (to != null) {
+                sb.append(" → ").append(to.title);
+            }
+        }
         return sb.toString();
     }
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         TransactionDraft.Entry entry = drafts.get(position);
-        Intent intent = new Intent(getContext(), TransactionActivity.class);
+        // A transfer has to reopen in the transfer screen: the ordinary one has no
+        // second account to put the other end of it in.
+        boolean isTransfer = entry.transaction.toAccountId > 0;
+        Intent intent = new Intent(getContext(),
+                isTransfer ? TransferActivity.class : TransactionActivity.class);
         intent.putExtra(AbstractTransactionActivity.DRAFT_ID_EXTRA, entry.id);
         startActivity(intent);
     }

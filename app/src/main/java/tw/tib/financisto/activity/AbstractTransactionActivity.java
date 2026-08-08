@@ -759,6 +759,8 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	 */
 	private boolean isWorthKeepingAsDraft(Transaction draft) {
 		return draft.fromAmount != 0
+				// A transfer with both ends picked is half done, whatever the amount.
+				|| draft.toAccountId > 0
 				|| draft.categoryId > 0
 				|| draft.payeeId > 0
 				|| (draft.note != null && !draft.note.trim().isEmpty())
