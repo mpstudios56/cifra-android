@@ -1244,4 +1244,6 @@
   <string name="quick_bar">Tasti nella tendina delle notifiche</string>
   <string name="quick_bar_summary">Una notifica silenziosa con spesa veloce, movimento e trasferimento</string>
   <string name="quick_bar_title">Nuova operazione</string>
+  <string name="menu_backup_security">Backup, ripristino e sicurezza</string>
+  <string name="menu_backup_security_summary">Una copia su file, su Drive o su Dropbox, e il blocco dell’app</string>
 </resources>

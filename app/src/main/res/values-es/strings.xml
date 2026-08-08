@@ -1241,4 +1241,6 @@
   <string name="quick_bar">Botones en el panel de notificaciones</string>
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
   <string name="quick_bar_title">Nueva operación</string>
+  <string name="menu_backup_security">Copia, restauración y seguridad</string>
+  <string name="menu_backup_security_summary">Una copia a un archivo, a Drive o a Dropbox, y el bloqueo de la aplicación</string>
 </resources>

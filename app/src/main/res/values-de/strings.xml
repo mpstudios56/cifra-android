@@ -1241,4 +1241,6 @@
   <string name="quick_bar">Tasten im Benachrichtigungsfeld</string>
   <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
   <string name="quick_bar_title">Neue Buchung</string>
+  <string name="menu_backup_security">Sichern, Wiederherstellen und Sicherheit</string>
+  <string name="menu_backup_security_summary">Eine Kopie in eine Datei, zu Drive oder Dropbox, und die Sperre der App</string>
 </resources>

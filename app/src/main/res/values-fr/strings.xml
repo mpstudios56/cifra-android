@@ -1234,4 +1234,6 @@
   <string name="quick_bar">Boutons dans le volet des notifications</string>
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
   <string name="quick_bar_title">Nouvelle opération</string>
+  <string name="menu_backup_security">Sauvegarde, restauration et sécurité</string>
+  <string name="menu_backup_security_summary">Une copie vers un fichier, Drive ou Dropbox, et le verrouillage de l’application</string>
 </resources>
