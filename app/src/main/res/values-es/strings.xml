@@ -680,8 +680,8 @@
   <string name="re_index_categories">Re-index</string>
   <string name="startup_screen">Startup screen</string>
   <string name="startup_screen_summary">Select tab which will be selected on startup</string>
-  <string name="integrity_error">Running balances look out of sync, please do Menu -&gt; More -&gt; Integrity Fix</string>
-  <string name="integrity_fix">Integrity Fix</string>
+  <string name="integrity_error">Los saldos no cuadran con los movimientos. Menú → Recalcular saldos y totales los pondrá en orden.</string>
+  <string name="integrity_fix">Recalcular saldos y totales</string>
   <string name="integrity_fix_in_progress">Checking and fixing if necessary...</string>
   <string name="select_to_account_differ_from_to_account">Cannot transfer to the same account...</string>
   <string name="period_this_and_last_week">This and last week</string>
@@ -1050,7 +1050,7 @@
   <string name="include_tx_status">Incluir\nel estado</string>
   <string name="installed_on_sd_card_warning">Las transacciones programadas pueden no funcionar si la aplicación está instalada en la tarjeta SD. Muévela a la memoria del dispositivo.</string>
   <string name="integrity_error_message">%s%n(Toca para cerrar este mensaje)</string>
-  <string name="integrity_fix_summary">Corrige los problemas internos cuando hace falta</string>
+  <string name="integrity_fix_summary">Reconstruye los saldos de las cuentas y los totales acumulados a partir de los propios movimientos. Úsalo cuando un saldo no coincide con la suma de sus apuntes, algo habitual tras una restauración o una importación. No borra ni modifica ningún movimiento.</string>
   <string name="invalid_rrule">Regla de repetición no válida: %s</string>
   <string name="is_included_into_reports">Incluir en los informes</string>
   <string name="is_included_into_reports_summary">Incluye en los informes las transacciones de esta cuenta</string>

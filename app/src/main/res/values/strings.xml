@@ -995,8 +995,8 @@
         <item>Reports</item>
     </string-array>
 
-    <string name="integrity_error">Running balances look out of sync, please do Menu -> More -> Integrity Fix</string>
-    <string name="integrity_fix">Integrity Fix</string>
+    <string name="integrity_error">Balances look out of step with the transactions. Menu → Recalculate balances and totals will put them right.</string>
+    <string name="integrity_fix">Recalculate balances and totals</string>
     <string name="integrity_fix_in_progress">Checking and fixing if necessary…</string>
 
     <string name="select_to_account_differ_from_to_account">Cannot transfer to the same account…</string>
@@ -1186,7 +1186,7 @@
     <string name="import_export_summary">Import/export database to another format like csv, qif, etc</string>
     <string name="mass_operations_summary">Apply operations to multiple transactions</string>
     <string name="planner_summary">View monthly planner</string>
-    <string name="integrity_fix_summary">Fix internal problems when required</string>
+    <string name="integrity_fix_summary">Rebuilds account balances and running totals from the transactions themselves. Use it when a balance does not match the sum of its entries, which usually follows a restore or an import. It never deletes or changes a transaction.</string>
     <string name="donate_summary">Cifra is free, has no adverts and no paid features. If it saves you time and helps you day to day, buy me a coffee or a beer: that really is enough.\nI will always keep making it better.</string>
     <string name="about_summary">Get more information about the project</string>
 

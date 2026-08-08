@@ -680,8 +680,8 @@
   <string name="re_index_categories">Neu indizieren</string>
   <string name="startup_screen">Startbildschirm</string>
   <string name="startup_screen_summary">Wählen Sie die Registerkarte, die beim Start angezeigt wird</string>
-  <string name="integrity_error">Laufendes Guthaben scheint nicht korrekt, wählen Sie bitte Menü -&gt; Mehr -&gt; Integritäts-Fix</string>
-  <string name="integrity_fix">Integritäts-Fix</string>
+  <string name="integrity_error">Die Salden passen nicht zu den Buchungen. Menü → Salden und Summen neu berechnen bringt sie in Ordnung.</string>
+  <string name="integrity_fix">Salden und Summen neu berechnen</string>
   <string name="integrity_fix_in_progress">Prüfe und korrigiere bei Bedarf ...</string>
   <string name="select_to_account_differ_from_to_account">Transfer zum selben Konto nicht möglich</string>
   <string name="period_this_and_last_week">Diese und vorige Woche</string>
@@ -1050,7 +1050,7 @@
   <string name="include_tx_status">Status\neinschließen</string>
   <string name="installed_on_sd_card_warning">Geplante Transaktionen funktionieren möglicherweise nicht, wenn die App auf der SD-Karte installiert ist. Verschiebe sie in den Gerätespeicher.</string>
   <string name="integrity_error_message">%s%n(Zum Schließen tippen)</string>
-  <string name="integrity_fix_summary">Behebt interne Probleme, wenn nötig</string>
+  <string name="integrity_fix_summary">Baut die Kontosalden und die laufenden Summen aus den Buchungen selbst neu auf. Zu verwenden, wenn ein Saldo nicht zur Summe seiner Buchungen passt, meist nach einer Wiederherstellung oder einem Import. Es wird keine Buchung gelöscht oder geändert.</string>
   <string name="invalid_rrule">Ungültige Wiederholungsregel: %s</string>
   <string name="is_included_into_reports">In Berichte einbeziehen</string>
   <string name="is_included_into_reports_summary">Bezieht die Transaktionen dieses Kontos in die Berichte ein</string>

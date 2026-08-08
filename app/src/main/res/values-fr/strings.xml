@@ -1021,11 +1021,11 @@
   <string name="import_wrong_currency_2">Devise incorrecte dans le fichier : <xliff:g id="currency">%1$s</xliff:g> (elle doit correspondre à celle du compte, soit <xliff:g id="currency">%2$s</xliff:g>)</string>
   <string name="include_tx_status">Inclure\nl\'état</string>
   <string name="installed_on_sd_card_warning">Les opérations planifiées peuvent ne pas fonctionner si l\'application est installée sur la carte SD. Déplacez-la dans la mémoire de l\'appareil.</string>
-  <string name="integrity_error">Les soldes cumulés semblent désynchronisés, faites Menu -> Plus -> Correction d\'intégrité</string>
+  <string name="integrity_error">Les soldes ne concordent pas avec les opérations. Menu → Recalculer les soldes et les totaux les remettra d\'aplomb.</string>
   <string name="integrity_error_message">%s%n(Touchez pour fermer ce message)</string>
-  <string name="integrity_fix">Correction d\'intégrité</string>
+  <string name="integrity_fix">Recalculer les soldes et les totaux</string>
   <string name="integrity_fix_in_progress">Vérification et correction si nécessaire…</string>
-  <string name="integrity_fix_summary">Corrige les problèmes internes lorsque c\'est nécessaire</string>
+  <string name="integrity_fix_summary">Reconstruit les soldes des comptes et les totaux cumulés à partir des opérations elles-mêmes. À utiliser quand un solde ne correspond pas à la somme de ses écritures, ce qui arrive en général après une restauration ou un import. Aucune opération n\'est supprimée ni modifiée.</string>
   <string name="invalid_rrule">Règle de répétition non valide : %s</string>
   <string name="is_included_into_reports">Inclure dans les états</string>
   <string name="is_included_into_reports_summary">Inclut les opérations de ce compte dans les états</string>

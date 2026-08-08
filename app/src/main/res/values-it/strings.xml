@@ -714,8 +714,8 @@
   <string name="re_index_categories">Reindicizzare</string>
   <string name="startup_screen">Schermo di avvio </string>
   <string name="startup_screen_summary">Seleziona tab che verranno selezionati in avvio</string>
-  <string name="integrity_error">Saldi non sincronizzati, vedi Menu -&gt; altro -&gt; Ripristina integrità</string>
-  <string name="integrity_fix">Ripristina integrità</string>
+  <string name="integrity_error">I saldi non tornano con i movimenti. Menu → Ricalcola saldi e totali li rimette a posto.</string>
+  <string name="integrity_fix">Ricalcola saldi e totali</string>
   <string name="integrity_fix_in_progress">Controllo e ripristino se necessario...</string>
   <string name="select_to_account_differ_from_to_account">Impossibile trasferire allo stesso conto</string>
   <string name="period_this_and_last_week">Questa settimana e la precedente</string>
@@ -1056,7 +1056,7 @@
   <string name="include_tx_status">Includi\nlo stato</string>
   <string name="installed_on_sd_card_warning">Le transazioni programmate potrebbero non funzionare se l\'app è installata sulla scheda SD. Spostala nella memoria del telefono.</string>
   <string name="integrity_error_message">%s%n(Tocca per chiudere questo messaggio)</string>
-  <string name="integrity_fix_summary">Corregge i problemi interni quando serve</string>
+  <string name="integrity_fix_summary">Rifà da zero i saldi dei conti e i totali progressivi partendo dai movimenti stessi. Serve quando un saldo non corrisponde alla somma dei suoi movimenti, cosa che di solito capita dopo un ripristino o un\'importazione. Non cancella e non modifica nessun movimento.</string>
   <string name="invalid_rrule">Regola di ricorrenza non valida: %s</string>
   <string name="is_included_into_reports">Includi nei report</string>
   <string name="is_included_into_reports_summary">Includi nei report le transazioni di questo conto</string>
