@@ -1191,7 +1191,7 @@
   <string name="summary">Übersicht</string>
   <string name="summary_income">Einnahmen</string>
   <string name="summary_expense">Ausgaben</string>
-  <string name="summary_saved">Gespart</string>
+  <string name="summary_saved">Monatssaldo</string>
   <string name="summary_saved_share">%1$d%% der Einnahmen</string>
   <string name="summary_top_categories">Wohin es ging</string>
   <string name="summary_net_worth">Alles zusammen</string>
@@ -1207,4 +1207,6 @@
   <string name="feedback_subject">Cifra %1$s - Rückmeldung</string>
   <string name="feedback_body">Schreib unten, was du sagen möchtest.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
   <string name="feedback_no_mail">Keine E-Mail-App auf diesem Telefon</string>
+  <string name="summary_previous_month">Voriger Monat</string>
+  <string name="summary_next_month">Nächster Monat</string>
 </resources>

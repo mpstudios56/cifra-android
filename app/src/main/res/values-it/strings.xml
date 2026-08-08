@@ -1194,7 +1194,7 @@
   <string name="summary">Riepilogo</string>
   <string name="summary_income">Entrate</string>
   <string name="summary_expense">Uscite</string>
-  <string name="summary_saved">Risparmiato</string>
+  <string name="summary_saved">Saldo mensile</string>
   <string name="summary_saved_share">%1$d%% di quanto è entrato</string>
   <string name="summary_top_categories">Dove sono andati</string>
   <string name="summary_net_worth">Tutto insieme</string>
@@ -1210,4 +1210,6 @@
   <string name="feedback_subject">Cifra %1$s - riscontro</string>
   <string name="feedback_body">Scrivi qui sotto quello che vuoi dire.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
   <string name="feedback_no_mail">Nessuna app di posta su questo telefono</string>
+  <string name="summary_previous_month">Mese precedente</string>
+  <string name="summary_next_month">Mese successivo</string>
 </resources>

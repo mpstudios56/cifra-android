@@ -48,6 +48,8 @@ public class SummaryFragment extends Fragment {
 
     private DatabaseAdapter db;
     private Utils u;
+    /** Months back from this one. Zero is the month in progress. */
+    private int monthsBack = 0;
 
     @Nullable
     @Override
@@ -68,6 +70,17 @@ public class SummaryFragment extends Fragment {
             v.setPadding(0, 0, 0, insets.bottom);
             ((ViewGroup) v).setClipToPadding(false);
             return WindowInsetsCompat.CONSUMED;
+        });
+
+        view.findViewById(R.id.summary_prev).setOnClickListener(v -> {
+            monthsBack++;
+            refresh();
+        });
+        view.findViewById(R.id.summary_next).setOnClickListener(v -> {
+            if (monthsBack > 0) {
+                monthsBack--;
+                refresh();
+            }
         });
     }
 
@@ -108,13 +121,22 @@ public class SummaryFragment extends Fragment {
         from.set(Calendar.MINUTE, 0);
         from.set(Calendar.SECOND, 0);
         from.set(Calendar.MILLISECOND, 0);
+        from.add(Calendar.MONTH, -monthsBack);
         long start = from.getTimeInMillis();
-        long end = System.currentTimeMillis();
+
+        Calendar next = (Calendar) from.clone();
+        next.add(Calendar.MONTH, 1);
+        // A month still running ends now, not at a date that has not arrived.
+        long end = Math.min(next.getTimeInMillis() - 1, System.currentTimeMillis());
 
         String month = new DateFormatSymbols(Locale.getDefault())
                 .getMonths()[from.get(Calendar.MONTH)];
         ((TextView) view.findViewById(R.id.summary_period))
                 .setText(month + " " + from.get(Calendar.YEAR));
+        // Nothing to see ahead of the month in progress.
+        View forward = view.findViewById(R.id.summary_next);
+        forward.setEnabled(monthsBack > 0);
+        forward.setAlpha(monthsBack > 0 ? 1f : 0.3f);
 
         long income = sum(start, end, true);
         long expense = sum(start, end, false);

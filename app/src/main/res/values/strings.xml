@@ -1329,7 +1329,7 @@
     <string name="summary">Summary</string>
     <string name="summary_income">In</string>
     <string name="summary_expense">Out</string>
-    <string name="summary_saved">Left</string>
+    <string name="summary_saved">Monthly balance</string>
     <string name="summary_saved_share">%1$d%% of what came in</string>
     <string name="summary_top_categories">Where it went</string>
     <string name="summary_net_worth">Everything together</string>
@@ -1347,4 +1347,6 @@
     <string name="feedback_no_mail">No mail app on this phone</string>
     <!-- Where feedback is sent. Not translated: it is an address. -->
     <string name="feedback_address" translatable="false">marcellopandolfo@gmail.com</string>
+    <string name="summary_previous_month">Previous month</string>
+    <string name="summary_next_month">Next month</string>
 </resources>

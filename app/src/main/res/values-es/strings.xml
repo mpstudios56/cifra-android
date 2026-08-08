@@ -1191,7 +1191,7 @@
   <string name="summary">Resumen</string>
   <string name="summary_income">Ingresos</string>
   <string name="summary_expense">Gastos</string>
-  <string name="summary_saved">Ahorrado</string>
+  <string name="summary_saved">Saldo del mes</string>
   <string name="summary_saved_share">%1$d%% de lo que entró</string>
   <string name="summary_top_categories">A dónde fue</string>
   <string name="summary_net_worth">Todo junto</string>
@@ -1207,4 +1207,6 @@
   <string name="feedback_subject">Cifra %1$s - comentarios</string>
   <string name="feedback_body">Escribe abajo lo que quieras decir.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
   <string name="feedback_no_mail">No hay ninguna aplicación de correo en este teléfono</string>
+  <string name="summary_previous_month">Mes anterior</string>
+  <string name="summary_next_month">Mes siguiente</string>
 </resources>
