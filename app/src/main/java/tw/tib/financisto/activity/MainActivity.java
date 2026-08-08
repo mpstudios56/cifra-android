@@ -108,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
                     | WindowInsetsCompat.Type.statusBars()
                     | WindowInsetsCompat.Type.captionBar());
-            v.setPadding(0, insets.top, 0, 0);
+            // The strip sits at the bottom now, so it is the navigation bar it has
+            // to keep clear of, not the status bar.
+            v.setPadding(0, 0, 0, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
 

@@ -11,12 +11,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
 	android:orientation="vertical">
-	<ListView android:id="@android:id/list" android:layout_width="match_parent"
-		android:layout_weight="1" android:layout_height="match_parent">
-	</ListView>
-	<TextView android:id="@id/android:empty" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_weight="1"
-		android:gravity="center" android:text="@string/no_budgets" />
+
 	<LinearLayout style="@style/BottomBar" android:id="@+id/bottom_bar">
 		<ImageButton android:id="@+id/bAdd"
 			style="@style/BottomBarButton"
@@ -29,4 +24,12 @@
 			android:src="@drawable/sort" />
         <include layout="@layout/total_text"/>
 	</LinearLayout>
+
+	<ListView android:id="@android:id/list" android:layout_width="match_parent"
+		android:layout_weight="1" android:layout_height="match_parent">
+	</ListView>
+	<TextView android:id="@id/android:empty" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1"
+		android:gravity="center" android:text="@string/no_budgets" />
+
 </LinearLayout>

@@ -54,7 +54,8 @@ public class ReportsListFragment extends ListFragment {
 
         ViewCompat.setOnApplyWindowInsetsListener(getView().findViewById(android.R.id.list), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, 0, 0, insets.bottom);
+            // The tab strip below already stands clear of the navigation bar.
+            v.setPadding(0, 0, 0, 0);
             ((ViewGroup) v).setClipToPadding(false);
             return WindowInsetsCompat.CONSUMED;
         });

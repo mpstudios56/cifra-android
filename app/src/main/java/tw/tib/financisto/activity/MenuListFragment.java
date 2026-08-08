@@ -59,7 +59,8 @@ public class MenuListFragment extends ListFragment {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
                     | WindowInsetsCompat.Type.statusBars()
                     | WindowInsetsCompat.Type.captionBar());
-            v.setPadding(0, 0, 0, insets.bottom);
+            // The tab strip below already stands clear of the navigation bar.
+            v.setPadding(0, 0, 0, 0);
             ((ViewGroup) v).setClipToPadding(false);
             return WindowInsetsCompat.CONSUMED;
         });

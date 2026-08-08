@@ -90,7 +90,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                     | WindowInsetsCompat.Type.statusBars()
                     | WindowInsetsCompat.Type.captionBar()
                     | WindowInsetsCompat.Type.ime());
-            v.setPadding(0, 0, 0, insets.bottom);
+            v.setPadding(0, insets.top, 0, 0);
             return WindowInsetsCompat.CONSUMED;
         });
 

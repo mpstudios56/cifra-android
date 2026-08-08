@@ -247,7 +247,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                         | WindowInsetsCompat.Type.captionBar()
                         | WindowInsetsCompat.Type.ime());
                 Log.d(TAG, format("insets.bottom: %s", insets.bottom));
-                v.setPadding(0, 0, 0, insets.bottom);
+                v.setPadding(0, insets.top, 0, 0);
                 return WindowInsetsCompat.CONSUMED;
             });
         }
