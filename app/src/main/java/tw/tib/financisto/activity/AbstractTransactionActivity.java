@@ -178,6 +178,12 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	// Pictures the user agreed to delete from storage, applied once the transaction
 	// is saved so that cancelling the edit leaves them where they are.
 	private final List<String> picturesToDeleteOnSave = new ArrayList<>();
+	/**
+	 * Files written by this screen. Attaching a photo copies it into the backup
+	 * folder straight away, so walking away without saving used to leave it there
+	 * with nothing left pointing at it.
+	 */
+	private final List<String> picturesAddedHere = new ArrayList<>();
 
 	// Set once the entry has been written, so leaving the screen afterwards is not
 	// mistaken for abandoning it and does not leave a draft behind.
@@ -424,7 +430,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 							Application.getExecutor().execute(() -> {
 								String fileName = PicturesUtil.saveSelectedPicture(this, uri);
 								if (fileName != null) {
-									new Handler(Looper.getMainLooper()).post(() -> selectPicture(fileName));
+									new Handler(Looper.getMainLooper()).post(() -> attachNewPicture(fileName));
 								}
 							});
 						} else {
@@ -435,7 +441,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 			takePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(), ret -> {
 				if (ret == false) return;
 				PicturesUtil.backupPictureFile(this, newPictureUri);
-				selectPicture(DocumentFile.fromSingleUri(this, newPictureUri).getName());
+				attachNewPicture(DocumentFile.fromSingleUri(this, newPictureUri).getName());
 			});
 
 			selectBackupFolder = registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
@@ -876,6 +882,14 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 				.build());
 	}
 
+	/** A picture this screen has just created, as opposed to one already stored. */
+	private void attachNewPicture(String pictureFileName) {
+		if (pictureFileName != null) {
+			picturesAddedHere.add(pictureFileName);
+		}
+		selectPicture(pictureFileName);
+	}
+
 	private void selectPicture(String pictureFileName) {
 		if (pictureView == null) {
 			return;
@@ -1053,11 +1067,38 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
 	@Override
 	protected void onDestroy() {
+		discardUnusedPictures();
 		if (payeeSelector != null) payeeSelector.onDestroy();
 		if (projectSelector != null) projectSelector.onDestroy();
 		if (locationSelector != null) locationSelector.onDestroy();
 		if (categorySelector != null) categorySelector.onDestroy();
 		super.onDestroy();
+	}
+
+	/**
+	 * Throws away photos taken here that nothing ended up pointing at.
+	 * <p>
+	 * Done as the screen goes for good rather than in onPause, which also runs when
+	 * the camera opens on top: deleting there would remove the picture just taken.
+	 */
+	private void discardUnusedPictures() {
+		if (!isFinishing() || transactionSaved || picturesAddedHere.isEmpty()) {
+			return;
+		}
+		List<String> orphans = new ArrayList<>(picturesAddedHere);
+		picturesAddedHere.clear();
+		// A draft was kept and still points at one of them, so that one stays.
+		if (draftId > 0) {
+			orphans.remove(transaction.attachedPicture);
+		}
+		if (orphans.isEmpty()) {
+			return;
+		}
+		Application.getExecutor().execute(() -> {
+			for (String fileName : orphans) {
+				PicturesUtil.deletePictureFile(this, fileName);
+			}
+		});
 	}
 
 	@Override

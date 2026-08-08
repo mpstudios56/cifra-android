@@ -30,10 +30,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import tw.tib.financisto.Application;
 import tw.tib.financisto.R;
 import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.model.Account;
 import tw.tib.financisto.model.Category;
+import tw.tib.financisto.utils.PicturesUtil;
 import tw.tib.financisto.utils.TransactionDraft;
 import tw.tib.financisto.utils.Utils;
 
@@ -133,6 +135,13 @@ public class DraftListFragment extends ListFragment {
                 .setMessage(R.string.delete_draft_message)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
                     for (TransactionDraft.Entry entry : selected) {
+                        // The photo was written when it was attached and only the
+                        // draft pointed at it, so it goes with the draft.
+                        String picture = entry.transaction.attachedPicture;
+                        if (picture != null) {
+                            Application.getExecutor().execute(
+                                    () -> PicturesUtil.deletePictureFile(getContext(), picture));
+                        }
                         TransactionDraft.delete(getContext(), entry.id);
                     }
                     mode.finish();
