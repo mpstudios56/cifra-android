@@ -1265,7 +1265,17 @@
   <string name="csv_map_parent_category">Grupo de categorías</string>
   <string name="csv_map_incomplete">Como mínimo hacen falta la columna de la fecha y la del importe.</string>
   <string name="csv_map_unreadable_lines">%1$d líneas no se pueden leer y quedarían fuera.</string>
-  <string name="csv_map_would_read">Cifra lee %1$d de las primeras líneas de este archivo.</string>
-  <string name="csv_map_not_yet">No se ha escrito nada. La importación en sí es el siguiente trabajo.</string>
   <string name="csv_map_continue">Continuar</string>
+  <string name="csv_map_fallback">Líneas sin cuenta</string>
+  <string name="csv_map_fallback_new">Crear «%1$s»</string>
+  <string name="csv_map_confirm">Cifra hace primero una copia completa y luego importa. Las líneas que no dicen la cuenta van a «%1$s». Lo que falte — cuentas, categorías, beneficiarios — se crea.</string>
+  <string name="csv_map_import">Importar</string>
+  <string name="csv_map_backing_up">Primero la copia…</string>
+  <string name="csv_map_backup_failed">No se ha podido hacer la copia, así que no se ha importado nada. Elige una carpeta para las copias en Copia, restauración y seguridad y vuelve a intentarlo.</string>
+  <string name="csv_map_importing">Importando…</string>
+  <string name="csv_map_importing_progress">Importando… %1$d%%</string>
+  <string name="csv_map_imported">%1$d movimientos importados.</string>
+  <string name="csv_map_accounts_created">%1$d cuentas creadas.</string>
+  <string name="csv_map_categories_created">%1$d categorías creadas.</string>
+  <string name="csv_map_payees_created">%1$d beneficiarios creados.</string>
 </resources>

@@ -5,6 +5,7 @@
  */
 package tw.tib.financisto.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,11 +42,15 @@ import java.util.Locale;
 import java.util.Map;
 
 import tw.tib.financisto.R;
+import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.export.csv.CsvColumnMapping;
 import tw.tib.financisto.export.csv.CsvField;
 import tw.tib.financisto.export.csv.CsvHeaderSniffer;
 import tw.tib.financisto.export.csv.CsvRow;
 import tw.tib.financisto.export.csv.CsvRowReader;
+import tw.tib.financisto.export.csv.MappedCsvImport;
+import tw.tib.financisto.export.csv.MappedCsvImportTask;
+import tw.tib.financisto.model.Account;
 import tw.tib.financisto.utils.PinProtection;
 
 /**
@@ -78,6 +83,9 @@ public class CsvMappingActivity extends AppCompatActivity {
 
     private Uri fileUri;
     private CsvHeaderSniffer.Guess guess;
+    private DatabaseAdapter db;
+    private List<String> accountTitles = new ArrayList<>();
+    private Spinner fallbackSpinner;
 
     private Button continueButton;
     private Button fileButton;
@@ -94,6 +102,12 @@ public class CsvMappingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.csv_mapping);
+
+        db = new DatabaseAdapter(this);
+        db.open();
+        for (Account account : db.getAllAccountsList()) {
+            accountTitles.add(account.title);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.csv_map_base), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -117,7 +131,7 @@ public class CsvMappingActivity extends AppCompatActivity {
         // all, or with a type of their own, and a filter that hides the file the user
         // came here with is worse than no filter.
         fileButton.setOnClickListener(v -> pickFile.launch(new String[]{"*/*"}));
-        continueButton.setOnClickListener(v -> describeWhatWouldHappen());
+        continueButton.setOnClickListener(v -> confirm());
 
         Intent intent = getIntent();
         if (Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getData() != null) {
@@ -222,6 +236,25 @@ public class CsvMappingActivity extends AppCompatActivity {
             showTheFieldsThatApply();
             refresh();
         }));
+
+        // Which account the lines belong to when the file never says. The name of the
+        // file is offered first because that is where these apps leave it.
+        List<String> where = new ArrayList<>();
+        where.add(getString(R.string.csv_map_fallback_new, suggestedAccountName()));
+        where.addAll(accountTitles);
+        fallbackSpinner = row(shapeRows, getString(R.string.csv_map_fallback), where, 0);
+    }
+
+    /** The name of the file, without its extension: usually the account's name. */
+    private String suggestedAccountName() {
+        String name = name(fileUri);
+        int dot = name.lastIndexOf('.');
+        return dot > 0 ? name.substring(0, dot) : name;
+    }
+
+    private String chosenFallbackAccount() {
+        int position = fallbackSpinner == null ? 0 : fallbackSpinner.getSelectedItemPosition();
+        return position <= 0 ? suggestedAccountName() : accountTitles.get(position - 1);
     }
 
     /** Reads the file again after the separator was corrected by hand. */
@@ -383,31 +416,53 @@ public class CsvMappingActivity extends AppCompatActivity {
     // -------------------------------------------------------------- next step
 
     /**
-     * What the import would do, said out loud. Until the import itself is written
-     * this is the whole of it, and it is worth keeping afterwards as the last thing
-     * seen before anything is written.
+     * The last thing seen before anything is written: what will happen, and that a
+     * backup is taken first. Nobody should discover either of those afterwards.
      */
-    private void describeWhatWouldHappen() {
-        CsvRowReader reader = new CsvRowReader(guess.mapping);
-        int readable = 0, unreadable = 0;
-        for (String[] values : guess.sample) {
-            if (reader.read(values) == null) {
-                unreadable++;
-            } else {
-                readable++;
-            }
-        }
-        StringBuilder text = new StringBuilder();
-        text.append(getString(R.string.csv_map_would_read, readable));
-        if (unreadable > 0) {
-            text.append('\n').append(getString(R.string.csv_map_unreadable_lines, unreadable));
-        }
-        text.append("\n\n").append(getString(R.string.csv_map_not_yet));
+    private void confirm() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.csv_map_title)
+                .setMessage(getString(R.string.csv_map_confirm, chosenFallbackAccount()))
+                .setPositiveButton(R.string.csv_map_import, (dialog, which) -> doImport())
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
 
+    private void doImport() {
+        ProgressDialog progress = ProgressDialog.show(
+                this, null, getString(R.string.csv_map_backing_up), true);
+        MappedCsvImportTask task = new MappedCsvImportTask(
+                this, progress, guess.mapping, fileUri, chosenFallbackAccount());
+        task.setShowResultMessage(false);
+        task.setListener(result -> {
+            if (result instanceof MappedCsvImport.Result) {
+                report((MappedCsvImport.Result) result);
+            }
+        });
+        task.execute();
+    }
+
+    /** What actually happened, counted rather than claimed. */
+    private void report(MappedCsvImport.Result result) {
+        StringBuilder text = new StringBuilder();
+        text.append(getString(R.string.csv_map_imported, result.imported));
+        if (result.skipped > 0) {
+            text.append('\n').append(getString(R.string.csv_map_unreadable_lines, result.skipped));
+        }
+        if (result.accountsCreated > 0) {
+            text.append('\n').append(getString(R.string.csv_map_accounts_created, result.accountsCreated));
+        }
+        if (result.categoriesCreated > 0) {
+            text.append('\n').append(getString(R.string.csv_map_categories_created, result.categoriesCreated));
+        }
+        if (result.payeesCreated > 0) {
+            text.append('\n').append(getString(R.string.csv_map_payees_created, result.payeesCreated));
+        }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.csv_map_title)
                 .setMessage(text.toString())
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> finish())
+                .setCancelable(false)
                 .show();
     }
 
@@ -459,6 +514,12 @@ public class CsvMappingActivity extends AppCompatActivity {
             }
         }
         return 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 
     @Override

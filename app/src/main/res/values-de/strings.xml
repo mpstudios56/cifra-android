@@ -1265,7 +1265,17 @@
   <string name="csv_map_parent_category">Kategoriengruppe</string>
   <string name="csv_map_incomplete">Mindestens nötig sind die Spalte mit dem Datum und die mit dem Betrag.</string>
   <string name="csv_map_unreadable_lines">%1$d Zeilen sind nicht lesbar und würden wegfallen.</string>
-  <string name="csv_map_would_read">Cifra liest %1$d der ersten Zeilen dieser Datei.</string>
-  <string name="csv_map_not_yet">Es wurde nichts geschrieben. Der eigentliche Import ist der nächste Arbeitsschritt.</string>
   <string name="csv_map_continue">Weiter</string>
+  <string name="csv_map_fallback">Zeilen ohne Konto</string>
+  <string name="csv_map_fallback_new">„%1$s“ anlegen</string>
+  <string name="csv_map_confirm">Cifra sichert zuerst alles und importiert dann. Zeilen ohne Konto landen in „%1$s“. Was fehlt — Konten, Kategorien, Empfänger — wird angelegt.</string>
+  <string name="csv_map_import">Importieren</string>
+  <string name="csv_map_backing_up">Zuerst die Sicherung…</string>
+  <string name="csv_map_backup_failed">Die Sicherung war nicht möglich, deshalb wurde nichts importiert. Wähle unter Sichern, Wiederherstellen und Sicherheit einen Ordner für die Sicherungen und versuche es erneut.</string>
+  <string name="csv_map_importing">Wird importiert…</string>
+  <string name="csv_map_importing_progress">Wird importiert… %1$d%%</string>
+  <string name="csv_map_imported">%1$d Buchungen importiert.</string>
+  <string name="csv_map_accounts_created">%1$d Konten angelegt.</string>
+  <string name="csv_map_categories_created">%1$d Kategorien angelegt.</string>
+  <string name="csv_map_payees_created">%1$d Empfänger angelegt.</string>
 </resources>

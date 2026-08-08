@@ -1405,7 +1405,17 @@
     <string name="csv_map_parent_category">Category group</string>
     <string name="csv_map_incomplete">At the very least, say which column holds the date and which holds the amount.</string>
     <string name="csv_map_unreadable_lines">%1$d lines could not be read, and would be left out.</string>
-    <string name="csv_map_would_read">Cifra reads %1$d of the first lines of this file.</string>
-    <string name="csv_map_not_yet">Nothing has been written. The import itself is the next piece of work.</string>
     <string name="csv_map_continue">Continue</string>
+    <string name="csv_map_fallback">Lines with no account</string>
+    <string name="csv_map_fallback_new">Create “%1$s”</string>
+    <string name="csv_map_confirm">Cifra will make a full backup first, then import. Lines that do not name an account go to “%1$s”. Anything missing — accounts, categories, payees — is created.</string>
+    <string name="csv_map_import">Import</string>
+    <string name="csv_map_backing_up">Backing up first…</string>
+    <string name="csv_map_backup_failed">The backup could not be made, so nothing was imported. Choose a folder for the backups in Backup, restore and security, then try again.</string>
+    <string name="csv_map_importing">Importing…</string>
+    <string name="csv_map_importing_progress">Importing… %1$d%%</string>
+    <string name="csv_map_imported">%1$d transactions imported.</string>
+    <string name="csv_map_accounts_created">%1$d accounts created.</string>
+    <string name="csv_map_categories_created">%1$d categories created.</string>
+    <string name="csv_map_payees_created">%1$d payees created.</string>
 </resources>
