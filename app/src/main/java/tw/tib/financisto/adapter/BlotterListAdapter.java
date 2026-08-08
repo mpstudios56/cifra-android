@@ -269,7 +269,15 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         setIndicatorColor(v, cursor);
         if (isTemplate == 1) {
             String templateName = cursor.getString(BlotterColumns.template_name.ordinal());
-            v.centerView.setText(templateName);
+            if (templateName == null || templateName.trim().isEmpty()) {
+                // An unnamed template left the big line empty and showed only the
+                // note underneath, which made this list look written in a smaller
+                // hand than the ledger it mirrors.
+                v.centerView.setText(v.bottomView.getText());
+                v.bottomView.setText("");
+            } else {
+                v.centerView.setText(templateName);
+            }
         } else {
             String recurrence = cursor.getString(BlotterColumns.recurrence.ordinal());
             if (isTemplate == 2 && recurrence != null) {

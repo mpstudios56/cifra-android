@@ -106,13 +106,8 @@ public class TemplatesListFragment extends BlotterFragment {
     protected void applyFilter() {
         super.applyFilter();
         if (isInsideMainScreen()) {
-            // No title bar here, but the list still needs saying what it is. The
-            // line the blotter uses for its date range is free on this tab, and
-            // costs one row rather than a bar the height of an action bar.
-            if (period != null) {
-                period.setText(R.string.templates);
-                period.setVisibility(View.VISIBLE);
-            }
+            // Nothing to write: the tab underneath carries the name, and this was
+            // the only tab with a title of its own.
             return;
         }
         if (getActivity() instanceof AppCompatActivity) {

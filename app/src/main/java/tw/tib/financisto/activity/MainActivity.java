@@ -58,21 +58,23 @@ public class MainActivity extends AppCompatActivity {
 
     /** The tabs this screen can show, in the order they appear when all are on. */
     private enum MainTab {
-        SUMMARY("summary", R.drawable.ic_tab_summary),
-        BLOTTER("blotter", R.drawable.ic_tab_blotter),
-        DRAFTS("drafts", R.drawable.ic_tab_drafts),
-        TEMPLATES("templates", R.drawable.ic_tab_templates),
-        BUDGETS("budgets", R.drawable.ic_tab_budgets),
-        REPORTS("reports", R.drawable.ic_tab_reports),
-        ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
-        MENU("menu", R.drawable.ic_tab_menu);
+        SUMMARY("summary", R.drawable.ic_tab_summary, R.string.summary),
+        BLOTTER("blotter", R.drawable.ic_tab_blotter, R.string.blotter),
+        DRAFTS("drafts", R.drawable.ic_tab_drafts, R.string.drafts),
+        TEMPLATES("templates", R.drawable.ic_tab_templates, R.string.templates),
+        BUDGETS("budgets", R.drawable.ic_tab_budgets, R.string.budgets),
+        REPORTS("reports", R.drawable.ic_tab_reports, R.string.reports),
+        ACCOUNTS("accounts", R.drawable.ic_tab_accounts, R.string.accounts),
+        MENU("menu", R.drawable.ic_tab_menu, R.string.menu);
 
         final String tag;
         final int iconId;
+        final int titleId;
 
-        MainTab(String tag, int iconId) {
+        MainTab(String tag, int iconId, int titleId) {
             this.tag = tag;
             this.iconId = iconId;
+            this.titleId = titleId;
         }
     }
 
@@ -221,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 (tab, position) -> {
                     MainTab which = visibleTabs.get(position);
                     tab.setIcon(ResourcesCompat.getDrawable(getResources(), which.iconId, getTheme()));
+                    tab.setText(which.titleId);
                     tabs.put(which.tag, tab);
                 });
         tabLayoutMediator.attach();
