@@ -1227,4 +1227,7 @@
   <string name="menu_records_summary">Les noms qui accompagnent une opération à côté de sa catégorie</string>
   <string name="menu_backup_restore">Sauvegarde et restauration</string>
   <string name="menu_backup_restore_summary">Vers un fichier, Google Drive, Dropbox, ou à envoyer ailleurs</string>
+  <string name="totals_assets">Ce que vous avez</string>
+  <string name="totals_liabilities">Ce que vous devez</string>
+  <string name="totals_net">Net</string>
 </resources>

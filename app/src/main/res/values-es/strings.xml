@@ -1234,4 +1234,7 @@
   <string name="menu_records_summary">Los nombres que acompañan a un movimiento junto a su categoría</string>
   <string name="menu_backup_restore">Copia de seguridad y restauración</string>
   <string name="menu_backup_restore_summary">A un archivo, a Google Drive, a Dropbox, o para enviar a otro sitio</string>
+  <string name="totals_assets">Lo que tienes</string>
+  <string name="totals_liabilities">Lo que debes</string>
+  <string name="totals_net">Neto</string>
 </resources>

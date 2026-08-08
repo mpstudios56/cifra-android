@@ -1237,4 +1237,7 @@
   <string name="menu_records_summary">I nomi che finiscono su un movimento accanto alla categoria</string>
   <string name="menu_backup_restore">Backup e ripristino</string>
   <string name="menu_backup_restore_summary">Su file, su Google Drive, su Dropbox, o da mandare altrove</string>
+  <string name="totals_assets">Quello che hai</string>
+  <string name="totals_liabilities">Quello che devi</string>
+  <string name="totals_net">Netto</string>
 </resources>

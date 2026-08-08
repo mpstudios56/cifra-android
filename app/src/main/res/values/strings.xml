@@ -1374,4 +1374,7 @@
     <string name="menu_records_summary">The names that go on a transaction beside its category</string>
     <string name="menu_backup_restore">Backup and restore</string>
     <string name="menu_backup_restore_summary">To a file, to Google Drive, to Dropbox, or shared elsewhere</string>
+    <string name="totals_assets">What you own</string>
+    <string name="totals_liabilities">What you owe</string>
+    <string name="totals_net">Net</string>
 </resources>

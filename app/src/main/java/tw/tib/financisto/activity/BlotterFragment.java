@@ -80,6 +80,7 @@ import tw.tib.financisto.utils.IntegrityCheckRunningBalance;
 import tw.tib.financisto.utils.MenuItemInfo;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
+import tw.tib.financisto.utils.TotalsPopup;
 import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.view.NodeInflater;
 import tw.tib.orb.EntityManager;
@@ -584,9 +585,16 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     }
 
     protected void showTotals() {
-        Intent intent = new Intent(getContext(), BlotterTotalsDetailsActivity.class);
-        blotterFilter.toIntent(intent);
-        startActivityForResult(intent, SHOW_TOTALS_REQUEST);
+        // The per-currency screen is worth opening only for somebody who keeps
+        // accounts in more than one; for everyone else it repeated the figure on
+        // the button and looked like nothing had happened.
+        if (TotalsPopup.severalCurrencies(db)) {
+            Intent intent = new Intent(getContext(), BlotterTotalsDetailsActivity.class);
+            blotterFilter.toIntent(intent);
+            startActivityForResult(intent, SHOW_TOTALS_REQUEST);
+        } else {
+            TotalsPopup.showBlotterBreakdown(getContext(), db, blotterFilter);
+        }
     }
 
     protected void prepareTransactionActionGrid() {

@@ -49,6 +49,7 @@ import tw.tib.financisto.model.Total;
 import tw.tib.financisto.utils.IntegrityCheckAutobackup;
 import tw.tib.financisto.utils.MenuItemInfo;
 import tw.tib.financisto.utils.MyPreferences;
+import tw.tib.financisto.utils.TotalsPopup;
 import tw.tib.financisto.utils.PinProtection;
 import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.view.NodeInflater;
@@ -328,9 +329,16 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     }
 
     private void showTotals() {
-        Intent intent = new Intent(getContext(), AccountListTotalsDetailsActivity.class);
-        intent.putExtra(AccountListTotalsDetailsActivity.FILTER, filter);
-        startActivityForResult(intent, SHOW_TOTALS_REQUEST);
+        // Only worth the per-currency screen for somebody keeping accounts in more
+        // than one. Otherwise say what the figure is made of, which is the question
+        // a total invites anyway.
+        if (TotalsPopup.severalCurrencies(db)) {
+            Intent intent = new Intent(getContext(), AccountListTotalsDetailsActivity.class);
+            intent.putExtra(AccountListTotalsDetailsActivity.FILTER, filter);
+            startActivityForResult(intent, SHOW_TOTALS_REQUEST);
+        } else {
+            TotalsPopup.showAccountsBreakdown(getContext(), db);
+        }
     }
 
     public static class AccountTotalsCalculationTask extends TotalCalculationTask {
