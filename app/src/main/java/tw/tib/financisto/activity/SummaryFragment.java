@@ -70,7 +70,7 @@ public class SummaryFragment extends Fragment {
             // Nothing stands between this and the status bar since the strip moved
             // to the bottom, so it keeps clear of it itself.
             v.setPadding(0, insets.top, 0, 0);
-            ((ViewGroup) v).setClipToPadding(false);
+            ((ViewGroup) v).setClipToPadding(true);
             return WindowInsetsCompat.CONSUMED;
         });
 

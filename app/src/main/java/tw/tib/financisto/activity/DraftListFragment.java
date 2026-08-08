@@ -74,7 +74,7 @@ public class DraftListFragment extends ListFragment {
         ViewCompat.setOnApplyWindowInsetsListener(getListView(), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(0, insets.top, 0, 0);
-            ((ViewGroup) v).setClipToPadding(false);
+            ((ViewGroup) v).setClipToPadding(true);
             return WindowInsetsCompat.CONSUMED;
         });
         setEmptyText(getString(R.string.no_drafts));
