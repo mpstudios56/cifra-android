@@ -4,112 +4,184 @@
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
+
   Contributors:
       Denis Solonenko - initial API and implementation
+
+  The PIN keypad. Every id and every label is kept as it was: PinView finds its
+  buttons by id and works out what was pressed from the first letter of the
+  text, so "C" and "OK" have to stay exactly that. What changed is how it
+  looks - the app's own dark green, round keys, and the entered digits shown as
+  large spaced characters instead of black text in a white box.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:orientation="vertical" android:padding="3dp" android:minWidth="200dp"
-              android:background="#222222">
-    <ViewSwitcher android:layout_height="wrap_content" android:layout_gravity="center"
-                  android:id="@+id/switcher" android:layout_width="fill_parent" android:layout_margin="5dp">
-        <TextView android:layout_height="wrap_content"
-                  android:gravity="center_vertical|center_horizontal"
-                  android:password="true" android:singleLine="true" android:id="@+id/result1"
-                  android:layout_gravity="center" android:layout_width="fill_parent"
-                  android:background="@drawable/textfield_default" android:textColor="#000" android:textSize="40sp"/>
-        <TextView android:layout_height="wrap_content"
-                  android:layout_width="fill_parent" android:gravity="center_vertical|center_horizontal"
-                  android:password="true" android:singleLine="true" android:id="@+id/result2"
-                  android:background="@drawable/textfield_default" android:textColor="#000" android:textSize="40sp"/>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FF10312A"
+    android:gravity="center_horizontal"
+    android:minWidth="200dp"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="18dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_foreground" />
+
+    <ViewSwitcher
+        android:id="@+id/switcher"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="14dp">
+
+        <TextView
+            android:id="@+id/result1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:letterSpacing="0.35"
+            android:password="true"
+            android:singleLine="true"
+            android:textColor="#FFFFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/result2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:letterSpacing="0.35"
+            android:password="true"
+            android:singleLine="true"
+            android:textColor="#FFFFFFFF"
+            android:textSize="34sp" />
     </ViewSwitcher>
-    <TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_weight="1"/>
-    <TableLayout android:layout_width="wrap_content"
-                 android:layout_gravity="center" android:layout_height="wrap_content">
-        <TableRow android:layout_height="wrap_content"
-                  android:layout_width="wrap_content" android:layout_gravity="center">
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="1"
-                    android:id="@+id/b1" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    android:textSize="30sp"
-                    style="@style/LockScreenButton"
-                    />
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="2"
-                    android:id="@+id/b2" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    style="@style/LockScreenButton"
-                    android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="3"
-                    android:id="@+id/b3" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    style="@style/LockScreenButton"
-                    android:textSize="30sp"/>
+
+    <View
+        android:layout_width="160dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="#4DFFFFFF" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/b1"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/b2"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/b3"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="3" />
         </TableRow>
-        <TableRow android:layout_height="wrap_content"
-                  android:layout_width="wrap_content" android:layout_gravity="center">
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/b4" android:text="4"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    style="@style/LockScreenButton"
-                    android:layout_margin="3dp" android:layout_weight="1" android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="5" android:id="@+id/b5"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    style="@style/LockScreenButton"
-                    android:layout_margin="3dp" android:layout_weight="1" android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="6" android:id="@+id/b6"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    style="@style/LockScreenButton"
-                    android:layout_margin="3dp" android:layout_weight="1" android:textSize="30sp"/>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/b4"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/b5"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/b6"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="6" />
         </TableRow>
-        <TableRow android:layout_height="wrap_content"
-                  android:layout_width="wrap_content" android:layout_gravity="center">
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="7"
-                    android:id="@+id/b7" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    style="@style/LockScreenButton"
-                    android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="8"
-                    android:id="@+id/b8" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    style="@style/LockScreenButton"
-                    android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="9"
-                    android:id="@+id/b9" android:minHeight="@dimen/pin_button_height"
-                    android:minWidth="@dimen/pin_button_width" android:layout_margin="3dp" android:layout_weight="1"
-                    style="@style/LockScreenButton"
-                    android:textSize="30sp"/>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/b7"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/b8"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/b9"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="9" />
         </TableRow>
-        <TableRow android:layout_height="wrap_content"
-                  android:layout_width="wrap_content" android:layout_gravity="center">
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="C" android:id="@+id/bHelp"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    android:layout_margin="3dp" android:textStyle="bold" android:textColor="#f26522"
-                    style="@style/LockScreenButton"
-                    android:layout_weight="1" android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="0" android:id="@+id/b0"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    style="@style/LockScreenButton"
-                    android:layout_margin="3dp" android:layout_weight="1" android:textSize="30sp"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="OK" android:id="@+id/bClear"
-                    android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"
-                    android:layout_margin="3dp" android:textStyle="bold" android:textColor="#39b54a"
-                    style="@style/LockScreenButton"
-                    android:layout_weight="1" android:textSize="30sp"/>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <!-- Clear. PinView reads the first letter, so this must stay a C. -->
+            <Button
+                android:id="@+id/bHelp"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="C"
+                android:textColor="#FFE9A742" />
+
+            <Button
+                android:id="@+id/b0"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="0" />
+
+            <!-- Confirm. PinView reads the O of OK. -->
+            <Button
+                android:id="@+id/bClear"
+                style="@style/LockScreenButton"
+                android:layout_margin="6dp"
+                android:text="OK"
+                android:textColor="#FF45B87E"
+                android:textSize="20sp" />
         </TableRow>
     </TableLayout>
-    <TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/TextView04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 </LinearLayout>

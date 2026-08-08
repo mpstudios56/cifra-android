@@ -12,63 +12,73 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License
+  ~
+  ~ Kept to the same ids, which PinActivity writes its status into. Redrawn to
+  ~ match the PIN keypad it sits beside: the same dark green, the print large
+  ~ enough to be the subject of the screen, and the two ways out as plain text
+  ~ rather than two shouting blue buttons.
   -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fingerprint_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#222222"
-    android:gravity="center_vertical">
+    android:background="#FF10312A"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="18dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/fingerprint_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:text="@string/fingerprint_description"
-        android:textColor="?android:attr/textColorPrimary" />
-
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/fingerprint_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fingerprint_description"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="28dp"
+        android:contentDescription="@string/fingerprint_description"
         android:src="@drawable/ic_fingerprint_white_48dp"
-        android:tint="@color/material_blue_gray" />
+        android:tint="#FF45B87E" />
 
     <TextView
         android:id="@+id/fingerprint_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fingerprint_icon"
-        android:layout_centerHorizontal="true"
-        android:text="@string/fingerprint_hint"
-        android:textColor="?android:attr/textColorSecondary" />
-
-    <Button
-        android:id="@+id/use_pin"
-        style="@style/BorderlessButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fingerprint_status"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        android:text="@string/use_pin"
-        android:textColor="@color/material_blue_gray"
-        android:textStyle="bold" />
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="@string/fingerprint_hint"
+        android:textColor="#B3FFFFFF" />
 
     <Button
         android:id="@+id/try_biometric_again"
         style="@style/BorderlessButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/use_pin"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
+        android:layout_marginTop="34dp"
+        android:padding="12dp"
         android:text="@string/try_fingerprint_again"
-        android:textColor="@color/material_blue_gray"
+        android:textColor="#FF45B87E"
         android:textStyle="bold" />
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/use_pin"
+        style="@style/BorderlessButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/use_pin"
+        android:textColor="#B3FFFFFF" />
+</LinearLayout>
