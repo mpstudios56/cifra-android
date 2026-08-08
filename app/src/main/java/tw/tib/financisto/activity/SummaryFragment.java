@@ -146,14 +146,24 @@ public class SummaryFragment extends Fragment {
     }
 
     /**
+     * Only the accounts that count. An account can be kept out of the totals or out
+     * of the reports, and the reports honour both; counting everything here made
+     * this screen disagree with them, which is worse than either answer alone.
+     */
+    private static final String COUNTED_ACCOUNTS =
+            " and exists (select 1 from account a where a._id = t.from_account_id"
+                    + " and a.is_include_into_totals = 1 and a.is_include_into_reports = 1)";
+
+    /**
      * Income or spending for the period. Transfers are left out on purpose:
      * moving money between one's own accounts is neither.
      */
     private long sum(long start, long end, boolean income) {
-        String sql = "select coalesce(sum(from_amount), 0) from transactions"
-                + " where is_template = 0 and parent_id = 0 and to_account_id = 0"
-                + " and datetime between ? and ?"
-                + (income ? " and from_amount > 0" : " and from_amount < 0");
+        String sql = "select coalesce(sum(t.from_amount), 0) from transactions t"
+                + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
+                + " and t.datetime between ? and ?"
+                + (income ? " and t.from_amount > 0" : " and t.from_amount < 0")
+                + COUNTED_ACCOUNTS;
         try (Cursor c = db.db().rawQuery(sql,
                 new String[]{String.valueOf(start), String.valueOf(end)})) {
             return c.moveToFirst() ? c.getLong(0) : 0;
@@ -167,6 +177,7 @@ public class SummaryFragment extends Fragment {
                 + " inner join category c on c._id = t.category_id"
                 + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
                 + " and t.from_amount < 0 and t.datetime between ? and ?"
+                + COUNTED_ACCOUNTS
                 + " group by c._id order by s asc limit " + TOP_CATEGORIES;
         try (Cursor c = db.db().rawQuery(sql,
                 new String[]{String.valueOf(start), String.valueOf(end)})) {
