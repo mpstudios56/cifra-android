@@ -1227,4 +1227,11 @@
   <string name="pref_group_notifications">Desde las notificaciones</string>
   <string name="pref_group_periods">Periodos y monedas</string>
   <string name="pref_group_widgets">Widget y accesos directos</string>
+  <string name="menu_categories_summary">Añade, renombra y reordena las categorías con las que clasificas los gastos</string>
+  <string name="menu_currencies">Monedas y cambios</string>
+  <string name="menu_currencies_summary">Las monedas de tus cuentas, y los cambios entre ellas</string>
+  <string name="menu_records">Beneficiarios, lugares y proyectos</string>
+  <string name="menu_records_summary">Los nombres que acompañan a un movimiento junto a su categoría</string>
+  <string name="menu_backup_restore">Copia de seguridad y restauración</string>
+  <string name="menu_backup_restore_summary">A un archivo, a Google Drive, a Dropbox, o para enviar a otro sitio</string>
 </resources>

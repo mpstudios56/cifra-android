@@ -1230,4 +1230,11 @@
   <string name="pref_group_notifications">Dalle notifiche</string>
   <string name="pref_group_periods">Periodi e valute</string>
   <string name="pref_group_widgets">Widget e scorciatoie</string>
+  <string name="menu_categories_summary">Aggiungi, rinomina e riordina le categorie sotto cui registri le spese</string>
+  <string name="menu_currencies">Valute e cambi</string>
+  <string name="menu_currencies_summary">Le valute in cui tieni i conti, e i cambi fra loro</string>
+  <string name="menu_records">Beneficiari, luoghi e progetti</string>
+  <string name="menu_records_summary">I nomi che finiscono su un movimento accanto alla categoria</string>
+  <string name="menu_backup_restore">Backup e ripristino</string>
+  <string name="menu_backup_restore_summary">Su file, su Google Drive, su Dropbox, o da mandare altrove</string>
 </resources>

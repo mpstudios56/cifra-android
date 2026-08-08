@@ -1220,4 +1220,11 @@
   <string name="pref_group_notifications">Depuis les notifications</string>
   <string name="pref_group_periods">Périodes et devises</string>
   <string name="pref_group_widgets">Widget et raccourcis</string>
+  <string name="menu_categories_summary">Ajouter, renommer et réordonner les catégories de vos dépenses</string>
+  <string name="menu_currencies">Devises et taux</string>
+  <string name="menu_currencies_summary">Les devises de vos comptes, et les taux entre elles</string>
+  <string name="menu_records">Bénéficiaires, lieux et projets</string>
+  <string name="menu_records_summary">Les noms qui accompagnent une opération à côté de sa catégorie</string>
+  <string name="menu_backup_restore">Sauvegarde et restauration</string>
+  <string name="menu_backup_restore_summary">Vers un fichier, Google Drive, Dropbox, ou à envoyer ailleurs</string>
 </resources>
