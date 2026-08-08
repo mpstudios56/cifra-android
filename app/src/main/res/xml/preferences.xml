@@ -4,12 +4,22 @@
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
+
   Contributors:
       Denis Solonenko - initial API and implementation
+
+  Grouped by what a setting is for, not by when it was added. The old screen had
+  a catch-all "interface" section holding the language, the tabs, the week start
+  and the fiscal year; the two halves of the widget in separate places; and an
+  "other" section for whatever had nowhere else to go.
+
+  Dropbox and Google Drive stay as sections rather than becoming sub-screens:
+  PreferenceFragment looks their keys up by name without checking for null, so a
+  sub-screen would make those lookups fail the moment it was opened.
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/user_interface">
+
+    <PreferenceCategory android:title="@string/pref_group_appearance">
         <ListPreference
             app:singleLineTitle="false"
             android:defaultValue="default"
@@ -29,21 +39,15 @@
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
-            android:key="templates_as_tab"
-            android:summary="@string/templates_as_tab_summary"
-            android:title="@string/templates_as_tab" />
-        <CheckBoxPreference
-            app:singleLineTitle="false"
-            android:defaultValue="true"
             android:key="show_summary_tab"
             android:summary="@string/show_summary_tab_summary"
             android:title="@string/show_summary_tab" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
-            android:key="quick_entry_from_widget"
-            android:summary="@string/quick_entry_from_widget_summary"
-            android:title="@string/quick_entry_from_widget" />
+            android:key="templates_as_tab"
+            android:summary="@string/templates_as_tab_summary"
+            android:title="@string/templates_as_tab" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
@@ -56,6 +60,29 @@
             android:key="show_reports_tab"
             android:summary="@string/show_reports_tab_summary"
             android:title="@string/show_reports_tab" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_group_transactions">
+        <Preference
+            app:singleLineTitle="false"
+            android:summary="@string/transaction_screen_summary"
+            android:title="@string/transaction_screen"
+            app:fragment="tw.tib.financisto.preference.TransactionPreferencesFragment" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="treat_transfer_to_ccard_as_payment"
+            android:summary="@string/treat_transfer_to_ccard_as_payment_summary"
+            android:title="@string/treat_transfer_to_ccard_as_payment" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="restore_missed_scheduled_transactions"
+            android:summary="@string/restore_missed_scheduled_transactions_summary"
+            android:title="@string/restore_missed_scheduled_transactions" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_group_lists">
         <Preference
             app:singleLineTitle="false"
             android:summary="@string/accounts_list_screen_summary"
@@ -66,27 +93,45 @@
             android:summary="@string/blotter_screen_summary"
             android:title="@string/blotter_screen"
             app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
-        <Preference
-            app:singleLineTitle="false"
-            android:summary="@string/transaction_screen_summary"
-            android:title="@string/transaction_screen"
-            app:fragment="tw.tib.financisto.preference.TransactionPreferencesFragment" />
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="0"
-            android:entries="@array/first_day_of_week_entries"
-            android:entryValues="@array/first_day_of_week_values"
-            android:key="first_day_of_week"
-            android:summary="@string/first_day_of_week_summary"
-            android:title="@string/first_day_of_week" />
-        <Preference
+            android:defaultValue="NAME"
+            android:entries="@array/sort_locations_entities"
+            android:entryValues="@array/sort_locations_values"
+            android:key="sort_locations"
+            android:summary="@string/sort_locations_summary"
+            android:title="@string/sort_locations" />
+        <ListPreference
             app:singleLineTitle="false"
-            android:key="fiscal_year_start"
-            android:summary="@string/fiscal_year_start_summary"
-            android:title="@string/fiscal_year_start" />
+            android:defaultValue="DATE"
+            android:entries="@array/sort_templates_entities"
+            android:entryValues="@array/sort_templates_values"
+            android:key="sort_templates"
+            android:summary="@string/sort_templates_summary"
+            android:title="@string/sort_templates" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_tpl">
+    <!--
+      These four still work. The SMS permission is gone, but the notification
+      listener falls back to the same templates and reads the same two settings,
+      so hiding them would take away the only control over a live feature.
+    -->
+    <PreferenceCategory android:title="@string/pref_group_notifications">
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="false"
+            android:key="google_wallet_transaction"
+            android:summary="@string/pref_google_wallet_transaction_summary"
+            android:title="@string/pref_google_wallet_transaction_title" />
+        <ListPreference
+            app:singleLineTitle="false"
+            android:defaultValue="PN"
+            android:dependency="google_wallet_transaction"
+            android:entries="@array/pref_transaction_statuses"
+            android:entryValues="@array/pref_transaction_status_values"
+            android:key="google_wallet_transaction_status"
+            android:summary="@string/pref_google_wallet_transaction_status"
+            android:title="@string/pref_tpl_transaction_status_title" />
         <ListPreference
             app:singleLineTitle="false"
             android:defaultValue="PN"
@@ -103,22 +148,34 @@
             android:title="@string/pref_tpl_adding_to_note_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_google_wallet">
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:key="google_wallet_transaction"
-            android:summary="@string/pref_google_wallet_transaction_summary"
-            android:title="@string/pref_google_wallet_transaction_title" />
+    <PreferenceCategory android:title="@string/pref_group_periods">
         <ListPreference
             app:singleLineTitle="false"
-            android:defaultValue="PN"
-            android:dependency="google_wallet_transaction"
-            android:entries="@array/pref_transaction_statuses"
-            android:entryValues="@array/pref_transaction_status_values"
-            android:key="google_wallet_transaction_status"
-            android:summary="@string/pref_google_wallet_transaction_status"
-            android:title="@string/pref_tpl_transaction_status_title" />
+            android:defaultValue="0"
+            android:entries="@array/first_day_of_week_entries"
+            android:entryValues="@array/first_day_of_week_values"
+            android:key="first_day_of_week"
+            android:summary="@string/first_day_of_week_summary"
+            android:title="@string/first_day_of_week" />
+        <Preference
+            app:singleLineTitle="false"
+            android:key="fiscal_year_start"
+            android:summary="@string/fiscal_year_start_summary"
+            android:title="@string/fiscal_year_start" />
+        <ListPreference
+            app:singleLineTitle="false"
+            android:defaultValue="freeCurrency"
+            android:entries="@array/exchange_rate_provider_entities"
+            android:entryValues="@array/exchange_rate_provider_values"
+            android:key="exchange_rate_provider"
+            android:summary="@string/exchange_rate_provider_summary"
+            android:title="@string/exchange_rate_provider" />
+        <EditTextPreference
+            app:singleLineTitle="false"
+            android:enabled="false"
+            android:key="openexchangerates_app_id"
+            android:summary="@string/openexchangerates_app_id_summary"
+            android:title="@string/openexchangerates_app_id" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/protection">
@@ -128,12 +185,6 @@
             android:key="secure_window"
             android:summary="@string/secure_window_summary"
             android:title="@string/secure_window" />
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="enable_widget"
-            android:summary="@string/enable_widget_summary"
-            android:title="@string/enable_widget" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
@@ -177,9 +228,27 @@
             android:key="pin_protection_lock_time"
             android:summary="@string/lock_time_summary"
             android:title="@string/lock_time" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="pin_protection_haptic_feedback"
+            android:summary="@string/pin_protection_haptic_feedback_summary"
+            android:title="@string/pin_protection_haptic_feedback" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/home_screen">
+    <PreferenceCategory android:title="@string/pref_group_widgets">
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="enable_widget"
+            android:summary="@string/enable_widget_summary"
+            android:title="@string/enable_widget" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="quick_entry_from_widget"
+            android:summary="@string/quick_entry_from_widget_summary"
+            android:title="@string/quick_entry_from_widget" />
         <Preference
             app:singleLineTitle="false"
             android:key="shortcut_new_transaction"
@@ -200,12 +269,6 @@
             android:title="@string/database_backup_folder" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="auto_backup_reminder_enabled"
-            android:summary="@string/auto_backup_reminder_enabled_summary"
-            android:title="@string/auto_backup_reminder_enabled" />
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="auto_backup_enabled"
             android:summary="@string/auto_backup_enabled_summary"
@@ -223,6 +286,12 @@
             android:key="auto_backup_warning_enabled"
             android:summary="@string/auto_backup_warning_summary"
             android:title="@string/auto_backup_warning_enabled" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="auto_backup_reminder_enabled"
+            android:summary="@string/auto_backup_reminder_enabled_summary"
+            android:title="@string/auto_backup_reminder_enabled" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
@@ -309,63 +378,6 @@
             android:key="google_drive_download_pictures"
             android:summary="@string/google_drive_download_pictures_summary"
             android:title="@string/google_drive_download_pictures" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/exchange_rates">
-        <ListPreference
-            app:singleLineTitle="false"
-            android:defaultValue="freeCurrency"
-            android:entries="@array/exchange_rate_provider_entities"
-            android:entryValues="@array/exchange_rate_provider_values"
-            android:key="exchange_rate_provider"
-            android:summary="@string/exchange_rate_provider_summary"
-            android:title="@string/exchange_rate_provider" />
-        <EditTextPreference
-            app:singleLineTitle="false"
-            android:enabled="false"
-            android:key="openexchangerates_app_id"
-            android:summary="@string/openexchangerates_app_id_summary"
-            android:title="@string/openexchangerates_app_id" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/sort_order">
-        <ListPreference
-            app:singleLineTitle="false"
-            android:defaultValue="NAME"
-            android:entries="@array/sort_locations_entities"
-            android:entryValues="@array/sort_locations_values"
-            android:key="sort_locations"
-            android:summary="@string/sort_locations_summary"
-            android:title="@string/sort_locations" />
-        <ListPreference
-            app:singleLineTitle="false"
-            android:defaultValue="DATE"
-            android:entries="@array/sort_templates_entities"
-            android:entryValues="@array/sort_templates_values"
-            android:key="sort_templates"
-            android:summary="@string/sort_templates_summary"
-            android:title="@string/sort_templates" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/other">
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="pin_protection_haptic_feedback"
-            android:summary="@string/pin_protection_haptic_feedback_summary"
-            android:title="@string/pin_protection_haptic_feedback" />
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="restore_missed_scheduled_transactions"
-            android:summary="@string/restore_missed_scheduled_transactions_summary"
-            android:title="@string/restore_missed_scheduled_transactions" />
-        <SwitchPreferenceCompat
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="treat_transfer_to_ccard_as_payment"
-            android:summary="@string/treat_transfer_to_ccard_as_payment_summary"
-            android:title="@string/treat_transfer_to_ccard_as_payment" />
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

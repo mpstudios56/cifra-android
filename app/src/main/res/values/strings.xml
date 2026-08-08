@@ -1361,4 +1361,10 @@
     <string name="welcome_demo_loading">Loading the sample data…</string>
     <string name="welcome_demo_failed">The sample data could not be loaded</string>
     <string name="welcome_start">Start</string>
+    <string name="pref_group_appearance">Appearance</string>
+    <string name="pref_group_transactions">Transactions</string>
+    <string name="pref_group_lists">Lists</string>
+    <string name="pref_group_notifications">From notifications</string>
+    <string name="pref_group_periods">Periods and currencies</string>
+    <string name="pref_group_widgets">Widget and shortcuts</string>
 </resources>

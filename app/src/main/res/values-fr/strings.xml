@@ -1214,4 +1214,10 @@
   <string name="welcome_demo_loading">Chargement des données d\'exemple…</string>
   <string name="welcome_demo_failed">Impossible de charger les données d\'exemple</string>
   <string name="welcome_start">Commencer</string>
+  <string name="pref_group_appearance">Apparence</string>
+  <string name="pref_group_transactions">Opérations</string>
+  <string name="pref_group_lists">Listes</string>
+  <string name="pref_group_notifications">Depuis les notifications</string>
+  <string name="pref_group_periods">Périodes et devises</string>
+  <string name="pref_group_widgets">Widget et raccourcis</string>
 </resources>
