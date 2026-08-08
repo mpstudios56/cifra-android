@@ -1237,7 +1237,7 @@
   <string name="currency_already_exists">%1$s ya existe. Dos monedas con el mismo código no se distinguen.</string>
   <string name="currency_in_use">Esta moneda la usa una cuenta, un presupuesto o un movimiento, así que no se puede eliminar.</string>
   <string name="welcome_currency">Moneda</string>
-  <string name="welcome_currency_summary">La moneda en la que llevas las cuentas. Tomada del teléfono; las demás se añaden después.</string>
+  <string name="welcome_currency_summary">La moneda base con la que llevas tus cuentas. Puedes añadir otras más adelante.</string>
   <string name="quick_bar">Botones en el panel de notificaciones</string>
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
   <string name="quick_bar_title">Nueva operación</string>

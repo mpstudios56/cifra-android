@@ -1230,7 +1230,7 @@
   <string name="currency_already_exists">%1$s existe déjà. Deux devises avec le même code sont indiscernables.</string>
   <string name="currency_in_use">Cette devise est utilisée par un compte, un budget ou une opération : impossible de la supprimer.</string>
   <string name="welcome_currency">Devise</string>
-  <string name="welcome_currency_summary">La devise dans laquelle vos comptes sont tenus. Prise sur le téléphone ; les autres s\'ajoutent ensuite.</string>
+  <string name="welcome_currency_summary">La devise de base dans laquelle vos comptes sont tenus. Vous pourrez en ajouter d’autres ensuite.</string>
   <string name="quick_bar">Boutons dans le volet des notifications</string>
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
   <string name="quick_bar_title">Nouvelle opération</string>

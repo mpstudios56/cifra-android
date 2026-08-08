@@ -1240,7 +1240,7 @@
   <string name="currency_already_exists">%1$s esiste già. Due valute con lo stesso codice non si distinguono.</string>
   <string name="currency_in_use">Questa valuta è usata da un conto, da un budget o da un movimento, quindi non si può eliminare.</string>
   <string name="welcome_currency">Valuta</string>
-  <string name="welcome_currency_summary">La valuta in cui tieni i conti. Presa dal telefono; le altre si aggiungono dopo.</string>
+  <string name="welcome_currency_summary">La valuta di base con cui tieni i tuoi conti. Puoi aggiungerne altre in seguito.</string>
   <string name="quick_bar">Tasti nella tendina delle notifiche</string>
   <string name="quick_bar_summary">Una notifica silenziosa con spesa veloce, movimento e trasferimento</string>
   <string name="quick_bar_title">Nuova operazione</string>

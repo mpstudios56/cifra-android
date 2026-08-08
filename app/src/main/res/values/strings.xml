@@ -1377,7 +1377,7 @@
     <string name="currency_already_exists">%1$s already exists. Two currencies with the same code cannot be told apart.</string>
     <string name="currency_in_use">This currency is in use by an account, a budget or a transaction, so it cannot be deleted.</string>
     <string name="welcome_currency">Currency</string>
-    <string name="welcome_currency_summary">The currency your accounts are kept in. Taken from your phone; others can be added later.</string>
+    <string name="welcome_currency_summary">The base currency your accounts are kept in. You can add others later.</string>
     <string name="quick_bar">Buttons in the notification shade</string>
     <string name="quick_bar_summary">A quiet notification carrying quick entry, transaction and transfer</string>
     <string name="quick_bar_title">New entry</string>
