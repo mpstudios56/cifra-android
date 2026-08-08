@@ -1237,4 +1237,6 @@
   <string name="totals_assets">Was du hast</string>
   <string name="totals_liabilities">Was du schuldest</string>
   <string name="totals_net">Netto</string>
+  <string name="currency_already_exists">%1$s gibt es schon. Zwei Währungen mit demselben Code sind nicht zu unterscheiden.</string>
+  <string name="currency_in_use">Diese Währung wird von einem Konto, einem Budget oder einer Buchung benutzt und kann nicht gelöscht werden.</string>
 </resources>

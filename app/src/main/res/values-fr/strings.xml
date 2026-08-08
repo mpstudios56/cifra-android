@@ -1230,4 +1230,6 @@
   <string name="totals_assets">Ce que vous avez</string>
   <string name="totals_liabilities">Ce que vous devez</string>
   <string name="totals_net">Net</string>
+  <string name="currency_already_exists">%1$s existe déjà. Deux devises avec le même code sont indiscernables.</string>
+  <string name="currency_in_use">Cette devise est utilisée par un compte, un budget ou une opération : impossible de la supprimer.</string>
 </resources>

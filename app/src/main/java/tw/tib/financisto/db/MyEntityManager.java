@@ -342,6 +342,18 @@ public abstract class MyEntityManager extends EntityManager {
 
 	private static final String UPDATE_DEFAULT_FLAG = "update currency set is_default=0";
 
+	/** Another currency already carrying this code, or -1. */
+	public long findCurrencyByCode(String code, long exceptId) {
+		if (code == null || code.trim().isEmpty()) {
+			return -1;
+		}
+		try (Cursor c = db().rawQuery(
+				"select _id from " + DatabaseHelper.CURRENCY_TABLE + " where name = ? and _id <> ? limit 1",
+				new String[]{code.trim(), String.valueOf(exceptId)})) {
+			return c.moveToFirst() ? c.getLong(0) : -1;
+		}
+	}
+
 	public long saveOrUpdate(tw.tib.financisto.model.Currency currency) {
 		SQLiteDatabase db = db();
 		db.beginTransaction();
@@ -357,10 +369,44 @@ public abstract class MyEntityManager extends EntityManager {
 		}
 	}
 
-	public int deleteCurrency(long id) {
+	/**
+	 * Everything that can point at a currency. Only accounts used to be checked, so
+	 * a currency still named by a budget, by the original amount of a transaction,
+	 * or as another currency's trading pair could be deleted out from under them,
+	 * leaving a reference to a row that no longer exists.
+	 */
+	private static final String[][] CURRENCY_REFERENCES = {
+			{DatabaseHelper.ACCOUNT_TABLE, "currency_id"},
+			{DatabaseHelper.TRANSACTION_TABLE, "original_currency_id"},
+			{DatabaseHelper.BUDGET_TABLE, "currency_id"},
+			{DatabaseHelper.BUDGET_TABLE, "budget_currency_id"},
+			{DatabaseHelper.CURRENCY_TABLE, "trading_currency_id"},
+	};
+
+	/** Whether anything would be left pointing at nothing if this currency went. */
+	public boolean isCurrencyInUse(long id) {
 		String sid = String.valueOf(id);
-		int deleted = db().delete(DatabaseHelper.CURRENCY_TABLE, "_id=? AND NOT EXISTS (SELECT 1 FROM " + DatabaseHelper.ACCOUNT_TABLE + " WHERE " + DatabaseHelper.AccountColumns.CURRENCY_ID + "=?)",
-				new String[]{sid, sid});
+		for (String[] reference : CURRENCY_REFERENCES) {
+			String sql = "select 1 from " + reference[0] + " where " + reference[1] + " = ? limit 1";
+			try (Cursor c = db().rawQuery(sql, new String[]{sid})) {
+				if (c.moveToFirst()) {
+					return true;
+				}
+			} catch (Exception e) {
+				// A column this old database has not got yet cannot be holding a
+				// reference; anything else is a reason not to delete.
+				Log.w("MyEntityManager", "could not check " + reference[0] + "." + reference[1], e);
+			}
+		}
+		return false;
+	}
+
+	public int deleteCurrency(long id) {
+		if (isCurrencyInUse(id)) {
+			return 0;
+		}
+		String sid = String.valueOf(id);
+		int deleted = db().delete(DatabaseHelper.CURRENCY_TABLE, "_id=?", new String[]{sid});
 		if (deleted > 0) {
 			db().delete(DatabaseHelper.EXCHANGE_RATES_TABLE, "from_currency_id=? OR to_currency_id=?", new String[]{sid, sid});
 		}

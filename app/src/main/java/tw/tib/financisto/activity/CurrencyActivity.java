@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormatSymbols;
 import java.util.List;
@@ -156,6 +157,15 @@ public class CurrencyActivity extends Activity implements ActivityLayoutListener
 				currency.symbolFormat = symbolFormats[symbolFormat.getSelectedItemPosition()];
 				currency.numberFormat = text(numberFormat);
 				currency.tradingCurrencyId = selectedTradingCurrency;
+				// Two rows carrying the same code are a trap: every screen shows the
+				// same three letters, and nothing tells you which one an account is
+				// in or which of the two a rate belongs to.
+				if (db.findCurrencyByCode(currency.name, currency.id) > 0) {
+					Toast.makeText(CurrencyActivity.this,
+							getString(R.string.currency_already_exists, currency.name),
+							Toast.LENGTH_LONG).show();
+					return;
+				}
 				long id = db.saveOrUpdate(currency);
 				CurrencyCache.initialize(db);
 				Intent data = new Intent();

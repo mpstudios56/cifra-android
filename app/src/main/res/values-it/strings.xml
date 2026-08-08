@@ -1240,4 +1240,6 @@
   <string name="totals_assets">Quello che hai</string>
   <string name="totals_liabilities">Quello che devi</string>
   <string name="totals_net">Netto</string>
+  <string name="currency_already_exists">%1$s esiste già. Due valute con lo stesso codice non si distinguono.</string>
+  <string name="currency_in_use">Questa valuta è usata da un conto, da un budget o da un movimento, quindi non si può eliminare.</string>
 </resources>

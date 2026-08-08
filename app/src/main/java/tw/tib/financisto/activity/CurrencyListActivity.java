@@ -131,7 +131,7 @@ public class CurrencyListActivity extends AbstractListActivity<Cursor> {
 			new AlertDialog.Builder(this)
 					.setTitle(R.string.delete)
 					.setIcon(android.R.drawable.ic_dialog_alert)
-					.setMessage(R.string.currency_delete_alert)
+					.setMessage(R.string.currency_in_use)
 					.setNeutralButton(R.string.ok, null).show();
 		}
 	}
