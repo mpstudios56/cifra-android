@@ -6,6 +6,7 @@
 package tw.tib.financisto.activity;
 
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,12 +124,21 @@ public class SummaryFragment extends Fragment {
         u.setAmountText(view.findViewById(R.id.summary_expense), home, expense, false);
         u.setAmountText(view.findViewById(R.id.summary_saved), home, saved, false);
 
+        // How the two compare, side by side. Absolute figures say which is bigger;
+        // the bar says by how much without anyone having to do the arithmetic.
+        fillBar(view.findViewById(R.id.summary_split_bar),
+                new long[]{income, -expense}, new int[]{IN, OUT});
+
         TextView note = view.findViewById(R.id.summary_saved_note);
-        if (income > 0) {
+        LinearLayout savedBar = view.findViewById(R.id.summary_saved_bar);
+        if (income > 0 && saved > 0) {
             long share = 100 * saved / income;
             note.setText(getString(R.string.summary_saved_share, share));
+            fillBar(savedBar, new long[]{saved, income - saved}, new int[]{IN, TRACK});
         } else {
             note.setText("");
+            // Nothing kept, or nothing came in: a bar would only be an empty box.
+            savedBar.setVisibility(View.GONE);
         }
 
         showTopCategories(view, home, start, end, expense);
@@ -164,7 +174,8 @@ public class SummaryFragment extends Fragment {
                 String title = c.getString(0);
                 long amount = c.getLong(1);
                 long share = expense != 0 ? 100 * amount / expense : 0;
-                list.addView(categoryRow(title, amount, share, home));
+                list.addView(categoryRow(title, amount, share, home,
+                        SLICES[list.getChildCount() % SLICES.length]));
             }
         }
         if (list.getChildCount() == 0) {
@@ -174,10 +185,14 @@ public class SummaryFragment extends Fragment {
         }
     }
 
-    private View categoryRow(String title, long amount, long share, Currency home) {
+    /** The name and figure on one line, and under them a bar of that width. */
+    private View categoryRow(String title, long amount, long share, Currency home, int colour) {
+        LinearLayout block = new LinearLayout(getContext());
+        block.setOrientation(LinearLayout.VERTICAL);
+        block.setPadding(0, 6, 0, 10);
+
         LinearLayout row = new LinearLayout(getContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setPadding(0, 8, 0, 8);
 
         TextView name = new TextView(getContext());
         name.setText(getString(R.string.summary_category_line, title, share));
@@ -190,7 +205,61 @@ public class SummaryFragment extends Fragment {
         value.setSingleLine(true);
         u.setAmountText(value, home, amount, false);
         row.addView(value);
-        return row;
+        block.addView(row);
+
+        LinearLayout bar = new LinearLayout(getContext());
+        bar.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, dp(7));
+        lp.topMargin = dp(5);
+        block.addView(bar, lp);
+        fillBar(bar, new long[]{share, 100 - share}, new int[]{colour, TRACK});
+        return block;
+    }
+
+    // Enough colours for the five rows, none of them red: a category is not a
+    // warning, it is just where the money went.
+    private static final int[] SLICES = {0xFF5B8DEF, 0xFF3FA96F, 0xFFE9A742,
+            0xFFC9709A, 0xFF6ECBC0};
+    private static final int IN = 0xFF3FA96F;
+    private static final int OUT = 0xFFD0453B;
+    private static final int TRACK = 0x33FFFFFF;
+
+    /**
+     * Lays out a bar as coloured pieces in proportion to the values given. Weights
+     * do the measuring, so it fits whatever width the screen turns out to be.
+     */
+    private void fillBar(LinearLayout bar, long[] values, int[] colours) {
+        bar.removeAllViews();
+        bar.setVisibility(View.VISIBLE);
+        long total = 0;
+        for (long v : values) {
+            total += Math.max(v, 0);
+        }
+        if (total <= 0) {
+            bar.setVisibility(View.GONE);
+            return;
+        }
+        for (int i = 0; i < values.length; i++) {
+            float weight = Math.max(values[i], 0);
+            if (weight <= 0) {
+                continue;
+            }
+            View piece = new View(getContext());
+            GradientDrawable shape = new GradientDrawable();
+            shape.setColor(colours[i]);
+            shape.setCornerRadius(dp(4));
+            piece.setBackground(shape);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, weight);
+            // A hair of space so the two colours read as two pieces, not a gradient.
+            lp.rightMargin = i < values.length - 1 ? dp(2) : 0;
+            bar.addView(piece, lp);
+        }
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     private void showNetWorth(View view, Currency home) {

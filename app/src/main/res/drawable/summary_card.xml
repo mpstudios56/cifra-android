@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The panel behind each block of the summary. Barely lighter than the screen: it
+  is there to group the figures, not to draw attention to itself.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#14FFFFFF" />
+    <corners android:radius="14dp" />
+</shape>
