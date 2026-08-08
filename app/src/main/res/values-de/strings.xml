@@ -1059,7 +1059,7 @@
   <string name="mass_operations_mark_pending_all">Alle als ausstehend markieren</string>
   <string name="mass_operations_mark_restored_all">Alle als wiederhergestellt markieren</string>
   <string name="mass_operations_mark_unreconciled_all">Alle als nicht abgeglichen markieren</string>
-  <string name="mass_operations_summary">Wendet Vorgänge auf mehrere Transaktionen zugleich an</string>
+  <string name="mass_operations_summary">Viele Buchungen auf einmal nehmen und als bestätigt, abgeglichen oder offen markieren - oder zusammen löschen.</string>
   <string name="mean_line_label">Mittelwert</string>
   <string name="merge_payee_confirm">Zusammenführen der Empfänger bestätigen</string>
   <string name="merge_payee_message">Der Empfänger %1$s bleibt bestehen, die Transaktionen der folgenden Empfänger werden ihm zugeordnet und diese Empfänger gelöscht:</string>
@@ -1099,7 +1099,7 @@
   <string name="permissions">Berechtigungen</string>
   <string name="permissions_summary">Berechtigungen prüfen, die von Hand erteilt werden müssen</string>
   <string name="planner">Planer</string>
-  <string name="planner_summary">Zeigt den Monatsplaner</string>
+  <string name="planner_summary">Die kommenden Monate, wie sie aussehen werden, wenn alles Geplante gebucht ist - um zu sehen, ob das Geld reicht.</string>
   <string name="preferences_summary">Einstellungen der App ändern</string>
   <string name="privacy_policy">Datenschutzerklärung</string>
   <string name="provided_by_other_app">(Von einer anderen App bereitgestellt)</string>
@@ -1133,7 +1133,7 @@
   <string name="restore_database_online_google_drive">Aus Google Drive wiederherstellen</string>
   <string name="restore_database_online_google_drive_summary">Stellt die Datenbank aus Google Drive wieder her</string>
   <string name="restore_database_summary">Stellt die Datenbank aus dem Gerätespeicher wieder her</string>
-  <string name="scheduled_transactions_summary">Transaktionen und Umbuchungen planen</string>
+  <string name="scheduled_transactions_summary">Was sich wiederholt: Miete, Gehalt, Abos. Die App bucht sie am Tag und sagt dir Bescheid.</string>
   <string name="select_all_drafts">Alle auswählen</string>
   <string name="select_color">Farbe wählen</string>
   <string name="selector_type_summary">Art der Auswahl für Stammdaten</string>

@@ -1034,7 +1034,7 @@
   <string name="mass_operations_mark_pending_all">Marquer toutes comme en attente</string>
   <string name="mass_operations_mark_restored_all">Marquer toutes comme restaurées</string>
   <string name="mass_operations_mark_unreconciled_all">Marquer toutes comme non rapprochées</string>
-  <string name="mass_operations_summary">Applique des opérations à plusieurs écritures à la fois</string>
+  <string name="mass_operations_summary">Prenez plusieurs opérations à la fois et marquez-les pointées, rapprochées ou en attente, ou supprimez-les ensemble.</string>
   <string name="mean_line_label">Moyenne</string>
   <string name="merge_payee_confirm">Confirmer la fusion des bénéficiaires</string>
   <string name="merge_payee_message">Le bénéficiaire %1$s sera conservé, les opérations des bénéficiaires suivants lui seront rattachées et ces bénéficiaires seront supprimés :</string>
@@ -1078,7 +1078,7 @@
   <string name="period_tomorrow">Demain</string>
   <string name="permissions">Autorisations</string>
   <string name="permissions_summary">Vérifier les autorisations à accorder à la main</string>
-  <string name="planner_summary">Affiche le planificateur mensuel</string>
+  <string name="planner_summary">Les mois à venir tels qu\'ils seront une fois tout le programmé passé : pour voir si l\'argent tient.</string>
   <string name="preferences_summary">Modifier les réglages de l\'application</string>
   <string name="privacy_policy">Politique de confidentialité</string>
   <string name="provided_by_other_app">(Fourni par une autre application)</string>
@@ -1122,7 +1122,7 @@
   <string name="restore_database_online_google_drive">Restaurer depuis Google Drive</string>
   <string name="restore_database_online_google_drive_summary">Restaure la base depuis Google Drive</string>
   <string name="restore_database_summary">Restaure la base depuis la mémoire de l\'appareil</string>
-  <string name="scheduled_transactions_summary">Planifier opérations et virements</string>
+  <string name="scheduled_transactions_summary">Ce qui se répète : loyer, salaire, abonnements. L\'application les saisit le jour venu et vous le dit.</string>
   <string name="select_all_drafts">Tout sélectionner</string>
   <string name="select_color">Choisir la couleur</string>
   <string name="select_to_account_differ_from_to_account">Impossible de virer vers le même compte…</string>

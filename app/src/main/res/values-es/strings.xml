@@ -1059,7 +1059,7 @@
   <string name="mass_operations_mark_pending_all">Marcar todas como pendientes</string>
   <string name="mass_operations_mark_restored_all">Marcar todas como restauradas</string>
   <string name="mass_operations_mark_unreconciled_all">Marcar todas como no conciliadas</string>
-  <string name="mass_operations_summary">Aplica operaciones a varias transacciones a la vez</string>
+  <string name="mass_operations_summary">Coge muchos movimientos a la vez y márcalos verificados, conciliados o pendientes, o bórralos todos juntos.</string>
   <string name="mean_line_label">Media</string>
   <string name="merge_payee_confirm">Confirmar la fusión de beneficiarios</string>
   <string name="merge_payee_message">Se conservará el beneficiario %1$s, las transacciones de los siguientes se pasarán a él y esos beneficiarios se eliminarán:</string>
@@ -1099,7 +1099,7 @@
   <string name="permissions">Permisos</string>
   <string name="permissions_summary">Revisa los permisos que hay que conceder a mano</string>
   <string name="planner">Planificador</string>
-  <string name="planner_summary">Muestra el planificador mensual</string>
+  <string name="planner_summary">Los meses que vienen tal como quedarán cuando haya pasado todo lo programado: para ver si el dinero llega.</string>
   <string name="preferences_summary">Cambia los ajustes de la aplicación</string>
   <string name="privacy_policy">Política de privacidad</string>
   <string name="provided_by_other_app">(Lo proporciona otra aplicación)</string>
@@ -1133,7 +1133,7 @@
   <string name="restore_database_online_google_drive">Restaurar desde Google Drive</string>
   <string name="restore_database_online_google_drive_summary">Restaura la base de datos desde Google Drive</string>
   <string name="restore_database_summary">Restaura la base de datos desde la memoria del dispositivo</string>
-  <string name="scheduled_transactions_summary">Programa transacciones y transferencias</string>
+  <string name="scheduled_transactions_summary">Lo que se repite: alquiler, sueldo, suscripciones. La aplicación los registra el día que toca y te avisa.</string>
   <string name="select_all_drafts">Seleccionar todos</string>
   <string name="select_color">Elige el color</string>
   <string name="selector_type_summary">Modo de selección para las entidades</string>

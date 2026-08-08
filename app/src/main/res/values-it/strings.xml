@@ -1064,7 +1064,7 @@
   <string name="mass_operations_mark_pending_all">Segna tutte come in attesa</string>
   <string name="mass_operations_mark_restored_all">Segna tutte come ripristinate</string>
   <string name="mass_operations_mark_unreconciled_all">Segna tutte come non riconciliate</string>
-  <string name="mass_operations_summary">Applica operazioni a più transazioni insieme</string>
+  <string name="mass_operations_summary">Prendi molti movimenti insieme e segnali verificati, riconciliati o in sospeso, oppure cancellali tutti in una volta.</string>
   <string name="mean_line_label">Media</string>
   <string name="merge_payee_confirm">Conferma l\'unione dei beneficiari</string>
   <string name="merge_payee_message">Verrà mantenuto il beneficiario %1$s, le transazioni dei seguenti beneficiari saranno spostate su di lui e quei beneficiari saranno eliminati:</string>
@@ -1103,7 +1103,7 @@
   <string name="permissions">Permessi</string>
   <string name="permissions_summary">Rivedi i permessi da concedere a mano</string>
   <string name="planner">Pianificatore</string>
-  <string name="planner_summary">Mostra il pianificatore mensile</string>
+  <string name="planner_summary">I mesi che verranno come saranno una volta passato tutto il programmato: per vedere se i soldi bastano.</string>
   <string name="preferences_summary">Cambia le impostazioni dell\'app</string>
   <string name="privacy_policy">Informativa sulla privacy</string>
   <string name="provided_by_other_app">(Fornito da un\'altra app)</string>
@@ -1137,7 +1137,7 @@
   <string name="restore_database_online_google_drive">Ripristino da Google Drive</string>
   <string name="restore_database_online_google_drive_summary">Ripristina la banca dati da Google Drive</string>
   <string name="restore_database_summary">Ripristina la banca dati dalla memoria del telefono</string>
-  <string name="scheduled_transactions_summary">Programma transazioni e trasferimenti</string>
+  <string name="scheduled_transactions_summary">Quello che si ripete: affitto, stipendio, abbonamenti. L\'app li registra il giorno giusto e te lo dice.</string>
   <string name="select_color">Scegli il colore</string>
   <string name="selector_type_summary">Modo di scelta per le anagrafiche</string>
   <string name="shortcut_not_supported_by_launcher">La schermata iniziale non supporta le scorciatoie fissate</string>
