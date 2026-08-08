@@ -97,10 +97,17 @@ public class TemplatesListFragment extends BlotterFragment {
     /**
      * The blotter titles itself from the internal name of its filter, which here is
      * the bare word "templates", under a "Transactions" subtitle that does not apply.
+     * <p>
+     * Only worth doing where there is a title bar to write into. Inside the main
+     * screen there is not: the tab already says which list this is, and a second
+     * bar above the buttons only made this tab taller than its neighbours.
      */
     @Override
     protected void applyFilter() {
         super.applyFilter();
+        if (isInsideMainScreen()) {
+            return;
+        }
         if (getActivity() instanceof AppCompatActivity) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
@@ -108,6 +115,10 @@ public class TemplatesListFragment extends BlotterFragment {
                 actionBar.setSubtitle(null);
             }
         }
+    }
+
+    private boolean isInsideMainScreen() {
+        return getActivity() instanceof MainActivity;
     }
 
     protected void internalOnCreateTemplates() {

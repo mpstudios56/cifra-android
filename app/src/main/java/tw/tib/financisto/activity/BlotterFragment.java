@@ -215,7 +215,10 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // MassOp / BudgetBlotter inherit this too.
         tw.tib.financisto.utils.SafeFastScroll.attach(getListView());
 
-        if (!mainBlotter) {
+        // A toolbar belongs to a screen of its own. Inside the main screen the tab
+        // says which list this is, and a title bar on top of the button bar only
+        // makes that tab taller than every other.
+        if (!mainBlotter && !(getActivity() instanceof MainActivity)) {
             // non-main blotter is contained in BlotterActivity, with fragment container layout
             // having a toolbar
             var toolbar = (Toolbar) view.findViewById(R.id.toolbar);

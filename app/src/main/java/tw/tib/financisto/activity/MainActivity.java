@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
     /** The tabs this screen can show, in the order they appear when all are on. */
     private enum MainTab {
         SUMMARY("summary", R.drawable.ic_tab_summary),
-        ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
         BLOTTER("blotter", R.drawable.ic_tab_blotter),
         DRAFTS("drafts", R.drawable.ic_tab_drafts),
         TEMPLATES("templates", R.drawable.ic_tab_templates),
         BUDGETS("budgets", R.drawable.ic_tab_budgets),
         REPORTS("reports", R.drawable.ic_tab_reports),
+        ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
         MENU("menu", R.drawable.ic_tab_menu);
 
         final String tag;
@@ -194,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         if (MyPreferences.isShowSummaryTab(this)) {
             result.add(MainTab.SUMMARY);
         }
-        result.add(MainTab.ACCOUNTS);
         result.add(MainTab.BLOTTER);
         if (TransactionDraft.count(this) > 0) {
             result.add(MainTab.DRAFTS);
@@ -208,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
         if (MyPreferences.isShowReportsTab(this)) {
             result.add(MainTab.REPORTS);
         }
+        result.add(MainTab.ACCOUNTS);
         result.add(MainTab.MENU);
         return result;
     }
