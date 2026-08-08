@@ -1205,4 +1205,9 @@
   <string name="show_summary_tab_summary">Mostra il mese a colpo d\'occhio come prima scheda</string>
   <string name="quick_entry_from_widget">Spesa veloce dal widget</string>
   <string name="quick_entry_from_widget_summary">Il tasto del widget apre la schermata veloce invece del modulo completo</string>
+  <string name="feedback">Invia un riscontro</string>
+  <string name="feedback_summary">Suggerimenti, una funzione che ti manca, o qualcosa che non ha funzionato</string>
+  <string name="feedback_subject">Cifra %1$s - riscontro</string>
+  <string name="feedback_body">Scrivi qui sotto quello che vuoi dire.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
+  <string name="feedback_no_mail">Nessuna app di posta su questo telefono</string>
 </resources>

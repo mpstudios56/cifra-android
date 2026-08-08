@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The one coloured button on the donation card, in the app's own green so it
+  reads as part of Cifra rather than as an advert.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF25714E" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FF2F8F63" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+</selector>

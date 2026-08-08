@@ -1340,4 +1340,11 @@
     <string name="show_summary_tab_summary">Show the month at a glance as the first tab</string>
     <string name="quick_entry_from_widget">Quick entry from the widget</string>
     <string name="quick_entry_from_widget_summary">The widget button opens the quick screen instead of the full form</string>
+    <string name="feedback">Send feedback</string>
+    <string name="feedback_summary">Suggestions, a feature you are missing, or something that went wrong</string>
+    <string name="feedback_subject">Cifra %1$s - feedback</string>
+    <string name="feedback_body">Write below what you would like to say.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
+    <string name="feedback_no_mail">No mail app on this phone</string>
+    <!-- Where feedback is sent. Not translated: it is an address. -->
+    <string name="feedback_address" translatable="false">marcellopandolfo@gmail.com</string>
 </resources>

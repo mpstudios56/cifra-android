@@ -1202,4 +1202,9 @@
   <string name="show_summary_tab_summary">Den Monat auf einen Blick als ersten Tab zeigen</string>
   <string name="quick_entry_from_widget">Schnelleingabe aus dem Widget</string>
   <string name="quick_entry_from_widget_summary">Die Widget-Taste öffnet die Schnelleingabe statt des vollen Formulars</string>
+  <string name="feedback">Rückmeldung senden</string>
+  <string name="feedback_summary">Vorschläge, eine fehlende Funktion oder etwas, das schiefgegangen ist</string>
+  <string name="feedback_subject">Cifra %1$s - Rückmeldung</string>
+  <string name="feedback_body">Schreib unten, was du sagen möchtest.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
+  <string name="feedback_no_mail">Keine E-Mail-App auf diesem Telefon</string>
 </resources>

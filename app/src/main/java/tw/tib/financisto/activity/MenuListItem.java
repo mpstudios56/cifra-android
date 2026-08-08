@@ -31,6 +31,7 @@ import tw.tib.financisto.export.csv.CsvImportTask;
 import tw.tib.financisto.export.SettingsExportTask;
 import tw.tib.financisto.utils.DonatePrompt;
 import tw.tib.financisto.utils.EntityEnum;
+import tw.tib.financisto.utils.Feedback;
 import tw.tib.financisto.utils.EnumUtils;
 
 import androidx.documentfile.provider.DocumentFile;
@@ -189,13 +190,21 @@ public enum MenuListItem implements SummaryEntityEnum {
             // Opens a payment page in the browser rather than asking for anything
             // inside the app: a voluntary donation buys nothing here, and nothing
             // in the app is withheld until one is made.
-            DonatePrompt.open(fragment.getContext());
+            // The card, not the browser: the same thing that comes up on its own
+            // every so often, so it can also be looked at on purpose.
+            DonatePrompt.ask(fragment.getActivity());
         }
     },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), AboutActivity.class));
+        }
+    },
+    MENU_FEEDBACK(R.string.feedback, R.string.feedback_summary, R.drawable.ic_action_feedback) {
+        @Override
+        public void call(Fragment fragment) {
+            Feedback.send(fragment.getActivity());
         }
     };
 

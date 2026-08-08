@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The cup on the donation card. Drawn in the app's outline set but at the weight
+  of an illustration rather than a button icon, and carrying the app's own green
+  and gold instead of taking a tint: it is the one place where the picture is
+  the point.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- steam -->
+    <path
+        android:strokeColor="#FF45B87E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M17.5,10.5 C17.5,8 20,7.4 20,4.9" />
+    <path
+        android:strokeColor="#FF45B87E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M24,10.5 C24,8 26.5,7.4 26.5,4.9" />
+    <path
+        android:strokeColor="#FF45B87E"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M30.5,10.5 C30.5,8 33,7.4 33,4.9" />
+    <!-- the cup, filled so it reads at a glance -->
+    <path
+        android:fillColor="#FF2F8F63"
+        android:pathData="M9,16 H35 V29 A9,9 0 0,1 26,38 H18 A9,9 0 0,1 9,29 Z" />
+    <!-- handle -->
+    <path
+        android:strokeColor="#FF2F8F63"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M35,19.5 H38.5 A4.5,4.5 0 0,1 38.5,28.5 H35" />
+    <!-- what is in it -->
+    <path
+        android:fillColor="#FFE9A742"
+        android:pathData="M12.4,19.4 H31.6 V27 A7,7 0 0,1 24.6,34 H19.4 A7,7 0 0,1 12.4,27 Z" />
+    <!-- saucer -->
+    <path
+        android:strokeColor="#FF45B87E"
+        android:strokeWidth="2.6"
+        android:strokeLineCap="round"
+        android:pathData="M6.5,42 H37.5" />
+</vector>

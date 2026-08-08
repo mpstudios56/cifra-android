@@ -1202,4 +1202,9 @@
   <string name="show_summary_tab_summary">Mostrar el mes de un vistazo como primera pestaña</string>
   <string name="quick_entry_from_widget">Gasto rápido desde el widget</string>
   <string name="quick_entry_from_widget_summary">El botón del widget abre la pantalla rápida en vez del formulario completo</string>
+  <string name="feedback">Enviar comentarios</string>
+  <string name="feedback_summary">Sugerencias, una función que echas en falta, o algo que ha fallado</string>
+  <string name="feedback_subject">Cifra %1$s - comentarios</string>
+  <string name="feedback_body">Escribe abajo lo que quieras decir.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
+  <string name="feedback_no_mail">No hay ninguna aplicación de correo en este teléfono</string>
 </resources>

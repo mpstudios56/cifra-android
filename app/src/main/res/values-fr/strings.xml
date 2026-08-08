@@ -1195,4 +1195,9 @@
   <string name="show_summary_tab_summary">Afficher le mois en un coup d\'œil comme premier onglet</string>
   <string name="quick_entry_from_widget">Saisie rapide depuis le widget</string>
   <string name="quick_entry_from_widget_summary">Le bouton du widget ouvre la saisie rapide au lieu du formulaire complet</string>
+  <string name="feedback">Envoyer un retour</string>
+  <string name="feedback_summary">Suggestions, une fonction qui vous manque, ou quelque chose qui a mal tourné</string>
+  <string name="feedback_subject">Cifra %1$s - retour</string>
+  <string name="feedback_body">Écrivez ci-dessous ce que vous souhaitez dire.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
+  <string name="feedback_no_mail">Aucune application de messagerie sur ce téléphone</string>
 </resources>

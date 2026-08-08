@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import tw.tib.financisto.R;
@@ -69,19 +71,40 @@ public class DonatePrompt {
             return;
         }
         askedThisLaunch = true;
+        show(activity, prefs, now);
+    }
 
-        new AlertDialog.Builder(activity)
-                .setTitle(R.string.donate)
-                .setMessage(R.string.donate_summary)
-                .setPositiveButton(R.string.donate_go, (d, w) -> {
-                    postpone(prefs, now + AFTER_GIVING);
-                    open(activity);
-                })
-                .setNeutralButton(R.string.donate_later, (d, w) -> postpone(prefs, now + LATER_WAIT))
-                .setNegativeButton(R.string.donate_never, (d, w) -> postpone(prefs, Long.MAX_VALUE))
-                // Dismissing without choosing is not a no, so treat it as "later".
+    /**
+     * Shows the card whether or not it is due. The menu entry uses this, so the
+     * thing that comes up on its own can also be reached on purpose.
+     */
+    public static void ask(Activity activity) {
+        show(activity, activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE),
+                System.currentTimeMillis());
+    }
+
+    private static void show(Activity activity, SharedPreferences prefs, long now) {
+        View card = LayoutInflater.from(activity).inflate(R.layout.donate_dialog, null);
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setView(card)
+                // Dismissing without choosing is not a no, so it counts as "later".
                 .setOnCancelListener(d -> postpone(prefs, now + LATER_WAIT))
-                .show();
+                .create();
+
+        card.findViewById(R.id.donate_go).setOnClickListener(v -> {
+            postpone(prefs, now + AFTER_GIVING);
+            open(activity);
+            dialog.dismiss();
+        });
+        card.findViewById(R.id.donate_later).setOnClickListener(v -> {
+            postpone(prefs, now + LATER_WAIT);
+            dialog.dismiss();
+        });
+        card.findViewById(R.id.donate_never).setOnClickListener(v -> {
+            postpone(prefs, Long.MAX_VALUE);
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     private static void postpone(SharedPreferences prefs, long when) {
