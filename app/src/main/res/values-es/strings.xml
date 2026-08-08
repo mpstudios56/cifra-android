@@ -1243,5 +1243,5 @@
   <string name="welcome_currency_summary">Tomada del teléfono. Las demás se añaden después.</string>
   <string name="quick_bar">Botones en el panel de notificaciones</string>
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
-  <string name="quick_bar_title">Añadir a Cifra</string>
+  <string name="quick_bar_title">Nueva operación</string>
 </resources>

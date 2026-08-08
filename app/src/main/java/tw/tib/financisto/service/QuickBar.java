@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
@@ -50,6 +51,14 @@ public class QuickBar {
         }
         createChannel(manager, context);
 
+        RemoteViews bar = new RemoteViews(context.getPackageName(), R.layout.notification_quick_bar);
+        bar.setOnClickPendingIntent(R.id.bar_quick,
+                open(context, QuickTransactionActivity.class, 1));
+        bar.setOnClickPendingIntent(R.id.bar_transaction,
+                open(context, TransactionActivity.class, 2));
+        bar.setOnClickPendingIntent(R.id.bar_transfer,
+                open(context, TransferActivity.class, 3));
+
         NotificationCompat.Builder b = new NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.actionbar_quick_add)
                 .setContentTitle(context.getString(R.string.quick_bar_title))
@@ -57,12 +66,9 @@ public class QuickBar {
                 .setOngoing(true)
                 .setShowWhen(false)
                 .setSilent(true)
-                .addAction(0, context.getString(R.string.quick_transaction),
-                        open(context, QuickTransactionActivity.class, 1))
-                .addAction(0, context.getString(R.string.transaction),
-                        open(context, TransactionActivity.class, 2))
-                .addAction(0, context.getString(R.string.transfer),
-                        open(context, TransferActivity.class, 3));
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(bar)
+                .setCustomBigContentView(bar);
         try {
             manager.notify(ID, b.build());
         } catch (SecurityException e) {

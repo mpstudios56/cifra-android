@@ -1236,5 +1236,5 @@
   <string name="welcome_currency_summary">Prise sur le téléphone. Les autres s\'ajoutent ensuite.</string>
   <string name="quick_bar">Boutons dans le volet des notifications</string>
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
-  <string name="quick_bar_title">Ajouter à Cifra</string>
+  <string name="quick_bar_title">Nouvelle opération</string>
 </resources>

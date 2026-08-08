@@ -1383,5 +1383,5 @@
     <string name="welcome_currency_summary">Taken from your phone. Others can be added later.</string>
     <string name="quick_bar">Buttons in the notification shade</string>
     <string name="quick_bar_summary">A quiet notification carrying quick entry, transaction and transfer</string>
-    <string name="quick_bar_title">Add to Cifra</string>
+    <string name="quick_bar_title">New entry</string>
 </resources>

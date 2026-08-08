@@ -1246,5 +1246,5 @@
   <string name="welcome_currency_summary">Presa dal telefono. Le altre si aggiungono dopo.</string>
   <string name="quick_bar">Tasti nella tendina delle notifiche</string>
   <string name="quick_bar_summary">Una notifica silenziosa con spesa veloce, movimento e trasferimento</string>
-  <string name="quick_bar_title">Aggiungi a Cifra</string>
+  <string name="quick_bar_title">Nuova operazione</string>
 </resources>

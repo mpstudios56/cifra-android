@@ -1243,5 +1243,5 @@
   <string name="welcome_currency_summary">Vom Telefon übernommen. Weitere lassen sich später anlegen.</string>
   <string name="quick_bar">Tasten im Benachrichtigungsfeld</string>
   <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
-  <string name="quick_bar_title">Zu Cifra hinzufügen</string>
+  <string name="quick_bar_title">Neue Buchung</string>
 </resources>
