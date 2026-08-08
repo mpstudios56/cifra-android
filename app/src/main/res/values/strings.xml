@@ -1349,4 +1349,16 @@
     <string name="feedback_address" translatable="false">marcellopandolfo@gmail.com</string>
     <string name="summary_previous_month">Previous month</string>
     <string name="summary_next_month">Next month</string>
+    <string name="welcome_title">Welcome to Cifra</string>
+    <string name="welcome_subtitle">Two questions, then it is out of your way</string>
+    <string name="welcome_backup">Back up on its own</string>
+    <string name="welcome_backup_summary">A copy of everything, once a day, in a folder you choose. Nothing leaves the phone unless you set up Drive or Dropbox later.</string>
+    <string name="welcome_choose_folder">Choose folder</string>
+    <string name="welcome_folder_chosen">Folder: %1$s</string>
+    <string name="welcome_folder_needed">Choose a folder for the backups first</string>
+    <string name="welcome_demo">Start with sample data</string>
+    <string name="welcome_demo_summary">Invented accounts and six months of invented spending, to see what the app does. Restore your own backup, or delete the accounts, when you have.</string>
+    <string name="welcome_demo_loading">Loading the sample data…</string>
+    <string name="welcome_demo_failed">The sample data could not be loaded</string>
+    <string name="welcome_start">Start</string>
 </resources>

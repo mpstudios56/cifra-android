@@ -1209,4 +1209,16 @@
   <string name="feedback_no_mail">No hay ninguna aplicación de correo en este teléfono</string>
   <string name="summary_previous_month">Mes anterior</string>
   <string name="summary_next_month">Mes siguiente</string>
+  <string name="welcome_title">Bienvenido a Cifra</string>
+  <string name="welcome_subtitle">Dos preguntas y te dejo en paz</string>
+  <string name="welcome_backup">Copia de seguridad automática</string>
+  <string name="welcome_backup_summary">Una copia de todo, una vez al día, en una carpeta que elijas. Nada sale del teléfono, salvo que conectes Drive o Dropbox más adelante.</string>
+  <string name="welcome_choose_folder">Elegir carpeta</string>
+  <string name="welcome_folder_chosen">Carpeta: %1$s</string>
+  <string name="welcome_folder_needed">Elige primero una carpeta para las copias</string>
+  <string name="welcome_demo">Empezar con datos de ejemplo</string>
+  <string name="welcome_demo_summary">Cuentas inventadas y seis meses de gastos inventados, para ver qué hace la aplicación. Después restaura tu copia o borra las cuentas.</string>
+  <string name="welcome_demo_loading">Cargando los datos de ejemplo…</string>
+  <string name="welcome_demo_failed">No se han podido cargar los datos de ejemplo</string>
+  <string name="welcome_start">Empezar</string>
 </resources>

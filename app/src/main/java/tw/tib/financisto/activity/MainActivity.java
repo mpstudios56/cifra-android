@@ -1,6 +1,7 @@
 package tw.tib.financisto.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Two questions worth asking once, before anything is on screen to
+        // distract from them. It comes back here when it is done.
+        if (WelcomeActivity.isPending(this)) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
+            return;
+        }
 
         if (MyPreferences.isSecureWindow()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);

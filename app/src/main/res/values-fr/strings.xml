@@ -1202,4 +1202,16 @@
   <string name="feedback_no_mail">Aucune application de messagerie sur ce téléphone</string>
   <string name="summary_previous_month">Mois précédent</string>
   <string name="summary_next_month">Mois suivant</string>
+  <string name="welcome_title">Bienvenue dans Cifra</string>
+  <string name="welcome_subtitle">Deux questions, puis on vous laisse tranquille</string>
+  <string name="welcome_backup">Sauvegarde automatique</string>
+  <string name="welcome_backup_summary">Une copie de tout, une fois par jour, dans un dossier que vous choisissez. Rien ne quitte le téléphone, sauf si vous reliez Drive ou Dropbox plus tard.</string>
+  <string name="welcome_choose_folder">Choisir le dossier</string>
+  <string name="welcome_folder_chosen">Dossier : %1$s</string>
+  <string name="welcome_folder_needed">Choisissez d\'abord un dossier pour les sauvegardes</string>
+  <string name="welcome_demo">Commencer avec des données d\'exemple</string>
+  <string name="welcome_demo_summary">Des comptes inventés et six mois de dépenses inventées, pour voir ce que fait l\'application. Ensuite, restaurez votre sauvegarde ou supprimez les comptes.</string>
+  <string name="welcome_demo_loading">Chargement des données d\'exemple…</string>
+  <string name="welcome_demo_failed">Impossible de charger les données d\'exemple</string>
+  <string name="welcome_start">Commencer</string>
 </resources>

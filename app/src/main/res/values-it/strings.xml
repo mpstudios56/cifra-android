@@ -1212,4 +1212,16 @@
   <string name="feedback_no_mail">Nessuna app di posta su questo telefono</string>
   <string name="summary_previous_month">Mese precedente</string>
   <string name="summary_next_month">Mese successivo</string>
+  <string name="welcome_title">Benvenuto in Cifra</string>
+  <string name="welcome_subtitle">Due domande, poi non ti disturbo più</string>
+  <string name="welcome_backup">Backup da solo</string>
+  <string name="welcome_backup_summary">Una copia di tutto, una volta al giorno, in una cartella che scegli tu. Niente esce dal telefono, a meno che tu non colleghi Drive o Dropbox più avanti.</string>
+  <string name="welcome_choose_folder">Scegli la cartella</string>
+  <string name="welcome_folder_chosen">Cartella: %1$s</string>
+  <string name="welcome_folder_needed">Scegli prima una cartella per i backup</string>
+  <string name="welcome_demo">Parti con dati di esempio</string>
+  <string name="welcome_demo_summary">Conti inventati e sei mesi di spese inventate, per vedere cosa fa l\'app. Quando hai visto, ripristini il tuo backup oppure cancelli i conti.</string>
+  <string name="welcome_demo_loading">Carico i dati di esempio…</string>
+  <string name="welcome_demo_failed">Non sono riuscito a caricare i dati di esempio</string>
+  <string name="welcome_start">Inizia</string>
 </resources>

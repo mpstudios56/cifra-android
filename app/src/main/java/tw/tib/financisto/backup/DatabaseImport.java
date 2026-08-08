@@ -48,6 +48,12 @@ public class DatabaseImport extends FullDatabaseImport {
         return new DatabaseImport(context, dbAdapter, inputStream);
     }
 
+    /** The sample data that ships with the app, offered by the welcome screen. */
+    public static DatabaseImport createFromAsset(Context context, DatabaseAdapter dbAdapter, String assetName)
+            throws IOException {
+        return new DatabaseImport(context, dbAdapter, context.getAssets().open(assetName));
+    }
+
     public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter db, GoogleDriveRESTClient googleDriveRESTClient, GoogleDriveFileInfo backupFile)
             throws Exception {
         InputStream inputStream = googleDriveRESTClient.getFileAsStream(backupFile.id);

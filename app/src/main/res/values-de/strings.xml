@@ -1209,4 +1209,16 @@
   <string name="feedback_no_mail">Keine E-Mail-App auf diesem Telefon</string>
   <string name="summary_previous_month">Voriger Monat</string>
   <string name="summary_next_month">Nächster Monat</string>
+  <string name="welcome_title">Willkommen bei Cifra</string>
+  <string name="welcome_subtitle">Zwei Fragen, dann bist du dran</string>
+  <string name="welcome_backup">Automatische Sicherung</string>
+  <string name="welcome_backup_summary">Einmal am Tag eine Kopie von allem, in einem Ordner deiner Wahl. Nichts verlässt das Telefon, es sei denn, du verbindest später Drive oder Dropbox.</string>
+  <string name="welcome_choose_folder">Ordner wählen</string>
+  <string name="welcome_folder_chosen">Ordner: %1$s</string>
+  <string name="welcome_folder_needed">Wähle zuerst einen Ordner für die Sicherungen</string>
+  <string name="welcome_demo">Mit Beispieldaten starten</string>
+  <string name="welcome_demo_summary">Erfundene Konten und sechs Monate erfundene Ausgaben, um zu sehen, was die App kann. Danach stellst du deine Sicherung wieder her oder löschst die Konten.</string>
+  <string name="welcome_demo_loading">Beispieldaten werden geladen…</string>
+  <string name="welcome_demo_failed">Die Beispieldaten konnten nicht geladen werden</string>
+  <string name="welcome_start">Los geht\'s</string>
 </resources>

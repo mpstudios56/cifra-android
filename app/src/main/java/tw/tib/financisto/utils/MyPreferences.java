@@ -572,6 +572,10 @@ public class MyPreferences {
 		return getBoolean("auto_backup_enabled", false);
 	}
 
+	public static void setAutoBackupEnabled(boolean enabled) {
+		edit().putBoolean("auto_backup_enabled", enabled).apply();
+	}
+
 	public static boolean isBackupNewlines() {
 		return getBoolean("backup_newlines", false);
 	}
