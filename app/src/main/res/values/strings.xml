@@ -1350,9 +1350,9 @@
     <string name="summary_previous_month">Previous month</string>
     <string name="summary_next_month">Next month</string>
     <string name="welcome_title">Welcome to Cifra</string>
-    <string name="welcome_subtitle">Two questions, then it is out of your way</string>
-    <string name="welcome_backup">Back up on its own</string>
-    <string name="welcome_backup_summary">A copy of everything, once a day, in a folder you choose. Nothing leaves the phone unless you set up Drive or Dropbox later.</string>
+    <string name="welcome_subtitle">A short setup to get started</string>
+    <string name="welcome_backup">Automatic backup on the phone</string>
+    <string name="welcome_backup_summary">A copy of everything, once a day, in a folder you choose on this phone. Nothing leaves it unless you connect Drive or Dropbox later.</string>
     <string name="welcome_choose_folder">Choose folder</string>
     <string name="welcome_folder_chosen">Folder: %1$s</string>
     <string name="welcome_folder_needed">Choose a folder for the backups first</string>
@@ -1377,7 +1377,7 @@
     <string name="currency_already_exists">%1$s already exists. Two currencies with the same code cannot be told apart.</string>
     <string name="currency_in_use">This currency is in use by an account, a budget or a transaction, so it cannot be deleted.</string>
     <string name="welcome_currency">Currency</string>
-    <string name="welcome_currency_summary">Taken from your phone. Others can be added later.</string>
+    <string name="welcome_currency_summary">The currency your accounts are kept in. Taken from your phone; others can be added later.</string>
     <string name="quick_bar">Buttons in the notification shade</string>
     <string name="quick_bar_summary">A quiet notification carrying quick entry, transaction and transfer</string>
     <string name="quick_bar_title">New entry</string>

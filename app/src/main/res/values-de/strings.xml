@@ -1210,9 +1210,9 @@
   <string name="summary_previous_month">Voriger Monat</string>
   <string name="summary_next_month">Nächster Monat</string>
   <string name="welcome_title">Willkommen bei Cifra</string>
-  <string name="welcome_subtitle">Zwei Fragen, dann bist du dran</string>
-  <string name="welcome_backup">Automatische Sicherung</string>
-  <string name="welcome_backup_summary">Einmal am Tag eine Kopie von allem, in einem Ordner deiner Wahl. Nichts verlässt das Telefon, es sei denn, du verbindest später Drive oder Dropbox.</string>
+  <string name="welcome_subtitle">Eine kurze Einrichtung zum Anfangen</string>
+  <string name="welcome_backup">Automatische Sicherung auf dem Telefon</string>
+  <string name="welcome_backup_summary">Einmal am Tag eine Kopie von allem, in einem Ordner deiner Wahl auf diesem Telefon. Nichts verlässt es, es sei denn, du verbindest später Drive oder Dropbox.</string>
   <string name="welcome_choose_folder">Ordner wählen</string>
   <string name="welcome_folder_chosen">Ordner: %1$s</string>
   <string name="welcome_folder_needed">Wähle zuerst einen Ordner für die Sicherungen</string>
@@ -1237,7 +1237,7 @@
   <string name="currency_already_exists">%1$s gibt es schon. Zwei Währungen mit demselben Code sind nicht zu unterscheiden.</string>
   <string name="currency_in_use">Diese Währung wird von einem Konto, einem Budget oder einer Buchung benutzt und kann nicht gelöscht werden.</string>
   <string name="welcome_currency">Währung</string>
-  <string name="welcome_currency_summary">Vom Telefon übernommen. Weitere lassen sich später anlegen.</string>
+  <string name="welcome_currency_summary">Die Währung, in der deine Konten geführt werden. Vom Telefon übernommen; weitere lassen sich später anlegen.</string>
   <string name="quick_bar">Tasten im Benachrichtigungsfeld</string>
   <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
   <string name="quick_bar_title">Neue Buchung</string>

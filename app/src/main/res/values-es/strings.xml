@@ -1210,9 +1210,9 @@
   <string name="summary_previous_month">Mes anterior</string>
   <string name="summary_next_month">Mes siguiente</string>
   <string name="welcome_title">Bienvenido a Cifra</string>
-  <string name="welcome_subtitle">Dos preguntas y te dejo en paz</string>
-  <string name="welcome_backup">Copia de seguridad automática</string>
-  <string name="welcome_backup_summary">Una copia de todo, una vez al día, en una carpeta que elijas. Nada sale del teléfono, salvo que conectes Drive o Dropbox más adelante.</string>
+  <string name="welcome_subtitle">Una pequeña configuración para empezar</string>
+  <string name="welcome_backup">Copia de seguridad local automática</string>
+  <string name="welcome_backup_summary">Una copia de todo, una vez al día, en una carpeta que elijas en este teléfono. Nada sale de aquí, salvo que conectes Drive o Dropbox más adelante.</string>
   <string name="welcome_choose_folder">Elegir carpeta</string>
   <string name="welcome_folder_chosen">Carpeta: %1$s</string>
   <string name="welcome_folder_needed">Elige primero una carpeta para las copias</string>
@@ -1237,7 +1237,7 @@
   <string name="currency_already_exists">%1$s ya existe. Dos monedas con el mismo código no se distinguen.</string>
   <string name="currency_in_use">Esta moneda la usa una cuenta, un presupuesto o un movimiento, así que no se puede eliminar.</string>
   <string name="welcome_currency">Moneda</string>
-  <string name="welcome_currency_summary">Tomada del teléfono. Las demás se añaden después.</string>
+  <string name="welcome_currency_summary">La moneda en la que llevas las cuentas. Tomada del teléfono; las demás se añaden después.</string>
   <string name="quick_bar">Botones en el panel de notificaciones</string>
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
   <string name="quick_bar_title">Nueva operación</string>

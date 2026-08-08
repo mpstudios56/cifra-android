@@ -1203,9 +1203,9 @@
   <string name="summary_previous_month">Mois précédent</string>
   <string name="summary_next_month">Mois suivant</string>
   <string name="welcome_title">Bienvenue dans Cifra</string>
-  <string name="welcome_subtitle">Deux questions, puis on vous laisse tranquille</string>
-  <string name="welcome_backup">Sauvegarde automatique</string>
-  <string name="welcome_backup_summary">Une copie de tout, une fois par jour, dans un dossier que vous choisissez. Rien ne quitte le téléphone, sauf si vous reliez Drive ou Dropbox plus tard.</string>
+  <string name="welcome_subtitle">Une petite configuration pour commencer</string>
+  <string name="welcome_backup">Sauvegarde locale automatique</string>
+  <string name="welcome_backup_summary">Une copie de tout, une fois par jour, dans un dossier que vous choisissez sur ce téléphone. Rien n\'en sort, sauf si vous reliez Drive ou Dropbox plus tard.</string>
   <string name="welcome_choose_folder">Choisir le dossier</string>
   <string name="welcome_folder_chosen">Dossier : %1$s</string>
   <string name="welcome_folder_needed">Choisissez d\'abord un dossier pour les sauvegardes</string>
@@ -1230,7 +1230,7 @@
   <string name="currency_already_exists">%1$s existe déjà. Deux devises avec le même code sont indiscernables.</string>
   <string name="currency_in_use">Cette devise est utilisée par un compte, un budget ou une opération : impossible de la supprimer.</string>
   <string name="welcome_currency">Devise</string>
-  <string name="welcome_currency_summary">Prise sur le téléphone. Les autres s\'ajoutent ensuite.</string>
+  <string name="welcome_currency_summary">La devise dans laquelle vos comptes sont tenus. Prise sur le téléphone ; les autres s\'ajoutent ensuite.</string>
   <string name="quick_bar">Boutons dans le volet des notifications</string>
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
   <string name="quick_bar_title">Nouvelle opération</string>
