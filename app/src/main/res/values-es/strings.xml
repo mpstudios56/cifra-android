@@ -1234,9 +1234,6 @@
   <string name="menu_records_summary">Los nombres que acompañan a un movimiento junto a su categoría</string>
   <string name="menu_backup_restore">Copia de seguridad y restauración</string>
   <string name="menu_backup_restore_summary">A un archivo, a Google Drive, a Dropbox, o para enviar a otro sitio</string>
-  <string name="totals_assets">Lo que tienes</string>
-  <string name="totals_liabilities">Lo que debes</string>
-  <string name="totals_net">Neto</string>
   <string name="currency_already_exists">%1$s ya existe. Dos monedas con el mismo código no se distinguen.</string>
   <string name="currency_in_use">Esta moneda la usa una cuenta, un presupuesto o un movimiento, así que no se puede eliminar.</string>
   <string name="welcome_currency">Moneda</string>
@@ -1244,9 +1241,4 @@
   <string name="quick_bar">Botones en el panel de notificaciones</string>
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
   <string name="quick_bar_title">Nueva operación</string>
-  <string name="totals_accounts_title">Lo que tienes</string>
-  <string name="totals_accounts_explained">La pastilla suma los saldos de todas las cuentas incluidas en los totales. Abajo está lo que se movió este mes: otra pregunta, otra cifra.</string>
-  <string name="totals_blotter_title">Saldo de lo que ves</string>
-  <string name="totals_blotter_explained">La pastilla suma los movimientos de esta lista. Es lo que se movió, no lo que tienes, así que no coincidirá con el total de las cuentas.</string>
-  <string name="totals_blotter_explained_filtered">La pastilla suma los movimientos que pasan el filtro activo, no todos, y no lo que tienes.</string>
 </resources>

@@ -1374,9 +1374,6 @@
     <string name="menu_records_summary">The names that go on a transaction beside its category</string>
     <string name="menu_backup_restore">Backup and restore</string>
     <string name="menu_backup_restore_summary">To a file, to Google Drive, to Dropbox, or shared elsewhere</string>
-    <string name="totals_assets">What you own</string>
-    <string name="totals_liabilities">What you owe</string>
-    <string name="totals_net">Net</string>
     <string name="currency_already_exists">%1$s already exists. Two currencies with the same code cannot be told apart.</string>
     <string name="currency_in_use">This currency is in use by an account, a budget or a transaction, so it cannot be deleted.</string>
     <string name="welcome_currency">Currency</string>
@@ -1384,9 +1381,4 @@
     <string name="quick_bar">Buttons in the notification shade</string>
     <string name="quick_bar_summary">A quiet notification carrying quick entry, transaction and transfer</string>
     <string name="quick_bar_title">New entry</string>
-    <string name="totals_accounts_title">What you have</string>
-    <string name="totals_accounts_explained">The chip adds up the balances of every account counted in the totals. Below is what moved this month - a different question, so a different figure.</string>
-    <string name="totals_blotter_title">Net of what is shown</string>
-    <string name="totals_blotter_explained">The chip adds up the transactions in this list. It is what moved, not what you have, so it will not match the total on the accounts screen.</string>
-    <string name="totals_blotter_explained_filtered">The chip adds up the transactions passing the filter in force, not all of them, and not what you have.</string>
 </resources>

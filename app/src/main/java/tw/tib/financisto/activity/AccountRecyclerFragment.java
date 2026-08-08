@@ -316,9 +316,6 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                     Utils.applyBlur(getView().findViewById(R.id.total));
                 }
             }
-            else {
-                showTotals();
-            }
         });
         totalText.setOnLongClickListener((view) -> {
             showTotals();
@@ -329,16 +326,14 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     }
 
     private void showTotals() {
-        // Only worth the per-currency screen for somebody keeping accounts in more
-        // than one. Otherwise say what the figure is made of, which is the question
-        // a total invites anyway.
-        if (TotalsPopup.severalCurrencies(db)) {
-            Intent intent = new Intent(getContext(), AccountListTotalsDetailsActivity.class);
-            intent.putExtra(AccountListTotalsDetailsActivity.FILTER, filter);
-            startActivityForResult(intent, SHOW_TOTALS_REQUEST);
-        } else {
-            TotalsPopup.showAccountsBreakdown(getContext(), db);
+        // Only where it has something to say. With one currency the screen listed
+        // the figure already on the button and nothing else.
+        if (!TotalsPopup.severalCurrencies(db)) {
+            return;
         }
+        Intent intent = new Intent(getContext(), AccountListTotalsDetailsActivity.class);
+        intent.putExtra(AccountListTotalsDetailsActivity.FILTER, filter);
+        startActivityForResult(intent, SHOW_TOTALS_REQUEST);
     }
 
     public static class AccountTotalsCalculationTask extends TotalCalculationTask {

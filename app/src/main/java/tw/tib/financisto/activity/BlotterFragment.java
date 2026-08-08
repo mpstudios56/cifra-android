@@ -325,9 +325,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                         Utils.applyBlur(getView().findViewById(R.id.total));
                     }
                 }
-                else {
-                    showTotals();
-                }
             });
             totalText.setOnLongClickListener((v) -> {
                 showTotals();
@@ -585,16 +582,14 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     }
 
     protected void showTotals() {
-        // The per-currency screen is worth opening only for somebody who keeps
-        // accounts in more than one; for everyone else it repeated the figure on
-        // the button and looked like nothing had happened.
-        if (TotalsPopup.severalCurrencies(db)) {
-            Intent intent = new Intent(getContext(), BlotterTotalsDetailsActivity.class);
-            blotterFilter.toIntent(intent);
-            startActivityForResult(intent, SHOW_TOTALS_REQUEST);
-        } else {
-            TotalsPopup.showBlotterBreakdown(getContext(), db, blotterFilter);
+        // Only where it has something to say. With one currency the screen listed
+        // the figure already on the button and nothing else.
+        if (!TotalsPopup.severalCurrencies(db)) {
+            return;
         }
+        Intent intent = new Intent(getContext(), BlotterTotalsDetailsActivity.class);
+        blotterFilter.toIntent(intent);
+        startActivityForResult(intent, SHOW_TOTALS_REQUEST);
     }
 
     protected void prepareTransactionActionGrid() {
