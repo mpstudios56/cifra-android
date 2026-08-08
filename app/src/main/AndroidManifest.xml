@@ -311,6 +311,8 @@
 
 		<activity android:name=".activity.CsvExportActivity" android:label="@string/csv_export"
 			android:theme="@style/AppThemeCompat" />
+		<activity android:name=".activity.CsvMappingActivity" android:label="@string/csv_map_title"
+			android:theme="@style/AppThemeCompat" android:exported="false" />
 		<activity android:name=".activity.CsvImportActivity" android:label="@string/csv_import"
 			android:theme="@style/AppThemeCompat" android:exported="true">
 			<intent-filter>

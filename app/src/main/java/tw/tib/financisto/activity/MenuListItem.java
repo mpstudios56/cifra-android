@@ -385,6 +385,17 @@ public enum MenuListItem implements SummaryEntityEnum {
 
     private enum ImportExportEntities implements ExecutableEntityEnum<Fragment> {
 
+        /**
+         * First, and on purpose: it is the one somebody needs on their first day,
+         * when they still have their whole history in another app. The CSV import
+         * below it reads Cifra's own files and is of no use to them.
+         */
+        CSV_IMPORT_OTHER_APP(R.string.csv_map_title, R.drawable.backup_csv) {
+            @Override
+            public void execute(Fragment fragment) {
+                fragment.startActivity(new Intent(fragment.getContext(), CsvMappingActivity.class));
+            }
+        },
         CSV_EXPORT(R.string.csv_export, R.drawable.backup_csv) {
             @Override
             public void execute(Fragment fragment) {

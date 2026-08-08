@@ -16,6 +16,10 @@ import java.util.Locale;
  * tested so far writes its headers in whatever language it is running in. An
  * Italian phone exports <em>Data, Importo, Conto</em>, an English one
  * <em>Date, Amount, Account</em>, and it is the same app and the same version.
+ * <p>
+ * The words of {@link #INCOME} and {@link #EXPENSE} do double duty: they are also
+ * what a Type column <em>says</em>, line by line, in the apps that spell out
+ * whether money came in or went out instead of using a sign.
  */
 public enum CsvField {
 
@@ -24,7 +28,7 @@ public enum CsvField {
     /** One column carrying the sign. */
     AMOUNT(true, "amount", "importo", "monto", "importe", "betrag", "montant", "value", "valore"),
     /** Two columns instead, with a zero in the one that does not apply. */
-    INCOME(false, "income", "entrate", "entrata", "ingreso", "ingresos", "einnahme", "recette", "deposit", "credit"),
+    INCOME(false, "income", "entrate", "entrata", "reddito", "ingreso", "ingresos", "einnahme", "recette", "deposit", "credit"),
     EXPENSE(false, "expense", "spesa", "spese", "uscite", "gasto", "ausgabe", "depense", "withdrawal", "debit"),
     /** Expense / Income / Transfer, when the app says it in words. */
     TYPE(false, "type", "tipo", "art", "typ"),

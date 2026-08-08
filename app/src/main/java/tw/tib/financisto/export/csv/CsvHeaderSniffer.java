@@ -32,10 +32,14 @@ public class CsvHeaderSniffer {
 
     /** How many lines are enough to tell: the header and a few transactions. */
     private static final int SAMPLE_LINES = 20;
-    private static final char[] DELIMITERS = {',', ';', '\t', '|'};
+    public static final char[] DELIMITERS = {',', ';', '\t', '|'};
+    /** The invisible character several apps put in front of the first heading. */
+    private static final char BOM = '\ufeff';
+    /** Stands for "work it out yourself". */
+    private static final char NO_DELIMITER = '\0';
 
     /** The date formats worth trying, most specific first. */
-    private static final String[] DATE_FORMATS = {
+    public static final String[] DATE_FORMATS = {
             "yyyy-MM-dd HH:mm:ss.SSS", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd", "yyyy/MM/dd",
             "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "dd/MM/yy",
@@ -55,12 +59,21 @@ public class CsvHeaderSniffer {
     }
 
     public static Guess sniff(Reader reader) throws IOException {
+        return sniff(reader, NO_DELIMITER);
+    }
+
+    /**
+     * The same, with the separator settled rather than worked out - for when
+     * somebody has corrected it by hand and everything downstream of it, the
+     * columns included, has to be looked at again.
+     */
+    public static Guess sniff(Reader reader, char delimiter) throws IOException {
         List<String> lines = readSample(reader);
         Guess guess = new Guess();
         if (lines.isEmpty()) {
             return guess;
         }
-        guess.mapping.delimiter = guessDelimiter(lines);
+        guess.mapping.delimiter = delimiter == NO_DELIMITER ? guessDelimiter(lines) : delimiter;
 
         List<String[]> rows = new ArrayList<>();
         for (String line : lines) {
@@ -99,6 +112,11 @@ public class CsvHeaderSniffer {
         List<String> lines = new ArrayList<>();
         String line;
         while (lines.size() < SAMPLE_LINES && (line = in.readLine()) != null) {
+            // A byte order mark sits invisibly in front of the first heading and would
+            // stop it matching anything. Several of the apps tested write one.
+            if (lines.isEmpty() && !line.isEmpty() && line.charAt(0) == BOM) {
+                line = line.substring(1);
+            }
             if (!line.trim().isEmpty()) {
                 lines.add(line);
             }
