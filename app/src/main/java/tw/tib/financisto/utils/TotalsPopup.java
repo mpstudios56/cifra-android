@@ -9,6 +9,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.Calendar;
+
 import tw.tib.financisto.R;
 import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.db.DatabaseHelper;
@@ -64,24 +66,38 @@ public class TotalsPopup {
                 context.getString(R.string.summary_saved), income + expense, currency);
     }
 
-    /** What is owned against what is owed, which is what a list of balances adds up to. */
+    /** What went in and out this month across the accounts that count towards it. */
     public static void showAccountsBreakdown(Context context, DatabaseAdapter db) {
+        Calendar from = Calendar.getInstance();
+        from.set(Calendar.DAY_OF_MONTH, 1);
+        from.set(Calendar.HOUR_OF_DAY, 0);
+        from.set(Calendar.MINUTE, 0);
+        from.set(Calendar.SECOND, 0);
+        from.set(Calendar.MILLISECOND, 0);
+
         String sql = "select"
-                + " coalesce(sum(case when total_amount > 0 then total_amount else 0 end), 0),"
-                + " coalesce(sum(case when total_amount < 0 then total_amount else 0 end), 0)"
-                + " from account where is_active = 1 and is_include_into_totals = 1";
-        long assets = 0, liabilities = 0;
-        try (Cursor c = db.db().rawQuery(sql, null)) {
+                + " coalesce(sum(case when t.from_amount > 0 then t.from_amount else 0 end), 0),"
+                + " coalesce(sum(case when t.from_amount < 0 then t.from_amount else 0 end), 0)"
+                + " from transactions t"
+                // A transfer between two of your own accounts is neither, and a split
+                // counted once per part would double everything it touches.
+                + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
+                + " and t.datetime >= ?"
+                + " and exists (select 1 from account a where a._id = t.from_account_id"
+                + "   and a.is_include_into_totals = 1)";
+        long income = 0, expense = 0;
+        try (Cursor c = db.db().rawQuery(sql,
+                new String[]{String.valueOf(from.getTimeInMillis())})) {
             if (c.moveToFirst()) {
-                assets = c.getLong(0);
-                liabilities = c.getLong(1);
+                income = c.getLong(0);
+                expense = c.getLong(1);
             }
         }
         Currency currency = CurrencyCache.getHomeCurrency();
         show(context, R.string.total,
-                context.getString(R.string.totals_assets), assets,
-                context.getString(R.string.totals_liabilities), liabilities,
-                context.getString(R.string.totals_net), assets + liabilities, currency);
+                context.getString(R.string.summary_income), income,
+                context.getString(R.string.summary_expense), expense,
+                context.getString(R.string.summary_saved), income + expense, currency);
     }
 
     private static void show(Context context, int titleId,

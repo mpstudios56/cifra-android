@@ -978,7 +978,7 @@
     <string name="sms_note_desc">Плейсхолдеры:\n{{t}} — текст комментария, извлеченный по шаблону</string>
     <string name="sms_note_hint">Укажите комментарий, который будет применяться к сгенерированной транзакции</string>
     <string name="sms_tpl_check">Попробуйте использовать пример уведомления здесь</string>
-    <string name="sms_templates">Уведомления / SMS-шаблоны</string>
+    <string name="sms_templates">Шаблоны уведомлений</string>
     <string name="no_sms_templates">Нет шаблонов</string>
     <string name="add_sms_template">Добавить шаблон</string>
     <string name="notification_list">Список уведомлений</string>

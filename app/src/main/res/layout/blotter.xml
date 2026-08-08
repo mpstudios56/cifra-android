@@ -91,6 +91,11 @@
 			android:focusable="true"
 			android:gravity="right|center"
 			android:layout_margin="4dp"
+			android:paddingLeft="14dp"
+			android:paddingRight="14dp"
+			android:textSize="15sp"
+			android:maxLines="1"
+			android:ellipsize="end"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent" />

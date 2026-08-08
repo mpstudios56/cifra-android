@@ -1138,7 +1138,7 @@
   <string name="sms_note_title">Note (?)</string>
   <string name="sms_number_hint">Nom de l\'application qui envoie la notification ou numéro de l\'expéditeur du SMS ; % remplace n\'importe quoi</string>
   <string name="sms_sender">Expéditeur de la notification / numéro SMS</string>
-  <string name="sms_templates">Modèles de notification / SMS</string>
+  <string name="sms_templates">Modèles de notification</string>
   <string name="sms_tpl">Modèle de notification / SMS</string>
   <string name="sms_tpl_check">Essayez ici avec un exemple de notification</string>
   <string name="sms_tpl_desc">Marqueurs : \n{{p}} - montant\n{{a}} - derniers chiffres du compte\n{{c}} - nom du compte\n{{x}} - nom du compte de destination\n{{f}} - code devise ISO 4217\n{{e}} - bénéficiaire (sans espace)\n{{r}} - projet (sans espace)\n{{t}} - texte de la note (court)\n{{u}} - texte de la note (long)\n{{g}} - date Unix en millisecondes\n{{*}} - n\'importe quel symbole ou mot</string>
@@ -1232,4 +1232,9 @@
   <string name="totals_net">Net</string>
   <string name="currency_already_exists">%1$s existe déjà. Deux devises avec le même code sont indiscernables.</string>
   <string name="currency_in_use">Cette devise est utilisée par un compte, un budget ou une opération : impossible de la supprimer.</string>
+  <string name="welcome_currency">Devise</string>
+  <string name="welcome_currency_summary">Prise sur le téléphone. Les autres s\'ajoutent ensuite.</string>
+  <string name="quick_bar">Boutons dans le volet des notifications</string>
+  <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
+  <string name="quick_bar_title">Ajouter à Cifra</string>
 </resources>

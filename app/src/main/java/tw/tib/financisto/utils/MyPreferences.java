@@ -763,6 +763,10 @@ public class MyPreferences {
 	 * Templates as a tab of their own rather than a button on the blotter, where it
 	 * sat among the buttons that create things while it only opens a chooser.
 	 */
+	public static boolean isQuickBarEnabled(Context context) {
+		return getBoolean("quick_bar_enabled", false);
+	}
+
 	public static boolean isQuickEntryFromWidget(Context context) {
 		return getBoolean("quick_entry_from_widget", true);
 	}

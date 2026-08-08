@@ -1146,7 +1146,7 @@
   <string name="sms_note_title">Concepto (?)</string>
   <string name="sms_number_hint">Nombre de la aplicación que envía la notificación o número del remitente del SMS; usa % como comodín</string>
   <string name="sms_sender">Remitente de la notificación / número de SMS</string>
-  <string name="sms_templates">Plantillas de notificación / SMS</string>
+  <string name="sms_templates">Plantillas de notificación</string>
   <string name="sms_tpl">Plantilla de notificación / SMS</string>
   <string name="sms_tpl_check">Pruébala aquí con una notificación de ejemplo</string>
   <string name="sms_tpl_desc">Marcadores: \n{{p}} - importe\n{{a}} - últimos dígitos de la cuenta\n{{c}} - nombre de la cuenta\n{{x}} - nombre de la cuenta de destino\n{{f}} - código de divisa ISO 4217\n{{e}} - beneficiario (sin espacios)\n{{r}} - proyecto (sin espacios)\n{{t}} - texto del concepto (mínimo)\n{{u}} - texto del concepto (máximo)\n{{g}} - fecha Unix en milisegundos\n{{*}} - cualquier símbolo o palabra</string>
@@ -1239,4 +1239,9 @@
   <string name="totals_net">Neto</string>
   <string name="currency_already_exists">%1$s ya existe. Dos monedas con el mismo código no se distinguen.</string>
   <string name="currency_in_use">Esta moneda la usa una cuenta, un presupuesto o un movimiento, así que no se puede eliminar.</string>
+  <string name="welcome_currency">Moneda</string>
+  <string name="welcome_currency_summary">Tomada del teléfono. Las demás se añaden después.</string>
+  <string name="quick_bar">Botones en el panel de notificaciones</string>
+  <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
+  <string name="quick_bar_title">Añadir a Cifra</string>
 </resources>

@@ -18,5 +18,7 @@
         android:layout_height="wrap_content"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
+        app:tabTextAppearance="@style/TabLabel"
+        app:tabInlineLabel="false"
         android:background="?attr/colorPrimary" />
 </LinearLayout>

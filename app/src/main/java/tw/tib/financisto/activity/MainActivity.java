@@ -41,6 +41,7 @@ import tw.tib.financisto.bus.GreenRobotBus_;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.DonatePrompt;
 import tw.tib.financisto.utils.MyPreferences;
+import tw.tib.financisto.service.QuickBar;
 import tw.tib.financisto.utils.PinProtection;
 
 public class MainActivity extends AppCompatActivity {
@@ -269,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         refreshTabs();
+        QuickBar.refresh(this);
         greenRobotBus.register(this);
         PinProtection.unlock(this);
         if (PinProtection.isUnlocked()) {

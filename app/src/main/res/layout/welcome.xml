@@ -41,6 +41,36 @@
             android:text="@string/welcome_subtitle"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="26dp"
+            android:alpha="0.2"
+            android:background="#FFFFFFFF" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/welcome_currency"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_currency_summary"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Button
+            android:id="@+id/welcome_currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="start|center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end" />
+
         <!-- backup -->
         <View
             android:layout_width="match_parent"

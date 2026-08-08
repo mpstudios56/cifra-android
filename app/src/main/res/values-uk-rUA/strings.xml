@@ -1023,7 +1023,7 @@
     <string name="sms_note_desc">Заповнювачі: \n{{t}} - текст примітки, витягнутий за шаблоном</string>
     <string name="sms_note_hint">Вкажіть примітку для застосування до згенерованої транзакції</string>
     <string name="sms_tpl_check">Спробуйте приклад сповіщення тут</string>
-    <string name="sms_templates">Шаблони сповіщень / SMS</string>
+    <string name="sms_templates">Шаблони сповіщень</string>
     <string name="no_sms_templates">Без шаблонів</string>
     <string name="add_sms_template">Додати шаблон</string>
     <string name="notification_list">Перелік сповіщень</string>

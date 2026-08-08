@@ -52,6 +52,13 @@
         <item name="android:textColor">#737373</item>
 		<item name="android:textSize">12sp</item>
     </style>
+	<!-- Small enough for the longest word in the longest language to fit under
+	     its icon: Ubersicht and Benachrichtigungen are not short. -->
+	<style name="TabLabel" parent="android:TextAppearance.Small">
+		<item name="android:textSize">9sp</item>
+		<item name="android:textAllCaps">false</item>
+	</style>
+
 	<style name="ListPrimary" parent="android:TextAppearance.Medium">
 		<item name="android:textSize">16sp</item>
 	</style>

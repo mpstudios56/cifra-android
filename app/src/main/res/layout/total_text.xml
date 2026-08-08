@@ -15,5 +15,7 @@
               android:layout_width="wrap_content"
               android:id="@+id/total" android:gravity="right|center"
               android:textStyle="bold" android:background="@drawable/btn_total_dark"
-              android:clickable="true" android:layout_margin="4dp"/>
+              android:clickable="true" android:layout_margin="4dp"
+              android:paddingLeft="14dp" android:paddingRight="14dp"
+              android:textSize="15sp" android:maxLines="1" android:ellipsize="end"/>
 </merge>

@@ -888,7 +888,7 @@
   <string name="sms_note_desc">佔位標籤: \n{{t}} - 會被換成模板取得的交易內容敘述</string>
   <string name="sms_note_hint">輸入產生交易時填寫的備註</string>
   <string name="sms_tpl_check">在此貼上通知內容進行測試</string>
-  <string name="sms_templates">通知 / 簡訊模板</string>
+  <string name="sms_templates">通知範本</string>
   <string name="no_sms_templates">沒有模板</string>
   <string name="add_sms_template">新增模板</string>
   <string name="notification_list">通知列表</string>

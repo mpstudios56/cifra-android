@@ -19,6 +19,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,7 @@ import tw.tib.financisto.backup.DatabaseImport;
 import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.export.Export;
 import tw.tib.financisto.service.DailyAutoBackupScheduler;
+import tw.tib.financisto.utils.LocalCurrency;
 import tw.tib.financisto.utils.MyPreferences;
 
 /**
@@ -50,6 +54,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private static final String DEMO_ASSET = "demo.backup";
 
     private CheckBox backupBox;
+    private Button currencyButton;
+    private String currencyCode;
     private CheckBox demoBox;
     private Button folderButton;
     private ActivityResultLauncher<Uri> pickFolder;
@@ -126,10 +132,46 @@ public class WelcomeActivity extends AppCompatActivity {
             showFolder();
         });
 
+        currencyButton = findViewById(R.id.welcome_currency);
+        currencyCode = LocalCurrency.guessCode();
+        showCurrency();
+        currencyButton.setOnClickListener(v -> pickCurrency());
+
         folderButton.setOnClickListener(v -> pickFolder.launch(null));
         backupBox.setOnCheckedChangeListener((b, checked) -> showFolder());
         findViewById(R.id.welcome_start).setOnClickListener(v -> start());
         showFolder();
+    }
+
+    private void showCurrency() {
+        currencyButton.setText(LocalCurrency.describe(currencyCode));
+    }
+
+    /**
+     * The codes worth offering without a search box. Whatever the phone says comes
+     * first, so the common case is one tap or none.
+     */
+    private void pickCurrency() {
+        List<String> codes = new ArrayList<>();
+        codes.add(currencyCode);
+        for (String code : new String[]{"EUR", "USD", "GBP", "CHF", "JPY", "CAD",
+                "AUD", "SEK", "NOK", "DKK", "PLN", "CZK", "HUF", "RON", "BGN",
+                "BRL", "MXN", "INR", "CNY", "ZAR", "TRY"}) {
+            if (!codes.contains(code)) {
+                codes.add(code);
+            }
+        }
+        String[] labels = new String[codes.size()];
+        for (int i = 0; i < codes.size(); i++) {
+            labels[i] = LocalCurrency.describe(codes.get(i));
+        }
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.welcome_currency)
+                .setItems(labels, (d, which) -> {
+                    currencyCode = codes.get(which);
+                    showCurrency();
+                })
+                .show();
     }
 
     private void showFolder() {
@@ -155,6 +197,16 @@ public class WelcomeActivity extends AppCompatActivity {
             }
             MyPreferences.setAutoBackupEnabled(true);
             DailyAutoBackupScheduler.scheduleNextAutoBackup(this);
+        }
+
+        // Before anything else: an app with no currency cannot hold a transaction,
+        // and inventing one by hand is a poor first task.
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        db.open();
+        try {
+            LocalCurrency.createIfMissing(this, db, currencyCode);
+        } finally {
+            db.close();
         }
 
         if (demoBox.isChecked()) {

@@ -1146,7 +1146,7 @@
   <string name="sms_note_title">Notiz (?)</string>
   <string name="sms_number_hint">Name der App, die die Benachrichtigung sendet, oder Nummer des SMS-Absenders; % steht für beliebige Zeichen</string>
   <string name="sms_sender">Absender der Benachrichtigung / SMS-Nummer</string>
-  <string name="sms_templates">Benachrichtigungs- und SMS-Vorlagen</string>
+  <string name="sms_templates">Benachrichtigungsvorlagen</string>
   <string name="sms_tpl">Benachrichtigungs- oder SMS-Vorlage</string>
   <string name="sms_tpl_check">Hier mit einer Beispielbenachrichtigung ausprobieren</string>
   <string name="sms_tpl_desc">Platzhalter: \n{{p}} - Betrag\n{{a}} - letzte Ziffern des Kontos\n{{c}} - Name des Kontos\n{{x}} - Name des Zielkontos\n{{f}} - Währungscode nach ISO 4217\n{{e}} - Empfänger (ohne Leerzeichen)\n{{r}} - Projekt (ohne Leerzeichen)\n{{t}} - Notiztext (kurz)\n{{u}} - Notiztext (lang)\n{{g}} - Unix-Zeit in Millisekunden\n{{*}} - beliebige Zeichen oder Wörter</string>
@@ -1239,4 +1239,9 @@
   <string name="totals_net">Netto</string>
   <string name="currency_already_exists">%1$s gibt es schon. Zwei Währungen mit demselben Code sind nicht zu unterscheiden.</string>
   <string name="currency_in_use">Diese Währung wird von einem Konto, einem Budget oder einer Buchung benutzt und kann nicht gelöscht werden.</string>
+  <string name="welcome_currency">Währung</string>
+  <string name="welcome_currency_summary">Vom Telefon übernommen. Weitere lassen sich später anlegen.</string>
+  <string name="quick_bar">Tasten im Benachrichtigungsfeld</string>
+  <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
+  <string name="quick_bar_title">Zu Cifra hinzufügen</string>
 </resources>

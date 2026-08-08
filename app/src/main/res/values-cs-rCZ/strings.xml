@@ -899,7 +899,7 @@
     <string name="sms_note_desc">Zástupné symboly: \n{{t}} - text poznámky extrahovaný podle šablony</string>
     <string name="sms_note_hint">Zadejte poznámku, která se má použít na vygenerovanou transakci</string>
     <string name="sms_tpl_check">Vyzkoušejte příklad oznámení zde</string>
-    <string name="sms_templates">Oznámení / Šablony SMS</string>
+    <string name="sms_templates">Šablony oznámení</string>
     <string name="no_sms_templates">Žádné šablony</string>
     <string name="add_sms_template">Přidat šablonu</string>
 	<string name="notification_list">Seznam oznámení</string>

@@ -249,6 +249,12 @@
             android:key="quick_entry_from_widget"
             android:summary="@string/quick_entry_from_widget_summary"
             android:title="@string/quick_entry_from_widget" />
+        <SwitchPreferenceCompat
+            app:singleLineTitle="false"
+            android:defaultValue="false"
+            android:key="quick_bar_enabled"
+            android:summary="@string/quick_bar_summary"
+            android:title="@string/quick_bar" />
         <Preference
             app:singleLineTitle="false"
             android:key="shortcut_new_transaction"
