@@ -137,6 +137,7 @@
 			android:name=".activity.QuickTransactionActivity" android:label="@string/quick_transaction"
 			android:configChanges="screenSize|smallestScreenSize|orientation|screenLayout|keyboardHidden"
 			android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+			android:theme="@style/AppThemeCompat"
 			android:exported="false" />
 		<activity android:icon="@drawable/icon_transaction" android:exported="true"
 			android:name=".activity.TransactionActivity" android:label="@string/transaction"
