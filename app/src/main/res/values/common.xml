@@ -235,6 +235,7 @@
 	<dimen name="report_legend_text_size">15sp</dimen>
 
 	<string-array name="startup_screen_values">
+		<item>SUMMARY</item>
 		<item>ACCOUNTS</item>
 		<item>BLOTTER</item>
 		<item>BUDGETS</item>

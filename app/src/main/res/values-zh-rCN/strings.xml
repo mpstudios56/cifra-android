@@ -744,6 +744,7 @@
     <item>15 分钟</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>概览</item>
     <item>账户</item>
     <item>明细</item>
     <item>预算</item>

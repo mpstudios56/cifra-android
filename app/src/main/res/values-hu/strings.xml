@@ -744,6 +744,7 @@
     <item>15 perc</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Összegzés</item>
     <item>Számlák</item>
     <item>Napló</item>
     <item>Költségvetések</item>

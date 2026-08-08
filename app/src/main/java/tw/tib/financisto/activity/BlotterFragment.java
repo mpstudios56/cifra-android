@@ -274,6 +274,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         isQuickMenuShowDuplicateKeepTime = MyPreferences.isQuickMenuShowDuplicateKeepTime();
         isQuickMenuShowDuplicateKeepDateTime = MyPreferences.isQuickMenuShowDuplicateKeepDateTime();
 
+        // Always offered, collapsed buttons or not: the point of quick entry is that
+        // it takes one tap to reach, and a menu would put it behind two.
+        ImageButton bQuick = view.findViewById(R.id.bQuick);
+        if (bQuick != null) {
+            bQuick.setOnClickListener(arg0 -> startActivityForResult(
+                    new Intent(getContext(), QuickTransactionActivity.class),
+                    NEW_TRANSACTION_REQUEST));
+        }
+
         if (showAllBlotterButtons) {
             bTransfer = view.findViewById(R.id.bTransfer);
             if (bTransfer != null) {

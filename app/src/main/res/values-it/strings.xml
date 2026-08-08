@@ -781,6 +781,7 @@
     <item>15 minuti</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Riepilogo</item>
     <item>Conti</item>
     <item>Registro</item>
     <item>Budgets</item>
@@ -1183,4 +1184,25 @@
   <string name="broker_etoro">eToro</string>
   <string name="broker_ibkr">Interactive Brokers</string>
   <string name="broker_traderepublic">Trade Republic</string>
+  <string name="quick_transaction">Spesa veloce</string>
+  <string name="quick_transaction_summary">Registra un movimento in tre tocchi</string>
+  <string name="quick_expense">Spesa</string>
+  <string name="quick_income">Entrata</string>
+  <string name="quick_no_amount">Scrivi prima un importo</string>
+  <string name="other_categories">Altre…</string>
+  <string name="transaction_saved">Salvato</string>
+  <string name="summary">Riepilogo</string>
+  <string name="summary_income">Entrate</string>
+  <string name="summary_expense">Uscite</string>
+  <string name="summary_saved">Risparmiato</string>
+  <string name="summary_saved_share">%1$d%% di quanto è entrato</string>
+  <string name="summary_top_categories">Dove sono andati</string>
+  <string name="summary_net_worth">Tutto insieme</string>
+  <string name="summary_net_worth_note">Saldo di tutti i conti inclusi nei totali</string>
+  <string name="summary_nothing_yet">Questo mese ancora niente</string>
+  <string name="summary_category_line">%1$s  %2$d%%</string>
+  <string name="show_summary_tab">Scheda riepilogo</string>
+  <string name="show_summary_tab_summary">Mostra il mese a colpo d\'occhio come prima scheda</string>
+  <string name="quick_entry_from_widget">Spesa veloce dal widget</string>
+  <string name="quick_entry_from_widget_summary">Il tasto del widget apre la schermata veloce invece del modulo completo</string>
 </resources>

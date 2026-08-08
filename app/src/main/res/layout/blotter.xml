@@ -123,6 +123,11 @@
 					android:src="@drawable/actionbar_add_big" />
 
 				<ImageButton
+					android:id="@+id/bQuick"
+					style="@style/BottomBarButton"
+					android:src="@drawable/actionbar_quick_add" />
+
+				<ImageButton
 					android:id="@+id/bTransfer"
 					style="@style/BottomBarButton"
 					android:src="@drawable/actionbar_transfer"

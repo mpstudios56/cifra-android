@@ -1009,6 +1009,7 @@
     <item>15 分鐘</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>總覽</item>
     <item>帳戶</item>
     <item>明細</item>
     <item>預算</item>

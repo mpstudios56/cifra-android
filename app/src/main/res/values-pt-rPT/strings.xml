@@ -744,6 +744,7 @@
     <item>15 minutos</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Resumo</item>
     <item>Contas</item>
     <item>Registros</item>
     <item>Orçamentos</item>

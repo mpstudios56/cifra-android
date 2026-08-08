@@ -744,6 +744,7 @@
     <item>15 minute</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Sumar</item>
     <item>Conturi</item>
     <item>Operaţiuni</item>
     <item>Bugete</item>

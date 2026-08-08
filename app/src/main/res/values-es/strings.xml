@@ -747,6 +747,7 @@
     <item>15 minutos</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Resumen</item>
     <item>Accounts</item>
     <item>Blotter</item>
     <item>Budgets</item>
@@ -1180,4 +1181,25 @@
   <string name="broker_etoro">eToro</string>
   <string name="broker_ibkr">Interactive Brokers</string>
   <string name="broker_traderepublic">Trade Republic</string>
+  <string name="quick_transaction">Gasto rápido</string>
+  <string name="quick_transaction_summary">Registra un movimiento en tres toques</string>
+  <string name="quick_expense">Gasto</string>
+  <string name="quick_income">Ingreso</string>
+  <string name="quick_no_amount">Escribe primero un importe</string>
+  <string name="other_categories">Otras…</string>
+  <string name="transaction_saved">Guardado</string>
+  <string name="summary">Resumen</string>
+  <string name="summary_income">Ingresos</string>
+  <string name="summary_expense">Gastos</string>
+  <string name="summary_saved">Ahorrado</string>
+  <string name="summary_saved_share">%1$d%% de lo que entró</string>
+  <string name="summary_top_categories">A dónde fue</string>
+  <string name="summary_net_worth">Todo junto</string>
+  <string name="summary_net_worth_note">Saldo de todas las cuentas incluidas en los totales</string>
+  <string name="summary_nothing_yet">Este mes aún nada</string>
+  <string name="summary_category_line">%1$s  %2$d%%</string>
+  <string name="show_summary_tab">Pestaña resumen</string>
+  <string name="show_summary_tab_summary">Mostrar el mes de un vistazo como primera pestaña</string>
+  <string name="quick_entry_from_widget">Gasto rápido desde el widget</string>
+  <string name="quick_entry_from_widget_summary">El botón del widget abre la pantalla rápida en vez del formulario completo</string>
 </resources>

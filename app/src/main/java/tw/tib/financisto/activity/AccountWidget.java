@@ -169,7 +169,12 @@ public class AccountWidget extends AppWidgetProvider {
     }
 
     private static void addButtonsClick(Context context, RemoteViews updateViews) {
-        Intent intent = new Intent(context, TransactionActivity.class);
+        // A widget exists to save a trip into the app, so it opens the quick screen
+        // rather than the full form. Anyone who wants the rest can turn it off in
+        // the settings, or open the entry afterwards and fill in the details.
+        Class<?> entry = MyPreferences.isQuickEntryFromWidget(context)
+                ? QuickTransactionActivity.class : TransactionActivity.class;
+        Intent intent = new Intent(context, entry);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         updateViews.setOnClickPendingIntent(R.id.add_transaction, pendingIntent);
         intent = new Intent(context, TransferActivity.class);

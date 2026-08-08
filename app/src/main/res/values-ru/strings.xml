@@ -842,6 +842,7 @@
     <string name="startup_screen">Экран запуска</string>
     <string name="startup_screen_summary">Выберите вкладку, которая будет выбрана при старте</string>
     <string-array name="startup_screen_entities">
+        <item>Сводка</item>
         <item>Счета</item>
         <item>Журнал</item>
         <item>Бюджеты</item>

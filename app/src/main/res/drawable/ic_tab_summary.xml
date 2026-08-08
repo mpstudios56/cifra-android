@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  summary tab icon for Cifra. One outline set at a single stroke weight.
+  A dial rather than a chart: the reports tab already owns bars, and what this
+  screen shows is a reading of where the month stands.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those. The tab strip tints it for the selected and normal states.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M3.4,16.4 A8.6,8.6 0 0,1 20.6,16.4" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M3.4,16.4 H20.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,16.4 L16.4,10.2" />
+</vector>

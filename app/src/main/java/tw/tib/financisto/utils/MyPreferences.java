@@ -758,6 +758,14 @@ public class MyPreferences {
 	 * Templates as a tab of their own rather than a button on the blotter, where it
 	 * sat among the buttons that create things while it only opens a chooser.
 	 */
+	public static boolean isQuickEntryFromWidget(Context context) {
+		return getBoolean("quick_entry_from_widget", true);
+	}
+
+	public static boolean isShowSummaryTab(Context context) {
+		return getBoolean("show_summary_tab", true);
+	}
+
 	public static boolean isTemplatesAsTab(Context context) {
 		return getBoolean("templates_as_tab", true);
 	}

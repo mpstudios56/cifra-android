@@ -1174,4 +1174,25 @@
   <string name="broker_etoro">eToro</string>
   <string name="broker_ibkr">Interactive Brokers</string>
   <string name="broker_traderepublic">Trade Republic</string>
+  <string name="quick_transaction">Saisie rapide</string>
+  <string name="quick_transaction_summary">Enregistrer une opération en trois touches</string>
+  <string name="quick_expense">Dépense</string>
+  <string name="quick_income">Recette</string>
+  <string name="quick_no_amount">Saisissez d\'abord un montant</string>
+  <string name="other_categories">Autres…</string>
+  <string name="transaction_saved">Enregistré</string>
+  <string name="summary">Résumé</string>
+  <string name="summary_income">Entrées</string>
+  <string name="summary_expense">Sorties</string>
+  <string name="summary_saved">Épargné</string>
+  <string name="summary_saved_share">%1$d%% de ce qui est entré</string>
+  <string name="summary_top_categories">Où est parti l\'argent</string>
+  <string name="summary_net_worth">Tout ensemble</string>
+  <string name="summary_net_worth_note">Solde de tous les comptes comptés dans les totaux</string>
+  <string name="summary_nothing_yet">Rien encore ce mois-ci</string>
+  <string name="summary_category_line">%1$s  %2$d%%</string>
+  <string name="show_summary_tab">Onglet résumé</string>
+  <string name="show_summary_tab_summary">Afficher le mois en un coup d\'œil comme premier onglet</string>
+  <string name="quick_entry_from_widget">Saisie rapide depuis le widget</string>
+  <string name="quick_entry_from_widget_summary">Le bouton du widget ouvre la saisie rapide au lieu du formulaire complet</string>
 </resources>

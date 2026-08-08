@@ -35,6 +35,18 @@
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:key="show_summary_tab"
+            android:summary="@string/show_summary_tab_summary"
+            android:title="@string/show_summary_tab" />
+        <CheckBoxPreference
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="quick_entry_from_widget"
+            android:summary="@string/quick_entry_from_widget_summary"
+            android:title="@string/quick_entry_from_widget" />
+        <CheckBoxPreference
+            app:singleLineTitle="false"
+            android:defaultValue="true"
             android:key="show_budgets_tab"
             android:summary="@string/show_budgets_tab_summary"
             android:title="@string/show_budgets_tab" />

@@ -1060,6 +1060,7 @@
     <item>15 minut</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Přehled</item>
     <item>Účty</item>
     <item>Záznamník</item>
     <item>Rozpočty</item>

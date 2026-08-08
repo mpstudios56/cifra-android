@@ -988,6 +988,7 @@
     <string name="startup_screen">Startup screen</string>
     <string name="startup_screen_summary">Select tab which will be selected on startup</string>
     <string-array name="startup_screen_entities">
+        <item>Summary</item>
         <item>Accounts</item>
         <item>Blotter</item>
         <item>Budgets</item>
@@ -1318,4 +1319,25 @@
   <string name="broker_etoro">eToro</string>
   <string name="broker_ibkr">Interactive Brokers</string>
   <string name="broker_traderepublic">Trade Republic</string>
+    <string name="quick_transaction">Quick entry</string>
+    <string name="quick_transaction_summary">Record a transaction in three taps</string>
+    <string name="quick_expense">Expense</string>
+    <string name="quick_income">Income</string>
+    <string name="quick_no_amount">Type an amount first</string>
+    <string name="other_categories">Other…</string>
+    <string name="transaction_saved">Saved</string>
+    <string name="summary">Summary</string>
+    <string name="summary_income">In</string>
+    <string name="summary_expense">Out</string>
+    <string name="summary_saved">Left</string>
+    <string name="summary_saved_share">%1$d%% of what came in</string>
+    <string name="summary_top_categories">Where it went</string>
+    <string name="summary_net_worth">Everything together</string>
+    <string name="summary_net_worth_note">Balance of every account counted in the totals</string>
+    <string name="summary_nothing_yet">Nothing this month yet</string>
+    <string name="summary_category_line">%1$s  %2$d%%</string>
+    <string name="show_summary_tab">Summary tab</string>
+    <string name="show_summary_tab_summary">Show the month at a glance as the first tab</string>
+    <string name="quick_entry_from_widget">Quick entry from the widget</string>
+    <string name="quick_entry_from_widget_summary">The widget button opens the quick screen instead of the full form</string>
 </resources>

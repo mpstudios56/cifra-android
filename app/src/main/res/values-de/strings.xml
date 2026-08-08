@@ -747,6 +747,7 @@
     <item>15 Minuten</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Übersicht</item>
     <item>Konten</item>
     <item>Protokoll</item>
     <item>Budgets</item>
@@ -1180,4 +1181,25 @@
   <string name="broker_etoro">eToro</string>
   <string name="broker_ibkr">Interactive Brokers</string>
   <string name="broker_traderepublic">Trade Republic</string>
+  <string name="quick_transaction">Schnelleingabe</string>
+  <string name="quick_transaction_summary">Eine Buchung in drei Tipps erfassen</string>
+  <string name="quick_expense">Ausgabe</string>
+  <string name="quick_income">Einnahme</string>
+  <string name="quick_no_amount">Zuerst einen Betrag eingeben</string>
+  <string name="other_categories">Weitere…</string>
+  <string name="transaction_saved">Gespeichert</string>
+  <string name="summary">Übersicht</string>
+  <string name="summary_income">Einnahmen</string>
+  <string name="summary_expense">Ausgaben</string>
+  <string name="summary_saved">Gespart</string>
+  <string name="summary_saved_share">%1$d%% der Einnahmen</string>
+  <string name="summary_top_categories">Wohin es ging</string>
+  <string name="summary_net_worth">Alles zusammen</string>
+  <string name="summary_net_worth_note">Saldo aller Konten, die in die Summen zählen</string>
+  <string name="summary_nothing_yet">Diesen Monat noch nichts</string>
+  <string name="summary_category_line">%1$s  %2$d%%</string>
+  <string name="show_summary_tab">Übersicht-Tab</string>
+  <string name="show_summary_tab_summary">Den Monat auf einen Blick als ersten Tab zeigen</string>
+  <string name="quick_entry_from_widget">Schnelleingabe aus dem Widget</string>
+  <string name="quick_entry_from_widget_summary">Die Widget-Taste öffnet die Schnelleingabe statt des vollen Formulars</string>
 </resources>

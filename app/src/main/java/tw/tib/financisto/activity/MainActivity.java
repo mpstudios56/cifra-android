@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** The tabs this screen can show, in the order they appear when all are on. */
     private enum MainTab {
+        SUMMARY("summary", R.drawable.ic_tab_summary),
         ACCOUNTS("accounts", R.drawable.ic_tab_accounts),
         BLOTTER("blotter", R.drawable.ic_tab_blotter),
         DRAFTS("drafts", R.drawable.ic_tab_drafts),
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public Fragment createFragment(int position)
             {
                 switch (visibleTabs.get(position)) {
+                    case SUMMARY: return new SummaryFragment();
                     case ACCOUNTS: return new AccountRecyclerFragment();
                     case BLOTTER: return new BlotterFragment(true);
                     case DRAFTS: return new DraftListFragment();
@@ -178,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private List<MainTab> buildVisibleTabs() {
         List<MainTab> result = new ArrayList<>();
+        if (MyPreferences.isShowSummaryTab(this)) {
+            result.add(MainTab.SUMMARY);
+        }
         result.add(MainTab.ACCOUNTS);
         result.add(MainTab.BLOTTER);
         if (TransactionDraft.count(this) > 0) {

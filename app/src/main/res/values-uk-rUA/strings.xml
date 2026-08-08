@@ -882,6 +882,7 @@
     <string name="startup_screen">Екран запуску</string>
     <string name="startup_screen_summary">Виберіть вкладку для відображення після запуску</string>
     <string-array name="startup_screen_entities">
+      <item>Зведення</item>
       <item>Рахунки</item>
       <item>Журнал</item>
       <item>Бюджети</item>

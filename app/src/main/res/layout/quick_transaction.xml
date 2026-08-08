@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The quick entry screen: an amount, a category, done.
+
+  Deliberately not the full transaction form. Everything that can be assumed is
+  assumed - today's date, the chosen account, cleared status - and the keypad is
+  on screen so the amount is typed without the system keyboard sliding over half
+  the layout.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quick_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/quick_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="@string/select_account" />
+
+        <ToggleButton
+            android:id="@+id/quick_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="96dp"
+            android:textOff="@string/quick_expense"
+            android:textOn="@string/quick_income" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/quick_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="end"
+        android:singleLine="true"
+        android:text="0,00"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/quick_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/quick_chosen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="@string/no_category"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <GridLayout
+        android:id="@+id/quick_keypad"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:columnCount="3"
+        android:rowCount="4" />
+
+    <Button
+        android:id="@+id/quick_save"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/save"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>

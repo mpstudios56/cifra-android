@@ -744,6 +744,7 @@
     <item>15 minút</item>
   </string-array>
   <string-array name="startup_screen_entities">
+    <item>Prehľad</item>
     <item>Účty</item>
     <item>Účtovná kniha</item>
     <item>Rozpočty</item>
