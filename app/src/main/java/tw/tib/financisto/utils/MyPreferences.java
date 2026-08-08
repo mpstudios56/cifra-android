@@ -86,6 +86,7 @@ public class MyPreferences {
 	}
 
 	public enum StartupScreen {
+		SUMMARY("summary"),
 		ACCOUNTS("accounts"),
 		BLOTTER("blotter"),
 		BUDGETS("budgets"),

@@ -11,8 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -57,7 +55,6 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private DatabaseAdapter db;
     private Account account;
     private long categoryId = 0;
-    private String categoryTitle;
     /** The amount as typed, in cents: digits accumulate from the right. */
     private long cents = 0;
 
@@ -219,7 +216,8 @@ public class QuickTransactionActivity extends AppCompatActivity {
         List<String> titles = new ArrayList<>();
         String sql = "select c._id, c.title, count(*) n from transactions t"
                 + " inner join category c on c._id = t.category_id"
-                + " where t.is_template = 0 and t.category_id > 0"
+                + " where t.is_template = 0 and t.parent_id = 0"
+                + " and t.to_account_id = 0 and t.category_id > 0"
                 + " group by c._id order by n desc limit " + SHORTCUTS;
         try (Cursor c = db.db().rawQuery(sql, null)) {
             while (c.moveToNext()) {
@@ -245,7 +243,6 @@ public class QuickTransactionActivity extends AppCompatActivity {
 
     private void chooseCategory(long id, String title) {
         categoryId = id;
-        categoryTitle = title;
         chosenView.setText(title);
     }
 
