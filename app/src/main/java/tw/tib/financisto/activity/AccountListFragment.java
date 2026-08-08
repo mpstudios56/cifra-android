@@ -85,8 +85,9 @@ public class AccountListFragment extends AbstractListFragment<Cursor> {
                     | WindowInsetsCompat.Type.statusBars()
                     | WindowInsetsCompat.Type.captionBar()
                     | WindowInsetsCompat.Type.ime());
-            // The tab strip below already stands clear of the navigation bar.
-            v.setPadding(0, 0, 0, 0);
+            // Nothing stands between this and the status bar since the strip moved
+            // to the bottom, so it keeps clear of it itself.
+            v.setPadding(0, insets.top, 0, 0);
             return WindowInsetsCompat.CONSUMED;
         });
 

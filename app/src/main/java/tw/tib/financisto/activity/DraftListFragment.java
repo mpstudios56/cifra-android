@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.graphics.Insets;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
@@ -66,6 +69,14 @@ public class DraftListFragment extends ListFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // No bar of its own at the top, and the tab strip that used to sit there
+        // has moved to the bottom, so the first row would start under the clock.
+        ViewCompat.setOnApplyWindowInsetsListener(getListView(), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(0, insets.top, 0, 0);
+            ((ViewGroup) v).setClipToPadding(false);
+            return WindowInsetsCompat.CONSUMED;
+        });
         setEmptyText(getString(R.string.no_drafts));
         enableMultiSelect();
     }
