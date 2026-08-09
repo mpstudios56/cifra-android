@@ -1305,20 +1305,20 @@
     <string name="accent_target_icon">On the symbol</string>
     <string name="accent_target_bar">On the row stripe</string>
     <string name="accent_target_both">On both</string>
-  <string name="electronic_type_revolut">Revolut</string>
+  <string name="electronic_type_revolut" translatable="false">Revolut</string>
     <string name="account_icon">Icon</string>
     <string name="account_icon_none">None</string>
-  <string name="electronic_type_coinbase">Coinbase</string>
-  <string name="bank_bbva">BBVA</string>
-  <string name="bank_bper">BPER Banca</string>
-  <string name="bank_creditagricole">Crédit Agricole</string>
-  <string name="bank_deutschebank">Deutsche Bank</string>
-  <string name="bank_sondrio">Banca Popolare di Sondrio</string>
-  <string name="bank_unicredit">UniCredit</string>
-  <string name="broker_degiro">DEGIRO</string>
-  <string name="broker_etoro">eToro</string>
-  <string name="broker_ibkr">Interactive Brokers</string>
-  <string name="broker_traderepublic">Trade Republic</string>
+  <string name="electronic_type_coinbase" translatable="false">Coinbase</string>
+  <string name="bank_bbva" translatable="false">BBVA</string>
+  <string name="bank_bper" translatable="false">BPER Banca</string>
+  <string name="bank_creditagricole" translatable="false">Crédit Agricole</string>
+  <string name="bank_deutschebank" translatable="false">Deutsche Bank</string>
+  <string name="bank_sondrio" translatable="false">Banca Popolare di Sondrio</string>
+  <string name="bank_unicredit" translatable="false">UniCredit</string>
+  <string name="broker_degiro" translatable="false">DEGIRO</string>
+  <string name="broker_etoro" translatable="false">eToro</string>
+  <string name="broker_ibkr" translatable="false">Interactive Brokers</string>
+  <string name="broker_traderepublic" translatable="false">Trade Republic</string>
     <string name="quick_transaction">Quick entry</string>
     <string name="quick_transaction_summary">Record a transaction in three taps</string>
     <string name="quick_expense">Expense</string>

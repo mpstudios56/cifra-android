@@ -13,13 +13,17 @@
     android:paddingTop="2dp"
     android:paddingBottom="2dp">
 
+    <!--
+      Wraps rather than truncating. "Category group" is two short words in
+      English and one long one in German, and a label cut off at "Kategorien…"
+      tells nobody what the menu beside it is for.
+    -->
     <TextView
         android:id="@+id/csv_map_row_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="4"
-        android:ellipsize="end"
-        android:singleLine="true"
+        android:paddingEnd="6dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Spinner
