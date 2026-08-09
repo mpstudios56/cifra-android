@@ -709,4 +709,53 @@
     <item>10 minut</item>
     <item>15 minut</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Wg daty utworzenia</item>
+      <item>Wg nazwy</item>
+      <item>Wg konta</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Tydzień</item>
+      <item>Miesiąc</item>
+      <item>Rok</item>
+      <item>Rok obrotowy</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Data ostatniej transakcji</item>
+      <item>Data utworzenia konta</item>
+      <item>Data ostatniej zmiany</item>
+      <item>Ukryta</item>
+  </string-array>
+  <string-array name="startup_screen_entities">
+      <item>Podsumowanie</item>
+      <item>Konta</item>
+      <item>Transakcje</item>
+      <item>Budżety</item>
+      <item>Raporty</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>Po lewej szukaj, pośrodku lista</item>
+      <item>Po lewej lista, pośrodku szukaj</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Wg nazwy</item>
+      <item>Wg końca okresu</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Jak w systemie</item>
+      <item>Niedziela</item>
+      <item>Poniedziałek</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Domyślnie</item>
+      <item>Podsumowanie i pozycje</item>
+      <item>Tylko podsumowanie</item>
+      <item>Tylko pozycje</item>
+  </string-array>
+  <string name="app_description">Menedżer finansów osobistych o otwartym kodzie</string>
+  <string name="about_copyright1">Wydane na licencji GNU GPL v2</string>
+  <string name="pin_choose">Wybierz PIN o długości co najmniej %1$d cyfr</string>
+  <string name="pin_too_short">Co najmniej %1$d cyfr</string>
+  <string name="pin_repeat">Wpisz go jeszcze raz</string>
+  <string name="pin_mismatch">Oba się nie zgadzają</string>
 </resources>

@@ -31,10 +31,19 @@ import android.widget.ViewSwitcher;
 import tw.tib.financisto.utils.MyPreferences;
 
 public class PinView implements OnClickListener {
-	
+
 	private static final int[] buttons = { R.id.b0, R.id.b1, R.id.b2, R.id.b3,
 		R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.bHelp,
 		R.id.bClear};
+
+	/**
+	 * Six, when choosing a new one. Four digits is ten thousand combinations,
+	 * which is an afternoon for anyone holding the phone; six is a hundred times
+	 * that. It applies only to choosing: a PIN already in use still unlocks,
+	 * whatever length it was set to.
+	 */
+	private static final int MIN_DIGITS = 6;
+	private static final int MAX_DIGITS = 12;
 
 	public static interface PinListener {
 		void onConfirm(String pinBase64);
@@ -49,9 +58,12 @@ public class PinView implements OnClickListener {
     private final Vibrator vibrator;
 	
 	private TextView result;
+	private TextView hint;
 	private String pin1;
 	private String pin2;
 	private boolean confirmPin;
+	/** Choosing a new PIN, rather than being asked for the one already set. */
+	private final boolean choosing;
 
 	public PinView(Context context, PinListener listener, int layoutId) {
 		this(context, listener, null, layoutId);
@@ -61,14 +73,19 @@ public class PinView implements OnClickListener {
         this.context = context;
 		this.listener = listener;
 		this.confirmPin = pin == null;
+		this.choosing = pin == null;
 		this.pin1 = pin;
 		LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		v = layoutInflater.inflate(layoutId, null);
 		for (int id : buttons) {
 			v.findViewById(id).setOnClickListener(this);
 		}
-		result = (TextView)v.findViewById(R.id.result1);		
-		switcher = (ViewSwitcher)v.findViewById(R.id.switcher);  
+		result = (TextView)v.findViewById(R.id.result1);
+		hint = (TextView)v.findViewById(R.id.TextView01);
+		if (hint != null) {
+			hint.setText(choosing ? context.getString(R.string.pin_choose, MIN_DIGITS) : "");
+		}
+		switcher = (ViewSwitcher)v.findViewById(R.id.switcher);
 		switcher.setInAnimation(inFromRightAnimation());
 		switcher.setOutAnimation(outToLeftAnimation());		
 		try {
@@ -99,7 +116,7 @@ public class PinView implements OnClickListener {
 			break;
 		default:
             String text = result.getText().toString();
-			if (text.length() < 7) {
+			if (text.length() < MAX_DIGITS) {
 				result.setText(text+String.valueOf(c));
 			}
 			break;
@@ -108,16 +125,31 @@ public class PinView implements OnClickListener {
 
 	private void nextStep() {
 		if (confirmPin) {
+			if (result.getText().length() < MIN_DIGITS) {
+				if (hint != null) {
+					hint.setText(context.getString(R.string.pin_too_short, MIN_DIGITS));
+				}
+				result.startAnimation(shakeAnimation());
+				return;
+			}
 			pin1 = pinBase64(result.getText().toString());
 			result = (TextView)v.findViewById(R.id.result2);
-			confirmPin = false;			
-			switcher.showNext();		
-			listener.onConfirm(pin1);			
+			confirmPin = false;
+			if (hint != null) {
+				hint.setText(context.getString(R.string.pin_repeat));
+			}
+			switcher.showNext();
+			listener.onConfirm(pin1);
 		} else {
 			pin2 = pinBase64(result.getText().toString());
 			if (pin1.equals(pin2)) {
-				listener.onSuccess(pin2);				
+				listener.onSuccess(pin2);
 			} else {
+				// Only while choosing. On the lock screen a wrong PIN is told nothing
+				// beyond the shake, which is the point of a lock screen.
+				if (choosing && hint != null) {
+					hint.setText(context.getString(R.string.pin_mismatch));
+				}
 				result.startAnimation(shakeAnimation());
 			}
 		}

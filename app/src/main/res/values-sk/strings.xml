@@ -750,4 +750,46 @@
     <item>Rozpočty</item>
     <item>Správy</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Podľa dátumu vytvorenia</item>
+      <item>Podľa názvu</item>
+      <item>Podľa účtu</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Týždeň</item>
+      <item>Mesiac</item>
+      <item>Rok</item>
+      <item>Fiškálny rok</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Dátum poslednej transakcie</item>
+      <item>Dátum vytvorenia účtu</item>
+      <item>Dátum poslednej zmeny</item>
+      <item>Skryté</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>Vľavo hľadanie, v strede zoznam</item>
+      <item>Vľavo zoznam, v strede hľadanie</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Podľa názvu</item>
+      <item>Podľa konca obdobia</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Ako systém</item>
+      <item>Nedeľa</item>
+      <item>Pondelok</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Predvolené</item>
+      <item>Súhrn aj položky</item>
+      <item>Len súhrn</item>
+      <item>Len položky</item>
+  </string-array>
+  <string name="app_description">Správca osobných financií s otvoreným kódom</string>
+  <string name="about_copyright1">Vydané pod licenciou GNU GPL v2</string>
+  <string name="pin_choose">Zvoľ PIN aspoň s %1$d číslicami</string>
+  <string name="pin_too_short">Aspoň %1$d číslic</string>
+  <string name="pin_repeat">Zadaj ho znova</string>
+  <string name="pin_mismatch">Oba sa nezhodujú</string>
 </resources>

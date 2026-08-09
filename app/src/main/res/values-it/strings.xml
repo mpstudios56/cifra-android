@@ -1281,4 +1281,46 @@
   <string name="csv_map_accounts_created">%1$d conti creati.</string>
   <string name="csv_map_categories_created">%1$d categorie create.</string>
   <string name="csv_map_payees_created">%1$d beneficiari creati.</string>
+  <string name="pin_choose">Scegli un PIN di almeno %1$d cifre</string>
+  <string name="pin_too_short">Almeno %1$d cifre</string>
+  <string name="pin_repeat">Scrivilo di nuovo</string>
+  <string name="pin_mismatch">I due non coincidono</string>
+  <string-array name="sort_templates_entities">
+      <item>Per data di creazione</item>
+      <item>Per nome</item>
+      <item>Per conto</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Settimana</item>
+      <item>Mese</item>
+      <item>Anno</item>
+      <item>Anno fiscale</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Data dell\'ultimo movimento</item>
+      <item>Data di creazione del conto</item>
+      <item>Data dell\'ultima modifica</item>
+      <item>Nascosta</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>A sinistra cerca, al centro elenco</item>
+      <item>A sinistra elenco, al centro cerca</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Per nome</item>
+      <item>Per fine del periodo</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Come il sistema</item>
+      <item>Domenica</item>
+      <item>Lunedì</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Predefinito</item>
+      <item>Riepilogo e voci</item>
+      <item>Solo il riepilogo</item>
+      <item>Solo le voci</item>
+  </string-array>
+  <string name="app_description">Gestore di finanze personali, a codice aperto</string>
+  <string name="about_copyright1">Distribuito con licenza GNU GPL v2</string>
 </resources>

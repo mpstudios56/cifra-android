@@ -709,4 +709,53 @@
     <item>10 분</item>
     <item>15 분</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>만든 날짜</item>
+      <item>이름</item>
+      <item>계정</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>주</item>
+      <item>월</item>
+      <item>연</item>
+      <item>회계연도</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>최근 거래 날짜</item>
+      <item>계정 만든 날짜</item>
+      <item>마지막 수정 날짜</item>
+      <item>숨김</item>
+  </string-array>
+  <string-array name="startup_screen_entities">
+      <item>요약</item>
+      <item>계정</item>
+      <item>거래</item>
+      <item>예산</item>
+      <item>보고서</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>왼쪽 검색, 가운데 목록</item>
+      <item>왼쪽 목록, 가운데 검색</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>이름순</item>
+      <item>기간 종료일순</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>시스템 설정</item>
+      <item>일요일</item>
+      <item>월요일</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>기본</item>
+      <item>요약과 항목</item>
+      <item>요약만</item>
+      <item>항목만</item>
+  </string-array>
+  <string name="app_description">오픈 소스 개인 재무 관리</string>
+  <string name="about_copyright1">GNU GPL v2 라이선스로 배포</string>
+  <string name="pin_choose">%1$d자리 이상의 PIN을 정하세요</string>
+  <string name="pin_too_short">%1$d자리 이상</string>
+  <string name="pin_repeat">다시 입력하세요</string>
+  <string name="pin_mismatch">두 개가 일치하지 않습니다</string>
 </resources>

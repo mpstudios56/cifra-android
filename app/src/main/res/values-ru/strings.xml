@@ -1085,4 +1085,25 @@
     <string name="app_description">Трекер личных финансов с открытым исходным кодом</string>
     <string name="about_copyright1">Выпущено под лицензией GNU GPL v2</string>
     <string name="electronic_type_yandex_money">Яндекс Пэй</string>
+    <string-array name="report_aggregate_unit_entities">
+        <item>Неделя</item>
+        <item>Месяц</item>
+        <item>Год</item>
+        <item>Финансовый год</item>
+    </string-array>
+    <string-array name="first_day_of_week_entries">
+        <item>Как в системе</item>
+        <item>Воскресенье</item>
+        <item>Понедельник</item>
+    </string-array>
+    <string-array name="filter_split_entries">
+        <item>По умолчанию</item>
+        <item>Сводка и части</item>
+        <item>Только сводка</item>
+        <item>Только части</item>
+    </string-array>
+    <string name="pin_choose">Выберите ПИН не менее чем из %1$d цифр</string>
+    <string name="pin_too_short">Не менее %1$d цифр</string>
+    <string name="pin_repeat">Введите ещё раз</string>
+    <string name="pin_mismatch">Они не совпадают</string>
 </resources>

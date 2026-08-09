@@ -750,4 +750,46 @@
     <item>Bugete</item>
     <item>Rapoarte</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>După data creării</item>
+      <item>După nume</item>
+      <item>După cont</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Săptămână</item>
+      <item>Lună</item>
+      <item>An</item>
+      <item>An fiscal</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Data ultimei tranzacții</item>
+      <item>Data creării contului</item>
+      <item>Data ultimei modificări</item>
+      <item>Ascunsă</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>În stânga căutare, la mijloc listă</item>
+      <item>În stânga listă, la mijloc căutare</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>După nume</item>
+      <item>După sfârșitul perioadei</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Ca sistemul</item>
+      <item>Duminică</item>
+      <item>Luni</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Implicit</item>
+      <item>Sumar și poziții</item>
+      <item>Doar sumarul</item>
+      <item>Doar pozițiile</item>
+  </string-array>
+  <string name="app_description">Gestionar de finanțe personale, cu sursă deschisă</string>
+  <string name="about_copyright1">Publicat sub licența GNU GPL v2</string>
+  <string name="pin_choose">Alege un PIN de cel puțin %1$d cifre</string>
+  <string name="pin_too_short">Cel puțin %1$d cifre</string>
+  <string name="pin_repeat">Scrie-l din nou</string>
+  <string name="pin_mismatch">Cele două nu se potrivesc</string>
 </resources>

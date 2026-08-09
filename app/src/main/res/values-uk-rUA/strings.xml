@@ -1155,4 +1155,22 @@
         <item>Неділя</item>
         <item>Понеділок</item>
     </string-array>
+    <string-array name="report_aggregate_unit_entities">
+        <item>Тиждень</item>
+        <item>Місяць</item>
+        <item>Рік</item>
+        <item>Фінансовий рік</item>
+    </string-array>
+    <string-array name="filter_split_entries">
+        <item>Типово</item>
+        <item>Зведення і частини</item>
+        <item>Лише зведення</item>
+        <item>Лише частини</item>
+    </string-array>
+    <string name="app_description">Облік особистих фінансів з відкритим кодом</string>
+    <string name="about_copyright1">Поширюється за ліцензією GNU GPL v2</string>
+    <string name="pin_choose">Виберіть ПІН щонайменше з %1$d цифр</string>
+    <string name="pin_too_short">Щонайменше %1$d цифр</string>
+    <string name="pin_repeat">Введіть ще раз</string>
+    <string name="pin_mismatch">Вони не збігаються</string>
 </resources>

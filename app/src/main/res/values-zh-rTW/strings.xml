@@ -1091,4 +1091,10 @@
     <item>只顯示彙總交易</item>
     <item>只顯示子交易</item>
   </string-array>
+  <string name="app_description">開源的個人財務管理</string>
+  <string name="about_copyright1">以 GNU GPL v2 授權發布</string>
+  <string name="pin_choose">設定至少 %1$d 位的 PIN</string>
+  <string name="pin_too_short">至少 %1$d 位</string>
+  <string name="pin_repeat">再輸入一次</string>
+  <string name="pin_mismatch">兩次輸入不一致</string>
 </resources>

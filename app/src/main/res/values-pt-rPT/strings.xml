@@ -750,4 +750,46 @@
     <item>Orçamentos</item>
     <item>Relatórios</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Por data de criação</item>
+      <item>Por nome</item>
+      <item>Por conta</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Semana</item>
+      <item>Mês</item>
+      <item>Ano</item>
+      <item>Ano fiscal</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Data do último movimento</item>
+      <item>Data de criação da conta</item>
+      <item>Data da última alteração</item>
+      <item>Oculta</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>À esquerda procura, ao centro lista</item>
+      <item>À esquerda lista, ao centro procura</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Por nome</item>
+      <item>Por fim do período</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Como o sistema</item>
+      <item>Domingo</item>
+      <item>Segunda-feira</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Predefinido</item>
+      <item>Resumo e itens</item>
+      <item>Só o resumo</item>
+      <item>Só os itens</item>
+  </string-array>
+  <string name="app_description">Gestor de finanças pessoais, de código aberto</string>
+  <string name="about_copyright1">Publicado sob a licença GNU GPL v2</string>
+  <string name="pin_choose">Escolhe um PIN de pelo menos %1$d dígitos</string>
+  <string name="pin_too_short">Pelo menos %1$d dígitos</string>
+  <string name="pin_repeat">Escreve-o outra vez</string>
+  <string name="pin_mismatch">Os dois não coincidem</string>
 </resources>

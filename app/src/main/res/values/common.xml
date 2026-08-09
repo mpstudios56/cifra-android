@@ -286,7 +286,7 @@
 	<string name="electronic_type_ebay" translatable="false">Ebay</string>
 	<string name="electronic_type_google_wallet" translatable="false">Google Wallet</string>
 	<string name="electronic_type_web_money" translatable="false">Web Money</string>
-	<string name="electronic_type_yandex_money">Yandex Money</string>
+	<string name="electronic_type_yandex_money" translatable="false">Yandex Money</string>
 	<string name="electronic_type_alipay" translatable="false">AliPay</string>
 
 	<string name="card_issuer_unionpay" translatable="false">UnionPay</string>

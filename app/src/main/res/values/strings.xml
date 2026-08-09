@@ -1418,4 +1418,8 @@
     <string name="csv_map_accounts_created">%1$d accounts created.</string>
     <string name="csv_map_categories_created">%1$d categories created.</string>
     <string name="csv_map_payees_created">%1$d payees created.</string>
+    <string name="pin_choose">Choose a PIN of at least %1$d digits</string>
+    <string name="pin_too_short">At least %1$d digits</string>
+    <string name="pin_repeat">Type it again</string>
+    <string name="pin_mismatch">The two do not match</string>
 </resources>

@@ -1271,4 +1271,53 @@
   <string name="csv_map_accounts_created">%1$d comptes créés.</string>
   <string name="csv_map_categories_created">%1$d catégories créées.</string>
   <string name="csv_map_payees_created">%1$d bénéficiaires créés.</string>
+  <string-array name="sort_templates_entities">
+      <item>Par date de création</item>
+      <item>Par nom</item>
+      <item>Par compte</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Semaine</item>
+      <item>Mois</item>
+      <item>Année</item>
+      <item>Année fiscale</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Date de la dernière opération</item>
+      <item>Date de création du compte</item>
+      <item>Date de dernière modification</item>
+      <item>Masquée</item>
+  </string-array>
+  <string-array name="startup_screen_entities">
+      <item>Résumé</item>
+      <item>Comptes</item>
+      <item>Opérations</item>
+      <item>Budgets</item>
+      <item>États</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>À gauche recherche, au centre liste</item>
+      <item>À gauche liste, au centre recherche</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Par nom</item>
+      <item>Par fin de période</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Comme le système</item>
+      <item>Dimanche</item>
+      <item>Lundi</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Par défaut</item>
+      <item>Résumé et lignes</item>
+      <item>Le résumé seul</item>
+      <item>Les lignes seules</item>
+  </string-array>
+  <string name="app_description">Gestionnaire de finances personnelles, à code ouvert</string>
+  <string name="about_copyright1">Publié sous licence GNU GPL v2</string>
+  <string name="pin_choose">Choisis un code d’au moins %1$d chiffres</string>
+  <string name="pin_too_short">Au moins %1$d chiffres</string>
+  <string name="pin_repeat">Saisis-le à nouveau</string>
+  <string name="pin_mismatch">Les deux ne correspondent pas</string>
 </resources>

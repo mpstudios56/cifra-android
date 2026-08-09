@@ -750,4 +750,46 @@
     <item>预算</item>
     <item>报告</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>按创建日期</item>
+      <item>按名称</item>
+      <item>按账户</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>周</item>
+      <item>月</item>
+      <item>年</item>
+      <item>财年</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>最近交易日期</item>
+      <item>账户创建日期</item>
+      <item>最后修改日期</item>
+      <item>隐藏</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>左侧搜索，中间列表</item>
+      <item>左侧列表，中间搜索</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>按名称</item>
+      <item>按周期结束日</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>跟随系统</item>
+      <item>星期日</item>
+      <item>星期一</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>默认</item>
+      <item>摘要和子项</item>
+      <item>仅摘要</item>
+      <item>仅子项</item>
+  </string-array>
+  <string name="app_description">开源的个人财务管理</string>
+  <string name="about_copyright1">以 GNU GPL v2 许可发布</string>
+  <string name="pin_choose">设置至少 %1$d 位的 PIN</string>
+  <string name="pin_too_short">至少 %1$d 位</string>
+  <string name="pin_repeat">再输入一次</string>
+  <string name="pin_mismatch">两次输入不一致</string>
 </resources>

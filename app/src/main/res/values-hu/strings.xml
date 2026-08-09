@@ -750,4 +750,46 @@
     <item>Költségvetések</item>
     <item>Jelentések</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Létrehozás dátuma szerint</item>
+      <item>Név szerint</item>
+      <item>Számla szerint</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Hét</item>
+      <item>Hónap</item>
+      <item>Év</item>
+      <item>Pénzügyi év</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Utolsó tétel dátuma</item>
+      <item>Számla létrehozásának dátuma</item>
+      <item>Utolsó módosítás dátuma</item>
+      <item>Rejtett</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>Balra keresés, középen lista</item>
+      <item>Balra lista, középen keresés</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Név szerint</item>
+      <item>Az időszak vége szerint</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Mint a rendszer</item>
+      <item>Vasárnap</item>
+      <item>Hétfő</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Alapértelmezett</item>
+      <item>Összegzés és tételek</item>
+      <item>Csak az összegzés</item>
+      <item>Csak a tételek</item>
+  </string-array>
+  <string name="app_description">Nyílt forráskódú személyes pénzügyi nyilvántartás</string>
+  <string name="about_copyright1">GNU GPL v2 licenc alatt kiadva</string>
+  <string name="pin_choose">Válassz legalább %1$d számjegyű PIN-kódot</string>
+  <string name="pin_too_short">Legalább %1$d számjegy</string>
+  <string name="pin_repeat">Írd be újra</string>
+  <string name="pin_mismatch">A kettő nem egyezik</string>
 </resources>

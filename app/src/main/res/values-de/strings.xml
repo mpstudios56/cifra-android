@@ -1278,4 +1278,46 @@
   <string name="csv_map_accounts_created">%1$d Konten angelegt.</string>
   <string name="csv_map_categories_created">%1$d Kategorien angelegt.</string>
   <string name="csv_map_payees_created">%1$d Empfänger angelegt.</string>
+  <string-array name="sort_templates_entities">
+      <item>Nach Erstellungsdatum</item>
+      <item>Nach Name</item>
+      <item>Nach Konto</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Woche</item>
+      <item>Monat</item>
+      <item>Jahr</item>
+      <item>Geschäftsjahr</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Datum der letzten Buchung</item>
+      <item>Datum der Kontoerstellung</item>
+      <item>Datum der letzten Änderung</item>
+      <item>Ausgeblendet</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>Links Suche, Mitte Liste</item>
+      <item>Links Liste, Mitte Suche</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Nach Name</item>
+      <item>Nach Ende des Zeitraums</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Wie das System</item>
+      <item>Sonntag</item>
+      <item>Montag</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Standard</item>
+      <item>Übersicht und Posten</item>
+      <item>Nur die Übersicht</item>
+      <item>Nur die Posten</item>
+  </string-array>
+  <string name="app_description">Quelloffene Verwaltung der eigenen Finanzen</string>
+  <string name="about_copyright1">Veröffentlicht unter der GNU GPL v2</string>
+  <string name="pin_choose">Wähle eine PIN mit mindestens %1$d Ziffern</string>
+  <string name="pin_too_short">Mindestens %1$d Ziffern</string>
+  <string name="pin_repeat">Noch einmal eingeben</string>
+  <string name="pin_mismatch">Die beiden stimmen nicht überein</string>
 </resources>

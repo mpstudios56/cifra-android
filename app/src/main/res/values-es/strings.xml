@@ -1278,4 +1278,46 @@
   <string name="csv_map_accounts_created">%1$d cuentas creadas.</string>
   <string name="csv_map_categories_created">%1$d categorías creadas.</string>
   <string name="csv_map_payees_created">%1$d beneficiarios creados.</string>
+  <string-array name="sort_templates_entities">
+      <item>Por fecha de creación</item>
+      <item>Por nombre</item>
+      <item>Por cuenta</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Semana</item>
+      <item>Mes</item>
+      <item>Año</item>
+      <item>Año fiscal</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Fecha del último movimiento</item>
+      <item>Fecha de creación de la cuenta</item>
+      <item>Fecha de la última modificación</item>
+      <item>Oculta</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>A la izquierda buscar, en el centro lista</item>
+      <item>A la izquierda lista, en el centro buscar</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Por nombre</item>
+      <item>Por fin del periodo</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Como el sistema</item>
+      <item>Domingo</item>
+      <item>Lunes</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Predeterminado</item>
+      <item>Resumen y partidas</item>
+      <item>Solo el resumen</item>
+      <item>Solo las partidas</item>
+  </string-array>
+  <string name="app_description">Gestor de finanzas personales, de código abierto</string>
+  <string name="about_copyright1">Publicado bajo licencia GNU GPL v2</string>
+  <string name="pin_choose">Elige un PIN de al menos %1$d dígitos</string>
+  <string name="pin_too_short">Al menos %1$d dígitos</string>
+  <string name="pin_repeat">Escríbelo otra vez</string>
+  <string name="pin_mismatch">Los dos no coinciden</string>
 </resources>

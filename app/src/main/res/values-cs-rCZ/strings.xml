@@ -1066,4 +1066,22 @@
     <item>Rozpočty</item>
     <item>Zprávy</item>
   </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Týden</item>
+      <item>Měsíc</item>
+      <item>Rok</item>
+      <item>Fiskální rok</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Výchozí</item>
+      <item>Souhrn i položky</item>
+      <item>Jen souhrn</item>
+      <item>Jen položky</item>
+  </string-array>
+  <string name="app_description">Správce osobních financí s otevřeným kódem</string>
+  <string name="about_copyright1">Vydáno pod licencí GNU GPL v2</string>
+  <string name="pin_choose">Zvol PIN alespoň o %1$d číslicích</string>
+  <string name="pin_too_short">Alespoň %1$d číslic</string>
+  <string name="pin_repeat">Zadej ho znovu</string>
+  <string name="pin_mismatch">Oba se neshodují</string>
 </resources>

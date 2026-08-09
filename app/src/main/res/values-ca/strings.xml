@@ -750,4 +750,46 @@
     <item>Pressupostos</item>
     <item>Informes</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Per data de creació</item>
+      <item>Per nom</item>
+      <item>Per compte</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Setmana</item>
+      <item>Mes</item>
+      <item>Any</item>
+      <item>Any fiscal</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Data del darrer moviment</item>
+      <item>Data de creació del compte</item>
+      <item>Data de la darrera modificació</item>
+      <item>Amagada</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>A l\'esquerra cerca, al centre llista</item>
+      <item>A l\'esquerra llista, al centre cerca</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Per nom</item>
+      <item>Per fi del període</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Com el sistema</item>
+      <item>Diumenge</item>
+      <item>Dilluns</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Predeterminat</item>
+      <item>Resum i partides</item>
+      <item>Només el resum</item>
+      <item>Només les partides</item>
+  </string-array>
+  <string name="app_description">Gestor de finances personals, de codi obert</string>
+  <string name="about_copyright1">Publicat sota llicència GNU GPL v2</string>
+  <string name="pin_choose">Tria un PIN d’almenys %1$d dígits</string>
+  <string name="pin_too_short">Almenys %1$d dígits</string>
+  <string name="pin_repeat">Escriu-lo un altre cop</string>
+  <string name="pin_mismatch">Els dos no coincideixen</string>
 </resources>

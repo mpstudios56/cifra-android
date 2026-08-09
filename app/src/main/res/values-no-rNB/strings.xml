@@ -709,4 +709,53 @@
     <item>10 minutter</item>
     <item>15 minutter</item>
   </string-array>
+  <string-array name="sort_templates_entities">
+      <item>Etter opprettelsesdato</item>
+      <item>Etter navn</item>
+      <item>Etter konto</item>
+  </string-array>
+  <string-array name="report_aggregate_unit_entities">
+      <item>Uke</item>
+      <item>Måned</item>
+      <item>År</item>
+      <item>Regnskapsår</item>
+  </string-array>
+  <string-array name="account_list_date_types">
+      <item>Dato for siste transaksjon</item>
+      <item>Dato kontoen ble opprettet</item>
+      <item>Dato for siste endring</item>
+      <item>Skjult</item>
+  </string-array>
+  <string-array name="startup_screen_entities">
+      <item>Sammendrag</item>
+      <item>Kontoer</item>
+      <item>Transaksjoner</item>
+      <item>Budsjetter</item>
+      <item>Rapporter</item>
+  </string-array>
+  <string-array name="selector_type_entries">
+      <item>Til venstre søk, i midten liste</item>
+      <item>Til venstre liste, i midten søk</item>
+  </string-array>
+  <string-array name="budget_sort_order">
+      <item>Etter navn</item>
+      <item>Etter slutten på perioden</item>
+  </string-array>
+  <string-array name="first_day_of_week_entries">
+      <item>Som systemet</item>
+      <item>Søndag</item>
+      <item>Mandag</item>
+  </string-array>
+  <string-array name="filter_split_entries">
+      <item>Standard</item>
+      <item>Sammendrag og poster</item>
+      <item>Bare sammendraget</item>
+      <item>Bare postene</item>
+  </string-array>
+  <string name="app_description">Personlig økonomistyring, med åpen kildekode</string>
+  <string name="about_copyright1">Utgitt under GNU GPL v2</string>
+  <string name="pin_choose">Velg en PIN-kode på minst %1$d sifre</string>
+  <string name="pin_too_short">Minst %1$d sifre</string>
+  <string name="pin_repeat">Skriv den på nytt</string>
+  <string name="pin_mismatch">De to stemmer ikke overens</string>
 </resources>

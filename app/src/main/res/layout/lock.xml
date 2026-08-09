@@ -66,11 +66,20 @@
         android:layout_marginTop="6dp"
         android:background="#4DFFFFFF" />
 
+    <!--
+      Says what is being asked for. Without it the second step - repeat the PIN -
+      looks exactly like the first, and choosing a PIN gives no hint that six
+      digits are wanted until the OK refuses to do anything.
+    -->
     <TextView
         android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:textColor="#99FFFFFF"
+        android:textSize="14sp" />
 
     <TableLayout
         android:layout_width="wrap_content"
