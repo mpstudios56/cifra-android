@@ -311,9 +311,13 @@
 
 		<activity android:name=".activity.CsvExportActivity" android:label="@string/csv_export"
 			android:theme="@style/AppThemeCompat" />
+		<!--
+		  Opening a CSV from a file manager lands here rather than on the older
+		  importer below. Somebody arriving with a file from another app wants the
+		  screen that reads any file and asks what its columns are; the older one
+		  expects Cifra's own column names and would tell them nothing useful.
+		-->
 		<activity android:name=".activity.CsvMappingActivity" android:label="@string/csv_map_title"
-			android:theme="@style/AppThemeCompat" android:exported="false" />
-		<activity android:name=".activity.CsvImportActivity" android:label="@string/csv_import"
 			android:theme="@style/AppThemeCompat" android:exported="true">
 			<intent-filter>
 				<data android:scheme="content" />
@@ -326,6 +330,8 @@
 				<data android:mimeType="text/comma-separated-values" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".activity.CsvImportActivity" android:label="@string/csv_import"
+			android:theme="@style/AppThemeCompat" android:exported="false" />
 
 		<activity android:name=".activity.QifExportActivity" android:label="@string/qif_export"
 			android:theme="@style/AppThemeCompat" />
