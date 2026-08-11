@@ -168,10 +168,11 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         }
 
         if (v.categoryIcon != null) {
-            // A transfer belongs to no category, so it gets no symbol - which is
-            // itself a useful thing to see in a list of spending.
+            // Transfers carry a category too - the setting that puts it on the
+            // transfer screen is on out of the box - so they get their symbol like
+            // anything else.
             CategoryIcons.show(v.categoryIcon, v.categoryIconText,
-                    toAccountId > 0 ? null : cursor.getString(BlotterColumns.category_icon.ordinal()),
+                    cursor.getString(BlotterColumns.category_icon.ordinal()),
                     cursor.getString(BlotterColumns.category_accent_color.ordinal()));
         }
 
