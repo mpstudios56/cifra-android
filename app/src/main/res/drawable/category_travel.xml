@@ -5,6 +5,8 @@
   colour can tint it.
   Literal colours, not resource references: build-time PNG generation cannot
   resolve those.
+  Geometry from Tabler Icons, https://tabler.io/icons - MIT licence,
+  copyright (c) 2020-2024 Pawel Kuna. Restroked to this set's weight.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
@@ -16,17 +18,35 @@
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M3,7.5 H21 V19.5 H3 Z" />
+        android:pathData="M6 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -10" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M9,7.5 V5 A1.5,1.5 0 0,1 10.5,3.5 H13.5 A1.5,1.5 0 0,1 15,5 V7.5" />
+        android:pathData="M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M12,7.5 V19.5" />
+        android:pathData="M6 10h12" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M6 16h12" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M9 20v1" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M15 20v1" />
 </vector>

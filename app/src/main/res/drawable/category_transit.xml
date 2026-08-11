@@ -5,6 +5,8 @@
   colour can tint it.
   Literal colours, not resource references: build-time PNG generation cannot
   resolve those.
+  Geometry from Tabler Icons, https://tabler.io/icons - MIT licence,
+  copyright (c) 2020-2024 Pawel Kuna. Restroked to this set's weight.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
@@ -16,35 +18,41 @@
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M4,4 H20 V15.5 A2,2 0 0,1 18,17.5 H6 A2,2 0 0,1 4,15.5 Z" />
+        android:pathData="M4 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M4,10.5 H20" />
+        android:pathData="M16 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M7.5,17.5 V20" />
+        android:pathData="M4 17h-2v-11a1 1 0 0 1 1 -1h14a5 7 0 0 1 5 7v5h-2m-4 0h-8" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M16.5,17.5 V20" />
+        android:pathData="M16 5l1.5 7l4.5 0" />
     <path
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2.4"
+        android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M7,13.8 L7,13.8" />
+        android:pathData="M2 10l15 0" />
     <path
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2.4"
+        android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M17,13.8 L17,13.8" />
+        android:pathData="M7 5l0 5" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12 5l0 5" />
 </vector>

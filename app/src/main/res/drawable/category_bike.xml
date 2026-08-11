@@ -5,6 +5,8 @@
   colour can tint it.
   Literal colours, not resource references: build-time PNG generation cannot
   resolve those.
+  Geometry from Tabler Icons, https://tabler.io/icons - MIT licence,
+  copyright (c) 2020-2024 Pawel Kuna. Restroked to this set's weight.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
@@ -16,29 +18,23 @@
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M6,12.5 A4,4 0 1,1 5.99,12.5 Z" />
+        android:pathData="M2 18a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M18,12.5 A4,4 0 1,1 17.99,12.5 Z" />
+        android:pathData="M16 18a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M6.5,16.5 L10.5,8.5 H15" />
+        android:pathData="M12 19v-4l-3 -3l5 -4l2 3h3" />
     <path
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.7"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M10.5,8.5 L14.5,16.5" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M18,16.5 L15,8.5" />
+        android:pathData="M13.007 5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
 </vector>
