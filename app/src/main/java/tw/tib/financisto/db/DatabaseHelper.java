@@ -138,7 +138,9 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
         last_recurrence,
         from_account_balance,
         to_account_balance,
-        is_transfer;
+        is_transfer,
+        category_icon,
+        category_accent_color;
 
         public static final String[] NORMAL_PROJECTION = EnumUtils.asStringArray(BlotterColumns.values());
 
@@ -186,7 +188,9 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
         type,
         last_location_id,
         last_project_id,
-        sort_order
+        sort_order,
+        icon,
+        accent_color
     }
 
     public static enum CategoryViewColumns {
@@ -198,7 +202,9 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
         type,
         last_location_id,
         last_project_id,
-        sort_order;
+        sort_order,
+        icon,
+        accent_color;
 
         public static String[] NORMAL_PROJECTION = EnumUtils.asStringArray(CategoryViewColumns.values());
     }

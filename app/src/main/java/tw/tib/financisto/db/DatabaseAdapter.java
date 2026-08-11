@@ -738,12 +738,30 @@ public class DatabaseAdapter extends MyEntityManager {
                 id = category.id;
             }
             addAttributes(id, attributes);
+            saveCategoryLook(id, category);
             category.id = id;
             db.setTransactionSuccessful();
             return id;
         } finally {
             db.endTransaction();
         }
+    }
+
+    /**
+     * The symbol and the colour, written separately.
+     * <p>
+     * Inserting and updating a category go through the nested-set bookkeeping,
+     * which builds its own ContentValues out of title, type and the two bounds
+     * and would silently drop anything else the category carries.
+     */
+    private void saveCategoryLook(long id, Category category) {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.CategoryColumns.icon.name(),
+                category.icon == null ? "" : category.icon);
+        values.put(DatabaseHelper.CategoryColumns.accent_color.name(),
+                category.accentColor == null ? "" : category.accentColor);
+        db().update(DatabaseHelper.CATEGORY_TABLE, values,
+                DatabaseHelper.CategoryColumns._id + "=?", new String[]{String.valueOf(id)});
     }
 
     private void addAttributes(long categoryId, List<Attribute> attributes) {

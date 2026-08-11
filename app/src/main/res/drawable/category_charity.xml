@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  category_charity for Cifra. One of the symbols a category can be given, drawn to
+  the same weight as the rest of the set and in white so the chosen accent
+  colour can tint it.
+  Literal colours, not resource references: build-time PNG generation cannot
+  resolve those.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M3.5,10.5 H20.5 V20.5 H3.5 Z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M9.5,14.5 H14.5" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M12,8.4 C12,8.4 8.7,6.4 8.7,4.5 A1.85,1.85 0 0,1 12,3.5 A1.85,1.85 0 0,1 15.3,4.5 C15.3,6.4 12,8.4 12,8.4 Z" />
+</vector>

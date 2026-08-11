@@ -16,6 +16,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <!--
+      The category's symbol, at the head of the row. It is read before the words
+      are: in a screen of forty transactions the picture says what kind of
+      spending this was without anybody having to read anything.
+    -->
+    <ImageView
+        android:id="@+id/category_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="5sp"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toEndOf="@id/indicator"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/category_icon_text"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/category_icon"
+        app:layout_constraintEnd_toEndOf="@id/category_icon"
+        app:layout_constraintTop_toTopOf="@id/category_icon"
+        app:layout_constraintBottom_toBottomOf="@id/category_icon" />
+
     <TextView
         android:id="@+id/top"
         android:layout_width="wrap_content"
@@ -26,7 +53,7 @@
         android:singleLine="true"
         android:text="top"
         android:textAppearance="@style/ListSecondary"
-        app:layout_constraintStart_toEndOf="@id/indicator"
+        app:layout_constraintStart_toEndOf="@id/category_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -73,7 +100,7 @@
         android:text="center"
         android:textAppearance="@style/ListPrimary"
         android:maxLines="1" android:ellipsize="end"
-        app:layout_constraintStart_toEndOf="@id/indicator"
+        app:layout_constraintStart_toEndOf="@id/category_icon"
         app:layout_constraintEnd_toStartOf="@id/right_center"
         app:layout_constraintTop_toBottomOf="@id/top"
         />
@@ -96,7 +123,7 @@
         android:textAppearance="@style/ListSecondary"
         android:maxLines="1"
         android:paddingBottom="2sp"
-        app:layout_constraintStart_toEndOf="@id/indicator"
+        app:layout_constraintStart_toEndOf="@id/category_icon"
         app:layout_constraintTop_toBottomOf="@id/center" />
 
     <TextView

@@ -39,7 +39,9 @@ SELECT
 	t.attached_picture as attached_picture,
 	rb.balance as from_account_balance,
 	0 as to_account_balance,
-	t.to_account_id as is_transfer
+	t.to_account_id as is_transfer,
+	cat.icon as category_icon,
+	cat.accent_color as category_accent_color
 FROM
 	transactions as t
 	INNER JOIN account as a ON a._id=t.from_account_id
@@ -93,7 +95,9 @@ SELECT
 	t.attached_picture as attached_picture,
 	rb.balance as from_account_balance,
 	0 as to_account_balance,
-	-1 as is_transfer
+	-1 as is_transfer,
+	cat.icon as category_icon,
+	cat.accent_color as category_accent_color
 FROM
 	transactions as t
 	INNER JOIN account as a ON a._id=t.to_account_id

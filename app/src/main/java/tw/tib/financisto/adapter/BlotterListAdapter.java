@@ -44,6 +44,7 @@ import tw.tib.financisto.model.CategoryEntity;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.recur.Recurrence;
+import tw.tib.financisto.utils.CategoryIcons;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.MyPreferences;
 
@@ -164,6 +165,14 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         }
         else {
             v.layout.setBackgroundColor(0);
+        }
+
+        if (v.categoryIcon != null) {
+            // A transfer belongs to no category, so it gets no symbol - which is
+            // itself a useful thing to see in a list of spending.
+            CategoryIcons.show(v.categoryIcon, v.categoryIconText,
+                    toAccountId > 0 ? null : cursor.getString(BlotterColumns.category_icon.ordinal()),
+                    cursor.getString(BlotterColumns.category_accent_color.ordinal()));
         }
 
         if (v.iconView2 != null) {
@@ -404,6 +413,9 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         public final TextView rightView;
         public final ImageView iconView;
         public final ImageView iconView2;
+        /** The category's symbol at the head of the row, and its typed-text twin. */
+        public final ImageView categoryIcon;
+        public final TextView categoryIconText;
         public final CheckBox checkBox;
 
         public BlotterViewHolder(View view) {
@@ -417,6 +429,8 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
             rightView = view.findViewById(R.id.right);
             iconView = view.findViewById(R.id.right_top);
             iconView2 = view.findViewById(R.id.right_top_2);
+            categoryIcon = view.findViewById(R.id.category_icon);
+            categoryIconText = view.findViewById(R.id.category_icon_text);
             checkBox = view.findViewById(R.id.cb);
         }
 

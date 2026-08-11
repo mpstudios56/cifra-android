@@ -8,6 +8,8 @@ SELECT
 	node.last_location_id as last_location_id,
 	node.last_project_id as last_project_id,
 	node.sort_order as sort_order,
+	node.icon as icon,
+	node.accent_color as accent_color,
 	count(parent._id)-1 as level
 FROM
 	category as node,

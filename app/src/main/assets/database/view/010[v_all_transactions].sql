@@ -39,7 +39,9 @@ SELECT
 	t.attached_picture as attached_picture,
 	frb.balance as from_account_balance,
 	trb.balance as to_account_balance,
-	t.to_account_id as is_transfer
+	t.to_account_id as is_transfer,
+	cat.icon as category_icon,
+	cat.accent_color as category_accent_color
 FROM
 	transactions as t
 	INNER JOIN account as a1 ON a1._id=t.from_account_id

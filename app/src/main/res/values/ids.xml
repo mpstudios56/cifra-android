@@ -18,6 +18,7 @@
 	<item name="account_from" type="id" />
 	<item name="account_to" type="id" />
 	<item name="category" type="id" />
+	<item name="category_icon" type="id" />
 	<item name="category_clear" type="id" />
 	<item name="category_add" type="id" />
 	<item name="project" type="id" />

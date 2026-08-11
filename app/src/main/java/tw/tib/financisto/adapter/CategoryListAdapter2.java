@@ -21,6 +21,7 @@ import android.graphics.Color;
 import tw.tib.financisto.R;
 import tw.tib.financisto.model.Category;
 import tw.tib.financisto.model.CategoryTree;
+import tw.tib.financisto.utils.CategoryIcons;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
@@ -154,6 +155,7 @@ public class CategoryListAdapter2 extends BaseAdapter {
         } else {
             indicator.setBackgroundColor(Color.WHITE);
         }
+		CategoryIcons.show(h.icon, h.iconText, c);
 		return convertView;
 	}
 	
@@ -206,6 +208,8 @@ public class CategoryListAdapter2 extends BaseAdapter {
         public TextView indicator;
 		public TextView indent;
 		public ImageView span;
+		public ImageView icon;
+		public TextView iconText;
 		public TextView title;
 		public TextView label;
 
@@ -214,6 +218,8 @@ public class CategoryListAdapter2 extends BaseAdapter {
             h.indicator = (TextView)convertView.findViewById(R.id.indicator);
 			h.indent = (TextView)convertView.findViewById(R.id.indent);
 			h.span = (ImageView)convertView.findViewById(R.id.span);
+			h.icon = (ImageView)convertView.findViewById(R.id.category_icon);
+			h.iconText = (TextView)convertView.findViewById(R.id.category_icon_text);
 			h.title = (TextView)convertView.findViewById(R.id.line1);
 			h.label = (TextView)convertView.findViewById(R.id.label);
 			convertView.setTag(h);

@@ -53,6 +53,18 @@ public class Category extends CategoryEntity<Category> {
 	@Column(name = "last_project_id")
 	public long lastProjectId;
 
+	/**
+	 * The symbol, in the same shape accounts use: a tag behind a marker, or plain
+	 * text - an emoji, an initial - when somebody would rather type their own.
+	 * See {@link tw.tib.financisto.utils.CategoryIcon}.
+	 */
+	@Column(name = "icon")
+	public String icon = "";
+
+	/** The colour of the symbol, as #AARRGGBB. Empty means the list's own colour. */
+	@Column(name = "accent_color")
+	public String accentColor = "";
+
 	@Transient
 	public int level;
 
@@ -124,6 +136,8 @@ public class Category extends CategoryEntity<Category> {
 		cat.type = c.getInt(CategoryViewColumns.type.ordinal());
 		cat.lastLocationId = c.getInt(CategoryViewColumns.last_location_id.ordinal());
 		cat.lastProjectId = c.getInt(CategoryViewColumns.last_project_id.ordinal());
+		cat.icon = c.getString(CategoryViewColumns.icon.ordinal());
+		cat.accentColor = c.getString(CategoryViewColumns.accent_color.ordinal());
 		return cat;
 	}
 

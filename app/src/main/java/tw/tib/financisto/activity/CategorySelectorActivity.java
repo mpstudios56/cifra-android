@@ -23,6 +23,7 @@ import tw.tib.financisto.model.Account;
 import tw.tib.financisto.model.Category;
 import tw.tib.financisto.model.CategoryTree;
 import tw.tib.financisto.model.CategoryTreeNavigator;
+import tw.tib.financisto.utils.CategoryIcons;
 import tw.tib.financisto.utils.MenuItemInfo;
 import tw.tib.financisto.utils.MyPreferences;
 
@@ -279,6 +280,9 @@ public class CategorySelectorActivity extends AbstractListActivity<Cursor> {
                 v.centerView.setText(c.title);
             }
             v.bottomView.setText(c.tag);
+            // The same symbol as in the list one picks from, so choosing a category
+            // and reading one back look like the same thing.
+            CategoryIcons.show(v.categoryIcon, v.categoryIconText, c);
             v.indicator.setBackgroundColor(c.isIncome() ? incomeColor : expenseColor);
             v.rightCenterView.setVisibility(View.INVISIBLE);
             v.iconView.setVisibility(View.INVISIBLE);

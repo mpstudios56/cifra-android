@@ -13,13 +13,18 @@ package tw.tib.financisto.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -38,6 +43,8 @@ import tw.tib.financisto.db.DatabaseHelper.SmsTemplateColumns;
 import tw.tib.financisto.model.Attribute;
 import tw.tib.financisto.model.Category;
 import tw.tib.financisto.model.SmsTemplate;
+import tw.tib.financisto.utils.CategoryIcon;
+import tw.tib.financisto.utils.Utils;
 
 import static android.Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE;
 import static tw.tib.financisto.activity.CategorySelector.SelectorType.PARENT;
@@ -72,6 +79,9 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
 	private LinearLayout parentAttributesLayout;
 
 	private Category category = new Category(-1);
+
+	private View categoryIconNode;
+	private View accentColorNode;
 
 	private CategorySelector parentCatSelector;
 
@@ -121,6 +131,14 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
 		categoryTitle = titleLayout.findViewById(R.id.primary);
 		LinearLayout layout = findViewById(R.id.layout);
 		x.addEditNode(layout, R.string.title, titleLayout);
+
+		// Straight under the name, because the symbol and the colour are part of
+		// what a category is called: in a list of forty, the picture is read first
+		// and the word second.
+		categoryIconNode = x.addListNodeIcon(layout, R.id.category_icon,
+				R.string.account_icon, R.string.account_icon_none);
+		accentColorNode = x.addListNodeIcon(layout, R.id.accent_color,
+				R.string.accent_color, R.string.account_icon_none);
 
 		smsTemplatesLayout = x.addTitleNodeNoDivider(layout, R.string.sms_templates).findViewById(R.id.layout);
 		x.addInfoNodePlus(smsTemplatesLayout, R.id.new_sms_template, R.id.new_sms_template, R.string.add_sms_template);
@@ -188,6 +206,144 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
 	private void editCategory() {
 		categoryTitle.setText(category.title);
 		parentCatSelector.selectCategory(category.getParentId(), false);
+		showIconOnNode();
+		showColorOnNode();
+	}
+
+	// ------------------------------------------------------ the symbol and its colour
+
+	/**
+	 * A grid of symbols with nothing written under them. They are chosen by
+	 * looking, which is what a symbol is for, and naming forty-four of them in
+	 * every language the app speaks would be a lot of words nobody reads.
+	 */
+	private void showIconPicker() {
+		final CategoryIcon[] icons = CategoryIcon.values();
+		final int tint = currentAccentColor();
+
+		GridView grid = new GridView(this);
+		grid.setNumColumns(5);
+		grid.setPadding(24, 24, 24, 24);
+		grid.setVerticalScrollBarEnabled(true);
+		grid.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				(int) (getResources().getDisplayMetrics().heightPixels * 0.6)));
+		grid.setAdapter(new BaseAdapter() {
+			@Override public int getCount() { return icons.length; }
+			@Override public Object getItem(int position) { return icons[position]; }
+			@Override public long getItemId(int position) { return position; }
+			@Override public View getView(int position, View convertView, ViewGroup parent) {
+				ImageView view = convertView instanceof ImageView
+						? (ImageView) convertView : new ImageView(CategoryActivity.this);
+				view.setLayoutParams(new GridView.LayoutParams(
+						GridView.LayoutParams.MATCH_PARENT, 150));
+				view.setPadding(16, 16, 16, 16);
+				view.setImageResource(icons[position].iconId);
+				view.setColorFilter(tint);
+				view.setContentDescription(icons[position].tag);
+				return view;
+			}
+		});
+
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+				.setTitle(R.string.icon_picker_title)
+				.setView(grid)
+				.setNeutralButton(R.string.icon_picker_clear, (d, which) -> {
+					category.icon = "";
+					showIconOnNode();
+				})
+				.setNegativeButton(R.string.cancel, null)
+				.create();
+		grid.setOnItemClickListener((parent, view, position, id) -> {
+			category.icon = icons[position].toStoredValue();
+			showIconOnNode();
+			dialog.dismiss();
+		});
+		dialog.show();
+	}
+
+	private void showColorPicker() {
+		final String[] colors = {
+				"#e53935", "#d81b60", "#8e24aa", "#5e35b1", "#3949ab", "#1e88e5",
+				"#039be5", "#00acc1", "#00897b", "#43a047", "#7cb342", "#c0ca33",
+				"#fdd835", "#ffb300", "#fb8c00", "#f4511e", "#6d4c41", "#757575"
+		};
+		var adapter = new ArrayAdapter<>(this, R.layout.select_entry_color_row, colors) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View v;
+				final var inflater = LayoutInflater.from(getContext());
+				if (convertView == null) {
+					convertView = inflater.inflate(R.layout.select_entry_color_row, parent, false);
+					v = convertView.findViewById(R.id.color_patch);
+					convertView.setTag(v);
+				} else {
+					v = (View) convertView.getTag();
+				}
+				v.setBackground(new ColorDrawable(Color.parseColor(colors[position])));
+				return convertView;
+			}
+		};
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.select_color)
+				.setAdapter(adapter, (dialog, which) -> {
+					category.accentColor = colors[which];
+					showColorOnNode();
+					showIconOnNode();
+				})
+				.setNeutralButton(R.string.icon_picker_clear, (d, which) -> {
+					category.accentColor = "";
+					showColorOnNode();
+					showIconOnNode();
+				})
+				.show();
+	}
+
+	/** The chosen colour, or white when none is set, so the symbol still reads. */
+	private int currentAccentColor() {
+		try {
+			return Color.parseColor(category.accentColor.trim());
+		} catch (Exception e) {
+			return Color.WHITE;
+		}
+	}
+
+	private void showIconOnNode() {
+		CategoryIcon chosen = CategoryIcon.parse(category.icon);
+		TextView label = categoryIconNode.findViewById(R.id.data);
+		ImageView preview = categoryIconNode.findViewById(R.id.icon);
+		if (chosen != null) {
+			label.setText("");
+			preview.setVisibility(View.VISIBLE);
+			preview.setImageResource(chosen.iconId);
+			preview.setColorFilter(currentAccentColor());
+		} else if (!Utils.isEmpty(category.icon)) {
+			// Somebody typed their own: an emoji, an initial. Shown as written.
+			label.setText(category.icon);
+			preview.setVisibility(View.INVISIBLE);
+		} else {
+			label.setText(R.string.icon_picker_clear);
+			preview.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	private void showColorOnNode() {
+		String value = category.accentColor == null ? "" : category.accentColor.trim();
+		TextView label = accentColorNode.findViewById(R.id.data);
+		ImageView preview = accentColorNode.findViewById(R.id.icon);
+		if (Utils.isEmpty(value)) {
+			label.setText(R.string.icon_picker_clear);
+			preview.setVisibility(View.INVISIBLE);
+			return;
+		}
+		label.setText(value);
+		try {
+			preview.setVisibility(View.VISIBLE);
+			preview.setImageResource(R.drawable.color_swatch);
+			preview.setColorFilter(Color.parseColor(value));
+		} catch (Exception e) {
+			preview.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	private void updateIncomeExpenseType() {
@@ -281,6 +437,12 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
 		switch (id) {
 			case R.id.category:
 				parentCatSelector.onClick(R.id.category);
+				break;
+			case R.id.category_icon:
+				showIconPicker();
+				break;
+			case R.id.accent_color:
+				showColorPicker();
 				break;
 
 			// Attributes >>
