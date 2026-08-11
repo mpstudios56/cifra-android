@@ -25,6 +25,7 @@
             android:defaultValue="default"
             android:entries="@array/ui_language_entities"
             android:entryValues="@array/ui_language_values"
+            android:icon="@drawable/pref_language"
             android:key="ui_language"
             android:summary="@string/ui_language_summary"
             android:title="@string/ui_language" />
@@ -33,30 +34,35 @@
             android:defaultValue="BLOTTER"
             android:entries="@array/startup_screen_entities"
             android:entryValues="@array/startup_screen_values"
+            android:icon="@drawable/pref_start"
             android:key="startup_screen"
             android:summary="@string/startup_screen_summary"
             android:title="@string/startup_screen" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_tab_summary"
             android:key="show_summary_tab"
             android:summary="@string/show_summary_tab_summary"
             android:title="@string/show_summary_tab" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_tab_templates"
             android:key="templates_as_tab"
             android:summary="@string/templates_as_tab_summary"
             android:title="@string/templates_as_tab" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_tab_budgets"
             android:key="show_budgets_tab"
             android:summary="@string/show_budgets_tab_summary"
             android:title="@string/show_budgets_tab" />
         <CheckBoxPreference
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_tab_reports"
             android:key="show_reports_tab"
             android:summary="@string/show_reports_tab_summary"
             android:title="@string/show_reports_tab" />
@@ -71,12 +77,14 @@
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/account_type_credit_card"
             android:key="treat_transfer_to_ccard_as_payment"
             android:summary="@string/treat_transfer_to_ccard_as_payment_summary"
             android:title="@string/treat_transfer_to_ccard_as_payment" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/actionbar_calendar"
             android:key="restore_missed_scheduled_transactions"
             android:summary="@string/restore_missed_scheduled_transactions_summary"
             android:title="@string/restore_missed_scheduled_transactions" />
@@ -98,6 +106,7 @@
             android:defaultValue="NAME"
             android:entries="@array/sort_locations_entities"
             android:entryValues="@array/sort_locations_values"
+            android:icon="@drawable/ic_action_location_2"
             android:key="sort_locations"
             android:summary="@string/sort_locations_summary"
             android:title="@string/sort_locations" />
@@ -106,6 +115,7 @@
             android:defaultValue="DATE"
             android:entries="@array/sort_templates_entities"
             android:entryValues="@array/sort_templates_values"
+            android:icon="@drawable/sort"
             android:key="sort_templates"
             android:summary="@string/sort_templates_summary"
             android:title="@string/sort_templates" />
@@ -120,6 +130,7 @@
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/ic_action_sms"
             android:key="google_wallet_transaction"
             android:summary="@string/pref_google_wallet_transaction_summary"
             android:title="@string/pref_google_wallet_transaction_title" />
@@ -154,11 +165,13 @@
             android:defaultValue="0"
             android:entries="@array/first_day_of_week_entries"
             android:entryValues="@array/first_day_of_week_values"
+            android:icon="@drawable/today"
             android:key="first_day_of_week"
             android:summary="@string/first_day_of_week_summary"
             android:title="@string/first_day_of_week" />
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/actionbar_calendar"
             android:key="fiscal_year_start"
             android:summary="@string/fiscal_year_start_summary"
             android:title="@string/fiscal_year_start" />
@@ -167,12 +180,14 @@
             android:defaultValue="freeCurrency"
             android:entries="@array/exchange_rate_provider_entities"
             android:entryValues="@array/exchange_rate_provider_values"
+            android:icon="@drawable/ic_action_money"
             android:key="exchange_rate_provider"
             android:summary="@string/exchange_rate_provider_summary"
             android:title="@string/exchange_rate_provider" />
         <EditTextPreference
             app:singleLineTitle="false"
             android:enabled="false"
+            android:icon="@drawable/category_rent"
             android:key="openexchangerates_app_id"
             android:summary="@string/openexchangerates_app_id_summary"
             android:title="@string/openexchangerates_app_id" />
@@ -182,12 +197,14 @@
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/apps"
             android:key="enable_widget"
             android:summary="@string/enable_widget_summary"
             android:title="@string/enable_widget" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/actionbar_flash"
             android:key="quick_entry_from_widget"
             android:summary="@string/quick_entry_from_widget_summary"
             android:title="@string/quick_entry_from_widget" />
@@ -199,11 +216,13 @@
             android:title="@string/quick_bar" />
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/icon_transaction"
             android:key="shortcut_new_transaction"
             android:summary="@string/shortcut_summary"
             android:title="@string/shortcut_new_transaction" />
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/icon_transfer"
             android:key="shortcut_new_transfer"
             android:summary="@string/shortcut_summary"
             android:title="@string/shortcut_new_transfer" />
@@ -212,12 +231,14 @@
     <PreferenceCategory android:title="@string/database_backup">
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/ic_action_category"
             android:key="database_backup_folder"
             android:summary="@string/database_backup_folder_summary"
             android:title="@string/database_backup_folder" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/sync_alt"
             android:key="auto_backup_enabled"
             android:summary="@string/auto_backup_enabled_summary"
             android:title="@string/auto_backup_enabled" />
@@ -231,18 +252,21 @@
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:dependency="auto_backup_enabled"
+            android:icon="@drawable/pref_alert"
             android:key="auto_backup_warning_enabled"
             android:summary="@string/auto_backup_warning_summary"
             android:title="@string/auto_backup_warning_enabled" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/pref_alert"
             android:key="auto_backup_reminder_enabled"
             android:summary="@string/auto_backup_reminder_enabled_summary"
             android:title="@string/auto_backup_reminder_enabled" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/pref_note"
             android:key="backup_newlines"
             android:summary="@string/backup_newlines_summary"
             android:title="@string/backup_newlines" />
@@ -251,35 +275,41 @@
     <PreferenceCategory android:title="@string/dropbox">
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/actionbar_share"
             android:key="dropbox_authorize"
             android:summary="@string/dropbox_authorize_summary"
             android:title="@string/dropbox_authorize" />
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/actionbar_share"
             android:key="dropbox_unlink"
             android:summary="@string/dropbox_unlink_summary"
             android:title="@string/dropbox_unlink" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/material_download"
             android:key="dropbox_upload_backup"
             android:summary="@string/dropbox_upload_backup_summary"
             android:title="@string/dropbox_upload_backup" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/sync_alt"
             android:key="dropbox_upload_autobackup"
             android:summary="@string/dropbox_upload_autobackup_summary"
             android:title="@string/dropbox_upload_autobackup" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/photo_album"
             android:key="dropbox_upload_pictures"
             android:summary="@string/dropbox_upload_pictures_summary"
             android:title="@string/dropbox_upload_pictures" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/photo_album"
             android:key="dropbox_download_pictures"
             android:summary="@string/dropbox_download_pictures_summary"
             android:title="@string/dropbox_download_pictures" />
@@ -288,11 +318,13 @@
     <PreferenceCategory android:title="@string/gdocs_backup">
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/actionbar_db_backup"
             android:key="google_drive_backup_account"
             android:summary="@string/google_drive_backup_account_summary"
             android:title="@string/google_drive_backup_account" />
         <Preference
             app:singleLineTitle="false"
+            android:icon="@drawable/actionbar_share"
             android:key="google_drive_sign_out"
             android:summary="@string/google_drive_sign_out_summary"
             android:title="@string/google_drive_sign_out" />
@@ -311,18 +343,21 @@
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/sync_alt"
             android:key="google_drive_upload_autobackup"
             android:summary="@string/google_drive_upload_autobackup_summary"
             android:title="@string/google_drive_upload_autobackup" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/photo_album"
             android:key="google_drive_upload_pictures"
             android:summary="@string/google_drive_upload_pictures_summary"
             android:title="@string/google_drive_upload_pictures" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/photo_album"
             android:key="google_drive_download_pictures"
             android:summary="@string/google_drive_download_pictures_summary"
             android:title="@string/google_drive_download_pictures" />

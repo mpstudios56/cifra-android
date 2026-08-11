@@ -8,12 +8,14 @@
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_action_lock"
             android:key="secure_window"
             android:summary="@string/secure_window_summary"
             android:title="@string/secure_window" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="false"
+            android:icon="@drawable/ic_action_lock"
             android:key="pin_protection"
             android:summary="@string/pin_protection_summary"
             android:title="@string/pin_protection" />
@@ -28,6 +30,7 @@
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:dependency="pin_protection"
+            android:icon="@drawable/ic_action_lock"
             android:key="pin_protection_use_fingerprint"
             android:summary="@string/pin_protection_use_fingerprint_summary"
             android:title="@string/pin_protection_use_fingerprint" />
@@ -51,12 +54,14 @@
             android:dependency="pin_protection"
             android:entries="@array/lock_time_entities"
             android:entryValues="@array/lock_time_values"
+            android:icon="@drawable/pref_clock"
             android:key="pin_protection_lock_time"
             android:summary="@string/lock_time_summary"
             android:title="@string/lock_time" />
         <SwitchPreferenceCompat
             app:singleLineTitle="false"
             android:defaultValue="true"
+            android:icon="@drawable/ic_action_lock"
             android:key="pin_protection_haptic_feedback"
             android:summary="@string/pin_protection_haptic_feedback_summary"
             android:title="@string/pin_protection_haptic_feedback" />
