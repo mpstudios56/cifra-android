@@ -121,14 +121,17 @@ public class BudgetListAdapter extends BaseAdapter {
                 v.progressBar.setMax((int)Math.abs(b.amount));
                 v.progressBar.setProgress((int)(spent-1));
             }
-			showPace(v.progressBar, b, balance);
+			showPace(v, b, balance);
 		} else {
 			v.bottomView.setText("*/*");
 			v.rightView1.setText(R.string.calculating);
 			v.rightView2.setText(R.string.calculating);
 			v.progressBar.setMax(1);
 			v.progressBar.setSecondaryProgress(0);
-			v.progressBar.setProgress(0);						
+			v.progressBar.setProgress(0);
+			// Rows are recycled, so a mark left over from the row before would
+			// point at a period this one knows nothing about.
+			hideToday(v);
 		}
 		v.progressBar.setVisibility(View.VISIBLE);
 		return convertView;
@@ -144,9 +147,11 @@ public class BudgetListAdapter extends BaseAdapter {
 	 * day and half left on the first day are not the same thing, and the bar alone
 	 * could not tell them apart.
 	 */
-	private void showPace(ProgressBar bar, Budget b, long balance) {
+	private void showPace(Holder v, Budget b, long balance) {
+		ProgressBar bar = v.progressBar;
 		long amount = Math.abs(b.amount);
 		if (amount == 0) {
+			hideToday(v);
 			return;
 		}
 		long span = b.endDate - b.startDate;
@@ -160,6 +165,23 @@ public class BudgetListAdapter extends BaseAdapter {
 		long left = b.amount > 0 ? balance : amount + b.spent;
 		int color = left < 0 ? OVER : (left < shouldRemain ? BEHIND : WITHIN);
 		bar.setProgressTintList(ColorStateList.valueOf(color));
+
+		// The bar counts down what is left, so the mark sits at what should
+		// still be there - not at how much of the period has gone.
+		if (span > 0 && elapsed > 0.02 && elapsed < 0.98) {
+			v.todayGuide.setGuidelinePercent((float) (1 - elapsed));
+			v.todayMark.setVisibility(View.VISIBLE);
+			v.todayLabel.setVisibility(View.VISIBLE);
+		} else {
+			// At either end the mark would sit on the bar's own edge and mean
+			// nothing, so it stays away.
+			hideToday(v);
+		}
+	}
+
+	private void hideToday(Holder v) {
+		v.todayMark.setVisibility(View.GONE);
+		v.todayLabel.setVisibility(View.GONE);
 	}
 
     private static class Holder {
@@ -171,6 +193,9 @@ public class BudgetListAdapter extends BaseAdapter {
 		public TextView rightView2;
 		public TextView rightCenterView;
 		public ProgressBar progressBar;
+		public androidx.constraintlayout.widget.Guideline todayGuide;
+		public View todayMark;
+		public TextView todayLabel;
 		
 		public static Holder create(View view) {
 			Holder v = new Holder();
@@ -181,6 +206,9 @@ public class BudgetListAdapter extends BaseAdapter {
 			v.rightView2 = (TextView)view.findViewById(R.id.right2);
 			v.rightCenterView = (TextView)view.findViewById(R.id.right_center);
 			v.progressBar = (ProgressBar)view.findViewById(R.id.progress);
+			v.todayGuide = view.findViewById(R.id.today_guide);
+			v.todayMark = view.findViewById(R.id.today_mark);
+			v.todayLabel = view.findViewById(R.id.today_label);
 			view.setTag(v);
 			return v;
 		}

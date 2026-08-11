@@ -1320,4 +1320,5 @@
   <string name="pin_too_short">Mindestens %1$d Ziffern</string>
   <string name="pin_repeat">Noch einmal eingeben</string>
   <string name="pin_mismatch">Die beiden stimmen nicht überein</string>
+  <string name="budget_today">HEUTE</string>
 </resources>

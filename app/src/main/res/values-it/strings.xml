@@ -1323,4 +1323,5 @@
   </string-array>
   <string name="app_description">Gestore di finanze personali, a codice aperto</string>
   <string name="about_copyright1">Distribuito con licenza GNU GPL v2</string>
+  <string name="budget_today">OGGI</string>
 </resources>

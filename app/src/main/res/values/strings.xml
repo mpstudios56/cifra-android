@@ -1422,4 +1422,5 @@
     <string name="pin_too_short">At least %1$d digits</string>
     <string name="pin_repeat">Type it again</string>
     <string name="pin_mismatch">The two do not match</string>
+  <string name="budget_today">TODAY</string>
 </resources>

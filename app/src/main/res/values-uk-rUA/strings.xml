@@ -1386,4 +1386,5 @@
     <string name="csv_map_accounts_created">Створено рахунків: %1$d.</string>
     <string name="csv_map_categories_created">Створено категорій: %1$d.</string>
     <string name="csv_map_payees_created">Створено отримувачів: %1$d.</string>
+  <string name="budget_today">СЬОГОДНІ</string>
 </resources>
