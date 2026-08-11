@@ -76,7 +76,7 @@
     <string name="autocomplete_filter_hint">Почніть друкувати…</string>
     <string name="select_project">Будь ласка, виберіть проект…</string>
     <string name="warning">Увага</string>
-    <string name="no_accounts">Почніть зі створення рахунку. Натисніть на зелений \'+\' внизу…</string>
+    <string name="no_accounts">Почніть зі створення рахунку: «+» угорі.</string>
     <string name="no_budgets">Немає бюджетів</string>
     <string name="loading">Завантаження…</string>
     <string name="no_transactions">Немає транзакцій</string>

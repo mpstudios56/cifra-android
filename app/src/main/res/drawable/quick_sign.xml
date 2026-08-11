@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Spending or income, as a pill that changes colour rather than a box that
+  changes word. The colour is the same one the amounts are shown in elsewhere,
+  so which way the money is going can be seen without reading.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF2F8F63" />
+            <corners android:radius="22dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFA6402F" />
+            <corners android:radius="22dp" />
+        </shape>
+    </item>
+</selector>

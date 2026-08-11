@@ -7,25 +7,23 @@
   on screen so the amount is typed without the system keyboard sliding over half
   the layout.
 
-  The two small labels are the least that stops the row of buttons from being a
-  guess, and "other" sits outside the scrolling strip so it is always in the
-  same place however many shortcuts there are.
+  Drawn like the unlock keypad, which is the same gesture: the app's own dark
+  green, round keys, and the figure large enough to be the subject of the
+  screen. The row of shortcuts is outlined rather than filled, so six of them
+  read as six choices instead of six grey slabs.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/quick_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FF10312A"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="14dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/account"
-        android:textAllCaps="true"
-        android:textSize="11sp"
-        android:alpha="0.6" />
-
+    <!-- which account, and which way the money is going -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,46 +33,67 @@
         <Button
             android:id="@+id/quick_account"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:ellipsize="end"
             android:gravity="start|center_vertical"
+            android:paddingStart="0dp"
             android:singleLine="true"
-            android:text="@string/select_account" />
+            android:text="@string/select_account"
+            android:textColor="#FFF4EFE4"
+            android:textSize="15sp" />
 
         <ToggleButton
             android:id="@+id/quick_sign"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="96dp"
+            android:layout_height="44dp"
+            android:background="@drawable/quick_sign"
+            android:minWidth="118dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFFFF"
             android:textOff="@string/quick_expense"
-            android:textOn="@string/quick_income" />
+            android:textOn="@string/quick_income"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- the figure, which is what the screen is for -->
     <TextView
         android:id="@+id/quick_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="10dp"
         android:gravity="end"
         android:singleLine="true"
         android:text="0,00"
-        android:textSize="46sp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="52sp"
         android:textStyle="bold" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.18"
+        android:background="#FFFFFFFF" />
+
+    <!-- what it was for -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.6"
+            android:alpha="0.55"
             android:text="@string/category"
             android:textAllCaps="true"
+            android:textColor="#FFFFFFFF"
             android:textSize="11sp" />
 
         <TextView
@@ -87,6 +106,7 @@
             android:gravity="end"
             android:singleLine="true"
             android:text="@string/no_category"
+            android:textColor="#FF45B87E"
             android:textSize="13sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -94,7 +114,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -114,26 +134,35 @@
         <Button
             android:id="@+id/quick_more"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/other_categories" />
+            android:layout_height="40dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/quick_chip"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:stateListAnimator="@null"
+            android:text="@string/other_categories"
+            android:textColor="#FFF4EFE4"
+            android:textSize="13sp" />
     </LinearLayout>
 
     <GridLayout
         android:id="@+id/quick_keypad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:layout_marginTop="6dp"
         android:columnCount="3"
         android:rowCount="4" />
 
     <Button
         android:id="@+id/quick_save"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/donate_button"
+        android:stateListAnimator="@null"
         android:text="@string/save"
-        android:textSize="18sp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
         android:textStyle="bold" />
 </LinearLayout>

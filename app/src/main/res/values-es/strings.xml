@@ -64,7 +64,7 @@
   <string name="select_category">Debe seleccionar una categoría...</string>
   <string name="select_project">Debe seleccionar un proyecto...</string>
   <string name="warning">Aviso</string>
-  <string name="no_accounts">Antes se debe comenzar con la creación de una cuenta. Toque el icono de abajo con el \'+\' verde para ello...</string>
+  <string name="no_accounts">Empieza creando una cuenta: el \'+\' está arriba.</string>
   <string name="no_budgets">Sin dotaciones</string>
   <string name="no_transactions">Sin transacciones</string>
   <string name="no_categories">Sin categorías</string>

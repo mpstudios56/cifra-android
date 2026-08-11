@@ -64,7 +64,7 @@
   <string name="select_category">Bitte Kategorie wählen...</string>
   <string name="select_project">Bitte Projekt wählen...</string>
   <string name="warning">Warnung</string>
-  <string name="no_accounts">Es sollte ein Konto angelegt werden (\'+\' drücken). </string>
+  <string name="no_accounts">Beginne mit einem Konto: das \'+\' ist oben.</string>
   <string name="no_budgets">Keine Budgets</string>
   <string name="no_transactions">Keine Transaktionen</string>
   <string name="no_categories">Keine Kategorien</string>

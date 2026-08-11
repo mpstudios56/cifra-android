@@ -51,6 +51,8 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private static final String KEY_ACCOUNT = "account_id";
     /** How many category shortcuts fit before the row is more work than a list. */
     private static final int SHORTCUTS = 8;
+    private static final int PICK_CATEGORY = 1;
+    private static final int NEW_ACCOUNT = 2;
 
     private DatabaseAdapter db;
     private Account account;
@@ -96,7 +98,7 @@ public class QuickTransactionActivity extends AppCompatActivity {
         // Outside the scrolling strip, so it stays put however many shortcuts there
         // are: buried at the far right it was never found.
         findViewById(R.id.quick_more).setOnClickListener(v -> startActivityForResult(
-                new Intent(this, CategorySelectorActivity.class), 1));
+                new Intent(this, CategorySelectorActivity.class), PICK_CATEGORY));
 
         buildKeypad();
         selectAccount(rememberedAccount());
@@ -127,16 +129,21 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private void buildKeypad() {
         GridLayout keypad = findViewById(R.id.quick_keypad);
         String[] keys = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "<"};
+        int margin = Math.round(6 * getResources().getDisplayMetrics().density);
         for (String key : keys) {
             Button b = new Button(this);
             b.setText("<".equals(key) ? "⌫" : key);
-            b.setTextSize(22);
+            b.setTextSize(24);
+            b.setTextColor(0xFFFFFFFF);
+            // The unlock keypad's round key. Same gesture, same key.
+            b.setBackgroundResource(R.drawable.quick_key);
+            b.setStateListAnimator(null);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
             lp.width = 0;
             lp.height = 0;
             lp.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
             lp.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
-            lp.setMargins(3, 3, 3, 3);
+            lp.setMargins(margin, margin, margin, margin);
             b.setLayoutParams(lp);
             b.setOnClickListener(v -> onKey(key));
             keypad.addView(b);
@@ -194,7 +201,11 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private void pickAccount() {
         List<Account> accounts = db.getAllAccountsList();
         if (accounts.isEmpty()) {
-            Toast.makeText(this, R.string.no_accounts, Toast.LENGTH_LONG).show();
+            // Nothing to choose from, so choosing is not what is wanted: open the
+            // screen that makes one. A list of no accounts, or a message saying
+            // there are none, leaves somebody stuck on their first minute without
+            // seeing that the missing thing is an account.
+            startActivityForResult(new Intent(this, AccountActivity.class), NEW_ACCOUNT);
             return;
         }
         String[] titles = new String[accounts.size()];
@@ -229,12 +240,26 @@ public class QuickTransactionActivity extends AppCompatActivity {
                 titles.add(c.getString(1));
             }
         }
+        float density = getResources().getDisplayMetrics().density;
+        int pad = Math.round(16 * density);
+        int gap = Math.round(6 * density);
         for (int i = 0; i < ids.size(); i++) {
             final long id = ids.get(i)[0];
             final String title = titles.get(i);
             Button b = new Button(this);
             b.setText(title);
             b.setSingleLine(true);
+            b.setAllCaps(false);
+            b.setTextSize(13);
+            b.setTextColor(0xFFF4EFE4);
+            b.setBackgroundResource(R.drawable.quick_chip);
+            b.setStateListAnimator(null);
+            b.setPadding(pad, 0, pad, 0);
+            var lp = new android.widget.LinearLayout.LayoutParams(
+                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                    Math.round(40 * density));
+            lp.setMarginEnd(gap);
+            b.setLayoutParams(lp);
             b.setOnClickListener(v -> chooseCategory(id, title));
             row.addView(b);
         }
@@ -248,12 +273,18 @@ public class QuickTransactionActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == PICK_CATEGORY && resultCode == RESULT_OK && data != null) {
             long id = data.getLongExtra(CategorySelectorActivity.SELECTED_CATEGORY_ID, -1);
             if (id > 0) {
                 var category = db.getCategoryWithParent(id);
                 chooseCategory(id, category != null ? category.title : "");
             }
+        }
+        if (requestCode == NEW_ACCOUNT) {
+            // Whether or not one was made, pick it up: coming back to a screen still
+            // saying "choose an account" after just making one would be absurd.
+            selectAccount(rememberedAccount());
+            buildCategoryShortcuts();
         }
     }
 
