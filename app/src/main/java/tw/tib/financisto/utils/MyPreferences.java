@@ -161,6 +161,19 @@ public class MyPreferences {
 
 	}
 
+	/**
+	 * How many days the bin keeps what was deleted. Thirty by default: long
+	 * enough to notice a mistake at the end of a month, short enough that the
+	 * bin does not quietly become a second copy of everything.
+	 */
+	public static int getTrashDays() {
+		try {
+			return Integer.parseInt(getString("trash_days", "30"));
+		} catch (NumberFormatException e) {
+			return 30;
+		}
+	}
+
 	public static boolean isSecureWindow() {
 		return getBoolean("secure_window", true);
 	}

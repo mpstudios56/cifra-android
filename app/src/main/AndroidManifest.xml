@@ -317,6 +317,8 @@
 		  screen that reads any file and asks what its columns are; the older one
 		  expects Cifra's own column names and would tell them nothing useful.
 		-->
+		<activity android:name=".activity.TrashActivity" android:label="@string/trash"
+			android:theme="@style/AppThemeCompat" android:exported="false" />
 		<activity android:name=".activity.CsvMappingActivity" android:label="@string/csv_map_title"
 			android:theme="@style/AppThemeCompat" android:exported="true">
 			<intent-filter>

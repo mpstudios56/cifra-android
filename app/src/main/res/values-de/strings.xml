@@ -174,7 +174,7 @@
   <string name="field_separator">Feld-\ntrenner</string>
   <string name="include_header">Spalten-\nüberschriften</string>
   <string name="delete_account_confirm">Konto löschen?</string>
-  <string name="delete_transaction_confirm">Transaktion löschen?</string>
+  <string name="delete_transaction_confirm">Diese Buchung löschen? Sie kommt in den Papierkorb und lässt sich zurückholen.</string>
   <string name="delete_budget_confirm">Budget löschen?</string>
   <string name="delete_budget_recurring_select">Es soll ein sich wiederholendes Budget gelöscht werden?</string>
   <string name="delete_budget_recurring_confirm">Sich wiederholendes Budget löschen?</string>
@@ -1321,4 +1321,25 @@
   <string name="pin_repeat">Noch einmal eingeben</string>
   <string name="pin_mismatch">Die beiden stimmen nicht überein</string>
   <string name="budget_today">HEUTE</string>
+  <string name="trash">Papierkorb</string>
+  <string name="trash_summary">Was gelöscht wurde, solange es noch zurückgeholt werden kann</string>
+  <string name="trash_empty">Der Papierkorb ist leer</string>
+  <string name="trash_empty_now">Papierkorb leeren</string>
+  <string name="trash_empty_confirm">%1$d Dinge sind dann endgültig weg. Das lässt sich nicht rückgängig machen.</string>
+  <string name="trash_restore">Zurückholen</string>
+  <string name="trash_restored">Zurückgeholt</string>
+  <string name="trash_restore_failed">Es konnte nicht zurückgeholt werden</string>
+  <string name="trash_forget">Endgültig löschen</string>
+  <string name="trash_forget_confirm">Das ist dann endgültig weg. Das lässt sich nicht rückgängig machen.</string>
+  <string name="trash_deleted_on">Gelöscht am %1$s</string>
+  <string name="trash_note_days">Gelöschtes bleibt %1$d Tage hier und ist dann endgültig weg.</string>
+  <string name="trash_note_forever">Gelöschtes bleibt hier, bis du den Papierkorb leerst.</string>
+  <string name="trash_days">Gelöschtes aufbewahren</string>
+  <string name="trash_days_summary">Danach leert sich der Papierkorb von selbst</string>
+  <string-array name="trash_days_entries">
+      <item>7 Tage</item>
+      <item>30 Tage</item>
+      <item>90 Tage</item>
+      <item>Für immer</item>
+  </string-array>
 </resources>

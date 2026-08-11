@@ -174,7 +174,7 @@
   <string name="field_separator">Separatore\ncampo</string>
   <string name="include_header">Includi\nheader</string>
   <string name="delete_account_confirm">Eliminare conto?</string>
-  <string name="delete_transaction_confirm">Eliminare transazione?</string>
+  <string name="delete_transaction_confirm">Eliminare questo movimento? Finisce nel cestino, da dove puoi rimetterlo a posto.</string>
   <string name="delete_budget_confirm">Eliminare budget?</string>
   <string name="delete_budget_recurring_select">Stai per eliminare un budget ricorrente. Procedere?</string>
   <string name="delete_budget_recurring_confirm">Eliminare budget ricorrente?</string>
@@ -1324,4 +1324,25 @@
   <string name="app_description">Gestore di finanze personali, a codice aperto</string>
   <string name="about_copyright1">Distribuito con licenza GNU GPL v2</string>
   <string name="budget_today">OGGI</string>
+  <string name="trash">Cestino</string>
+  <string name="trash_summary">Quello che hai cancellato, finché si può ancora recuperare</string>
+  <string name="trash_empty">Il cestino è vuoto</string>
+  <string name="trash_empty_now">Svuota il cestino</string>
+  <string name="trash_empty_confirm">%1$d cose spariranno per sempre. Non si torna indietro.</string>
+  <string name="trash_restore">Rimettilo a posto</string>
+  <string name="trash_restored">Rimesso a posto</string>
+  <string name="trash_restore_failed">Non è stato possibile rimetterlo a posto</string>
+  <string name="trash_forget">Elimina per sempre</string>
+  <string name="trash_forget_confirm">Sparirà per sempre. Non si torna indietro.</string>
+  <string name="trash_deleted_on">Cancellato il %1$s</string>
+  <string name="trash_note_days">Quello che cancelli resta qui %1$d giorni, poi sparisce per sempre.</string>
+  <string name="trash_note_forever">Quello che cancelli resta qui finché non svuoti il cestino.</string>
+  <string name="trash_days">Tieni le cose cancellate per</string>
+  <string name="trash_days_summary">Passato questo tempo, il cestino si svuota da solo</string>
+  <string-array name="trash_days_entries">
+      <item>7 giorni</item>
+      <item>30 giorni</item>
+      <item>90 giorni</item>
+      <item>Per sempre</item>
+  </string-array>
 </resources>

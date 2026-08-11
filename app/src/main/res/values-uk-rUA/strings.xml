@@ -205,7 +205,7 @@
     <string name="include_header">Включати\nзаголовок</string>
     <string name="include_tx_status">Включити\nTx статус</string>
     <string name="delete_account_confirm">Видалити рахунок?</string>
-    <string name="delete_transaction_confirm">Видалити транзакцію?</string>
+    <string name="delete_transaction_confirm">Видалити цю операцію? Вона потрапить у кошик, звідки її можна повернути.</string>
     <string name="delete_budget_confirm">Видалити бюджет?</string>
     <string name="delete_budget_recurring_select">Ви видаляєте копію бюджету. Видалити?</string>
     <string name="delete_budget_recurring_confirm">Видалити копії бюджетів?</string>
@@ -1387,4 +1387,25 @@
     <string name="csv_map_categories_created">Створено категорій: %1$d.</string>
     <string name="csv_map_payees_created">Створено отримувачів: %1$d.</string>
   <string name="budget_today">СЬОГОДНІ</string>
+    <string name="trash">Кошик</string>
+    <string name="trash_summary">Те, що ви видалили, поки це ще можна повернути</string>
+    <string name="trash_empty">Кошик порожній</string>
+    <string name="trash_empty_now">Спорожнити кошик</string>
+    <string name="trash_empty_confirm">%1$d речей зникне назавжди. Це не можна скасувати.</string>
+    <string name="trash_restore">Повернути</string>
+    <string name="trash_restored">Повернуто</string>
+    <string name="trash_restore_failed">Не вдалося повернути</string>
+    <string name="trash_forget">Видалити назавжди</string>
+    <string name="trash_forget_confirm">Це зникне назавжди. Це не можна скасувати.</string>
+    <string name="trash_deleted_on">Видалено %1$s</string>
+    <string name="trash_note_days">Видалене лишається тут %1$d днів, а потім зникає назавжди.</string>
+    <string name="trash_note_forever">Видалене лишається тут, доки ви не спорожните кошик.</string>
+    <string name="trash_days">Зберігати видалене</string>
+    <string name="trash_days_summary">Після цього кошик спорожняється сам</string>
+    <string-array name="trash_days_entries">
+        <item>7 днів</item>
+        <item>30 днів</item>
+        <item>90 днів</item>
+        <item>Назавжди</item>
+    </string-array>
 </resources>

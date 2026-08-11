@@ -31,6 +31,7 @@ import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.utils.ArrUtils;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.StringUtil;
+import tw.tib.financisto.utils.Utils;
 import tw.tib.financisto.model.Account;
 import tw.tib.financisto.model.Attribute;
 import tw.tib.financisto.model.Budget;
@@ -616,6 +617,11 @@ public class DatabaseAdapter extends MyEntityManager {
 
     public void deleteTransactionNoDbTransaction(long id) {
         Transaction t = getTransaction(id);
+        // Copied out while it is still there to read. What goes in the bin is
+        // the row, its split children and their attributes, because that is
+        // exactly what is about to be removed.
+        Trash.keep(db(), DatabaseHelper.TRANSACTION_TABLE, id,
+                describeForTrash(t), whenForTrash(t));
         if (t.isNotTemplateLike()) {
             revertFromAccountBalance(t);
             revertToAccountBalance(t);
@@ -628,6 +634,37 @@ public class DatabaseAdapter extends MyEntityManager {
         db.delete(DatabaseHelper.TRANSACTION_ATTRIBUTE_TABLE, DatabaseHelper.TransactionAttributeColumns.TRANSACTION_ID + "=?", sid);
         db.delete(DatabaseHelper.TRANSACTION_TABLE, DatabaseHelper.TransactionColumns._id + "=?", sid);
         deleteSplitsForParentTransaction(id);
+    }
+
+    /** What the bin should call this, so a list of them can be read. */
+    private String describeForTrash(Transaction t) {
+        StringBuilder sb = new StringBuilder();
+        if (t.categoryId > 0) {
+            Category c = getCategoryWithParent(t.categoryId);
+            if (c != null && c.title != null) {
+                sb.append(c.title);
+            }
+        }
+        if (t.payeeId > 0) {
+            Payee p = get(Payee.class, t.payeeId);
+            if (p != null && p.title != null) {
+                if (sb.length() > 0) {
+                    sb.append(" · ");
+                }
+                sb.append(p.title);
+            }
+        }
+        if (sb.length() == 0 && t.note != null) {
+            sb.append(t.note);
+        }
+        return sb.toString();
+    }
+
+    private String whenForTrash(Transaction t) {
+        Account a = getAccount(t.fromAccountId);
+        Currency currency = a != null ? a.currency : Currency.EMPTY;
+        return Utils.amountToString(currency, t.fromAmount) + "   "
+                + DateUtils.getShortDateFormat(context).format(new java.util.Date(t.dateTime));
     }
 
     private void deleteSplitsForParentTransaction(long parentId) {
