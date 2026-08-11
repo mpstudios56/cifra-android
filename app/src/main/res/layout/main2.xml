@@ -20,5 +20,7 @@
         app:tabGravity="fill"
         app:tabTextAppearance="@style/TabLabel"
         app:tabInlineLabel="false"
+        app:tabPaddingStart="1dp"
+        app:tabPaddingEnd="1dp"
         android:background="?attr/colorPrimary" />
 </LinearLayout>
