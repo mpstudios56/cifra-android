@@ -64,7 +64,11 @@ public class ReportAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		GraphUnit unit = units.get(position);
 		GraphWidget w = new GraphWidget(context, unit, maxAmount, maxAmountWidth);
-		w.setPadding(5, 10, 5, 5);
+		// Room to breathe at the sides, matching the cards on the summary screen.
+		// The old five pixels put the bars hard against the edge of the phone.
+		float density = context.getResources().getDisplayMetrics().density;
+		int side = Math.round(16 * density);
+		w.setPadding(side, Math.round(12 * density), side, Math.round(2 * density));
 		return w;
 	}
 

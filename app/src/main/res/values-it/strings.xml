@@ -132,7 +132,7 @@
   <string name="report_by_location">Per posizione</string>
   <string name="report_by_location_summary">Rapporti transazioni per posizione</string>
   <string name="report_by_project">Per progetto</string>
-  <string name="report_by_project_summary">Rapporti transazioni per posizione</string>
+  <string name="report_by_project_summary">Rapporti transazioni per progetto</string>
   <string name="report_by_account_by_period">Per conto / periodo</string>
   <string name="report_by_account_by_period_summary">Rapporti transazioni per conto e periodo</string>
   <string name="report_by_category_by_period">Per categoria / periodo</string>

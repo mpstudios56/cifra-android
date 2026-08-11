@@ -174,9 +174,9 @@
   <string name="include_header">Inclure\ntête</string>
   <string name="delete_account_confirm">Supprimer le compte ?</string>
   <string name="delete_transaction_confirm">Supprimer l\'opération ?</string>
-  <string name="delete_budget_confirm">Supprimer l\'opération planifiée ?</string>
+  <string name="delete_budget_confirm">Supprimer le budget ?</string>
   <string name="delete_budget_recurring_select">Vous allez supprimer une opération planifiée. Que supprimer ?</string>
-  <string name="delete_budget_recurring_confirm">Supprimer l\'opération planifiée ?</string>
+  <string name="delete_budget_recurring_confirm">Supprimer le budget récurrent ?</string>
   <string name="delete_budget_one_entry">Cet élément</string>
   <string name="delete_budget_all_entries">Tous les éléments</string>
   <string name="edit_recurring_budget">Vous modifiez une opération planifiée, ceci affectera tous ses éléments</string>

@@ -478,7 +478,7 @@
   <string name="sort_by_title">Nach Name sortieren</string>
   <string name="sort_all_by_title">Alles nach Name sortieren</string>
   <string name="include_transfers_into_reports">Transfers in Berichten aufführen</string>
-  <string name="include_transfers_into_reports_summary">Transfers in Berichten aufführen</string>
+  <string name="include_transfers_into_reports_summary">Umbuchungen zwischen Konten in die Berichte einbeziehen</string>
   <string name="negative_opening_amount">Negativer Eröffnungskontostand</string>
   <string name="negative_opening_amount_summary">Konto mit negativen Kontostand eröffnen</string>
   <string name="payment_day">Zahlungstag</string>
