@@ -145,14 +145,28 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/quick_keypad"
+    <!--
+      The pad is as big as its keys and no bigger. Stretched to fill whatever
+      was left it took over half the screen, and the space it wasted is what the
+      figure above wanted.
+    -->
+    <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
+        android:layout_weight="1" />
+
+    <GridLayout
+        android:id="@+id/quick_keypad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:columnCount="3"
         android:rowCount="4" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/quick_save"

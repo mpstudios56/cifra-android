@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -129,20 +132,27 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private void buildKeypad() {
         GridLayout keypad = findViewById(R.id.quick_keypad);
         String[] keys = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "<"};
-        int margin = Math.round(6 * getResources().getDisplayMetrics().density);
+        float density = getResources().getDisplayMetrics().density;
+        int margin = Math.round(7 * density);
+        // A fixed key rather than one that stretches to fill whatever is left:
+        // stretched, the pad took over half the screen and the digits still
+        // looked small inside it. Sized here, the keys are smaller and the
+        // numbers on them larger, which is the way round it should have been.
+        int side = Math.round(66 * density);
         for (String key : keys) {
             Button b = new Button(this);
             b.setText("<".equals(key) ? "⌫" : key);
-            b.setTextSize(24);
+            b.setTextSize(28);
             b.setTextColor(0xFFFFFFFF);
             // The unlock keypad's round key. Same gesture, same key.
             b.setBackgroundResource(R.drawable.quick_key);
             b.setStateListAnimator(null);
+            b.setPadding(0, 0, 0, 0);
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-            lp.width = 0;
-            lp.height = 0;
-            lp.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
-            lp.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
+            lp.width = side;
+            lp.height = side;
+            lp.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1);
+            lp.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1);
             lp.setMargins(margin, margin, margin, margin);
             b.setLayoutParams(lp);
             b.setOnClickListener(v -> onKey(key));
@@ -165,9 +175,38 @@ public class QuickTransactionActivity extends AppCompatActivity {
         showAmount();
     }
 
+    /**
+     * The figure, with the cents set smaller than the rest.
+     * <p>
+     * There is no comma key and there does not need to be: the digits fill in
+     * from the right, the way a till works, so typing 1250 reads 12,50. That is
+     * not obvious from a keypad of plain numbers, and the first person to see
+     * this screen asked where the comma was. Shrinking everything after the
+     * separator shows what the keys are doing without a word of explanation.
+     */
     private void showAmount() {
         Currency currency = account != null ? account.currency : Currency.EMPTY;
-        amountView.setText(Utils.amountToString(currency, cents));
+        String text = Utils.amountToString(currency, cents);
+        char separator = separatorOf(currency);
+        int cut = text.lastIndexOf(separator);
+        if (cut < 0) {
+            amountView.setText(text);
+            return;
+        }
+        SpannableString styled = new SpannableString(text);
+        styled.setSpan(new RelativeSizeSpan(0.58f), cut, text.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        amountView.setText(styled);
+    }
+
+    /** The currency writes it as '.' or ',' - quotes included - so unwrap it. */
+    private char separatorOf(Currency currency) {
+        String written = currency.decimalSeparator;
+        if (written == null || written.isEmpty()) {
+            return '.';
+        }
+        String bare = written.replace("'", "");
+        return bare.isEmpty() ? '.' : bare.charAt(0);
     }
 
     // ----------------------------------------------------------------- account
