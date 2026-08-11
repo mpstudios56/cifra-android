@@ -1,6 +1,6 @@
 # Privacy Policy for Cifra
 
-Last updated: 6 August 2026
+Last updated: 11 August 2026
 
 Cifra is a personal finance manager for Android. It is free software, released
 under the GNU General Public License v2.0, and its complete source code is public
@@ -40,6 +40,17 @@ Google Drive credentials.
 
 **Sharing a backup.** If you choose to send a backup somewhere else, for instance by
 email, the destination is entirely your choice.
+
+## Files you open in Cifra
+
+You can hand Cifra a file exported by another finance app and have it read the
+transactions into your own accounts. The file is read on the phone and nothing
+about it is sent anywhere. Cifra sees only the file you pick, and only while it
+is importing it: it is not given access to the rest of your storage.
+
+Before writing anything from such a file, Cifra takes a full backup of what you
+already have, into the backup folder you chose. That backup stays on the phone
+unless you have connected Google Drive or Dropbox yourself.
 
 ## Optional features that read sensitive information
 
