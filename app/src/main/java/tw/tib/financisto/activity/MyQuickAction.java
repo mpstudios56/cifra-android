@@ -20,7 +20,14 @@ public class MyQuickAction extends QuickAction {
     public static int NO_FILTER = -1;
     public int titleId = -1;
 
-    private static final ColorFilter BLACK_CF = new LightingColorFilter(Color.BLACK, Color.BLACK);
+    /**
+     * The icons are drawn white and were being forced to black for a white
+     * bubble. The bubble is dark now, so they are left the colour they were
+     * drawn - and the ones that carry their own colour, like the transaction
+     * states, still pass NO_FILTER and keep it.
+     */
+    private static final ColorFilter LIGHT_CF =
+            new LightingColorFilter(Color.BLACK, 0xFFF4EFE4);
 
     public MyQuickAction(Context ctx, int drawableId, int titleId) {
         super(ctx, buildDrawable(ctx, drawableId), titleId);
@@ -34,7 +41,7 @@ public class MyQuickAction extends QuickAction {
 
     private static Drawable buildDrawable(Context ctx, int drawableId) {
         Drawable d = ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate();
-        d.setColorFilter(BLACK_CF);
+        d.setColorFilter(LIGHT_CF);
         return d;
     }
 
