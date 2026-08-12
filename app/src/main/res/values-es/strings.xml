@@ -1194,7 +1194,7 @@
   <string name="summary_expense">Gastos</string>
   <string name="summary_saved">Saldo del mes</string>
   <string name="summary_saved_share">%1$d%% de lo que entró</string>
-  <string name="summary_top_categories">A dónde fue</string>
+  <string name="summary_top_categories">Gastos por categoría</string>
   <string name="summary_net_worth">Total</string>
   <string name="summary_net_worth_note">Saldo de todas las cuentas incluidas en los totales</string>
   <string name="summary_nothing_yet">Este mes aún nada</string>
@@ -1346,4 +1346,15 @@
       <item>90 días</item>
       <item>Para siempre</item>
   </string-array>
+  <string name="summary_period">Periodo del resumen</string>
+  <string name="summary_period_summary">El intervalo de tiempo que suma la pestaña de resumen</string>
+  <string name="summary_show_all">Mostrar todas las categorías</string>
+  <string name="summary_show_top">Mostrar solo las principales</string>
+  <string-array name="summary_period_entries">
+    <item>Semana</item>
+    <item>Mes</item>
+    <item>Trimestre</item>
+    <item>Año</item>
+  </string-array>
+  <string name="summary_quarter">%1$d.er trimestre %2$d</string>
 </resources>

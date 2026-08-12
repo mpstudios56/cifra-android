@@ -30,6 +30,7 @@ import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.Total;
 import tw.tib.financisto.utils.CurrencyCache;
+import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
 import tw.tib.financisto.utils.Utils;
 
@@ -48,8 +49,10 @@ public class SummaryFragment extends Fragment {
 
     private DatabaseAdapter db;
     private Utils u;
-    /** Months back from this one. Zero is the month in progress. */
-    private int monthsBack = 0;
+    /** Periods back from this one. Zero is the period in progress. */
+    private int periodsBack = 0;
+    /** Whether the spending card is showing every category or only the largest. */
+    private boolean allCategories = false;
 
     @Nullable
     @Override
@@ -75,14 +78,20 @@ public class SummaryFragment extends Fragment {
         });
 
         view.findViewById(R.id.summary_prev).setOnClickListener(v -> {
-            monthsBack++;
+            periodsBack++;
             refresh();
         });
         view.findViewById(R.id.summary_next).setOnClickListener(v -> {
-            if (monthsBack > 0) {
-                monthsBack--;
+            if (periodsBack > 0) {
+                periodsBack--;
                 refresh();
             }
+        });
+        // The five largest answer "where did it go" most of the time; the rest
+        // are one tap away rather than on a screen of their own.
+        view.findViewById(R.id.summary_categories_header).setOnClickListener(v -> {
+            allCategories = !allCategories;
+            refresh();
         });
     }
 
@@ -117,28 +126,20 @@ public class SummaryFragment extends Fragment {
         }
         Currency home = CurrencyCache.getHomeCurrency();
 
-        Calendar from = Calendar.getInstance();
-        from.set(Calendar.DAY_OF_MONTH, 1);
-        from.set(Calendar.HOUR_OF_DAY, 0);
-        from.set(Calendar.MINUTE, 0);
-        from.set(Calendar.SECOND, 0);
-        from.set(Calendar.MILLISECOND, 0);
-        from.add(Calendar.MONTH, -monthsBack);
+        String period = MyPreferences.getSummaryPeriod(getContext());
+        Calendar from = startOf(period);
         long start = from.getTimeInMillis();
 
         Calendar next = (Calendar) from.clone();
-        next.add(Calendar.MONTH, 1);
-        // A month still running ends now, not at a date that has not arrived.
+        step(next, period, 1);
+        // A period still running ends now, not at a date that has not arrived.
         long end = Math.min(next.getTimeInMillis() - 1, System.currentTimeMillis());
 
-        String month = new DateFormatSymbols(Locale.getDefault())
-                .getMonths()[from.get(Calendar.MONTH)];
-        ((TextView) view.findViewById(R.id.summary_period))
-                .setText(month + " " + from.get(Calendar.YEAR));
-        // Nothing to see ahead of the month in progress.
+        ((TextView) view.findViewById(R.id.summary_period)).setText(label(from, period));
+        // Nothing to see ahead of the period in progress.
         View forward = view.findViewById(R.id.summary_next);
-        forward.setEnabled(monthsBack > 0);
-        forward.setAlpha(monthsBack > 0 ? 1f : 0.3f);
+        forward.setEnabled(periodsBack > 0);
+        forward.setAlpha(periodsBack > 0 ? 1f : 0.3f);
 
         long income = sum(start, end, true);
         long expense = sum(start, end, false);
@@ -167,6 +168,70 @@ public class SummaryFragment extends Fragment {
 
         showTopCategories(view, home, start, end, expense);
         showNetWorth(view, home);
+    }
+
+    // ------------------------------------------------------------------ period
+
+    /**
+     * The beginning of the period being shown, counting back from the one in
+     * progress. Everything is cut to whole weeks, months, quarters or years:
+     * a summary of "the last thirty days" cannot be compared with the thirty
+     * days before it, because neither has the same rent day in it.
+     */
+    private Calendar startOf(String period) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        switch (period) {
+            case "WEEK":
+                c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
+                break;
+            case "QUARTER":
+                c.set(Calendar.DAY_OF_MONTH, 1);
+                c.set(Calendar.MONTH, (c.get(Calendar.MONTH) / 3) * 3);
+                break;
+            case "YEAR":
+                c.set(Calendar.DAY_OF_YEAR, 1);
+                break;
+            default:
+                c.set(Calendar.DAY_OF_MONTH, 1);
+                break;
+        }
+        step(c, period, -periodsBack);
+        return c;
+    }
+
+    private void step(Calendar c, String period, int by) {
+        switch (period) {
+            case "WEEK": c.add(Calendar.WEEK_OF_YEAR, by); break;
+            case "QUARTER": c.add(Calendar.MONTH, 3 * by); break;
+            case "YEAR": c.add(Calendar.YEAR, by); break;
+            default: c.add(Calendar.MONTH, by); break;
+        }
+    }
+
+    /** What to write above the figures, in the words the period deserves. */
+    private String label(Calendar from, String period) {
+        int year = from.get(Calendar.YEAR);
+        switch (period) {
+            case "WEEK": {
+                Calendar to = (Calendar) from.clone();
+                to.add(Calendar.DAY_OF_YEAR, 6);
+                java.text.DateFormat d = android.text.format.DateFormat
+                        .getMediumDateFormat(getContext());
+                return d.format(from.getTime()) + " – " + d.format(to.getTime());
+            }
+            case "QUARTER":
+                return getString(R.string.summary_quarter,
+                        from.get(Calendar.MONTH) / 3 + 1, year);
+            case "YEAR":
+                return String.valueOf(year);
+            default:
+                return new DateFormatSymbols(Locale.getDefault())
+                        .getMonths()[from.get(Calendar.MONTH)] + " " + year;
+        }
     }
 
     /**
@@ -202,7 +267,8 @@ public class SummaryFragment extends Fragment {
                 + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
                 + " and t.from_amount < 0 and t.datetime between ? and ?"
                 + COUNTED_ACCOUNTS
-                + " group by c._id order by s asc limit " + TOP_CATEGORIES;
+                + " group by c._id order by s asc"
+                + (allCategories ? "" : " limit " + TOP_CATEGORIES);
         try (Cursor c = db.db().rawQuery(sql,
                 new String[]{String.valueOf(start), String.valueOf(end)})) {
             while (c.moveToNext()) {
@@ -213,11 +279,24 @@ public class SummaryFragment extends Fragment {
                         SLICES[list.getChildCount() % SLICES.length]));
             }
         }
-        if (list.getChildCount() == 0) {
+        int shown = list.getChildCount();
+        if (shown == 0) {
             TextView empty = new TextView(getContext());
             empty.setText(R.string.summary_nothing_yet);
             list.addView(empty);
         }
+
+        // The header says what tapping it will do, and points the way it goes.
+        TextView more = view.findViewById(R.id.summary_categories_more);
+        android.widget.ImageView chevron = view.findViewById(R.id.summary_categories_chevron);
+        // Offering "show every category" when five is every category there is
+        // would open nothing at all.
+        boolean worthExpanding = allCategories || shown >= TOP_CATEGORIES;
+        more.setVisibility(worthExpanding ? View.VISIBLE : View.GONE);
+        chevron.setVisibility(worthExpanding ? View.VISIBLE : View.GONE);
+        more.setText(allCategories ? R.string.summary_show_top : R.string.summary_show_all);
+        chevron.setRotation(allCategories ? 180 : 0);
+        view.findViewById(R.id.summary_categories_header).setClickable(worthExpanding);
     }
 
     /** The name and figure on one line, and under them a bar of that width. */

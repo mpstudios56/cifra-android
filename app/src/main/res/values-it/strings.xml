@@ -1197,7 +1197,7 @@
   <string name="summary_expense">Uscite</string>
   <string name="summary_saved">Saldo mensile</string>
   <string name="summary_saved_share">%1$d%% di quanto è entrato</string>
-  <string name="summary_top_categories">Dove sono andati</string>
+  <string name="summary_top_categories">Uscite per categoria</string>
   <string name="summary_net_worth">Totale</string>
   <string name="summary_net_worth_note">Saldo di tutti i conti inclusi nei totali</string>
   <string name="summary_nothing_yet">Questo mese ancora niente</string>
@@ -1349,4 +1349,15 @@
       <item>90 giorni</item>
       <item>Per sempre</item>
   </string-array>
+  <string name="summary_period">Periodo del riepilogo</string>
+  <string name="summary_period_summary">L’arco di tempo che la scheda riepilogo somma</string>
+  <string name="summary_show_all">Mostra tutte le categorie</string>
+  <string name="summary_show_top">Mostra solo le principali</string>
+  <string-array name="summary_period_entries">
+    <item>Settimana</item>
+    <item>Mese</item>
+    <item>Trimestre</item>
+    <item>Anno</item>
+  </string-array>
+  <string name="summary_quarter">%1$d° trimestre %2$d</string>
 </resources>

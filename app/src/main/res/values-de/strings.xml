@@ -1194,7 +1194,7 @@
   <string name="summary_expense">Ausgaben</string>
   <string name="summary_saved">Monatssaldo</string>
   <string name="summary_saved_share">%1$d%% der Einnahmen</string>
-  <string name="summary_top_categories">Wohin es ging</string>
+  <string name="summary_top_categories">Ausgaben nach Kategorie</string>
   <string name="summary_net_worth">Gesamt</string>
   <string name="summary_net_worth_note">Saldo aller Konten, die in die Summen zählen</string>
   <string name="summary_nothing_yet">Diesen Monat noch nichts</string>
@@ -1346,4 +1346,15 @@
       <item>90 Tage</item>
       <item>Für immer</item>
   </string-array>
+  <string name="summary_period">Zeitraum der Übersicht</string>
+  <string name="summary_period_summary">Der Zeitraum, den die Übersicht zusammenrechnet</string>
+  <string name="summary_show_all">Alle Kategorien anzeigen</string>
+  <string name="summary_show_top">Nur die größten anzeigen</string>
+  <string-array name="summary_period_entries">
+    <item>Woche</item>
+    <item>Monat</item>
+    <item>Quartal</item>
+    <item>Jahr</item>
+  </string-array>
+  <string name="summary_quarter">%1$d. Quartal %2$d</string>
 </resources>

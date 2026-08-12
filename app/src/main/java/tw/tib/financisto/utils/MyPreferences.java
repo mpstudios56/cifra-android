@@ -788,6 +788,11 @@ public class MyPreferences {
 		return getBoolean("show_summary_tab", true);
 	}
 
+	/** WEEK, MONTH, QUARTER or YEAR: what the summary tab adds up at a time. */
+	public static String getSummaryPeriod(Context context) {
+		return getString("summary_period", "MONTH");
+	}
+
 	public static boolean isTemplatesAsTab(Context context) {
 		return getBoolean("templates_as_tab", true);
 	}

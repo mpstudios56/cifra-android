@@ -1332,7 +1332,7 @@
     <string name="summary_expense">Out</string>
     <string name="summary_saved">Monthly balance</string>
     <string name="summary_saved_share">%1$d%% of what came in</string>
-    <string name="summary_top_categories">Where it went</string>
+    <string name="summary_top_categories">Spending by category</string>
     <string name="summary_net_worth">Total</string>
     <string name="summary_net_worth_note">Balance of every account counted in the totals</string>
     <string name="summary_nothing_yet">Nothing this month yet</string>
@@ -1448,4 +1448,15 @@
         <item>90 days</item>
         <item>For ever</item>
     </string-array>
+    <string name="summary_period">Summary period</string>
+    <string name="summary_period_summary">The stretch of time the summary tab adds up</string>
+    <string name="summary_show_all">Show every category</string>
+    <string name="summary_show_top">Show only the largest</string>
+    <string-array name="summary_period_entries">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Quarter</item>
+        <item>Year</item>
+    </string-array>
+    <string name="summary_quarter">Q%1$d %2$d</string>
 </resources>

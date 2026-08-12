@@ -1187,7 +1187,7 @@
   <string name="summary_expense">Sorties</string>
   <string name="summary_saved">Solde du mois</string>
   <string name="summary_saved_share">%1$d%% de ce qui est entré</string>
-  <string name="summary_top_categories">Où est parti l\'argent</string>
+  <string name="summary_top_categories">Dépenses par catégorie</string>
   <string name="summary_net_worth">Total</string>
   <string name="summary_net_worth_note">Solde de tous les comptes comptés dans les totaux</string>
   <string name="summary_nothing_yet">Rien encore ce mois-ci</string>
@@ -1346,4 +1346,15 @@
       <item>90 jours</item>
       <item>Pour toujours</item>
   </string-array>
+  <string name="summary_period">Période du résumé</string>
+  <string name="summary_period_summary">La durée que l’onglet résumé additionne</string>
+  <string name="summary_show_all">Afficher toutes les catégories</string>
+  <string name="summary_show_top">Afficher seulement les principales</string>
+  <string-array name="summary_period_entries">
+    <item>Semaine</item>
+    <item>Mois</item>
+    <item>Trimestre</item>
+    <item>Année</item>
+  </string-array>
+  <string name="summary_quarter">%1$de trimestre %2$d</string>
 </resources>
