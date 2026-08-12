@@ -1366,4 +1366,6 @@
   <string name="pie_centre_in">Entrate</string>
   <string name="search_hint">Cerca nei movimenti</string>
   <string name="search_clear">Cancella</string>
+  <string name="trash_no_account">Il conto a cui apparteneva questo elemento è stato eliminato. Ricrealo e potrai ripristinarlo; fino ad allora resta nel cestino.</string>
+  <string name="trash_restored_partly">Ripristinato senza la categoria, che non esiste più.</string>
 </resources>

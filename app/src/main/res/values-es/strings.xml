@@ -1363,4 +1363,6 @@
   <string name="pie_centre_in">Ingresos</string>
   <string name="search_hint">Buscar en los movimientos</string>
   <string name="search_clear">Borrar</string>
+  <string name="trash_no_account">La cuenta a la que pertenecía este elemento se ha eliminado. Vuelve a crearla y podrás restaurarlo; hasta entonces permanece en la papelera.</string>
+  <string name="trash_restored_partly">Restaurado sin la categoría, que ya no existe.</string>
 </resources>

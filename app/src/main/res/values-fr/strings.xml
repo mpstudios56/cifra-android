@@ -1363,4 +1363,6 @@
   <string name="pie_centre_in">Revenus</string>
   <string name="search_hint">Rechercher dans les opérations</string>
   <string name="search_clear">Effacer</string>
+  <string name="trash_no_account">Le compte auquel appartenait cet élément a été supprimé. Recrée-le et tu pourras le restaurer ; en attendant il reste dans la corbeille.</string>
+  <string name="trash_restored_partly">Restauré sans la catégorie, qui n’existe plus.</string>
 </resources>

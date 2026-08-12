@@ -1465,4 +1465,6 @@
     <string name="pie_centre_in">Income</string>
     <string name="search_hint">Search transactions</string>
     <string name="search_clear">Clear</string>
+    <string name="trash_no_account">The account this entry belonged to has been deleted. Create it again and the entry can be restored; it stays in the bin until then.</string>
+    <string name="trash_restored_partly">Restored. What it referred to no longer exists and was left out.</string>
 </resources>

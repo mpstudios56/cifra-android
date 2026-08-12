@@ -116,25 +116,72 @@ public class Trash {
 
     // --------------------------------------------------------------- restoring
 
+    /** How a restore went, and what it was. */
+    public enum Outcome {
+        /** Back where it was. */
+        DONE,
+        /** Its account has been deleted in the meantime, so it has nowhere to go. */
+        NO_ACCOUNT,
+        /** Something else went wrong; the bin still holds it. */
+        FAILED,
+    }
+
+    public static class Restored {
+        public Outcome outcome = Outcome.FAILED;
+        /** The table put back, so the caller knows whether balances must be made again. */
+        public String entity;
+        /** True when a category, payee, project or place had gone and was dropped. */
+        public boolean lostSomething;
+    }
+
     /**
      * Puts the rows back where they came from, with the identifiers they had.
      * <p>
-     * Returns the table restored, so the caller knows whether the balances need
-     * working out again - which they do for anything that moved money.
+     * The world may have moved on while the row sat here. What it pointed at can
+     * have been deleted in the meantime, and putting the identifiers back as
+     * they were would give a transaction on an account that does not exist -
+     * counted in no balance, shown with a blank name, findable only by somebody
+     * wondering why the figures no longer add up.
+     * <p>
+     * So the account is required: without it there is nowhere to put the money
+     * back, and the row stays in the bin with an explanation. A category, a
+     * payee, a project or a place is not required - the amount and the date are
+     * the movement, and the rest is labelling. Those are dropped and the row
+     * comes back without them.
      */
-    public static String restore(SQLiteDatabase db, long trashId) {
-        String entity = null;
+    public static Restored restore(SQLiteDatabase db, long trashId) {
+        Restored restored = new Restored();
         db.beginTransaction();
         try (Cursor c = db.query(TABLE, new String[]{"entity", "payload"},
                 "_id=?", args(trashId), null, null, null)) {
             if (!c.moveToFirst()) {
-                return null;
+                return restored;
             }
-            entity = c.getString(0);
+            restored.entity = c.getString(0);
             JSONArray rows = new JSONArray(c.getString(1));
+
+            for (int i = 0; i < rows.length(); i++) {
+                JSONObject row = rows.getJSONObject(i);
+                if (!DatabaseHelper.TRANSACTION_TABLE.equals(row.getString("table"))) {
+                    continue;
+                }
+                JSONObject values = row.getJSONObject("values");
+                if (!stillThere(db, DatabaseHelper.ACCOUNT_TABLE, values, "from_account_id")
+                        || !stillThere(db, DatabaseHelper.ACCOUNT_TABLE, values, "to_account_id")) {
+                    restored.outcome = Outcome.NO_ACCOUNT;
+                    return restored;
+                }
+            }
+
             for (int i = 0; i < rows.length(); i++) {
                 JSONObject row = rows.getJSONObject(i);
                 JSONObject values = row.getJSONObject("values");
+                if (DatabaseHelper.TRANSACTION_TABLE.equals(row.getString("table"))) {
+                    restored.lostSomething |= drop(db, DatabaseHelper.CATEGORY_TABLE, values, "category_id");
+                    restored.lostSomething |= drop(db, DatabaseHelper.PAYEE_TABLE, values, "payee_id");
+                    restored.lostSomething |= drop(db, DatabaseHelper.PROJECT_TABLE, values, "project_id");
+                    restored.lostSomething |= drop(db, DatabaseHelper.LOCATIONS_TABLE, values, "location_id");
+                }
                 ContentValues cv = new ContentValues();
                 for (java.util.Iterator<String> it = values.keys(); it.hasNext(); ) {
                     String key = it.next();
@@ -145,13 +192,49 @@ public class Trash {
             }
             db.delete(TABLE, "_id=?", args(trashId));
             db.setTransactionSuccessful();
+            restored.outcome = Outcome.DONE;
         } catch (Exception e) {
             Log.e(TAG, "could not restore " + trashId, e);
-            return null;
+            restored.outcome = Outcome.FAILED;
         } finally {
             db.endTransaction();
         }
-        return entity;
+        return restored;
+    }
+
+    /** Whether what a column points at is still in the database. Zero points at nothing. */
+    private static boolean stillThere(SQLiteDatabase db, String table,
+                                      JSONObject values, String column) throws Exception {
+        if (!values.has(column)) {
+            return true;
+        }
+        long id = parse(values.getString(column));
+        return id <= 0 || exists(db, table, id);
+    }
+
+    /** Clears a column whose row has gone. Returns true if it had to. */
+    private static boolean drop(SQLiteDatabase db, String table,
+                                JSONObject values, String column) throws Exception {
+        if (stillThere(db, table, values, column)) {
+            return false;
+        }
+        values.put(column, "0");
+        return true;
+    }
+
+    private static boolean exists(SQLiteDatabase db, String table, long id) {
+        try (Cursor c = db.query(table, new String[]{"_id"}, "_id=?", args(id),
+                null, null, null)) {
+            return c.moveToFirst();
+        }
+    }
+
+    private static long parse(String value) {
+        try {
+            return Long.parseLong(value);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // ---------------------------------------------------------------- emptying

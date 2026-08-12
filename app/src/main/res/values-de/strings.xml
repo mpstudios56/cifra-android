@@ -1363,4 +1363,6 @@
   <string name="pie_centre_in">Einnahmen</string>
   <string name="search_hint">Buchungen durchsuchen</string>
   <string name="search_clear">Löschen</string>
+  <string name="trash_no_account">Das Konto, zu dem dieser Eintrag gehörte, wurde gelöscht. Lege es neu an, dann lässt sich der Eintrag wiederherstellen; bis dahin bleibt er im Papierkorb.</string>
+  <string name="trash_restored_partly">Wiederhergestellt, ohne die Kategorie: die gibt es nicht mehr.</string>
 </resources>

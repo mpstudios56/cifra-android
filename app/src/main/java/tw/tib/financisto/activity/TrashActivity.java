@@ -120,12 +120,23 @@ public class TrashActivity extends AppCompatActivity {
     }
 
     private void restore(Trash.Item item) {
-        String entity = Trash.restore(db.db(), item.id);
-        if (entity == null) {
+        Trash.Restored restored = Trash.restore(db.db(), item.id);
+        if (restored.outcome == Trash.Outcome.NO_ACCOUNT) {
+            // Left in the bin on purpose: recreating the account puts it back
+            // within reach, and restoring it onto nothing would not.
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.trash_restore_failed)
+                    .setMessage(R.string.trash_no_account)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+            return;
+        }
+        if (restored.outcome != Trash.Outcome.DONE) {
             Toast.makeText(this, R.string.trash_restore_failed, Toast.LENGTH_LONG).show();
             refresh();
             return;
         }
+        String entity = restored.entity;
         if (DatabaseHelper.TRANSACTION_TABLE.equals(entity)) {
             // The money moved back, so the figures have to be made again. Doing
             // it here rather than trusting an increment: a restored transaction
@@ -134,7 +145,11 @@ public class TrashActivity extends AppCompatActivity {
             db.recalculateAccountsBalances();
             db.rebuildRunningBalances();
         }
-        Toast.makeText(this, R.string.trash_restored, Toast.LENGTH_SHORT).show();
+        // Said plainly when something it pointed at had gone: the movement is
+        // back, but not quite as it was, and that is worth knowing.
+        Toast.makeText(this, restored.lostSomething
+                ? R.string.trash_restored_partly : R.string.trash_restored,
+                restored.lostSomething ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
         refresh();
     }
 
