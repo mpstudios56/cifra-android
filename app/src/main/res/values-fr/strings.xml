@@ -1425,4 +1425,14 @@
   <string name="summary_not_shared">A toi seul</string>
   <string name="account_shared">Partager ce compte</string>
   <string name="account_shared_summary">Ses opérations vont à l’autre personne</string>
+  <string name="duplicates">À revoir</string>
+  <string name="duplicates_intro">Des opérations qui pourraient être un même paiement noté deux fois. L’application demande, elle ne décide pas.</string>
+  <string name="duplicates_none">Rien à revoir</string>
+  <string name="duplicates_none_short">Rien en attente</string>
+  <string name="duplicates_waiting">%1$d à revoir</string>
+  <string name="duplicate_written">%1$s à %2$s</string>
+  <string name="duplicate_different">Elles diffèrent</string>
+  <string name="duplicate_same">Un doublon</string>
+  <string name="duplicate_same_confirm">La première notée reste. L’autre va à la corbeille, d’où elle peut être restaurée.</string>
+  <string name="duplicate_removed">La première a été gardée</string>
 </resources>

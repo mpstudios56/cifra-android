@@ -45,6 +45,8 @@ public class SyncEngine {
         public int received;
         /** Entries that could not be applied, with the reason, at most a few. */
         public final List<String> skipped = new ArrayList<>();
+        /** Pairs that might be one payment written down twice. */
+        public int duplicates;
         public String problem;
     }
 
@@ -80,6 +82,8 @@ public class SyncEngine {
             // not once per entry.
             db.recalculateAccountsBalances();
             db.rebuildRunningBalances();
+            // And then: did the same payment arrive twice? Asked, never decided.
+            result.duplicates = Duplicates.look(database);
         }
         MyPreferences.setSyncLastRun(System.currentTimeMillis());
         return result;

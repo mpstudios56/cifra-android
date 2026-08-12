@@ -1527,4 +1527,14 @@
     <string name="summary_not_shared">Only yours</string>
     <string name="account_shared">Share this account</string>
     <string name="account_shared_summary">Its movements go to the other person</string>
+    <string name="duplicates">To review</string>
+    <string name="duplicates_intro">Movements that might be one payment written down twice. The app asks rather than decides: two identical coffees and a bill split in half look alike in the rows.</string>
+    <string name="duplicates_none">Nothing to review</string>
+    <string name="duplicates_none_short">Nothing pending</string>
+    <string name="duplicates_waiting">%1$d to review</string>
+    <string name="duplicate_written">%1$s at %2$s</string>
+    <string name="duplicate_different">They differ</string>
+    <string name="duplicate_same">A duplicate</string>
+    <string name="duplicate_same_confirm">The one written first stays. The other goes to the bin, where it can be restored.</string>
+    <string name="duplicate_removed">Kept the first one</string>
 </resources>

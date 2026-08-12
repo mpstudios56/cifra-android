@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One pair: what it was and how much, then the two lines saying who wrote each
+  and when. The times are what settles it - two coffees an hour apart are two
+  coffees, the same dinner at nine and at eleven is one dinner.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/duplicate_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="@style/ListPrimary" />
+
+        <TextView
+            android:id="@+id/duplicate_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/duplicate_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:alpha="0.75"
+        android:singleLine="true"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/duplicate_b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.75"
+        android:singleLine="true"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/duplicate_different"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/quick_chip"
+            android:stateListAnimator="@null"
+            android:text="@string/duplicate_different"
+            android:textAllCaps="false"
+            android:textColor="#FFF4EFE4"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/duplicate_same"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/quick_chip"
+            android:stateListAnimator="@null"
+            android:text="@string/duplicate_same"
+            android:textAllCaps="false"
+            android:textColor="#FFF4EFE4"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

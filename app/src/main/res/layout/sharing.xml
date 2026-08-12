@@ -255,6 +255,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sharing_duplicates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duplicates"
+                    android:textAppearance="@style/ListPrimary" />
+
+                <TextView
+                    android:id="@+id/sharing_duplicates_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/sharing_merge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

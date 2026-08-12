@@ -75,6 +75,8 @@ public class SharingActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
+        findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
+                startActivity(new Intent(this, DuplicatesActivity.class)));
         findViewById(R.id.sharing_merge).setOnClickListener(v ->
                 startActivity(new Intent(this, MergeActivity.class)));
         findViewById(R.id.sharing_what).setOnClickListener(v ->
@@ -190,6 +192,11 @@ public class SharingActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.sharing_what_value)).setText(chosen == 0
                 ? getString(R.string.share_what_none)
                 : getString(R.string.share_what_some, chosen));
+
+        int waiting = tw.tib.financisto.sync.Duplicates.waiting(db.db());
+        ((TextView) findViewById(R.id.sharing_duplicates_value)).setText(waiting == 0
+                ? getString(R.string.duplicates_none_short)
+                : getString(R.string.duplicates_waiting, waiting));
 
         long last = MyPreferences.getSyncLastRun();
         ((TextView) findViewById(R.id.sharing_last)).setText(last == 0

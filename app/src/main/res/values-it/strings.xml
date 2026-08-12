@@ -1428,4 +1428,14 @@
   <string name="summary_not_shared">Solo tuoi</string>
   <string name="account_shared">Condividi questo conto</string>
   <string name="account_shared_summary">I suoi movimenti vanno all’altra persona</string>
+  <string name="duplicates">Da rivedere</string>
+  <string name="duplicates_intro">Movimenti che potrebbero essere la stessa spesa scritta due volte. L’app chiede e non decide: due caffè uguali e una cena divisa a metà si somigliano nelle righe.</string>
+  <string name="duplicates_none">Niente da rivedere</string>
+  <string name="duplicates_none_short">Niente in sospeso</string>
+  <string name="duplicates_waiting">%1$d da rivedere</string>
+  <string name="duplicate_written">%1$s alle %2$s</string>
+  <string name="duplicate_different">Sono diverse</string>
+  <string name="duplicate_same">È un doppione</string>
+  <string name="duplicate_same_confirm">Resta quella registrata per prima. L’altra va nel cestino, da cui si può ripristinare.</string>
+  <string name="duplicate_removed">Tenuta la prima</string>
 </resources>

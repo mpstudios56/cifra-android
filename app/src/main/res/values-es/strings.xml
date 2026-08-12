@@ -1425,4 +1425,14 @@
   <string name="summary_not_shared">Solo tuyos</string>
   <string name="account_shared">Compartir esta cuenta</string>
   <string name="account_shared_summary">Sus movimientos van a la otra persona</string>
+  <string name="duplicates">Por revisar</string>
+  <string name="duplicates_intro">Movimientos que podrían ser el mismo pago anotado dos veces. La aplicación pregunta, no decide.</string>
+  <string name="duplicates_none">Nada por revisar</string>
+  <string name="duplicates_none_short">Nada pendiente</string>
+  <string name="duplicates_waiting">%1$d por revisar</string>
+  <string name="duplicate_written">%1$s a las %2$s</string>
+  <string name="duplicate_different">Son distintos</string>
+  <string name="duplicate_same">Es un duplicado</string>
+  <string name="duplicate_same_confirm">Se queda el anotado primero. El otro va a la papelera, desde donde se puede restaurar.</string>
+  <string name="duplicate_removed">Se ha quedado el primero</string>
 </resources>
