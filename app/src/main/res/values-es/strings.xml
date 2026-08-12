@@ -1361,4 +1361,6 @@
   <string name="pie_other">Otros</string>
   <string name="pie_centre_out">Gastos</string>
   <string name="pie_centre_in">Ingresos</string>
+  <string name="search_hint">Buscar en los movimientos</string>
+  <string name="search_clear">Borrar</string>
 </resources>

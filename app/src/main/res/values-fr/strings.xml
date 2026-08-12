@@ -1361,4 +1361,6 @@
   <string name="pie_other">Autres</string>
   <string name="pie_centre_out">Dépenses</string>
   <string name="pie_centre_in">Revenus</string>
+  <string name="search_hint">Rechercher dans les opérations</string>
+  <string name="search_clear">Effacer</string>
 </resources>

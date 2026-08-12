@@ -1463,4 +1463,6 @@
     <string name="pie_other">Other</string>
     <string name="pie_centre_out">Spending</string>
     <string name="pie_centre_in">Income</string>
+    <string name="search_hint">Search transactions</string>
+    <string name="search_clear">Clear</string>
 </resources>

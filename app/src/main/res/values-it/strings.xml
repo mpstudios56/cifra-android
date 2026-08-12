@@ -1364,4 +1364,6 @@
   <string name="pie_other">Altro</string>
   <string name="pie_centre_out">Uscite</string>
   <string name="pie_centre_in">Entrate</string>
+  <string name="search_hint">Cerca nei movimenti</string>
+  <string name="search_clear">Cancella</string>
 </resources>

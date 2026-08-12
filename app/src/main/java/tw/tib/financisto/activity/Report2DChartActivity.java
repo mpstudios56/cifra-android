@@ -325,6 +325,9 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         chart.setBackgroundColor(Color.parseColor("#ff111111"));
         chart.setTouchEnabled(true);
         chart.setOnChartValueSelectedListener(this);
+        // The library writes "Description Label" in the corner unless told not
+        // to, and it had been showing on every one of these charts.
+        chart.getDescription().setEnabled(false);
 
         chart.setDragEnabled(true);
         chart.setScaleEnabled(true);
@@ -340,14 +343,27 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return DateUtils.formatDateTime(Report2DChartActivity.this, (long) value,
-                        DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_NO_MONTH_DAY);
+                // Written at the scale being looked at. Weeks labelled by month
+                // alone gave "Mar Mar Mar Apr Apr", which names nothing; years
+                // labelled by month would name the wrong thing entirely.
+                int flags;
+                switch (aggregateUnit) {
+                    case WEEK -> flags = DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_NO_YEAR;
+                    case YEAR, FISCAL_YEAR -> flags =
+                            DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_NO_MONTH_DAY;
+                    default -> flags =
+                            DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_NO_MONTH_DAY;
+                }
+                return DateUtils.formatDateTime(Report2DChartActivity.this, (long) value, flags);
             }
         });
         xAxis.setTextColor(Color.WHITE);
         xAxis.setTextSize(12f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.enableGridDashedLine(10.0f, 10.0f, 0.0f);
+        // The first and last dates sit at the very edges, where half of them
+        // would otherwise be drawn off the side of the chart.
+        xAxis.setAvoidFirstLastClipping(true);
 
         chart.getAxisRight().setEnabled(false);
 
@@ -550,6 +566,12 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
                 // 2026-07 adjust to 43200*1000 since we added a week aggregate length
                 vals.add(new Entry(v.getTimeframeTimeInMillis() + 43200_000f, (float) v.getValue() / 100.0f, v));
             }
+
+            // One label per point, placed on the points themselves. Left to
+            // pick its own, the axis spaced the labels evenly across the range
+            // and two of them landed inside the same month, so the same month
+            // name was written twice with nothing between the two.
+            chart.getXAxis().setLabelCount(Math.min(vals.size(), 7), true);
 
             ds.notifyDataSetChanged();
             chart.getData().notifyDataChanged();

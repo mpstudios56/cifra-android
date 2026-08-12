@@ -1361,4 +1361,6 @@
   <string name="pie_other">Sonstige</string>
   <string name="pie_centre_out">Ausgaben</string>
   <string name="pie_centre_in">Einnahmen</string>
+  <string name="search_hint">Buchungen durchsuchen</string>
+  <string name="search_clear">Löschen</string>
 </resources>

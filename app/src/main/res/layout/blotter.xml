@@ -103,6 +103,51 @@
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
+	<!--
+	  Directly under the button it opens from, not at the foot of the screen.
+	  Down there the keyboard came up over it, so one typed into a box one
+	  could not see - and the magnifying glass being at the top made the box
+	  appearing at the bottom look like a different screen's doing.
+	-->
+	<FrameLayout
+		android:id="@+id/search_text_frame"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="#FF141414"
+		android:paddingStart="10dp"
+		android:paddingTop="8dp"
+		android:paddingEnd="10dp"
+		android:paddingBottom="8dp"
+		android:visibility="gone">
+
+		<EditText
+			android:id="@+id/search_text"
+			android:layout_width="match_parent"
+			android:layout_height="44dp"
+			android:background="@drawable/search_field"
+			android:drawableStart="@android:drawable/ic_menu_search"
+			android:drawablePadding="8dp"
+			android:hint="@string/search_hint"
+			android:imeOptions="actionSearch"
+			android:inputType="text"
+			android:maxLines="1"
+			android:paddingStart="14dp"
+			android:paddingEnd="44dp"
+			android:textColor="#FFF4EFE4"
+			android:textSize="15sp" />
+
+		<ImageButton
+			android:id="@+id/search_text_clear"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_gravity="end|center_vertical"
+			android:layout_marginEnd="4dp"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/search_clear"
+			android:src="@drawable/ic_close"
+			android:visibility="gone" />
+	</FrameLayout>
+
 	<androidx.appcompat.widget.Toolbar
 		android:id="@+id/toolbar"
 		android:layout_width="match_parent"
@@ -152,31 +197,6 @@
 			android:layout_gravity="center_vertical"
 			android:indeterminate="true"
 			android:visibility="gone" />
-	</FrameLayout>
-
-	<FrameLayout
-		android:id="@+id/search_text_frame"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="5dp"
-		android:padding="5dp"
-		android:visibility="gone">
-
-		<EditText
-			android:id="@+id/search_text"
-			android:layout_width="fill_parent"
-			android:layout_height="50dp"
-			android:maxLines="1"
-			android:inputType="text" />
-
-		<ImageButton
-			android:id="@+id/search_text_clear"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginRight="10dp"
-			android:layout_gravity="right|center_vertical"
-			android:visibility="gone"
-			android:background="@android:drawable/ic_delete" />
 	</FrameLayout>
 
 	<TextView
