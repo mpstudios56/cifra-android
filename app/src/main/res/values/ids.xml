@@ -112,4 +112,5 @@
 	<item name="electronic_payment_type" type="id" />
 	<item name="attached_picture" type="id" />
     <item name="is_shared" type="id"/>
+    <item name="privacy_button" type="id"/>
 </resources>

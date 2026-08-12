@@ -771,7 +771,7 @@
     <item>2 anni</item>
     <item>5 anni</item>
     <item>10 anni</item>
-    <item>all data</item>
+    <item>Dall’inizio</item>
   </string-array>
   <string-array name="lock_time_entities">
     <item>Disattivo</item>
@@ -1442,4 +1442,9 @@
   <string name="currency_tidy">Unisci le valute ripetute</string>
   <string name="currency_tidy_none">Nessuna valuta compare due volte</string>
   <string name="currency_tidy_done">%1$d righe ripetute unite in una. Conti, budget e movimenti ora usano la stessa valuta</string>
+
+  <string name="privacy_toggle">Nascondi gli importi</string>
+  <string name="privacy_hidden">Importi nascosti</string>
+  <string name="privacy_shown">Importi di nuovo visibili</string>
+  <string name="backup_settings">Impostazioni di backup</string>
 </resources>

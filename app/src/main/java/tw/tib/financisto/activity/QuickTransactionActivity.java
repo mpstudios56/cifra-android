@@ -194,7 +194,8 @@ public class QuickTransactionActivity extends AppCompatActivity {
      */
     private void showAmount() {
         Currency currency = account != null ? account.currency : Currency.EMPTY;
-        String text = Utils.amountToString(currency, cents);
+        // never masked: this is the amount being typed in
+        String text = Utils.amountToStringPlain(currency, cents);
         char separator = separatorOf(currency);
         int cut = text.lastIndexOf(separator);
         if (cut < 0) {

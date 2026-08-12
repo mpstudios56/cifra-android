@@ -737,7 +737,7 @@
     <item>2 Jahre</item>
     <item>5 Jahre</item>
     <item>10 Jahre</item>
-    <item>all data</item>
+    <item>Seit Beginn</item>
   </string-array>
   <string-array name="lock_time_entities">
     <item>Aus</item>
@@ -1439,4 +1439,9 @@
   <string name="currency_tidy">Doppelte Währungen zusammenführen</string>
   <string name="currency_tidy_none">Keine Währung kommt doppelt vor</string>
   <string name="currency_tidy_done">%1$d doppelte Zeilen zu einer zusammengeführt. Konten, Budgets und Buchungen nutzen jetzt dieselbe Währung</string>
+
+  <string name="privacy_toggle">Beträge verbergen</string>
+  <string name="privacy_hidden">Beträge verborgen</string>
+  <string name="privacy_shown">Beträge wieder sichtbar</string>
+  <string name="backup_settings">Backup-Einstellungen</string>
 </resources>

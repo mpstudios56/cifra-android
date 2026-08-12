@@ -5,30 +5,31 @@
   folding a repeated row into the one it repeats, and two rings sharing a middle
   is the picture everyone already knows for that.
 
-  Same hand as the category symbols: 24 across, stroke 1.7, round ends.
+  Drawn at bar weight - 24 across, stroke 2.2, plain white - so it carries the
+  same as the plus beside it. At the lighter menu weight it looked washed out
+  next to its neighbours.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="24"
-    android:tint="#FFF4EFE4">
+    android:viewportHeight="24">
 
     <path
         android:fillColor="#00000000"
-        android:pathData="M9.5,12m-5.5,0a5.5,5.5 0 1,0 11,0a5.5,5.5 0 1,0 -11,0"
+        android:pathData="M9,12m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0"
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7" />
+        android:strokeWidth="2.2" />
 
     <path
         android:fillColor="#00000000"
-        android:pathData="M14.5,12m-5.5,0a5.5,5.5 0 1,0 11,0a5.5,5.5 0 1,0 -11,0"
+        android:pathData="M15,12m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0"
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7" />
+        android:strokeWidth="2.2" />
 
     <!-- the part they share, filled: that is the row that stays -->
     <path
-        android:fillAlpha="0.9"
+        android:fillAlpha="0.95"
         android:fillColor="#FFFFFFFF"
-        android:pathData="M12,7.55 A5.5,5.5 0 0,1 12,16.45 A5.5,5.5 0 0,1 12,7.55 Z" />
+        android:pathData="M12,8 A5,5 0 0,1 12,16 A5,5 0 0,1 12,8 Z" />
 </vector>

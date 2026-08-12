@@ -44,6 +44,7 @@ import tw.tib.financisto.utils.TransactionUtils;
 import tw.tib.financisto.view.NodeInflater;
 
 import static tw.tib.financisto.utils.Utils.amountToString;
+import tw.tib.financisto.utils.Utils;
 import static tw.tib.financisto.utils.Utils.checkEditText;
 import static tw.tib.financisto.utils.Utils.text;
 
@@ -199,8 +200,10 @@ public class CurrencyActivity extends Activity implements ActivityLayoutListener
 				temp.groupSeparator = groupSeparators.getSelectedItem().toString();
 				temp.numberFormat = text(numberFormat);
 
-				maxValue.setText(getString(R.string.currency_max_value, amountToString(temp, Long.MAX_VALUE)));
-				minValue.setText(getString(R.string.currency_min_value, amountToString(temp, Long.MIN_VALUE)));
+				// the largest and smallest this format can hold: a property of
+				// the format, not a balance, so it is never masked
+				maxValue.setText(getString(R.string.currency_max_value, Utils.amountToStringPlain(temp, Long.MAX_VALUE)));
+				minValue.setText(getString(R.string.currency_min_value, Utils.amountToStringPlain(temp, Long.MIN_VALUE)));
 			}
 
 			@Override

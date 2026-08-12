@@ -699,7 +699,7 @@
     <item>2 lata</item>
     <item>5 lat</item>
     <item>10 lat</item>
-    <item>all data</item>
+    <item>Od początku</item>
   </string-array>
   <string-array name="lock_time_entities">
     <item>Od</item>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Figures are on show: a plain open eye. Tapping it puts them out.
+  Menu weight - 24 across, stroke 1.8, round ends - so it sits at the same
+  visual pitch as the rest of the outline set.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M2.5,12 C2.5,12 6.1,6 12,6 C17.9,6 21.5,12 21.5,12 C21.5,12 17.9,18 12,18 C6.1,18 2.5,12 2.5,12 Z"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.8" />
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,12m-2.6,0a2.6,2.6 0 1,0 5.2,0a2.6,2.6 0 1,0 -5.2,0"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="1.8" />
+</vector>

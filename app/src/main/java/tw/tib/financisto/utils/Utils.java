@@ -100,7 +100,31 @@ public class Utils {
         return amountToString(sb, c, new BigDecimal(amount), addPlus);
     }
 
+    /**
+     * The one place every amount on screen is turned into text, which is why
+     * the privacy switch lives here: one check covers the lists, the totals,
+     * the summary, the reports and the widget, and nothing new has to be
+     * remembered when a screen is added later.
+     */
     public static StringBuilder amountToString(StringBuilder sb, Currency c, BigDecimal amount, boolean addPlus) {
+        if (Privacy.isHidden()) {
+            return sb.append(Privacy.mask(c));
+        }
+        return amountToStringPlain(sb, c, amount, addPlus);
+    }
+
+    /**
+     * The same, but always showing the figures.
+     * <p>
+     * For the few places where a number is not somebody's money: the amount
+     * being typed on the keypad, and the worked example under a currency's
+     * name. Hiding those would just be broken.
+     */
+    public static String amountToStringPlain(Currency c, long amount) {
+        return amountToStringPlain(new StringBuilder(), c, new BigDecimal(amount), false).toString();
+    }
+
+    public static StringBuilder amountToStringPlain(StringBuilder sb, Currency c, BigDecimal amount, boolean addPlus) {
         var sb2 = new StringBuilder();
         if (amount.compareTo(BigDecimal.ZERO) > 0) {
             if (addPlus) {
@@ -150,7 +174,7 @@ public class Utils {
 
     public void setAmountText(StringBuilder sb, TextView view, Currency c, long amount, boolean addPlus) {
         view.setText(amountToString(sb, c, amount, addPlus).toString());
-        view.setTextColor(amount == 0 ? zeroColor : (amount > 0 ? positiveColor : negativeColor));
+        view.setTextColor(getAmountColor(amount));
     }
 
     public void setAmountText(StringBuilder sb, TextView view, Currency originalCurrency, long originalAmount, Currency currency, long amount, boolean addPlus) {
@@ -159,14 +183,22 @@ public class Utils {
         amountToString(sb, currency, amount, addPlus);
         sb.append(")");
         view.setText(sb.toString());
-        view.setTextColor(amount == 0 ? zeroColor : (amount > 0 ? positiveColor : negativeColor));
+        view.setTextColor(getAmountColor(amount));
     }
 
     public int getAmountColor(long amount) {
+        // With the figures off the colours have to go too: red and green say
+        // money in or money out just as plainly as the number does.
+        if (Privacy.isHidden()) {
+            return zeroColor;
+        }
         return amount == 0 ? zeroColor : (amount > 0 ? positiveColor : negativeColor);
     }
 
     public static TextAppearanceSpan getAmountSpan(Context context, long amount) {
+        if (Privacy.isHidden()) {
+            return new TextAppearanceSpan(context, R.style.TextAppearance_ZeroAmount);
+        }
         return new TextAppearanceSpan(context,
                 amount == 0
                         ? R.style.TextAppearance_ZeroAmount
@@ -281,11 +313,11 @@ public class Utils {
     }
 
     public void setNegativeColor(TextView textView) {
-        textView.setTextColor(negativeColor);
+        textView.setTextColor(Privacy.isHidden() ? zeroColor : negativeColor);
     }
 
     public void setPositiveColor(TextView textView) {
-        textView.setTextColor(positiveColor);
+        textView.setTextColor(Privacy.isHidden() ? zeroColor : positiveColor);
     }
 
     public void setTotal(TextView totalText, Total total) {

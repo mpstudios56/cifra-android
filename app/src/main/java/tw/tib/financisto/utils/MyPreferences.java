@@ -211,6 +211,15 @@ public class MyPreferences {
 		return AccountSortOrder.valueOf(sortOrder);
 	}
 
+	/** Whether the figures are currently switched off. See {@link Privacy}. */
+	public static boolean isAmountsHidden() {
+		return getBoolean("amounts_hidden", false);
+	}
+
+	public static void setAmountsHidden(boolean value) {
+		edit().putBoolean("amounts_hidden", value).apply();
+	}
+
 	public static boolean isBlurBalances() {
 		return getBoolean("blur_balances", false);
 	}

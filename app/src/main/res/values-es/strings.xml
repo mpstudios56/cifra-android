@@ -737,7 +737,7 @@
     <item>2 años</item>
     <item>5 años</item>
     <item>10 años</item>
-    <item>all data</item>
+    <item>Desde el principio</item>
   </string-array>
   <string-array name="lock_time_entities">
     <item>Desactivar</item>
@@ -1439,4 +1439,9 @@
   <string name="currency_tidy">Unir las monedas repetidas</string>
   <string name="currency_tidy_none">Ninguna moneda aparece dos veces</string>
   <string name="currency_tidy_done">%1$d filas repetidas unidas en una. Cuentas, presupuestos y movimientos usan ahora la misma moneda</string>
+
+  <string name="privacy_toggle">Ocultar los importes</string>
+  <string name="privacy_hidden">Importes ocultos</string>
+  <string name="privacy_shown">Importes visibles de nuevo</string>
+  <string name="backup_settings">Ajustes de copia de seguridad</string>
 </resources>

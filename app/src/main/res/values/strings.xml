@@ -1541,4 +1541,9 @@
     <string name="currency_tidy">Merge repeated currencies</string>
     <string name="currency_tidy_none">No currency appears twice</string>
     <string name="currency_tidy_done">%1$d repeated rows folded into one. Accounts, budgets and movements now share one currency</string>
+
+    <string name="privacy_toggle">Hide the figures</string>
+    <string name="privacy_hidden">Figures hidden</string>
+    <string name="privacy_shown">Figures shown</string>
+    <string name="backup_settings">Backup settings</string>
 </resources>

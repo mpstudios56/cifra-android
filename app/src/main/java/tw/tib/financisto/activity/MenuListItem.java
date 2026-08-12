@@ -288,6 +288,16 @@ public enum MenuListItem implements SummaryEntityEnum {
     /** Every way of getting the data out and back in, in one place. */
     private enum BackupRestoreEntities implements ExecutableEntityEnum<Fragment> {
 
+        /** Where the copies go, and how often: settings beside the buttons that use them. */
+        MENU_BACKUP_SETTINGS(R.string.backup_settings, R.drawable.ic_action_gear) {
+            @Override
+            public void execute(Fragment fragment) {
+                Intent intent = new Intent(fragment.getContext(), PreferencesActivity2.class);
+                intent.putExtra(PreferencesActivity2.SCREEN_EXTRA,
+                        "tw.tib.financisto.preference.BackupPreferencesFragment");
+                fragment.startActivity(intent);
+            }
+        },
         MENU_SECURITY(R.string.protection, R.drawable.ic_action_lock) {
             @Override
             public void execute(Fragment fragment) {

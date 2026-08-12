@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 
 import tw.tib.financisto.R;
+import tw.tib.financisto.utils.FingerprintUtils;
 
 /**
  * The lock: screenshots, PIN, fingerprint.
@@ -26,6 +27,15 @@ public class SecurityPreferencesFragment extends PreferenceFragmentBase {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.pref_security, rootKey);
+
+        // Offering a fingerprint on a phone that has none, or has none
+        // enrolled, is offering a lock with no key: say why instead.
+        Preference fingerprint = getPreferenceScreen().findPreference("pin_protection_use_fingerprint");
+        if (fingerprint != null && FingerprintUtils.fingerprintUnavailable(getContext())) {
+            fingerprint.setSummary(getString(R.string.fingerprint_unavailable,
+                    FingerprintUtils.reasonWhyFingerprintUnavailable(getContext())));
+            fingerprint.setEnabled(false);
+        }
     }
 
     @Override

@@ -56,6 +56,7 @@ import tw.tib.financisto.report.TotalBalanceByPeriodReport;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
+import tw.tib.financisto.utils.Privacy;
 import tw.tib.financisto.utils.Utils;
 
 import androidx.core.graphics.Insets;
@@ -348,6 +349,16 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         yAxis.setGridLineWidth(1f);
         yAxis.setDrawAxisLine(false);
         yAxis.setLabelCount(5, false);
+        // With the figures off, the scale up the side would give the whole
+        // thing away - the shape of the line can stay, the numbers cannot.
+        if (Privacy.isHidden()) {
+            yAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return "•••";
+                }
+            });
+        }
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new ValueFormatter() {

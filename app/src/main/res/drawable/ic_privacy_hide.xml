@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Figures are off: the same eye, struck through. Dark strokes, because this
+  state is drawn on the green button - the one moment the switch is meant to
+  be noticed, so that nobody wonders later why every total reads in dots.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M10.6,6.2 A9.4,9.4 0 0,1 12,6 C17.9,6 21.5,12 21.5,12 A16,16 0 0,1 18.9,15.2"
+        android:strokeColor="#FF0B0B0B"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.9" />
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M6.1,7.9 A15.6,15.6 0 0,0 2.5,12 C2.5,12 6.1,18 12,18 A9.6,9.6 0 0,0 15.6,17.3"
+        android:strokeColor="#FF0B0B0B"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.9" />
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9.9,9.9 A3,3 0 0,0 14.1,14.1"
+        android:strokeColor="#FF0B0B0B"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.9" />
+
+    <path
+        android:pathData="M3.5,3.5 L20.5,20.5"
+        android:strokeColor="#FF0B0B0B"
+        android:strokeLineCap="round"
+        android:strokeWidth="1.9" />
+</vector>

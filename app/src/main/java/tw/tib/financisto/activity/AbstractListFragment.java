@@ -91,17 +91,8 @@ abstract public class AbstractListFragment<D> extends ListFragment
         loaderManager.initLoader(0, null, this);
 
         getListView().setOnItemLongClickListener((parent, v, position, id) -> {
-            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
-            Menu menu = popupMenu.getMenu();
-            List<MenuItemInfo> menus = createContextMenus(id);
-            int i = 0;
-            for (MenuItemInfo m : menus) {
-                if (m.enabled) {
-                    menu.add(0, m.menuId, i++, m.titleId);
-                }
-            }
-            popupMenu.setOnMenuItemClickListener(item -> onPopupItemSelected(item.getItemId(), v, position, id));
-            popupMenu.show();
+            RowMenu.show(getActivity(), v, createContextMenus(id),
+                    menuId -> onPopupItemSelected(menuId, v, position, id));
             return true;
         });
 
@@ -131,9 +122,9 @@ abstract public class AbstractListFragment<D> extends ListFragment
 
     protected List<MenuItemInfo> createContextMenus(long id) {
         List<MenuItemInfo> menus = new LinkedList<>();
-        menus.add(new MenuItemInfo(MENU_VIEW, R.string.view));
-        menus.add(new MenuItemInfo(MENU_EDIT, R.string.edit));
-        menus.add(new MenuItemInfo(MENU_DELETE, R.string.delete));
+        menus.add(new MenuItemInfo(MENU_VIEW, R.string.view, R.drawable.ic_action_info));
+        menus.add(new MenuItemInfo(MENU_EDIT, R.string.edit, R.drawable.ic_row_edit));
+        menus.add(new MenuItemInfo(MENU_DELETE, R.string.delete, R.drawable.ic_row_delete));
         return menus;
     }
 

@@ -24,6 +24,11 @@ public abstract class AbstractGenericListAdapter extends ResourceCursorAdapter {
 		super(context, R.layout.generic_list_item, c);
 	}
 
+	/** For lists whose rows do not fit the blotter's shape and bring their own. */
+	protected AbstractGenericListAdapter(DatabaseAdapter db, Context context, Cursor c, int layout) {
+		super(context, layout, c);
+	}
+
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		View view = super.newView(context, cursor, parent);

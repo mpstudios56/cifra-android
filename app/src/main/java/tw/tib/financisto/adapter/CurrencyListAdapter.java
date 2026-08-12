@@ -25,7 +25,7 @@ public class CurrencyListAdapter extends AbstractGenericListAdapter {
 	DatabaseAdapter db;
 
 	public CurrencyListAdapter(DatabaseAdapter db, Context context, Cursor c) {
-		super(db, context, c);
+		super(db, context, c, R.layout.currency_list_item);
 		this.context = context;
 		this.db = db;
 	}
@@ -42,9 +42,11 @@ public class CurrencyListAdapter extends AbstractGenericListAdapter {
 			}
 		}
 		v.numberView.setText(nameLine);
-		v.amountView.setText(Utils.amountToString(c, new BigDecimal(1000).movePointRight(c.decimals < 3 ? 2 : c.decimals)));
+		// a worked example of the format, not anybody's money: always shown
+		v.amountView.setText(Utils.amountToStringPlain(new StringBuilder(), c,
+				new BigDecimal(1000).movePointRight(c.decimals < 3 ? 2 : c.decimals), false).toString());
 		if (c.isDefault) {
-			v.iconView.setImageResource(R.drawable.ic_home_currency);
+			v.iconView.setImageResource(R.drawable.ic_currency_home);
 		} else {
 			v.iconView.setImageDrawable(null);
 		}

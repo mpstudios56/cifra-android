@@ -14,10 +14,17 @@ public class MenuItemInfo {
 	public final int menuId;
 	public int titleId;
 	public boolean enabled = true;
-	
+	/** Optional: the symbol shown beside the words. 0 leaves the space empty. */
+	public int iconId;
+
 	public MenuItemInfo(int menuId, int titleId) {
 		this.menuId = menuId;
 		this.titleId = titleId;
+	}
+
+	public MenuItemInfo(int menuId, int titleId, int iconId) {
+		this(menuId, titleId);
+		this.iconId = iconId;
 	}
 
 }

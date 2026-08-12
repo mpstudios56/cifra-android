@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One line of the menu that opens on a long press.
+
+  It used to be the platform's plain list of words - the only menu left in the
+  app without a single symbol on it, while the menu on a short tap is a grid of
+  icons. Same actions, same pictures, so it is obvious they are the same thing
+  reached two ways.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="20dp">
+
+    <ImageView
+        android:id="@+id/menu_icon"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="#FFF4EFE4"
+        android:textSize="15sp" />
+</LinearLayout>

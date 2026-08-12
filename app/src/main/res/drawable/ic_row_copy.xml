@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Duplicate: one sheet behind another. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9,9 m0,-1.2 a1.2,1.2 0 0,1 1.2,-1.2 l8.6,0 a1.2,1.2 0 0,1 1.2,1.2 l0,10.6 a1.2,1.2 0 0,1 -1.2,1.2 l-8.6,0 a1.2,1.2 0 0,1 -1.2,-1.2 z"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.8" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M15,3.6 L5.2,3.6 A1.2,1.2 0 0,0 4,4.8 L4,15"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.8" />
+</vector>

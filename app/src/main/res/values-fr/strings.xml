@@ -703,7 +703,7 @@
     <item>2 ans</item>
     <item>5 années</item>
     <item>10 années</item>
-    <item>all data</item>
+    <item>Depuis le début</item>
   </string-array>
   <string-array name="lock_time_entities">
     <item>Off</item>
@@ -1439,4 +1439,9 @@
   <string name="currency_tidy">Fusionner les devises répétées</string>
   <string name="currency_tidy_none">Aucune devise n’apparaît deux fois</string>
   <string name="currency_tidy_done">%1$d lignes répétées fusionnées en une. Comptes, budgets et opérations utilisent désormais la même devise</string>
+
+  <string name="privacy_toggle">Masquer les montants</string>
+  <string name="privacy_hidden">Montants masqués</string>
+  <string name="privacy_shown">Montants de nouveau visibles</string>
+  <string name="backup_settings">Réglages de sauvegarde</string>
 </resources>

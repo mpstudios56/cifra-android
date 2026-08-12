@@ -1,41 +1,78 @@
 <!--
+  The currencies, and the three things one does with them: add one, look at the
+  rates between them, and fold away the ones written down twice.
+
+  The bar at the bottom was white with bare grey squares on it - the only screen
+  in the app still wearing the 2010 button bar. It now uses the same dark bar
+  and rounded buttons as everywhere else.
+
   Copyright (c) 2010 Denis Solonenko.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
+
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:orientation="vertical"
-	android:id="@+id/currency_list">
-	<ListView android:id="@android:id/list" android:layout_width="match_parent"
-		android:layout_weight="1" android:layout_height="match_parent">
-	</ListView>
-	<TextView android:id="@id/android:empty" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_weight="1"
-		android:gravity="center" android:text="@string/no_currencies" />
-	<LinearLayout android:layout_height="wrap_content"
-		android:id="@+id/bottom_bar"
-		android:layout_width="fill_parent" android:background="#FFF"
-		android:paddingTop="2dp">
-		<ImageButton android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/bAdd"
-			android:src="@drawable/ic_input_add" />
-        <ImageButton android:layout_width="wrap_content"
-                     android:layout_height="wrap_content" android:id="@+id/bRates"
-                     android:src="@drawable/ic_input_exchange_rates" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/currency_list"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbarStyle="outsideOverlay" />
+
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="@string/no_currencies" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/BottomBar">
+
+        <ImageButton
+            android:id="@+id/bAdd"
+            style="@style/BottomBarButton"
+            android:src="@drawable/actionbar_add_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/bRates"
+            style="@style/BottomBarButton"
+            android:contentDescription="@string/exchange_rates"
+            android:layout_marginRight="@dimen/action_button_margin"
+            android:src="@drawable/ic_bar_exchange_rates"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bTidy"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!--
           Folds rows that are the same currency twice. It happens on its own at
           every start; the button is for the person who has just been told that
           is why nothing added up, and wants to see it happen.
         -->
-        <ImageButton android:layout_width="wrap_content"
-                     android:layout_height="wrap_content" android:id="@+id/bTidy"
-                     android:contentDescription="@string/currency_tidy"
-                     android:src="@drawable/ic_merge_duplicates" />
-	</LinearLayout>
+        <ImageButton
+            android:id="@+id/bTidy"
+            style="@style/BottomBarButton"
+            android:contentDescription="@string/currency_tidy"
+            android:layout_marginRight="@dimen/action_button_margin"
+            android:src="@drawable/ic_merge_duplicates"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

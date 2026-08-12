@@ -446,7 +446,7 @@
         <item>2 роки</item>
         <item>5 років</item>
         <item>10 років</item>
-        <item>all data</item>
+        <item>Від початку</item>
     </string-array>
     <string name="report_reference_currency">Звітна валюта</string>
     <string name="report_reference_currency_summary">Визначте валюту для використання у звітах</string>
@@ -1415,4 +1415,9 @@
         <item>90 днів</item>
         <item>Назавжди</item>
     </string-array>
+
+    <string name="privacy_toggle">Приховати суми</string>
+    <string name="privacy_hidden">Суми приховано</string>
+    <string name="privacy_shown">Суми знову видно</string>
+    <string name="backup_settings">Налаштування резервних копій</string>
 </resources>

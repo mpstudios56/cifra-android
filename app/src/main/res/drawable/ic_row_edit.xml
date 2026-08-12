@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Edit. The old symbol was a black pencil drawn for a light background, which
+  on the dark menu was a pencil-shaped hole. Outline, light, 24 across,
+  stroke 1.8 - the same hand as the rest of the menu.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,20 L4,16.2 L15.6,4.6 A1.7,1.7 0 0,1 18,4.6 L19.4,6 A1.7,1.7 0 0,1 19.4,8.4 L7.8,20 Z"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1.8" />
+    <path
+        android:pathData="M14.2,6 L18,9.8"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeLineCap="round"
+        android:strokeWidth="1.8" />
+</vector>
