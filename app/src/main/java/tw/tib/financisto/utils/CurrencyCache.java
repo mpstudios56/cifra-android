@@ -58,15 +58,21 @@ public class CurrencyCache {
 		} finally {
 			c.close();
 		}
-		// Nothing marked as home, and something to choose from: the only
-		// currency there is, is the home one. Without this every total on
-		// every screen reads "N/A" - the sums are worked out in the home
-		// currency, and converting into nothing finds no exchange rate.
+		// Nothing marked as home: mark one, here and now, and use it.
 		//
-		// This is the safety net for a database already in that state; the
-		// import marks one on the way in.
-		if (homeCurrency == Currency.EMPTY && currencies.size() == 1) {
-			homeCurrency = currencies.values().iterator().next();
+		// A backup made by a version that never asked which currency was home
+		// carries none, and then every total on every screen reads "N/A" - the
+		// sums are worked out in the home currency, and converting into nothing
+		// finds no exchange rate. Doing it on the way in from a backup is not
+		// enough: it does not help the person who imported yesterday, which is
+		// exactly the person it happened to.
+		if (homeCurrency == Currency.EMPTY && !currencies.isEmpty()) {
+			long chosen = tw.tib.financisto.db.HomeCurrency.ensure(em.db());
+			Currency picked = currencies.get(chosen);
+			if (picked != null) {
+				picked.isDefault = true;
+				homeCurrency = picked;
+			}
 		}
 		CURRENCIES.putAll(currencies);
 		loaded = true;

@@ -89,45 +89,9 @@ public class DatabaseImport extends FullDatabaseImport {
         }
     }
 
-    /**
-     * Makes sure one currency is marked as the home one.
-     * <p>
-     * Without it every total on every screen reads "N/A", including on a file
-     * that only ever had one currency in it. The totals are worked out in the
-     * home currency, and when no currency is marked as home the code looks for
-     * an exchange rate from euros to nothing, does not find one, and gives up -
-     * correctly, but in a way that looks like the import failed.
-     * <p>
-     * A backup made by a version that never asked which currency was home
-     * carries none, so restoring it into a fresh app produced exactly that: all
-     * the money there, every total unavailable.
-     * <p>
-     * The one used by the most accounts wins. On the single-currency files this
-     * happens to that is the only one there is.
-     */
+    /** See {@link tw.tib.financisto.db.HomeCurrency}: without it every total reads "N/A". */
     private void ensureHomeCurrency() {
-        try (Cursor c = db.rawQuery(
-                "select count(*) from currency where is_default = 1", null)) {
-            if (c.moveToFirst() && c.getInt(0) > 0) {
-                return;
-            }
-        }
-        long chosen = 0;
-        try (Cursor c = db.rawQuery(
-                "select c._id, count(a._id) n from currency c"
-                        + " left join account a on a.currency_id = c._id"
-                        + " group by c._id order by n desc, c._id asc limit 1", null)) {
-            if (c.moveToFirst()) {
-                chosen = c.getLong(0);
-            }
-        }
-        if (chosen > 0) {
-            ContentValues values = new ContentValues();
-            values.put("is_default", 1);
-            db.update("currency", values, "_id=?",
-                    new String[]{String.valueOf(chosen)});
-            Log.i("DatabaseImport", "no home currency in the backup, chose " + chosen);
-        }
+        tw.tib.financisto.db.HomeCurrency.ensure(db);
     }
 
     private InputStream decompressStream(InputStream input) throws IOException {
