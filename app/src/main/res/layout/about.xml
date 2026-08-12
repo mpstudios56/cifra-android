@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Informazioni, novità e licenza.
+
+  Its own layout rather than the main screen's: this one needs a bar at the top
+  carrying the name and the version, and the main screen must not grow one.
+
+  The version lives in that bar. Before, this screen borrowed the main layout,
+  which has no bar at all, so the title was set and then shown nowhere - the
+  version was there in the code and invisible on the phone.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/about_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:tabGravity="fill"
+        app:tabInlineLabel="false"
+        app:tabMaxWidth="0dp"
+        app:tabPaddingEnd="1dp"
+        app:tabPaddingStart="1dp"
+        app:tabTextAppearance="@style/TabLabel" />
+</LinearLayout>

@@ -44,17 +44,28 @@ public class AboutActivity extends AppCompatActivity {
     protected OnBackPressedCallback onBackPressedCallback;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-        setTitle("Cifra ("+getAppVersion(this)+")");
+        setContentView(R.layout.about);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        setTitle("Cifra " + getAppVersion(this));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        setContentView(R.layout.main2);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tabs), (v, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
-                    | WindowInsetsCompat.Type.statusBars()
-                    | WindowInsetsCompat.Type.captionBar());
-            v.setPadding(0, insets.top, 0, 0);
+        // On the whole screen, not on the tabs. The tabs sit at the foot of it,
+        // so padding their top by the height of the status bar left a gap in
+        // the middle of the screen and let the page underneath slide up behind
+        // the clock - and the tabs themselves under the navigation bar.
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.about_base), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
 
