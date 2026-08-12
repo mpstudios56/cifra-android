@@ -75,6 +75,8 @@ public class SharingActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
+        findViewById(R.id.sharing_merge).setOnClickListener(v ->
+                startActivity(new Intent(this, MergeActivity.class)));
         findViewById(R.id.sharing_what).setOnClickListener(v ->
                 startActivity(new Intent(this, SharePickerActivity.class)));
 

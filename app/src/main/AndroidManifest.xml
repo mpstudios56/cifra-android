@@ -317,6 +317,8 @@
 		  screen that reads any file and asks what its columns are; the older one
 		  expects Cifra's own column names and would tell them nothing useful.
 		-->
+		<activity android:name=".activity.MergeActivity" android:label="@string/merge"
+			android:theme="@style/AppThemeCompat" android:exported="false" />
 		<activity android:name=".activity.SharePickerActivity" android:label="@string/share_picker"
 			android:theme="@style/AppThemeCompat" android:exported="false" />
 		<activity android:name=".activity.SharingActivity" android:label="@string/sharing"

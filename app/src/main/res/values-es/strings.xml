@@ -1409,4 +1409,13 @@
   <string name="share_what_none">Todavía nada: no viajará nada</string>
   <string name="share_what_some">%1$d cosas</string>
   <string name="no_title">Sin nombre</string>
+  <string name="merge">Unir</string>
+  <string name="merge_intro">Dos etiquetas que significan lo mismo, reunidas. Aquí no se toca el dinero: ningún movimiento se elimina, se mueve ni se suma; los que usaban la etiqueta que desaparece usarán la que queda.</string>
+  <string name="merge_side">%1$s — %2$d movimientos</string>
+  <string name="merge_maybe">Escritas de forma distinta: comprueba antes de unir</string>
+  <string name="merge_which">¿Qué nombre conservas?</string>
+  <string name="merge_done">Unidas. %1$d movimientos han cambiado de etiqueta</string>
+  <string name="merge_has_children">Esta categoría tiene subcategorías. Une primero esas, o vacíala</string>
+  <string name="merge_none">Nada que unir</string>
+  <string name="sharing_functions">Funciones</string>
 </resources>

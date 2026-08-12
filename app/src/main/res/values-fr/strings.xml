@@ -1409,4 +1409,13 @@
   <string name="share_what_none">Rien pour l’instant — rien ne circulera</string>
   <string name="share_what_some">%1$d éléments</string>
   <string name="no_title">Sans nom</string>
+  <string name="merge">Fusionner</string>
+  <string name="merge_intro">Deux étiquettes qui désignent la même chose, réunies. Rien ici ne touche à l’argent : aucune opération n’est supprimée, déplacée ni additionnée — celles qui utilisaient l’étiquette qui disparaît utiliseront celle qui reste.</string>
+  <string name="merge_side">%1$s — %2$d opérations</string>
+  <string name="merge_maybe">Écrites différemment : vérifie avant de fusionner</string>
+  <string name="merge_which">Quel nom gardes-tu ?</string>
+  <string name="merge_done">Fusionnées. %1$d opérations ont changé d’étiquette</string>
+  <string name="merge_has_children">Cette catégorie a des sous-catégories. Fusionne-les d’abord, ou vide-la</string>
+  <string name="merge_none">Rien à fusionner</string>
+  <string name="sharing_functions">Fonctions</string>
 </resources>

@@ -1511,4 +1511,13 @@
     <string name="share_what_none">Nothing yet — nothing will travel</string>
     <string name="share_what_some">%1$d things</string>
     <string name="no_title">Untitled</string>
+    <string name="merge">Merge</string>
+    <string name="merge_intro">Two labels that mean one thing, put back together. Nothing here touches the money: no movement is deleted, moved or added up — the ones that used the label going away will use the one staying.</string>
+    <string name="merge_side">%1$s — %2$d movements</string>
+    <string name="merge_maybe">Written differently: check before merging</string>
+    <string name="merge_which">Which name do you keep?</string>
+    <string name="merge_done">Merged. %1$d movements changed label</string>
+    <string name="merge_has_children">This category has subcategories under it. Merge those first, or empty it</string>
+    <string name="merge_none">Nothing to merge</string>
+    <string name="sharing_functions">Functions</string>
 </resources>
