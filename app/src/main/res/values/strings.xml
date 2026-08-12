@@ -1480,4 +1480,7 @@
     <string name="change_added">added</string>
     <string name="change_edited">edited</string>
     <string name="change_deleted">deleted</string>
+    <string name="identity_name_hint">Name</string>
+    <string name="identity_colour">Colour</string>
+    <string name="identity_symbol">Symbol</string>
 </resources>

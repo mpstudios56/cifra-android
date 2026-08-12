@@ -1,15 +1,3 @@
--- An identifier that means the same thing on both phones.
---
--- Two phones both create their transaction number 57, and nothing about the
--- number says whether they are one movement or two. So every row that can be
--- exchanged gets an identifier made where it was created and never reused.
---
--- Filled in for the rows already here with randomblob, which is as good a
--- random identifier as SQLite can make on its own. The index is deliberately
--- not unique: every path that inserts a row would otherwise have to be taught
--- to fill this in, and one that forgot would fail at the worst moment. Blanks
--- are filled in before a synchronisation instead.
-
 ALTER TABLE transactions ADD COLUMN uuid TEXT NOT NULL DEFAULT '';
 UPDATE transactions SET uuid = lower(hex(randomblob(16))) WHERE uuid = '';
 CREATE INDEX IF NOT EXISTS transactions_uuid_idx ON transactions (uuid);

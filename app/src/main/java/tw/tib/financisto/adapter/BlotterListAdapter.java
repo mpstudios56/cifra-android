@@ -45,6 +45,7 @@ import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.recur.Recurrence;
 import tw.tib.financisto.utils.CategoryIcons;
+import tw.tib.financisto.utils.Identity;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.MyPreferences;
 
@@ -174,6 +175,18 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
             CategoryIcons.show(v.categoryIcon, v.categoryIconText,
                     cursor.getString(BlotterColumns.category_icon.ordinal()),
                     cursor.getString(BlotterColumns.category_accent_color.ordinal()));
+        }
+
+        if (v.authorMark != null) {
+            // Nothing at all until somebody is sharing: on one phone every
+            // movement is the reader's, and a mark that is always there marks
+            // nothing.
+            boolean theirs = !Identity.isMine(
+                    cursor.getString(BlotterColumns.created_by.ordinal()));
+            v.authorMark.setVisibility(theirs ? View.VISIBLE : View.GONE);
+            if (theirs) {
+                v.authorMark.getBackground().setTint(theirColour(context));
+            }
         }
 
         if (v.iconView2 != null) {
@@ -402,6 +415,16 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         notifyDataSetInvalidated();
     }
 
+    /** Read once and kept: the colour is the same for every row on the screen. */
+    private int theirColour = 0;
+
+    private int theirColour(Context context) {
+        if (theirColour == 0) {
+            theirColour = Identity.theirs(context).colour;
+        }
+        return theirColour;
+    }
+
     public static class BlotterViewHolder {
 
         public final View layout;
@@ -417,6 +440,8 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         /** The category's symbol at the head of the row, and its typed-text twin. */
         public final ImageView categoryIcon;
         public final TextView categoryIconText;
+        /** Shown, in the other person's colour, on the movements they wrote. */
+        public final View authorMark;
         public final CheckBox checkBox;
 
         public BlotterViewHolder(View view) {
@@ -432,6 +457,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
             iconView2 = view.findViewById(R.id.right_top_2);
             categoryIcon = view.findViewById(R.id.category_icon);
             categoryIconText = view.findViewById(R.id.category_icon_text);
+            authorMark = view.findViewById(R.id.author_mark);
             checkBox = view.findViewById(R.id.cb);
         }
 

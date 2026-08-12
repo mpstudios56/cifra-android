@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Who one of the two people is: a name, a colour, and a symbol if they want one.
+
+  The colour first among the choices, because the colour is what does the work.
+  A list of forty movements is read with the eye, and a coloured mark is seen
+  before any word on the row is. The symbol is decoration on top of that - nice
+  to have, and useless on its own at this size.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="8dp">
+
+        <EditText
+            android:id="@+id/identity_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/identity_name_hint"
+            android:inputType="textPersonName|textCapWords"
+            android:maxLines="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:alpha="0.7"
+            android:text="@string/identity_colour"
+            android:textAllCaps="true"
+            android:textSize="11sp" />
+
+        <tw.tib.financisto.view.FlowLayout
+            android:id="@+id/identity_colours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:alpha="0.7"
+            android:text="@string/identity_symbol"
+            android:textAllCaps="true"
+            android:textSize="11sp" />
+
+        <tw.tib.financisto.view.FlowLayout
+            android:id="@+id/identity_symbols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>

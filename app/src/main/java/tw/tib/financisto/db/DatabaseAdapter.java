@@ -429,6 +429,12 @@ public class DatabaseAdapter extends MyEntityManager {
         long transactionId;
         boolean isNew = transaction.id == -1;
         transaction.lastRecurrence = System.currentTimeMillis();
+        if (isNew && (transaction.createdBy == null || transaction.createdBy.isEmpty())) {
+            // Stamped once, when it is written. An edit by the other person
+            // does not make the movement theirs: they changed it, they did not
+            // record it, and the record of changes is where editing is shown.
+            transaction.createdBy = MyPreferences.getSyncDeviceId();
+        }
         if (isNew) {
             transactionId = insertTransaction(transaction);
         } else {

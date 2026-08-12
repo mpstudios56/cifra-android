@@ -1378,4 +1378,7 @@
   <string name="change_added">hinzugefügt</string>
   <string name="change_edited">geändert</string>
   <string name="change_deleted">gelöscht</string>
+  <string name="identity_name_hint">Name</string>
+  <string name="identity_colour">Farbe</string>
+  <string name="identity_symbol">Symbol</string>
 </resources>

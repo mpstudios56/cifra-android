@@ -140,7 +140,9 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
         to_account_balance,
         is_transfer,
         category_icon,
-        category_accent_color;
+        category_accent_color,
+        /** The phone this movement was written on. Empty for anything older than sharing. */
+        created_by;
 
         public static final String[] NORMAL_PROJECTION = EnumUtils.asStringArray(BlotterColumns.values());
 

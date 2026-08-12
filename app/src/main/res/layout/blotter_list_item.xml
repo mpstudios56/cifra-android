@@ -31,6 +31,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <!--
+      A small mark in the other person's colour, on the movements they wrote.
+      Only on theirs: marking both would double the ink and say nothing, since
+      what one wants to see is which of these are not mine. Tucked against the
+      category symbol rather than given a column of its own, so a row is no
+      taller and no busier when nobody is sharing anything.
+    -->
+    <View
+        android:id="@+id/author_mark"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:background="@drawable/pie_row_dot"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/category_icon"
+        app:layout_constraintTop_toTopOf="@id/category_icon" />
+
     <TextView
         android:id="@+id/category_icon_text"
         android:layout_width="28dp"

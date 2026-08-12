@@ -52,6 +52,14 @@ public class Transaction extends TransactionBase {
 	@Column(name = "blob_key")
 	public String blobKey;
 
+	/**
+	 * The phone this movement was written on, so a list of them can show at a
+	 * glance which ones are not yours. Empty for everything written before two
+	 * people shared a ledger, which is the truth about it.
+	 */
+	@Column(name = "created_by")
+	public String createdBy;
+
 	@Column(name = "original_currency_id")
 	public long originalCurrencyId;
 
@@ -102,6 +110,12 @@ public class Transaction extends TransactionBase {
 		values.put(TransactionColumns.is_ccard_payment.name(), isCCardPayment);
 		values.put(TransactionColumns.last_recurrence.name(), lastRecurrence);
 		values.put(TransactionColumns.blob_key.name(), blobKey);
+		// Which phone wrote it. Written here rather than at each of the dozen
+		// places that save a movement, and only when it is not already known,
+		// so that an edit does not take the authorship off whoever wrote it.
+		if (createdBy != null && !createdBy.isEmpty()) {
+			values.put("created_by", createdBy);
+		}
 		return values;
 	}
 

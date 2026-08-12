@@ -185,7 +185,11 @@ public class DatabaseSchemaEvolution extends SQLiteOpenHelper {
 		Scanner scanner = new Scanner(is);
 		try {
 			while (scanner.hasNextLine()) {
-				sb.append(scanner.nextLine().trim()).append(" ");
+				// Kept on separate lines. Joined with a space, a line beginning
+				// with -- swallowed the statement that followed it and the
+				// script silently did nothing: the migration "ran", the column
+				// was not there, and the app died on the first query for it.
+				sb.append(scanner.nextLine().trim()).append("\n");
 			}
 		} finally {
 			scanner.close();
