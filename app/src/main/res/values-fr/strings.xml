@@ -1365,4 +1365,17 @@
   <string name="search_clear">Effacer</string>
   <string name="trash_no_account">Le compte auquel appartenait cet élément a été supprimé. Recrée-le et tu pourras le restaurer ; en attendant il reste dans la corbeille.</string>
   <string name="trash_restored_partly">Restauré sans la catégorie, qui n’existe plus.</string>
+  <string name="pref_group_sharing">Partage entre deux personnes</string>
+  <string name="sync_author">Ton nom</string>
+  <string name="sync_author_summary">Comment sont signés dans le journal les changements que tu fais</string>
+  <string name="sync_partner">L’autre personne</string>
+  <string name="sync_partner_summary">Comment s’appellent ses changements quand ils arrivent</string>
+  <string name="change_log">Journal des modifications</string>
+  <string name="change_log_summary">Qui a ajouté, modifié ou supprimé quoi, et quand</string>
+  <string name="change_log_empty">Rien n’a encore été modifié</string>
+  <string name="change_log_note">Les changements faits sur ce téléphone sont signés %1$s.</string>
+  <string name="change_log_note_unsigned">Personne n’a dit qui utilise ce téléphone, les changements ne sont donc pas signés. Le nom se règle dans les paramètres.</string>
+  <string name="change_added">ajouté</string>
+  <string name="change_edited">modifié</string>
+  <string name="change_deleted">supprimé</string>
 </resources>

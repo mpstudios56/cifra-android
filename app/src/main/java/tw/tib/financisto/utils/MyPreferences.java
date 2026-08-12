@@ -574,6 +574,33 @@ public class MyPreferences {
 	}
 
 	/**
+	 * How this phone signs the changes it makes. Empty until somebody says who
+	 * they are - an unsigned record is still better than a wrong name.
+	 */
+	public static String getSyncAuthor() {
+		return getString("sync_author", "");
+	}
+
+	/** What the other person's changes are called when they arrive. */
+	public static String getSyncPartner() {
+		return getString("sync_partner", "");
+	}
+
+	/**
+	 * This phone, told apart from the other one. Made once and kept: the names
+	 * can be changed at any time and both can be the same, so they cannot be
+	 * what distinguishes the two devices.
+	 */
+	public static String getSyncDeviceId() {
+		String id = getString("sync_device_id", "");
+		if (id.isEmpty()) {
+			id = java.util.UUID.randomUUID().toString();
+			edit().putString("sync_device_id", id).apply();
+		}
+		return id;
+	}
+
+	/**
 	 * Written from the chart screen as well as from the settings, so that
 	 * changing what a chart shows and reading what the settings say never give
 	 * two different answers.

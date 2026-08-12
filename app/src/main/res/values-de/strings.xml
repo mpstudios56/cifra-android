@@ -1365,4 +1365,17 @@
   <string name="search_clear">Löschen</string>
   <string name="trash_no_account">Das Konto, zu dem dieser Eintrag gehörte, wurde gelöscht. Lege es neu an, dann lässt sich der Eintrag wiederherstellen; bis dahin bleibt er im Papierkorb.</string>
   <string name="trash_restored_partly">Wiederhergestellt, ohne die Kategorie: die gibt es nicht mehr.</string>
+  <string name="pref_group_sharing">Teilen zu zweit</string>
+  <string name="sync_author">Dein Name</string>
+  <string name="sync_author_summary">Wie deine Änderungen im Protokoll unterschrieben werden</string>
+  <string name="sync_partner">Die andere Person</string>
+  <string name="sync_partner_summary">Wie ihre Änderungen heißen, wenn sie ankommen</string>
+  <string name="change_log">Änderungsprotokoll</string>
+  <string name="change_log_summary">Wer was hinzugefügt, geändert oder gelöscht hat, und wann</string>
+  <string name="change_log_empty">Es wurde noch nichts geändert</string>
+  <string name="change_log_note">Änderungen auf diesem Telefon werden mit %1$s unterschrieben.</string>
+  <string name="change_log_note_unsigned">Niemand hat gesagt, wer dieses Telefon benutzt, also sind die Änderungen nicht unterschrieben. Der Name wird in den Einstellungen gesetzt.</string>
+  <string name="change_added">hinzugefügt</string>
+  <string name="change_edited">geändert</string>
+  <string name="change_deleted">gelöscht</string>
 </resources>

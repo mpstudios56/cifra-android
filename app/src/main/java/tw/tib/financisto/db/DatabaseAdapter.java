@@ -427,8 +427,9 @@ public class DatabaseAdapter extends MyEntityManager {
 
     public long insertOrUpdateInTransaction(Transaction transaction, List<TransactionAttribute> attributes) {
         long transactionId;
+        boolean isNew = transaction.id == -1;
         transaction.lastRecurrence = System.currentTimeMillis();
-        if (transaction.id == -1) {
+        if (isNew) {
             transactionId = insertTransaction(transaction);
         } else {
             updateTransaction(transaction);
@@ -443,7 +444,27 @@ public class DatabaseAdapter extends MyEntityManager {
         }
         transaction.id = transactionId;
         insertSplits(transaction);
+        // Templates and scheduled patterns are not movements of money, and a
+        // record full of them would bury the entries somebody is looking for.
+        if (transaction.isNotTemplateLike()) {
+            noteChange(DatabaseHelper.TRANSACTION_TABLE, transactionId,
+                    isNew ? ChangeLog.INSERT : ChangeLog.UPDATE,
+                    describeForTrash(transaction), whenForTrash(transaction));
+        }
         return transactionId;
+    }
+
+    /**
+     * Writes a line in the record of who changed what.
+     * <p>
+     * Called from inside whatever database transaction the change is part of,
+     * so a change that is rolled back takes its line with it: a record of
+     * something that did not happen is worse than no record.
+     */
+    private void noteChange(String entity, long id, String operation,
+                            String title, String subtitle) {
+        ChangeLog.record(db(), MyPreferences.getSyncDeviceId(), MyPreferences.getSyncAuthor(),
+                entity, id, operation, title, subtitle);
     }
 
     public void insertWithoutUpdatingBalance(Transaction transaction) {
@@ -623,6 +644,8 @@ public class DatabaseAdapter extends MyEntityManager {
         Trash.keep(db(), DatabaseHelper.TRANSACTION_TABLE, id,
                 describeForTrash(t), whenForTrash(t));
         if (t.isNotTemplateLike()) {
+            noteChange(DatabaseHelper.TRANSACTION_TABLE, id, ChangeLog.DELETE,
+                    describeForTrash(t), whenForTrash(t));
             revertFromAccountBalance(t);
             revertToAccountBalance(t);
             updateAccountLastTransactionDate(t.fromAccountId);

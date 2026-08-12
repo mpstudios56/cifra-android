@@ -100,6 +100,13 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.icon_transfer);
             return true;
         });
+        Preference pChangeLog = preferenceScreen.findPreference("change_log");
+        if (pChangeLog != null) {
+            pChangeLog.setOnPreferenceClickListener(arg0 -> {
+                startActivity(new Intent(getActivity(), ChangeLogActivity.class));
+                return true;
+            });
+        }
         Preference pDatabaseBackupFolder = preferenceScreen.findPreference("database_backup_folder");
         pDatabaseBackupFolder.setOnPreferenceClickListener(arg0 -> {
             selectDatabaseBackupFolder();

@@ -244,6 +244,35 @@
             android:title="@string/shortcut_new_transfer" />
     </PreferenceCategory>
 
+    <!--
+      Two names, not two accounts. Nobody signs in to anything: the names are
+      only how the record of changes reads, so that "chi ha messo questi
+      ottanta euro" has an answer between two people who can both do
+      everything.
+    -->
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_sharing">
+        <EditTextPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            app:useSimpleSummaryProvider="true"
+            android:key="sync_author"
+            android:summary="@string/sync_author_summary"
+            android:title="@string/sync_author" />
+        <EditTextPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            app:useSimpleSummaryProvider="true"
+            android:key="sync_partner"
+            android:summary="@string/sync_partner_summary"
+            android:title="@string/sync_partner" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="change_log"
+            android:summary="@string/change_log_summary"
+            android:title="@string/change_log" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/database_backup">
         <Preference
             app:iconSpaceReserved="false"

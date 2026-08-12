@@ -1368,4 +1368,17 @@
   <string name="search_clear">Cancella</string>
   <string name="trash_no_account">Il conto a cui apparteneva questo elemento è stato eliminato. Ricrealo e potrai ripristinarlo; fino ad allora resta nel cestino.</string>
   <string name="trash_restored_partly">Ripristinato senza la categoria, che non esiste più.</string>
+  <string name="pref_group_sharing">Condivisione fra due persone</string>
+  <string name="sync_author">Il tuo nome</string>
+  <string name="sync_author_summary">Come vengono firmate nel registro le modifiche che fai tu</string>
+  <string name="sync_partner">L’altra persona</string>
+  <string name="sync_partner_summary">Come vengono chiamate le sue modifiche quando arrivano</string>
+  <string name="change_log">Registro delle modifiche</string>
+  <string name="change_log_summary">Chi ha aggiunto, modificato o eliminato cosa, e quando</string>
+  <string name="change_log_empty">Non è ancora stato modificato niente</string>
+  <string name="change_log_note">Le modifiche fatte su questo telefono sono firmate %1$s.</string>
+  <string name="change_log_note_unsigned">Nessuno ha detto chi usa questo telefono, quindi le modifiche non sono firmate. Il nome si imposta nelle preferenze.</string>
+  <string name="change_added">aggiunto</string>
+  <string name="change_edited">modificato</string>
+  <string name="change_deleted">eliminato</string>
 </resources>

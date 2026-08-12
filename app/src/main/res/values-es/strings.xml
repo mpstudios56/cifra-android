@@ -1365,4 +1365,17 @@
   <string name="search_clear">Borrar</string>
   <string name="trash_no_account">La cuenta a la que pertenecía este elemento se ha eliminado. Vuelve a crearla y podrás restaurarlo; hasta entonces permanece en la papelera.</string>
   <string name="trash_restored_partly">Restaurado sin la categoría, que ya no existe.</string>
+  <string name="pref_group_sharing">Compartir entre dos personas</string>
+  <string name="sync_author">Tu nombre</string>
+  <string name="sync_author_summary">Cómo se firman en el registro los cambios que haces tú</string>
+  <string name="sync_partner">La otra persona</string>
+  <string name="sync_partner_summary">Cómo se llaman sus cambios cuando llegan</string>
+  <string name="change_log">Registro de cambios</string>
+  <string name="change_log_summary">Quién ha añadido, modificado o eliminado qué, y cuándo</string>
+  <string name="change_log_empty">Todavía no se ha cambiado nada</string>
+  <string name="change_log_note">Los cambios hechos en este teléfono se firman %1$s.</string>
+  <string name="change_log_note_unsigned">Nadie ha dicho quién usa este teléfono, así que los cambios no se firman. El nombre se define en los ajustes.</string>
+  <string name="change_added">añadido</string>
+  <string name="change_edited">modificado</string>
+  <string name="change_deleted">eliminado</string>
 </resources>

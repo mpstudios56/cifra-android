@@ -1467,4 +1467,17 @@
     <string name="search_clear">Clear</string>
     <string name="trash_no_account">The account this entry belonged to has been deleted. Create it again and the entry can be restored; it stays in the bin until then.</string>
     <string name="trash_restored_partly">Restored. What it referred to no longer exists and was left out.</string>
+    <string name="pref_group_sharing">Sharing between two people</string>
+    <string name="sync_author">Your name</string>
+    <string name="sync_author_summary">How the changes you make are signed in the record</string>
+    <string name="sync_partner">The other person</string>
+    <string name="sync_partner_summary">What their changes are called when they arrive</string>
+    <string name="change_log">Record of changes</string>
+    <string name="change_log_summary">Who added, edited or deleted what, and when</string>
+    <string name="change_log_empty">Nothing has been changed yet</string>
+    <string name="change_log_note">Changes made on this phone are signed %1$s.</string>
+    <string name="change_log_note_unsigned">Nobody has said who uses this phone, so the changes are unsigned. The name is set in the settings.</string>
+    <string name="change_added">added</string>
+    <string name="change_edited">edited</string>
+    <string name="change_deleted">deleted</string>
 </resources>
