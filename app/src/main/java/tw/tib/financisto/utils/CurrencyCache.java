@@ -45,6 +45,11 @@ public class CurrencyCache {
 	}
 
 	public static synchronized void initialize(EntityManager em) {
+		// Ten rows all called EUR are one currency, and until they are one
+		// currency every total that crosses two of them reads "N/A". Folded
+		// before the list is read, so what is read is already right.
+		tw.tib.financisto.db.Currencies.mergeSameCode(em.db());
+
 		var currencies = new Long2ObjectOpenHashMap<Currency>();
 		Query<Currency> q = em.createQuery(Currency.class);
 		Cursor c = q.execute();
