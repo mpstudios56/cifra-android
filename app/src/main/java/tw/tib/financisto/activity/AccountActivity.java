@@ -336,6 +336,11 @@ public class AccountActivity extends AbstractActivity {
 			case R.id.is_included_into_reports:
 				isIncludedIntoReports.performClick();
 				break;
+			// Without this the row does nothing at all when tapped: the tick
+			// itself is not what receives the touch, the row is.
+			case R.id.is_shared:
+				isShared.performClick();
+				break;
 			case R.id.account_icon:
 				showIconPicker();
 				break;
