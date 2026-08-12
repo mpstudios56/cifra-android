@@ -348,27 +348,40 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
         private Intent createPieChart() {
             ReportData report = currentReport.getReportForChart(db, WhereFilter.copyOf(filter));
 
-            ArrayList<PieEntry> entries = new ArrayList<>();
-            // The figures again as written money. Formatting them here is the
-            // only place the currency of each line is still known; the chart
-            // screen is handed a plain list of values.
+            // Three plain lists rather than objects turned into JSON: the chart
+            // screen wants a name, a size and a written amount, and passing
+            // them as they are keeps the library's own classes out of a
+            // reflection round-trip that the release build obfuscates.
+            //
+            // The written amounts are made here because this is the last place
+            // the currency of each line is still known.
+            ArrayList<String> names = new ArrayList<>();
+            ArrayList<Float> values = new ArrayList<>();
             ArrayList<String> amounts = new ArrayList<>();
 
             for (GraphUnit unit : report.units) {
                 BigDecimal v = unit.getIncomeExpense().income;
                 if (!v.equals(BigDecimal.ZERO)) {
-                    entries.add(new PieEntry(Math.abs(v.floatValue()), "+" + unit.name));
+                    names.add("+" + unit.name);
+                    values.add(Math.abs(v.floatValue()));
                     amounts.add(Utils.amountToString(unit.currency, v.longValue()));
                 }
                 v = unit.getIncomeExpense().expense;
                 if (!v.equals(BigDecimal.ZERO)) {
-                    entries.add(new PieEntry(Math.abs(v.floatValue()), "-" + unit.name));
+                    names.add("-" + unit.name);
+                    values.add(Math.abs(v.floatValue()));
                     amounts.add(Utils.amountToString(unit.currency, v.longValue()));
                 }
             }
 
+            float[] sizes = new float[values.size()];
+            for (int i = 0; i < values.size(); i++) {
+                sizes[i] = values.get(i);
+            }
+
             Intent intent = new Intent(ReportActivity.this, ReportPieChartActivity.class);
-            intent.putExtra(ReportPieChartActivity.PIE_CHART_DATA, new Gson().toJson(entries));
+            intent.putExtra(ReportPieChartActivity.PIE_CHART_NAMES, names.toArray(new String[0]));
+            intent.putExtra(ReportPieChartActivity.PIE_CHART_VALUES, sizes);
             intent.putExtra(ReportPieChartActivity.PIE_CHART_AMOUNTS,
                     amounts.toArray(new String[0]));
             return intent;

@@ -23,8 +23,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +46,8 @@ import tw.tib.financisto.utils.PinProtection;
  */
 public class ReportPieChartActivity extends AppCompatActivity {
 
-    public static final String PIE_CHART_DATA = "pie_chart_data";
+    public static final String PIE_CHART_NAMES = "pie_chart_names";
+    public static final String PIE_CHART_VALUES = "pie_chart_values";
     public static final String PIE_CHART_AMOUNTS = "pie_chart_amounts";
 
     /** Below this share of the total a slice is a sliver, and joins "other". */
@@ -147,25 +146,20 @@ public class ReportPieChartActivity extends AppCompatActivity {
         if (args == null) {
             return;
         }
-        String json = args.getString(PIE_CHART_DATA);
+        String[] names = args.getStringArray(PIE_CHART_NAMES);
+        float[] values = args.getFloatArray(PIE_CHART_VALUES);
         String[] amounts = args.getStringArray(PIE_CHART_AMOUNTS);
-        if (json == null) {
+        if (names == null || values == null) {
             return;
         }
-        ArrayList<PieEntry> entries =
-                new Gson().fromJson(json, new TypeToken<ArrayList<PieEntry>>() {}.getType());
-        if (entries == null) {
-            return;
-        }
-        for (int i = 0; i < entries.size(); i++) {
-            PieEntry e = entries.get(i);
-            String label = e.getLabel() == null ? "" : e.getLabel();
+        for (int i = 0; i < names.length && i < values.length; i++) {
+            String label = names[i] == null ? "" : names[i];
             // The caller marks which side of the ledger a line is on by writing
             // a sign in front of its name.
             boolean isIncome = label.startsWith("+");
             String name = label.isEmpty() ? label : label.substring(1);
             String amount = amounts != null && i < amounts.length ? amounts[i] : "";
-            (isIncome ? income : spending).add(new Slice(name, Math.abs(e.getValue()), amount));
+            (isIncome ? income : spending).add(new Slice(name, Math.abs(values[i]), amount));
         }
         Collections.sort(spending, (a, b) -> Float.compare(b.value, a.value));
         Collections.sort(income, (a, b) -> Float.compare(b.value, a.value));
