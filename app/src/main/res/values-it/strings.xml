@@ -1438,4 +1438,7 @@
   <string name="duplicate_same">È un doppione</string>
   <string name="duplicate_same_confirm">Resta quella registrata per prima. L’altra va nel cestino, da cui si può ripristinare.</string>
   <string name="duplicate_removed">Tenuta la prima</string>
+  <string name="currency_tidy">Unisci le valute ripetute</string>
+  <string name="currency_tidy_none">Nessuna valuta compare due volte</string>
+  <string name="currency_tidy_done">%1$d righe ripetute unite in una. Conti, budget e movimenti ora usano la stessa valuta</string>
 </resources>

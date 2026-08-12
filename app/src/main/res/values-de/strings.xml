@@ -1435,4 +1435,7 @@
   <string name="duplicate_same">Ein Duplikat</string>
   <string name="duplicate_same_confirm">Die zuerst notierte bleibt. Die andere kommt in den Papierkorb und kann von dort wiederhergestellt werden.</string>
   <string name="duplicate_removed">Die erste wurde behalten</string>
+  <string name="currency_tidy">Doppelte Währungen zusammenführen</string>
+  <string name="currency_tidy_none">Keine Währung kommt doppelt vor</string>
+  <string name="currency_tidy_done">%1$d doppelte Zeilen zu einer zusammengeführt. Konten, Budgets und Buchungen nutzen jetzt dieselbe Währung</string>
 </resources>

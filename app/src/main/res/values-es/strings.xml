@@ -1435,4 +1435,7 @@
   <string name="duplicate_same">Es un duplicado</string>
   <string name="duplicate_same_confirm">Se queda el anotado primero. El otro va a la papelera, desde donde se puede restaurar.</string>
   <string name="duplicate_removed">Se ha quedado el primero</string>
+  <string name="currency_tidy">Unir las monedas repetidas</string>
+  <string name="currency_tidy_none">Ninguna moneda aparece dos veces</string>
+  <string name="currency_tidy_done">%1$d filas repetidas unidas en una. Cuentas, presupuestos y movimientos usan ahora la misma moneda</string>
 </resources>

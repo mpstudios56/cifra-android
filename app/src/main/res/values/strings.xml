@@ -1537,4 +1537,7 @@
     <string name="duplicate_same">A duplicate</string>
     <string name="duplicate_same_confirm">The one written first stays. The other goes to the bin, where it can be restored.</string>
     <string name="duplicate_removed">Kept the first one</string>
+    <string name="currency_tidy">Merge repeated currencies</string>
+    <string name="currency_tidy_none">No currency appears twice</string>
+    <string name="currency_tidy_done">%1$d repeated rows folded into one. Accounts, budgets and movements now share one currency</string>
 </resources>

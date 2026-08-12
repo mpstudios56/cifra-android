@@ -1435,4 +1435,7 @@
   <string name="duplicate_same">Un doublon</string>
   <string name="duplicate_same_confirm">La première notée reste. L’autre va à la corbeille, d’où elle peut être restaurée.</string>
   <string name="duplicate_removed">La première a été gardée</string>
+  <string name="currency_tidy">Fusionner les devises répétées</string>
+  <string name="currency_tidy_none">Aucune devise n’apparaît deux fois</string>
+  <string name="currency_tidy_done">%1$d lignes répétées fusionnées en une. Comptes, budgets et opérations utilisent désormais la même devise</string>
 </resources>

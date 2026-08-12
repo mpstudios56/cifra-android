@@ -28,5 +28,14 @@
         <ImageButton android:layout_width="wrap_content"
                      android:layout_height="wrap_content" android:id="@+id/bRates"
                      android:src="@drawable/ic_input_exchange_rates" />
+        <!--
+          Folds rows that are the same currency twice. It happens on its own at
+          every start; the button is for the person who has just been told that
+          is why nothing added up, and wants to see it happen.
+        -->
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content" android:id="@+id/bTidy"
+                     android:contentDescription="@string/currency_tidy"
+                     android:src="@drawable/ic_action_category" />
 	</LinearLayout>
 </LinearLayout>

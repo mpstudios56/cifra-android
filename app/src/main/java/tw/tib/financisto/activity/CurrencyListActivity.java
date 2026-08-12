@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import android.widget.ListAdapter;
 
 import androidx.core.graphics.Insets;
@@ -48,6 +49,9 @@ public class CurrencyListActivity extends AbstractListActivity<Cursor> {
 			Intent intent = new Intent(CurrencyListActivity.this, ExchangeRatesListActivity.class);
 			startActivity(intent);
 		});
+
+		ImageButton bTidy = findViewById(R.id.bTidy);
+		bTidy.setOnClickListener(view -> tidyCurrencies());
 
 		ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.currency_list), (v, windowInsets) -> {
 			Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
@@ -90,6 +94,32 @@ public class CurrencyListActivity extends AbstractListActivity<Cursor> {
 		Currency c = db.get(Currency.class, id);
 		c.isDefault = true;
 		db.saveOrUpdate(c);
+		recreateCursor();
+	}
+
+	/**
+	 * Folds rows that are the same currency written twice.
+	 * <p>
+	 * Some ledgers arrive from Financisto with the euro in them ten times over.
+	 * To the app those are ten currencies, and adding up two accounts held in
+	 * two of them needs an exchange rate from euros to euros - so every total
+	 * reads "N/A" while the money is all plainly there. This is the same tidying
+	 * that happens at every start, put behind a button for whoever has just
+	 * found out that was the reason.
+	 */
+	private void tidyCurrencies() {
+		int folded = tw.tib.financisto.db.Currencies.mergeSameCode(db.db());
+		if (folded == 0) {
+			Toast.makeText(this, R.string.currency_tidy_none, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		// The list of currencies is held in memory; after moving rows around
+		// underneath it, it has to be read again or the screens go on showing
+		// what is no longer there.
+		tw.tib.financisto.utils.CurrencyCache.initialize(db);
+		db.recalculateAccountsBalances();
+		Toast.makeText(this, getString(R.string.currency_tidy_done, folded),
+				Toast.LENGTH_LONG).show();
 		recreateCursor();
 	}
 
