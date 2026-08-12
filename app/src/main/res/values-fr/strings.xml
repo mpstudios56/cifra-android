@@ -1388,9 +1388,17 @@
   <string name="sharing_them">L’autre personne</string>
   <string name="sharing_me_empty">Dis qui tu es</string>
   <string name="sharing_them_empty">Dis qui c’est</string>
-  <string name="sharing_not_yet">L’échange entre les deux téléphones n’est pas encore construit : rien ne quitte ce téléphone. Ce qui fonctionne aujourd’hui, c’est le journal de ce que tu modifies, et les deux noms prêts pour la suite.</string>
+  <string name="sharing_not_yet">Les deux téléphones échangent un fichier dans le dossier partagé. Un tour a lieu à l’ouverture de cet écran et quand tu appuies sur le bouton. La vitesse d’arrivée d’un changement est celle de ton cloud : l’application ne peut pas être plus rapide que le dossier.</string>
   <string name="sharing_folder">Dossier partagé</string>
   <string name="sharing_folder_empty">Pas choisi. Ce doit être un dossier que ton cloud garde à jour sur les deux téléphones</string>
   <string name="sharing_folder_chosen">%1$s</string>
   <string name="sharing_folder_failed">Aucune application de ce téléphone ne sait choisir un dossier</string>
+  <string name="sharing_now">Synchroniser</string>
+  <string name="sharing_running">Synchronisation…</string>
+  <string name="sharing_last">Dernière synchronisation à %1$s</string>
+  <string name="sharing_never">Pas encore synchronisé</string>
+  <string name="sharing_received">%1$d changements sont arrivés</string>
+  <string name="sharing_nothing_new">Rien de nouveau</string>
+  <string name="sharing_no_folder">Choisis d’abord le dossier partagé</string>
+  <string name="sharing_skipped">Quelque chose n’a pas pu être appliqué : %1$s</string>
 </resources>

@@ -1391,9 +1391,17 @@
   <string name="sharing_them">L’altra persona</string>
   <string name="sharing_me_empty">Di’ chi sei</string>
   <string name="sharing_them_empty">Di’ chi è</string>
-  <string name="sharing_not_yet">Lo scambio fra i due telefoni non è ancora costruito: da questo telefono non esce niente. Quello che funziona oggi è il registro di quello che modifichi tu, e i due nomi pronti per quando arriverà.</string>
+  <string name="sharing_not_yet">I due telefoni si scambiano un file nella cartella condivisa. Un giro parte quando apri questa schermata e quando premi il pulsante. La velocità con cui una modifica arriva è quella con cui il tuo cloud tiene allineata la cartella: l’app non può essere più veloce della cartella.</string>
   <string name="sharing_folder">Cartella condivisa</string>
   <string name="sharing_folder_empty">Non scelta. Dev’essere una cartella che il tuo cloud tiene allineata su tutti e due i telefoni</string>
   <string name="sharing_folder_chosen">%1$s</string>
   <string name="sharing_folder_failed">Nessuna app su questo telefono sa scegliere una cartella</string>
+  <string name="sharing_now">Sincronizza adesso</string>
+  <string name="sharing_running">Sincronizzo…</string>
+  <string name="sharing_last">Ultima sincronia alle %1$s</string>
+  <string name="sharing_never">Non ancora sincronizzato</string>
+  <string name="sharing_received">Arrivate %1$d modifiche</string>
+  <string name="sharing_nothing_new">Niente di nuovo</string>
+  <string name="sharing_no_folder">Scegli prima la cartella condivisa</string>
+  <string name="sharing_skipped">Qualcosa non si è potuto applicare: %1$s</string>
 </resources>

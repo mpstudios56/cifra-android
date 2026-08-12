@@ -455,7 +455,8 @@ public class DatabaseAdapter extends MyEntityManager {
         if (transaction.isNotTemplateLike()) {
             noteChange(DatabaseHelper.TRANSACTION_TABLE, transactionId,
                     isNew ? ChangeLog.INSERT : ChangeLog.UPDATE,
-                    describeForTrash(transaction), whenForTrash(transaction));
+                    describeForTrash(transaction), whenForTrash(transaction),
+                    tw.tib.financisto.sync.SyncPayload.of(db(), transactionId));
         }
         return transactionId;
     }
@@ -468,9 +469,9 @@ public class DatabaseAdapter extends MyEntityManager {
      * something that did not happen is worse than no record.
      */
     private void noteChange(String entity, long id, String operation,
-                            String title, String subtitle) {
+                            String title, String subtitle, String payload) {
         ChangeLog.record(db(), MyPreferences.getSyncDeviceId(), MyPreferences.getSyncAuthor(),
-                entity, id, operation, title, subtitle);
+                entity, id, operation, title, subtitle, payload);
     }
 
     public void insertWithoutUpdatingBalance(Transaction transaction) {
@@ -651,7 +652,9 @@ public class DatabaseAdapter extends MyEntityManager {
                 describeForTrash(t), whenForTrash(t));
         if (t.isNotTemplateLike()) {
             noteChange(DatabaseHelper.TRANSACTION_TABLE, id, ChangeLog.DELETE,
-                    describeForTrash(t), whenForTrash(t));
+                    describeForTrash(t), whenForTrash(t),
+                    tw.tib.financisto.sync.SyncPayload.forDeletion(
+                            Uuids.of(db(), DatabaseHelper.TRANSACTION_TABLE, id)));
             revertFromAccountBalance(t);
             revertToAccountBalance(t);
             updateAccountLastTransactionDate(t.fromAccountId);

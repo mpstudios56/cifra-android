@@ -63,6 +63,16 @@ public class ChangeLog {
     public static void record(SQLiteDatabase db, String device, String author,
                               String entity, long entityId, String operation,
                               String title, String subtitle) {
+        record(db, device, author, entity, entityId, operation, title, subtitle, "");
+    }
+
+    /**
+     * @param payload what the other phone needs to put this change back, or
+     *                empty for a change that stays here
+     */
+    public static void record(SQLiteDatabase db, String device, String author,
+                              String entity, long entityId, String operation,
+                              String title, String subtitle, String payload) {
         try {
             ContentValues values = new ContentValues();
             values.put("change_uuid", UUID.randomUUID().toString());
@@ -74,7 +84,7 @@ public class ChangeLog {
             values.put("operation", operation);
             values.put("title", title == null ? "" : title);
             values.put("subtitle", subtitle == null ? "" : subtitle);
-            values.put("payload", "");
+            values.put("payload", payload == null ? "" : payload);
             db.insert(TABLE, null, values);
         } catch (Exception e) {
             Log.e(TAG, "could not record " + operation + " on " + entity + " " + entityId, e);

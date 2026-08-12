@@ -592,6 +592,15 @@ public class MyPreferences {
 		return getString("sync_folder", "");
 	}
 
+	/** When the last round of the exchange happened, or zero. */
+	public static long getSyncLastRun() {
+		return getLong("sync_last_run", 0);
+	}
+
+	public static void setSyncLastRun(long when) {
+		edit().putLong("sync_last_run", when).apply();
+	}
+
 	public static void setSyncFolder(String uri) {
 		edit().putString("sync_folder", uri == null ? "" : uri).apply();
 	}

@@ -1388,9 +1388,17 @@
   <string name="sharing_them">La otra persona</string>
   <string name="sharing_me_empty">Di quién eres</string>
   <string name="sharing_them_empty">Di quién es</string>
-  <string name="sharing_not_yet">El intercambio entre los dos teléfonos aún no está construido: de este teléfono no sale nada. Lo que funciona hoy es el registro de lo que cambias tú, y los dos nombres listos para cuando llegue.</string>
+  <string name="sharing_not_yet">Los dos teléfonos intercambian un archivo en la carpeta compartida. Se sincroniza al abrir esta pantalla y al pulsar el botón. La rapidez con que llega un cambio es la de tu nube: la aplicación no puede ser más rápida que la carpeta.</string>
   <string name="sharing_folder">Carpeta compartida</string>
   <string name="sharing_folder_empty">Sin elegir. Debe ser una carpeta que tu nube mantenga sincronizada en los dos teléfonos</string>
   <string name="sharing_folder_chosen">%1$s</string>
   <string name="sharing_folder_failed">Ninguna aplicación de este teléfono sabe elegir una carpeta</string>
+  <string name="sharing_now">Sincronizar ahora</string>
+  <string name="sharing_running">Sincronizando…</string>
+  <string name="sharing_last">Última sincronización a las %1$s</string>
+  <string name="sharing_never">Aún sin sincronizar</string>
+  <string name="sharing_received">Han llegado %1$d cambios</string>
+  <string name="sharing_nothing_new">Nada nuevo</string>
+  <string name="sharing_no_folder">Elige primero la carpeta compartida</string>
+  <string name="sharing_skipped">Algo no se ha podido aplicar: %1$s</string>
 </resources>

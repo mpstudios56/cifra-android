@@ -1388,9 +1388,17 @@
   <string name="sharing_them">Die andere Person</string>
   <string name="sharing_me_empty">Sag, wer du bist</string>
   <string name="sharing_them_empty">Sag, wer sie ist</string>
-  <string name="sharing_not_yet">Der Austausch zwischen den beiden Telefonen ist noch nicht gebaut: von diesem Telefon geht nichts weg. Was heute funktioniert, ist das Protokoll deiner eigenen Änderungen und die beiden Namen, bereit für später.</string>
+  <string name="sharing_not_yet">Die beiden Telefone tauschen eine Datei im gemeinsamen Ordner. Ein Durchgang läuft beim Öffnen dieses Bildschirms und auf Knopfdruck. Wie schnell eine Änderung ankommt, hängt von deiner Cloud ab - die App kann nicht schneller sein als der Ordner.</string>
   <string name="sharing_folder">Gemeinsamer Ordner</string>
   <string name="sharing_folder_empty">Nicht gewählt. Es muss ein Ordner sein, den deine Cloud auf beiden Telefonen abgleicht</string>
   <string name="sharing_folder_chosen">%1$s</string>
   <string name="sharing_folder_failed">Keine App auf diesem Telefon kann einen Ordner auswählen</string>
+  <string name="sharing_now">Jetzt abgleichen</string>
+  <string name="sharing_running">Gleiche ab…</string>
+  <string name="sharing_last">Zuletzt abgeglichen um %1$s</string>
+  <string name="sharing_never">Noch nicht abgeglichen</string>
+  <string name="sharing_received">%1$d Änderungen sind angekommen</string>
+  <string name="sharing_nothing_new">Nichts Neues</string>
+  <string name="sharing_no_folder">Wähle zuerst den gemeinsamen Ordner</string>
+  <string name="sharing_skipped">Etwas konnte nicht übernommen werden: %1$s</string>
 </resources>

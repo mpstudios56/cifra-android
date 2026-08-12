@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import tw.tib.financisto.R;
+import tw.tib.financisto.db.DatabaseAdapter;
+import tw.tib.financisto.sync.SyncEngine;
 import tw.tib.financisto.utils.CategoryIcon;
 import tw.tib.financisto.utils.Identity;
 import tw.tib.financisto.utils.MyPreferences;
@@ -34,15 +39,17 @@ import tw.tib.financisto.utils.PinProtection;
  * switches nobody would find it, and it is not a preference in any case: it is
  * a thing the app does, and things the app does live in the menu.
  * <p>
- * What is here today is who the two people are and the record of what each of
- * them changed. The exchange between the two phones is not built yet, and the
- * screen says so rather than implying otherwise - a screen that looks finished
- * and does nothing is worse than one that admits where it has got to.
+ * Who the two people are, where their phones meet, and the record of what each
+ * of them changed. Opening it runs a round of the exchange, because somebody
+ * who came here to see whether the other person's spending has arrived should
+ * not have to ask for it.
  */
 public class SharingActivity extends AppCompatActivity {
 
     private static final String TAG = "SharingActivity";
     private static final int PICK_FOLDER = 1;
+
+    private DatabaseAdapter db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,8 +74,47 @@ public class SharingActivity extends AppCompatActivity {
         findViewById(R.id.sharing_log).setOnClickListener(v ->
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
+        findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
 
+        db = new DatabaseAdapter(this);
+        db.open();
         show();
+        // A round on opening: somebody who came here to see whether the other
+        // person's spending has arrived should not have to ask for it.
+        sync(false);
+    }
+
+    /**
+     * One round, off the main thread. The folder is somebody else's storage
+     * provider with a cloud behind it, and it takes as long as it takes.
+     */
+    private void sync(boolean saySo) {
+        Button button = findViewById(R.id.sharing_now);
+        button.setEnabled(false);
+        button.setText(R.string.sharing_running);
+        new Thread(() -> {
+            SyncEngine.Result result = SyncEngine.run(this, db);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                button.setEnabled(true);
+                button.setText(R.string.sharing_now);
+                show();
+                if (saySo || result.received > 0) {
+                    Toast.makeText(this, message(result), Toast.LENGTH_LONG).show();
+                }
+            });
+        }).start();
+    }
+
+    private String message(SyncEngine.Result result) {
+        if (!result.ran) {
+            return getString(R.string.sharing_no_folder);
+        }
+        if (!result.skipped.isEmpty()) {
+            return getString(R.string.sharing_skipped, result.skipped.get(0));
+        }
+        return result.received > 0
+                ? getString(R.string.sharing_received, result.received)
+                : getString(R.string.sharing_nothing_new);
     }
 
     /**
@@ -132,6 +178,14 @@ public class SharingActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.sharing_folder_value)).setText(folder.isEmpty()
                 ? getString(R.string.sharing_folder_empty)
                 : getString(R.string.sharing_folder_chosen, folderName(folder)));
+
+        long last = MyPreferences.getSyncLastRun();
+        ((TextView) findViewById(R.id.sharing_last)).setText(last == 0
+                ? getString(R.string.sharing_never)
+                : getString(R.string.sharing_last, android.text.format.DateFormat
+                        .getTimeFormat(this).format(new java.util.Date(last))));
+        findViewById(R.id.sharing_now).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+        findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void show(Identity identity, int nameId, int dotId, int iconId, int emptyId) {
@@ -148,6 +202,14 @@ public class SharingActivity extends AppCompatActivity {
             icon.setImageResource(chosen.iconId);
             icon.setImageTintList(ColorStateList.valueOf(identity.colour));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (db != null) {
+            db.close();
+        }
+        super.onDestroy();
     }
 
     @Override

@@ -179,6 +179,35 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
+            <!--
+              The round happens on its own when the screen opens; the button is
+              for the moment somebody is standing there waiting for it, which is
+              exactly when a wait of thirty seconds feels like a fault.
+            -->
+            <Button
+                android:id="@+id/sharing_now"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/donate_button"
+                android:stateListAnimator="@null"
+                android:text="@string/sharing_now"
+                android:textColor="#FFFFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sharing_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
