@@ -31,14 +31,23 @@ public class PrivacyButton {
     private static final int ABOVE_BOTTOM_DP = 150;
     /** How long a wakeful button stays bright before retiring to the edge. */
     private static final long REST_AFTER_MS = 2500;
-    private static final float RESTING_ALPHA = 0.42f;
+    private static final float RESTING_ALPHA = 0.30f;
+    /** How much of it hides past the edge once it settles. */
+    private static final float RESTING_TUCK = 0.52f;
 
     private static final int TAG_ID = R.id.privacy_button;
 
     public static void attachTo(Activity activity) {
         ViewGroup content = activity.findViewById(android.R.id.content);
         if (content == null || content.getChildCount() == 0) return;
-        if (content.findViewById(TAG_ID) != null) return;
+        View already = content.findViewById(TAG_ID);
+        if (already != null) {
+            // Coming back to the app: show it for a moment. Whoever put the
+            // figures out on the bus wants to see, on picking the phone up
+            // again, that they are still out and where the switch is.
+            wake(already);
+            return;
+        }
 
         ImageButton button = new ImageButton(activity);
         button.setId(TAG_ID);
@@ -94,7 +103,7 @@ public class PrivacyButton {
         if (button.getParent() == null) return;
         button.animate()
                 .alpha(RESTING_ALPHA)
-                .translationX(button.getWidth() * 0.38f)
+                .translationX(button.getWidth() * RESTING_TUCK)
                 .setDuration(400)
                 .start();
     }
