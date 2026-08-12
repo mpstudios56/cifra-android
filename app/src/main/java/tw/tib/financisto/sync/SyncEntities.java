@@ -1,0 +1,226 @@
+/*
+ * This program is made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ */
+package tw.tib.financisto.sync;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import tw.tib.financisto.db.DatabaseHelper;
+
+/**
+ * The things a movement points at: accounts, categories, names, places.
+ * <p>
+ * Sent as they are rather than as a history of changes. There is no interesting
+ * story in the life of a category, and sending the current state means a phone
+ * that joins late, or that lost its copy, catches up on the first round instead
+ * of needing every change ever made to it.
+ * <p>
+ * <b>Matched by name before anything else.</b> Two people who both restored the
+ * same backup, or who each set up their own, have a "Conto corrente" apiece with
+ * different identifiers. Creating a second one next to it would give them two of
+ * everything on the first round, tidily and irreversibly. So a thing arriving
+ * under a name we already have is that thing, and the two phones settle on one
+ * identifier for it.
+ */
+public class SyncEntities {
+
+    private static final String TAG = "SyncEntities";
+
+    private SyncEntities() {
+    }
+
+    // ------------------------------------------------------------------ sending
+
+    /** A line for everything this phone has agreed to share. */
+    public static List<String> lines(SQLiteDatabase db) {
+        List<String> lines = new ArrayList<>();
+        for (String kind : SharedThings.KINDS) {
+            for (SharedThings.Thing thing : SharedThings.list(db, kind)) {
+                if (!thing.shared || thing.uuid == null || thing.uuid.isEmpty()) {
+                    continue;
+                }
+                try {
+                    JSONObject o = new JSONObject();
+                    o.put("thing", kind);
+                    o.put("uuid", thing.uuid);
+                    o.put("name", thing.name);
+                    if (SharedThings.ACCOUNT.equals(kind)) {
+                        o.put("currency", currencyOf(db, thing.id));
+                        o.put("type", stringOf(db, kind, thing.id, "type"));
+                    }
+                    lines.add(o.toString());
+                } catch (Exception e) {
+                    Log.e(TAG, "could not write out " + kind + " " + thing.uuid, e);
+                }
+            }
+        }
+        return lines;
+    }
+
+    // ----------------------------------------------------------------- receiving
+
+    /**
+     * Makes sure the thing described is here, under the identifier the other
+     * phone knows it by.
+     *
+     * @return true when something was created or renamed
+     */
+    public static boolean take(SQLiteDatabase db, JSONObject o) {
+        String kind = o.optString("thing", "");
+        String uuid = o.optString("uuid", "");
+        String name = o.optString("name", "");
+        if (kind.isEmpty() || uuid.isEmpty()) {
+            return false;
+        }
+
+        // Already known by that identifier: nothing to do but keep sharing it.
+        if (idByUuid(db, kind, uuid) > 0) {
+            SharedThings.adopt(db, kind, uuid);
+            return false;
+        }
+
+        long byName = idByName(db, kind, name);
+        if (byName > 0) {
+            // The same thing under two identifiers. Ours takes theirs, and from
+            // now on both phones mean the same row when they say it.
+            ContentValues v = new ContentValues();
+            v.put("uuid", uuid);
+            db.update(kind, v, "_id=?", new String[]{String.valueOf(byName)});
+            SharedThings.adopt(db, kind, uuid);
+            return false;
+        }
+
+        boolean made = create(db, kind, uuid, name, o);
+        if (made) {
+            SharedThings.adopt(db, kind, uuid);
+        }
+        return made;
+    }
+
+    private static boolean create(SQLiteDatabase db, String kind, String uuid,
+                                  String name, JSONObject o) {
+        try {
+            ContentValues v = new ContentValues();
+            v.put(SharedThings.nameColumn(kind), name);
+            v.put("uuid", uuid);
+            if (SharedThings.ACCOUNT.equals(kind)) {
+                long currency = currencyByName(db, o.optString("currency", ""));
+                if (currency <= 0) {
+                    // Without a currency an account is not an account. Better to
+                    // leave it out and say so than to invent one.
+                    return false;
+                }
+                v.put("currency_id", currency);
+                v.put("type", o.optString("type", "CASH"));
+                v.put("is_active", 1);
+                v.put("is_include_into_totals", 1);
+                v.put("is_include_into_reports", 1);
+                v.put("total_amount", 0);
+                v.put("creation_date", System.currentTimeMillis());
+                v.put("last_transaction_date", 0);
+                v.put("sort_order", 0);
+            } else if (SharedThings.CATEGORY.equals(kind)) {
+                // Placed at the end of the tree, at the top level. The shape of
+                // somebody else's categories is theirs; what has to match is the
+                // name a movement points at.
+                int right = maxRight(db);
+                v.put("left", right + 1);
+                v.put("right", right + 2);
+                v.put("type", 0);
+            } else if (SharedThings.LOCATION.equals(kind)) {
+                v.put("datetime", System.currentTimeMillis());
+                v.put("is_payee", 0);
+            }
+            return db.insert(kind, null, v) > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "could not create " + kind + " " + name, e);
+            return false;
+        }
+    }
+
+    // ------------------------------------------------------------------ lookups
+
+    private static long idByUuid(SQLiteDatabase db, String table, String uuid) {
+        try (Cursor c = db.query(table, new String[]{"_id"}, "uuid=?",
+                new String[]{uuid}, null, null, null)) {
+            return c.moveToFirst() ? c.getLong(0) : 0;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private static long idByName(SQLiteDatabase db, String table, String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return 0;
+        }
+        // Case and stray spaces do not make two different accounts.
+        try (Cursor c = db.query(table, new String[]{"_id"},
+                "trim(lower(" + SharedThings.nameColumn(table) + "))=?",
+                new String[]{name.trim().toLowerCase()}, null, null, "_id asc")) {
+            return c.moveToFirst() ? c.getLong(0) : 0;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private static String currencyOf(SQLiteDatabase db, long accountId) {
+        try (Cursor c = db.rawQuery("select cur.name from account a"
+                + " inner join currency cur on cur._id = a.currency_id where a._id=?",
+                new String[]{String.valueOf(accountId)})) {
+            return c.moveToFirst() && c.getString(0) != null ? c.getString(0) : "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private static long currencyByName(SQLiteDatabase db, String name) {
+        if (name == null || name.isEmpty()) {
+            return homeCurrency(db);
+        }
+        try (Cursor c = db.query(DatabaseHelper.CURRENCY_TABLE, new String[]{"_id"},
+                "name=?", new String[]{name}, null, null, null)) {
+            if (c.moveToFirst()) {
+                return c.getLong(0);
+            }
+        } catch (Exception e) {
+            // fall through
+        }
+        return homeCurrency(db);
+    }
+
+    private static long homeCurrency(SQLiteDatabase db) {
+        try (Cursor c = db.query(DatabaseHelper.CURRENCY_TABLE, new String[]{"_id"},
+                "is_default=1", null, null, null, null)) {
+            return c.moveToFirst() ? c.getLong(0) : 0;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private static int maxRight(SQLiteDatabase db) {
+        try (Cursor c = db.rawQuery("select max(right) from category", null)) {
+            return c.moveToFirst() ? c.getInt(0) : 1;
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
+    private static String stringOf(SQLiteDatabase db, String table, long id, String column) {
+        try (Cursor c = db.query(table, new String[]{column}, "_id=?",
+                new String[]{String.valueOf(id)}, null, null, null)) {
+            return c.moveToFirst() && c.getString(0) != null ? c.getString(0) : "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+}

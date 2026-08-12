@@ -1503,4 +1503,12 @@
     <string name="sharing_nothing_new">Nothing new</string>
     <string name="sharing_no_folder">Choose the shared folder first</string>
     <string name="sharing_skipped">Something could not be applied: %1$s</string>
+    <string name="share_picker">What to share</string>
+    <string name="share_picker_intro">Nothing is shared until you tick it. Sharing an account shares what happens on it; sharing a category or a name only means the other phone has it to hand.</string>
+    <string name="share_all">Tick all</string>
+    <string name="share_none">Untick all</string>
+    <string name="share_what">What to share</string>
+    <string name="share_what_none">Nothing yet — nothing will travel</string>
+    <string name="share_what_some">%1$d things</string>
+    <string name="no_title">Untitled</string>
 </resources>

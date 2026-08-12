@@ -47,16 +47,47 @@ public class SyncPayload {
             if (!c.moveToFirst()) {
                 return null;
             }
+            long fromId = id(c, "from_account_id");
+            long toId = id(c, "to_account_id");
+            boolean fromShared = SharedThings.isAccountShared(db, fromId);
+            boolean toShared = toId > 0 && SharedThings.isAccountShared(db, toId);
+            if (!fromShared && !toShared) {
+                // Neither end is shared: this is nobody else's business.
+                return null;
+            }
+
             JSONObject o = new JSONObject();
             o.put("uuid", string(c, "uuid"));
-            o.put("from_account", uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, id(c, "from_account_id")));
-            o.put("to_account", uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, id(c, "to_account_id")));
+
+            if (fromShared) {
+                o.put("from_account", uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, fromId));
+                // A transfer into an account the other person cannot see goes
+                // as money leaving, with no destination named. Their balance
+                // stays right - which is the point of sharing an account - and
+                // the account that was not shared is not named anywhere.
+                o.put("to_account", toShared
+                        ? uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, toId) : "");
+            } else {
+                // Money arriving into the shared account from one that is not:
+                // sent as money arriving, with no origin named.
+                o.put("from_account", uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, toId));
+                o.put("to_account", "");
+            }
             o.put("category", uuidOf(db, DatabaseHelper.CATEGORY_TABLE, id(c, "category_id")));
             o.put("payee", uuidOf(db, DatabaseHelper.PAYEE_TABLE, id(c, "payee_id")));
             o.put("project", uuidOf(db, DatabaseHelper.PROJECT_TABLE, id(c, "project_id")));
             o.put("location", uuidOf(db, DatabaseHelper.LOCATIONS_TABLE, id(c, "location_id")));
             for (String field : PLAIN) {
                 o.put(field, string(c, field));
+            }
+            if (!fromShared) {
+                // Flipped round: what left an account they cannot see arrived
+                // in the one they can, so the amount arrives positive and the
+                // other side of it is dropped.
+                o.put("from_amount", string(c, "to_amount"));
+                o.put("to_amount", "0");
+            } else if (!toShared) {
+                o.put("to_amount", "0");
             }
             // Travels with it, so the other phone shows it in the writer's
             // colour rather than claiming it as its own.

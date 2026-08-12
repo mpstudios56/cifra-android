@@ -1404,4 +1404,12 @@
   <string name="sharing_nothing_new">Niente di nuovo</string>
   <string name="sharing_no_folder">Scegli prima la cartella condivisa</string>
   <string name="sharing_skipped">Qualcosa non si è potuto applicare: %1$s</string>
+  <string name="share_picker">Cosa condividere</string>
+  <string name="share_picker_intro">Non viene condiviso niente finché non lo spunti. Condividere un conto condivide quello che ci succede sopra; condividere una categoria o un nome serve solo perché l’altro telefono ce l’abbia sottomano.</string>
+  <string name="share_all">Spunta tutto</string>
+  <string name="share_none">Togli tutto</string>
+  <string name="share_what">Cosa condividere</string>
+  <string name="share_what_none">Ancora niente — non viaggerà nulla</string>
+  <string name="share_what_some">%1$d cose</string>
+  <string name="no_title">Senza nome</string>
 </resources>

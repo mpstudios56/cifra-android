@@ -75,6 +75,8 @@ public class SharingActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
+        findViewById(R.id.sharing_what).setOnClickListener(v ->
+                startActivity(new Intent(this, SharePickerActivity.class)));
 
         db = new DatabaseAdapter(this);
         db.open();
@@ -179,6 +181,14 @@ public class SharingActivity extends AppCompatActivity {
                 ? getString(R.string.sharing_folder_empty)
                 : getString(R.string.sharing_folder_chosen, folderName(folder)));
 
+        int chosen = 0;
+        for (String kind : tw.tib.financisto.sync.SharedThings.KINDS) {
+            chosen += tw.tib.financisto.sync.SharedThings.shared(db.db(), kind).size();
+        }
+        ((TextView) findViewById(R.id.sharing_what_value)).setText(chosen == 0
+                ? getString(R.string.share_what_none)
+                : getString(R.string.share_what_some, chosen));
+
         long last = MyPreferences.getSyncLastRun();
         ((TextView) findViewById(R.id.sharing_last)).setText(last == 0
                 ? getString(R.string.sharing_never)
@@ -228,5 +238,9 @@ public class SharingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         PinProtection.unlock(this);
+        if (db != null) {
+            // Coming back from the picker, the count has changed.
+            show();
+        }
     }
 }
