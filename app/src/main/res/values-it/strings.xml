@@ -932,7 +932,7 @@
   <string name="electronic_type_coinbase">Coinbase</string>
 
   <!-- Resto dell'app: voci che erano rimaste in inglese -->
-  <string name="about_summary">Maggiori informazioni sul progetto</string>
+  <string name="about_summary">Versione, licenza e novità</string>
   <string name="accent_color">Colore d\'accento</string>
   <string name="account_by_currency">Tutti i conti in %s</string>
   <string name="account_type_electronic">Elettronico</string>
@@ -976,7 +976,7 @@
   <string name="decimals_warning">I decimali diversi da 0, 1 e 2 sono sperimentali</string>
   <string name="delete_account">Elimina il conto</string>
   <string name="delete_picture_confirm">Staccare la foto ed eliminarne il file?</string>
-  <string name="donate_summary">Cifra è gratuita, senza pubblicità e senza funzioni a pagamento. Se ti fa risparmiare tempo e ti aiuta nella vita di tutti i giorni, offrimi un caffè o una birra: bastano davvero.\nIo la migliorerò sempre.</string>
+  <string name="donate_summary">Gratuita, senza pubblicità e senza funzioni a pagamento</string>
   <string name="download_all_rates">Scarica tutti i cambi attuali</string>
   <string name="downloading_picture_from_dropbox">Scaricamento da Dropbox…</string>
   <string name="downloading_picture_from_google_drive">Scaricamento da Google Drive…</string>
@@ -1051,13 +1051,13 @@
   <string name="icon_text">Testo da mostrare come icona (prova un\'emoji)</string>
   <string name="image_pick_camera">Fotocamera</string>
   <string name="image_pick_images">Immagini</string>
-  <string name="import_export_summary">Importa ed esporta la banca dati in altri formati come csv o qif</string>
+  <string name="import_export_summary">Importazione ed esportazione in CSV e QIF</string>
   <string name="import_file_not_found_2">File da importare non trovato. Prova senza il prefisso\n\'<xliff:g id="path">%1$s</xliff:g>\'</string>
   <string name="import_wrong_currency_2">Valuta errata nel file da importare: <xliff:g id="currency">%1$s</xliff:g> (deve coincidere con la valuta del conto, che è <xliff:g id="currency">%2$s</xliff:g>)</string>
   <string name="include_tx_status">Includi\nlo stato</string>
   <string name="installed_on_sd_card_warning">Le transazioni programmate potrebbero non funzionare se l\'app è installata sulla scheda SD. Spostala nella memoria del telefono.</string>
   <string name="integrity_error_message">%s%n(Tocca per chiudere questo messaggio)</string>
-  <string name="integrity_fix_summary">Rifà da zero i saldi dei conti e i totali progressivi partendo dai movimenti stessi. Serve quando un saldo non corrisponde alla somma dei suoi movimenti, cosa che di solito capita dopo un ripristino o un\'importazione. Non cancella e non modifica nessun movimento.</string>
+  <string name="integrity_fix_summary">Ricalcola saldi e totali dai movimenti. Nessun movimento viene modificato</string>
   <string name="invalid_rrule">Regola di ricorrenza non valida: %s</string>
   <string name="is_included_into_reports">Includi nei report</string>
   <string name="is_included_into_reports_summary">Includi nei report le transazioni di questo conto</string>
@@ -1065,7 +1065,7 @@
   <string name="mass_operations_mark_pending_all">Segna tutte come in attesa</string>
   <string name="mass_operations_mark_restored_all">Segna tutte come ripristinate</string>
   <string name="mass_operations_mark_unreconciled_all">Segna tutte come non riconciliate</string>
-  <string name="mass_operations_summary">Prendi molti movimenti insieme e segnali verificati, riconciliati o in sospeso, oppure cancellali tutti in una volta.</string>
+  <string name="mass_operations_summary">Cambia stato o elimina più movimenti insieme</string>
   <string name="mean_line_label">Media</string>
   <string name="merge_payee_confirm">Conferma l\'unione dei beneficiari</string>
   <string name="merge_payee_message">Verrà mantenuto il beneficiario %1$s, le transazioni dei seguenti beneficiari saranno spostate su di lui e quei beneficiari saranno eliminati:</string>
@@ -1102,10 +1102,10 @@
   <string name="period_this_year">Quest\'anno</string>
   <string name="period_tomorrow">Domani</string>
   <string name="permissions">Permessi</string>
-  <string name="permissions_summary">Rivedi i permessi da concedere a mano</string>
+  <string name="permissions_summary">Permessi da concedere a mano</string>
   <string name="planner">Pianificatore</string>
-  <string name="planner_summary">I mesi che verranno come saranno una volta passato tutto il programmato: per vedere se i soldi bastano.</string>
-  <string name="preferences_summary">Cambia le impostazioni dell\'app</string>
+  <string name="planner_summary">Proiezione dei mesi successivi con il programmato</string>
+  <string name="preferences_summary">Impostazioni dell’app</string>
   <string name="privacy_policy">Informativa sulla privacy</string>
   <string name="provided_by_other_app">(Fornito da un\'altra app)</string>
   <string name="rate_as_of">Cambio al %s, </string>
@@ -1138,7 +1138,7 @@
   <string name="restore_database_online_google_drive">Ripristino da Google Drive</string>
   <string name="restore_database_online_google_drive_summary">Ripristina la banca dati da Google Drive</string>
   <string name="restore_database_summary">Ripristina la banca dati dalla memoria del telefono</string>
-  <string name="scheduled_transactions_summary">Quello che si ripete: affitto, stipendio, abbonamenti. L\'app li registra il giorno giusto e te lo dice.</string>
+  <string name="scheduled_transactions_summary">Movimenti ricorrenti registrati alla data prevista</string>
   <string name="select_color">Scegli il colore</string>
   <string name="selector_type_summary">Modo di scelta per le anagrafiche</string>
   <string name="shortcut_not_supported_by_launcher">La schermata iniziale non supporta le scorciatoie fissate</string>
@@ -1207,7 +1207,7 @@
   <string name="quick_entry_from_widget">Spesa veloce dal widget</string>
   <string name="quick_entry_from_widget_summary">Il tasto del widget apre la schermata veloce invece del modulo completo</string>
   <string name="feedback">Invia un riscontro</string>
-  <string name="feedback_summary">Suggerimenti, una funzione che ti manca, o qualcosa che non ha funzionato</string>
+  <string name="feedback_summary">Segnalazioni e suggerimenti</string>
   <string name="feedback_subject">Cifra %1$s - riscontro</string>
   <string name="feedback_body">Scrivi qui sotto quello che vuoi dire.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
   <string name="feedback_no_mail">Nessuna app di posta su questo telefono</string>
@@ -1231,11 +1231,11 @@
   <string name="pref_group_notifications">Dalle notifiche</string>
   <string name="pref_group_periods">Periodi e valute</string>
   <string name="pref_group_widgets">Widget e scorciatoie</string>
-  <string name="menu_categories_summary">Aggiungi, rinomina e riordina le categorie sotto cui registri le spese</string>
+  <string name="menu_categories_summary">Aggiungi, rinomina e riordina le categorie</string>
   <string name="menu_currencies">Valute e cambi</string>
-  <string name="menu_currencies_summary">Le valute in cui tieni i conti, e i cambi fra loro</string>
+  <string name="menu_currencies_summary">Valute dei conti e tassi di cambio</string>
   <string name="menu_records">Beneficiari, luoghi e progetti</string>
-  <string name="menu_records_summary">I nomi che finiscono su un movimento accanto alla categoria</string>
+  <string name="menu_records_summary">Beneficiari, luoghi e progetti</string>
   <string name="menu_backup_restore">Backup e ripristino</string>
   <string name="menu_backup_restore_summary">Su file, su Google Drive, su Dropbox, o da mandare altrove</string>
   <string name="currency_already_exists">%1$s esiste già. Due valute con lo stesso codice non si distinguono.</string>
@@ -1246,7 +1246,7 @@
   <string name="quick_bar_summary">Una notifica silenziosa con spesa veloce, movimento e trasferimento</string>
   <string name="quick_bar_title">Nuova operazione</string>
   <string name="menu_backup_security">Backup, ripristino e sicurezza</string>
-  <string name="menu_backup_security_summary">Una copia su file, su Drive o su Dropbox, e il blocco dell’app</string>
+  <string name="menu_backup_security_summary">Copia su file, Drive o Dropbox, e blocco dell’app</string>
   <string name="csv_map_title">Importa da un\'altra app</string>
   <string name="csv_map_intro">Scegli un file esportato dall\'app che stai lasciando. Cifra lo legge e ti chiede cosa sono le sue colonne. Non scrive niente finché non glielo dici tu.</string>
   <string name="csv_map_choose_file">Scegli il file</string>
@@ -1326,7 +1326,7 @@
   <string name="about_copyright1">Distribuito con licenza GNU GPL v2</string>
   <string name="budget_today">OGGI</string>
   <string name="trash">Cestino</string>
-  <string name="trash_summary">Gli elementi eliminati, finché possono essere ripristinati</string>
+  <string name="trash_summary">Elementi eliminati, ripristinabili entro il periodo scelto</string>
   <string name="trash_empty">Il cestino è vuoto</string>
   <string name="trash_empty_now">Svuota il cestino</string>
   <plurals name="trash_empty_confirm">
@@ -1385,7 +1385,7 @@
   <string name="identity_colour">Colore</string>
   <string name="identity_symbol">Simbolo</string>
   <string name="sharing">Condivisione</string>
-  <string name="sharing_summary">Tenere un bilancio in due</string>
+  <string name="sharing_summary">Un bilancio tenuto da due persone</string>
   <string name="sharing_intro">Due nomi, nessun account. Nessuno fa login da nessuna parte: i nomi servono a come si legge il registro delle modifiche, e i colori a riconoscere a colpo d’occhio, in un elenco, le voci che non sono tue.</string>
   <string name="sharing_me">Tu</string>
   <string name="sharing_them">L’altra persona</string>
