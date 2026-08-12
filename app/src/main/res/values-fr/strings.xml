@@ -1185,7 +1185,7 @@
   <string name="summary">Résumé</string>
   <string name="summary_income">Entrées</string>
   <string name="summary_expense">Sorties</string>
-  <string name="summary_saved">Solde du mois</string>
+  <string name="summary_saved">Solde de la période</string>
   <string name="summary_saved_share">%1$d%% de ce qui est entré</string>
   <string name="summary_top_categories">Dépenses par catégorie</string>
   <string name="summary_net_worth">Total</string>

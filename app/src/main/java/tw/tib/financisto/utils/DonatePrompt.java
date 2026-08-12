@@ -74,15 +74,6 @@ public class DonatePrompt {
         show(activity, prefs, now);
     }
 
-    /**
-     * Shows the card whether or not it is due. The menu entry uses this, so the
-     * thing that comes up on its own can also be reached on purpose.
-     */
-    public static void ask(Activity activity) {
-        show(activity, activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE),
-                System.currentTimeMillis());
-    }
-
     private static void show(Activity activity, SharedPreferences prefs, long now) {
         View card = LayoutInflater.from(activity).inflate(R.layout.donate_dialog, null);
         AlertDialog dialog = new AlertDialog.Builder(activity)

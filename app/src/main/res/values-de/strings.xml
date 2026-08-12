@@ -1192,7 +1192,7 @@
   <string name="summary">Übersicht</string>
   <string name="summary_income">Einnahmen</string>
   <string name="summary_expense">Ausgaben</string>
-  <string name="summary_saved">Monatssaldo</string>
+  <string name="summary_saved">Saldo des Zeitraums</string>
   <string name="summary_saved_share">%1$d%% der Einnahmen</string>
   <string name="summary_top_categories">Ausgaben nach Kategorie</string>
   <string name="summary_net_worth">Gesamt</string>

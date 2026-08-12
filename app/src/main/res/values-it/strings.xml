@@ -573,7 +573,7 @@
   <string name="donate">Offrimi un caffè</string>
   <string name="donate_go">Vai a PayPal</string>
   <string name="donate_later">Più tardi</string>
-  <string name="donate_never">Non chiedermelo più</string>
+  <string name="donate_never">Mai più</string>
   <string name="donate_error">Nessun browser disponibile sul dispositivo</string>
   <string name="type">Tipo</string>
   <string name="qif_export">Esportazione QIF</string>
@@ -1195,7 +1195,7 @@
   <string name="summary">Riepilogo</string>
   <string name="summary_income">Entrate</string>
   <string name="summary_expense">Uscite</string>
-  <string name="summary_saved">Saldo mensile</string>
+  <string name="summary_saved">Saldo del periodo</string>
   <string name="summary_saved_share">%1$d%% di quanto è entrato</string>
   <string name="summary_top_categories">Uscite per categoria</string>
   <string name="summary_net_worth">Totale</string>

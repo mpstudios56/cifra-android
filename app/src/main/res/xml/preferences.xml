@@ -19,8 +19,9 @@
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/pref_group_appearance">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_appearance">
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="default"
             android:entries="@array/ui_language_entities"
@@ -29,6 +30,7 @@
             android:summary="@string/ui_language_summary"
             android:title="@string/ui_language" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="BLOTTER"
             android:entries="@array/startup_screen_entities"
@@ -37,12 +39,14 @@
             android:summary="@string/startup_screen_summary"
             android:title="@string/startup_screen" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="show_summary_tab"
             android:summary="@string/show_summary_tab_summary"
             android:title="@string/show_summary_tab" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="MONTH"
             android:entries="@array/summary_period_entries"
@@ -51,18 +55,21 @@
             android:summary="@string/summary_period_summary"
             android:title="@string/summary_period" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="templates_as_tab"
             android:summary="@string/templates_as_tab_summary"
             android:title="@string/templates_as_tab" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="show_budgets_tab"
             android:summary="@string/show_budgets_tab_summary"
             android:title="@string/show_budgets_tab" />
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="show_reports_tab"
@@ -70,19 +77,22 @@
             android:title="@string/show_reports_tab" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_group_transactions">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_transactions">
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:summary="@string/transaction_screen_summary"
             android:title="@string/transaction_screen"
             app:fragment="tw.tib.financisto.preference.TransactionPreferencesFragment" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="treat_transfer_to_ccard_as_payment"
             android:summary="@string/treat_transfer_to_ccard_as_payment_summary"
             android:title="@string/treat_transfer_to_ccard_as_payment" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="restore_missed_scheduled_transactions"
@@ -90,18 +100,21 @@
             android:title="@string/restore_missed_scheduled_transactions" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_group_lists">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_lists">
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:summary="@string/accounts_list_screen_summary"
             android:title="@string/accounts_list_screen"
             app:fragment="tw.tib.financisto.preference.AccountPreferencesFragment" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:summary="@string/blotter_screen_summary"
             android:title="@string/blotter_screen"
             app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="NAME"
             android:entries="@array/sort_locations_entities"
@@ -110,6 +123,7 @@
             android:summary="@string/sort_locations_summary"
             android:title="@string/sort_locations" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="DATE"
             android:entries="@array/sort_templates_entities"
@@ -124,14 +138,16 @@
       listener falls back to the same templates and reads the same two settings,
       so hiding them would take away the only control over a live feature.
     -->
-    <PreferenceCategory android:title="@string/pref_group_notifications">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_notifications">
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="google_wallet_transaction"
             android:summary="@string/pref_google_wallet_transaction_summary"
             android:title="@string/pref_google_wallet_transaction_title" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="PN"
             android:dependency="google_wallet_transaction"
@@ -141,6 +157,7 @@
             android:summary="@string/pref_google_wallet_transaction_status"
             android:title="@string/pref_tpl_transaction_status_title" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="PN"
             android:entries="@array/pref_transaction_statuses"
@@ -149,6 +166,7 @@
             android:summary="@string/pref_tpl_transaction_status"
             android:title="@string/pref_tpl_transaction_status_title" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="sms_transaction_note"
@@ -156,8 +174,9 @@
             android:title="@string/pref_tpl_adding_to_note_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_group_periods">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_periods">
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="0"
             android:entries="@array/first_day_of_week_entries"
@@ -166,11 +185,13 @@
             android:summary="@string/first_day_of_week_summary"
             android:title="@string/first_day_of_week" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="fiscal_year_start"
             android:summary="@string/fiscal_year_start_summary"
             android:title="@string/fiscal_year_start" />
         <ListPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="freeCurrency"
             android:entries="@array/exchange_rate_provider_entities"
@@ -179,6 +200,7 @@
             android:summary="@string/exchange_rate_provider_summary"
             android:title="@string/exchange_rate_provider" />
         <EditTextPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:enabled="false"
             android:key="openexchangerates_app_id"
@@ -186,44 +208,51 @@
             android:title="@string/openexchangerates_app_id" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_group_widgets">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_widgets">
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="enable_widget"
             android:summary="@string/enable_widget_summary"
             android:title="@string/enable_widget" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="quick_entry_from_widget"
             android:summary="@string/quick_entry_from_widget_summary"
             android:title="@string/quick_entry_from_widget" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="quick_bar_enabled"
             android:summary="@string/quick_bar_summary"
             android:title="@string/quick_bar" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="shortcut_new_transaction"
             android:summary="@string/shortcut_summary"
             android:title="@string/shortcut_new_transaction" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="shortcut_new_transfer"
             android:summary="@string/shortcut_summary"
             android:title="@string/shortcut_new_transfer" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/database_backup">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/database_backup">
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="database_backup_folder"
             android:summary="@string/database_backup_folder_summary"
             android:title="@string/database_backup_folder" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="auto_backup_enabled"
@@ -236,6 +265,7 @@
             android:summary="@string/auto_backup_time_summary"
             android:title="@string/auto_backup_time" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:dependency="auto_backup_enabled"
@@ -243,12 +273,14 @@
             android:summary="@string/auto_backup_warning_summary"
             android:title="@string/auto_backup_warning_enabled" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
             android:key="auto_backup_reminder_enabled"
             android:summary="@string/auto_backup_reminder_enabled_summary"
             android:title="@string/auto_backup_reminder_enabled" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="backup_newlines"
@@ -256,36 +288,42 @@
             android:title="@string/backup_newlines" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/dropbox">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/dropbox">
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="dropbox_authorize"
             android:summary="@string/dropbox_authorize_summary"
             android:title="@string/dropbox_authorize" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="dropbox_unlink"
             android:summary="@string/dropbox_unlink_summary"
             android:title="@string/dropbox_unlink" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="dropbox_upload_backup"
             android:summary="@string/dropbox_upload_backup_summary"
             android:title="@string/dropbox_upload_backup" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="dropbox_upload_autobackup"
             android:summary="@string/dropbox_upload_autobackup_summary"
             android:title="@string/dropbox_upload_autobackup" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="dropbox_upload_pictures"
             android:summary="@string/dropbox_upload_pictures_summary"
             android:title="@string/dropbox_upload_pictures" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="dropbox_download_pictures"
@@ -293,42 +331,49 @@
             android:title="@string/dropbox_download_pictures" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/gdocs_backup">
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/gdocs_backup">
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="google_drive_backup_account"
             android:summary="@string/google_drive_backup_account_summary"
             android:title="@string/google_drive_backup_account" />
         <Preference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:key="google_drive_sign_out"
             android:summary="@string/google_drive_sign_out_summary"
             android:title="@string/google_drive_sign_out" />
         <EditTextPreference
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="financisto"
             android:key="google_drive_backup_folder"
             android:summary="@string/backup_folder_summary"
             android:title="@string/backup_folder" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="google_drive_upload_backup"
             android:summary="@string/google_drive_upload_backup_summary"
             android:title="@string/google_drive_upload_backup" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="google_drive_upload_autobackup"
             android:summary="@string/google_drive_upload_autobackup_summary"
             android:title="@string/google_drive_upload_autobackup" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="google_drive_upload_pictures"
             android:summary="@string/google_drive_upload_pictures_summary"
             android:title="@string/google_drive_upload_pictures" />
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
             android:key="google_drive_download_pictures"

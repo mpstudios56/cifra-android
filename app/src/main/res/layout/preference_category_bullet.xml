@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The heading of a group of settings.
+
+  Forty rows of white text under eight quiet headings read as one long list,
+  and the eye has nothing to catch on while scrolling past the part it does not
+  want. A bar of colour in the margin turns the same list into eight blocks
+  that can be counted at a glance.
+
+  Deliberately not an icon: a symbol for "appearance" or for "lists" is either
+  a guess or a cliché, and forty small guesses is what the previous attempt
+  looked like.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="6dp">
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/preference_group_mark" />
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="?attr/colorAccent"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>

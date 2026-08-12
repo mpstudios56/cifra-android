@@ -134,12 +134,11 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_DONATE(R.string.donate, R.string.donate_summary, R.drawable.actionbar_donate) {
         @Override
         public void call(Fragment fragment) {
-            // Opens a payment page in the browser rather than asking for anything
-            // inside the app: a voluntary donation buys nothing here, and nothing
-            // in the app is withheld until one is made.
-            // The card, not the browser: the same thing that comes up on its own
-            // every so often, so it can also be looked at on purpose.
-            DonatePrompt.ask(fragment.getActivity());
+            // Straight to the payment page. The card that comes up on its own
+            // is there to ask; somebody who has come looking for this row has
+            // already been asked, and being asked a second time by the thing
+            // one has just chosen reads as a wall rather than as an invitation.
+            DonatePrompt.open(fragment.getContext());
         }
     },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {

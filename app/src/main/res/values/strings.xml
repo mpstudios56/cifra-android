@@ -712,7 +712,7 @@
     <string name="donate">Buy me a coffee</string>
     <string name="donate_go">Go to PayPal</string>
     <string name="donate_later">Later</string>
-    <string name="donate_never">Don\'t ask again</string>
+    <string name="donate_never">Never again</string>
     <string name="donate_error">No browser available on your device</string>
     <!-- The address the donation entry opens. Not translated: it is a URL. -->
     <string name="donate_url" translatable="false">https://paypal.me/MP56</string>
@@ -1330,7 +1330,7 @@
     <string name="summary">Summary</string>
     <string name="summary_income">In</string>
     <string name="summary_expense">Out</string>
-    <string name="summary_saved">Monthly balance</string>
+    <string name="summary_saved">Balance for the period</string>
     <string name="summary_saved_share">%1$d%% of what came in</string>
     <string name="summary_top_categories">Spending by category</string>
     <string name="summary_net_worth">Total</string>
