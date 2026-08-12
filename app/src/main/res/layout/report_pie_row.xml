@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One line of the report under the ring: the colour it was drawn in, what it
+  is called, its share, and the money itself. The share is what the ring shows
+  and the amount is what the ring cannot.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="9dp"
+    android:paddingBottom="9dp">
+
+    <View
+        android:id="@+id/pie_row_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/pie_row_dot" />
+
+    <TextView
+        android:id="@+id/pie_row_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/pie_row_share"
+        android:layout_width="46dp"
+        android:layout_height="wrap_content"
+        android:alpha="0.65"
+        android:gravity="end"
+        android:singleLine="true"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/pie_row_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:singleLine="true"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>

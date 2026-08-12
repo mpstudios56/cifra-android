@@ -573,6 +573,19 @@ public class MyPreferences {
 		return getInt("fiscal_year_start", 301);
 	}
 
+	/**
+	 * Written from the chart screen as well as from the settings, so that
+	 * changing what a chart shows and reading what the settings say never give
+	 * two different answers.
+	 */
+	public static void setReferenceCurrency(String currencyTitle) {
+		edit().putString("report_reference_currency", currencyTitle).apply();
+	}
+
+	public static void setReportAggregateUnit(String unit) {
+		edit().putString("report_aggregate_unit", unit).apply();
+	}
+
 	public static void setFiscalYearStart(int month, int date) {
 		edit().putInt("fiscal_year_start", month * 100 + date).apply();
 	}

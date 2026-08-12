@@ -1357,4 +1357,8 @@
     <item>Año</item>
   </string-array>
   <string name="summary_quarter">%1$d.er trimestre %2$d</string>
+  <string name="pie_chart">Gráfico circular</string>
+  <string name="pie_other">Otros</string>
+  <string name="pie_centre_out">Gastos</string>
+  <string name="pie_centre_in">Ingresos</string>
 </resources>

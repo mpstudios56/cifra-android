@@ -1357,4 +1357,8 @@
     <item>Jahr</item>
   </string-array>
   <string name="summary_quarter">%1$d. Quartal %2$d</string>
+  <string name="pie_chart">Kreisdiagramm</string>
+  <string name="pie_other">Sonstige</string>
+  <string name="pie_centre_out">Ausgaben</string>
+  <string name="pie_centre_in">Einnahmen</string>
 </resources>

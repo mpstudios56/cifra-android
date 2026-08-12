@@ -1,11 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  The ring on top, the names underneath.
+
+  The ring is given a fixed share of the screen rather than all of it: a pie
+  drawn edge to edge with a legend floating over it was two things fighting for
+  the same space. Here the ring answers "what is the shape of it" and the list
+  below answers "what were they", and the list can be as long as it needs to be
+  because it scrolls.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pie_base"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <!-- shown only when there is something on both sides of the ledger -->
+    <LinearLayout
+        android:id="@+id/pie_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pie_out"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/quick_chip"
+            android:stateListAnimator="@null"
+            android:text="@string/summary_expense"
+            android:textAllCaps="false"
+            android:textColor="#FFF4EFE4"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/pie_in"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/quick_chip"
+            android:stateListAnimator="@null"
+            android:text="@string/summary_income"
+            android:textAllCaps="false"
+            android:textColor="#FFF4EFE4"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="200dp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/pie_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="@string/summary_nothing_yet"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <LinearLayout
+            android:id="@+id/pie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="12dp" />
+    </ScrollView>
+</LinearLayout>

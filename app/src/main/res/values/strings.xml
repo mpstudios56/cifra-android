@@ -1459,4 +1459,8 @@
         <item>Year</item>
     </string-array>
     <string name="summary_quarter">Q%1$d %2$d</string>
+    <string name="pie_chart">Pie chart</string>
+    <string name="pie_other">Other</string>
+    <string name="pie_centre_out">Spending</string>
+    <string name="pie_centre_in">Income</string>
 </resources>

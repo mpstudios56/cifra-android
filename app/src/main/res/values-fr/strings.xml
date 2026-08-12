@@ -1357,4 +1357,8 @@
     <item>Année</item>
   </string-array>
   <string name="summary_quarter">%1$de trimestre %2$d</string>
+  <string name="pie_chart">Graphique circulaire</string>
+  <string name="pie_other">Autres</string>
+  <string name="pie_centre_out">Dépenses</string>
+  <string name="pie_centre_in">Revenus</string>
 </resources>

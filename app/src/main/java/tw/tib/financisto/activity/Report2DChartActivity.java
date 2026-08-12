@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -307,6 +308,10 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         });
         findViewById(R.id.report_period).setFocusable(true);
 
+        findViewById(R.id.report_unit).setOnClickListener(v -> changeAggregateUnit());
+        findViewById(R.id.report_currency).setOnClickListener(v -> changeCurrency());
+        showChartControls();
+
         pointDate = findViewById(R.id.point_date);
         pointAmount = findViewById(R.id.point_amount);
 
@@ -429,6 +434,84 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
                             processPeriodLengthChange(previousPeriod, true);
                         })
                 .show();
+    }
+
+    /**
+     * What the three buttons above the chart are set to.
+     * <p>
+     * Written out rather than left as icons: "12 mesi", "Mese", "EUR" says
+     * what the line is showing without anyone having to tap anything to find
+     * out, which is the point of moving them out of the settings.
+     */
+    private void showChartControls() {
+        ((Button) findViewById(R.id.report_unit)).setText(unitName(aggregateUnit));
+        ((Button) findViewById(R.id.report_currency))
+                .setText(currency != null ? currency.name : "");
+    }
+
+    private String unitName(MyPreferences.ReportAggregateUnit unit) {
+        String[] names = getResources().getStringArray(R.array.report_aggregate_unit_entities);
+        String[] values = getResources().getStringArray(R.array.report_aggregate_unit_values);
+        for (int i = 0; i < values.length && i < names.length; i++) {
+            if (values[i].equals(unit.name())) {
+                return names[i];
+            }
+        }
+        return unit.name();
+    }
+
+    /** Weeks, months, years: how finely the same stretch of time is cut up. */
+    private void changeAggregateUnit() {
+        String[] names = getResources().getStringArray(R.array.report_aggregate_unit_entities);
+        String[] values = getResources().getStringArray(R.array.report_aggregate_unit_values);
+        int selected = 0;
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equals(aggregateUnit.name())) {
+                selected = i;
+            }
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.report_aggregate_unit)
+                .setSingleChoiceItems(names, selected, (dialog, which) -> {
+                    dialog.cancel();
+                    aggregateUnit = MyPreferences.ReportAggregateUnit.valueOf(values[which]);
+                    // Kept in the settings too, so the two places never disagree
+                    // about what the report is doing.
+                    MyPreferences.setReportAggregateUnit(values[which]);
+                    rebuildForControls();
+                })
+                .show();
+    }
+
+    /** Which money the figures are converted into before being added up. */
+    private void changeCurrency() {
+        List<Currency> all = new ArrayList<>(CurrencyCache.getAllCurrencies());
+        if (all.isEmpty()) {
+            return;
+        }
+        String[] names = new String[all.size()];
+        int selected = 0;
+        for (int i = 0; i < all.size(); i++) {
+            names[i] = all.get(i).name + "  " + all.get(i).title;
+            if (currency != null && all.get(i).id == currency.id) {
+                selected = i;
+            }
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.currency)
+                .setSingleChoiceItems(names, selected, (dialog, which) -> {
+                    dialog.cancel();
+                    currency = all.get(which);
+                    MyPreferences.setReferenceCurrency(currency.title);
+                    rebuildForControls();
+                })
+                .show();
+    }
+
+    private void rebuildForControls() {
+        reportData.rebuild(this, db, startPeriod, getPeriodOfReference(), currency, aggregateUnit);
+        showChartControls();
+        refreshView();
     }
 
     /**

@@ -349,20 +349,28 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
             ReportData report = currentReport.getReportForChart(db, WhereFilter.copyOf(filter));
 
             ArrayList<PieEntry> entries = new ArrayList<>();
+            // The figures again as written money. Formatting them here is the
+            // only place the currency of each line is still known; the chart
+            // screen is handed a plain list of values.
+            ArrayList<String> amounts = new ArrayList<>();
 
             for (GraphUnit unit : report.units) {
                 BigDecimal v = unit.getIncomeExpense().income;
                 if (!v.equals(BigDecimal.ZERO)) {
                     entries.add(new PieEntry(Math.abs(v.floatValue()), "+" + unit.name));
+                    amounts.add(Utils.amountToString(unit.currency, v.longValue()));
                 }
                 v = unit.getIncomeExpense().expense;
                 if (!v.equals(BigDecimal.ZERO)) {
                     entries.add(new PieEntry(Math.abs(v.floatValue()), "-" + unit.name));
+                    amounts.add(Utils.amountToString(unit.currency, v.longValue()));
                 }
             }
 
             Intent intent = new Intent(ReportActivity.this, ReportPieChartActivity.class);
             intent.putExtra(ReportPieChartActivity.PIE_CHART_DATA, new Gson().toJson(entries));
+            intent.putExtra(ReportPieChartActivity.PIE_CHART_AMOUNTS,
+                    amounts.toArray(new String[0]));
             return intent;
         }
 

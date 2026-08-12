@@ -1360,4 +1360,8 @@
     <item>Anno</item>
   </string-array>
   <string name="summary_quarter">%1$d° trimestre %2$d</string>
+  <string name="pie_chart">Grafico a torta</string>
+  <string name="pie_other">Altro</string>
+  <string name="pie_centre_out">Uscite</string>
+  <string name="pie_centre_in">Entrate</string>
 </resources>
