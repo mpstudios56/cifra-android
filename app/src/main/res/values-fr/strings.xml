@@ -1264,6 +1264,7 @@
   <string name="csv_map_fallback_new">Créer « %1$s »</string>
   <string name="csv_map_confirm">Cifra fait d’abord une sauvegarde complète, puis importe. Les lignes qui ne nomment pas de compte vont dans « %1$s ». Ce qui manque — comptes, catégories, bénéficiaires — est créé.</string>
   <string name="csv_map_import">Importer</string>
+  <string name="csv_map_remembered">Colonnes remplies comme la dernière fois</string>
   <string name="csv_map_backing_up">D’abord la sauvegarde…</string>
   <string name="csv_map_backup_failed">La sauvegarde n’a pas pu être faite, donc rien n’a été importé. Choisis un dossier pour les sauvegardes dans Sauvegarde, restauration et sécurité, puis réessaie.</string>
   <string name="csv_map_importing">Importation…</string>

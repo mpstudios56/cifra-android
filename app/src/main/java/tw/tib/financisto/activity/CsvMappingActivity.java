@@ -49,6 +49,7 @@ import tw.tib.financisto.export.csv.CsvHeaderSniffer;
 import tw.tib.financisto.export.csv.CsvRow;
 import tw.tib.financisto.export.csv.CsvRowReader;
 import tw.tib.financisto.export.csv.MappedCsvImport;
+import tw.tib.financisto.export.csv.CsvMappingStore;
 import tw.tib.financisto.export.csv.MappedCsvImportTask;
 import tw.tib.financisto.model.Account;
 import tw.tib.financisto.utils.PinProtection;
@@ -82,6 +83,8 @@ public class CsvMappingActivity extends AppCompatActivity {
     };
 
     private Uri fileUri;
+    /** What this shape of file is called, so its assignment can be found again. */
+    private String signature = "";
     private CsvHeaderSniffer.Guess guess;
     private DatabaseAdapter db;
     private List<String> accountTitles = new ArrayList<>();
@@ -279,6 +282,17 @@ public class CsvMappingActivity extends AppCompatActivity {
                     return;
                 }
                 guess = result;
+                // Seen this shape of file before? Then the columns were already
+                // sorted out once, by hand, and asking again is asking somebody
+                // to repeat work they have already done. The sniffer's guess is
+                // only a guess; what a person confirmed is better.
+                signature = CsvMappingStore.signature(result.headings);
+                CsvColumnMapping remembered = CsvMappingStore.load(this, signature);
+                if (remembered != null) {
+                    guess.mapping = remembered;
+                    Toast.makeText(this, R.string.csv_map_remembered,
+                            Toast.LENGTH_SHORT).show();
+                }
                 buildShape();
                 buildFields();
                 refresh();
@@ -426,7 +440,10 @@ public class CsvMappingActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.csv_map_title)
                 .setMessage(getString(R.string.csv_map_confirm, chosenFallbackAccount()))
-                .setPositiveButton(R.string.csv_map_import, (dialog, which) -> doImport())
+                .setPositiveButton(R.string.csv_map_import, (dialog, which) -> {
+                    CsvMappingStore.save(this, signature, guess.mapping);
+                    doImport();
+                })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }

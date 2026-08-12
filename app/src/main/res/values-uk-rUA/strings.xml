@@ -1379,6 +1379,7 @@
     <string name="csv_map_fallback_new">Створити «%1$s»</string>
     <string name="csv_map_confirm">Спершу Cifra зробить повну резервну копію, потім імпортує. Рядки, що не називають рахунку, потраплять до «%1$s». Усе, чого бракує — рахунки, категорії, отримувачі — буде створено.</string>
     <string name="csv_map_import">Імпортувати</string>
+    <string name="csv_map_remembered">Стовпці заповнено як минулого разу</string>
     <string name="csv_map_backing_up">Спершу резервна копія…</string>
     <string name="csv_map_backup_failed">Резервну копію зробити не вдалося, тому нічого не імпортовано. Виберіть теку для копій у розділі «Копія, відновлення і безпека» і спробуйте ще раз.</string>
     <string name="csv_map_importing">Імпортування…</string>

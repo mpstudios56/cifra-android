@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Two things that are one thing: two rings overlapping, with the overlap drawn
+  solid. Not a funnel, not a folder, not two arrows - what is being done here is
+  folding a repeated row into the one it repeats, and two rings sharing a middle
+  is the picture everyone already knows for that.
+
+  Same hand as the category symbols: 24 across, stroke 1.7, round ends.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFF4EFE4">
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9.5,12m-5.5,0a5.5,5.5 0 1,0 11,0a5.5,5.5 0 1,0 -11,0"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" />
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M14.5,12m-5.5,0a5.5,5.5 0 1,0 11,0a5.5,5.5 0 1,0 -11,0"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" />
+
+    <!-- the part they share, filled: that is the row that stays -->
+    <path
+        android:fillAlpha="0.9"
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,7.55 A5.5,5.5 0 0,1 12,16.45 A5.5,5.5 0 0,1 12,7.55 Z" />
+</vector>

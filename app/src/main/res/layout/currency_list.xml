@@ -36,6 +36,6 @@
         <ImageButton android:layout_width="wrap_content"
                      android:layout_height="wrap_content" android:id="@+id/bTidy"
                      android:contentDescription="@string/currency_tidy"
-                     android:src="@drawable/ic_action_category" />
+                     android:src="@drawable/ic_merge_duplicates" />
 	</LinearLayout>
 </LinearLayout>

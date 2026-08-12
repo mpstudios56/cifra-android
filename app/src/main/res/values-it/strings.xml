@@ -120,8 +120,8 @@
   <string name="service_is_not_available">Servizio non disponibile, riprova più tardi</string>
   <string name="resolve_address">Risolvi indirizzo</string>
   <string name="resolving_address">Risoluzione indirizzo...</string>
-  <string name="report">Rapporto</string>
-  <string name="reports">Rapporti</string>
+  <string name="report">Report</string>
+  <string name="reports">Report</string>
   <string name="no_reports">Nessun rapporto</string>
   <string name="select_report">Seleziona un rapporto...</string>
   <string name="overall">Globale</string>
@@ -1274,6 +1274,7 @@
   <string name="csv_map_fallback_new">Crea «%1$s»</string>
   <string name="csv_map_confirm">Cifra fa prima un backup completo, poi importa. Le righe che non dicono il conto finiscono in «%1$s». Quello che manca — conti, categorie, beneficiari — viene creato.</string>
   <string name="csv_map_import">Importa</string>
+  <string name="csv_map_remembered">Colonne compilate come l’ultima volta</string>
   <string name="csv_map_backing_up">Prima il backup…</string>
   <string name="csv_map_backup_failed">Il backup non è riuscito, quindi non è stato importato niente. Scegli una cartella per i backup in Backup, ripristino e sicurezza, poi riprova.</string>
   <string name="csv_map_importing">Sto importando…</string>

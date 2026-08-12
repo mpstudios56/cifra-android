@@ -69,6 +69,8 @@ import androidx.core.view.WindowInsetsCompat;
  */
 public class Report2DChartActivity extends Activity implements OnChartValueSelectedListener {
     private static final String TAG = "Report2DChartActivity";
+    /** The app's own green, the same one the save buttons are painted in. */
+    private static final int LINE = 0xFF45B87E;
 
     // activity result identifier to get results back
     public static final int REPORT_PREFERENCES = 1;
@@ -95,7 +97,8 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
     private int positive;
     private int negative;
 
-    public static final int meanColor = 0xFF206DED;
+    /** The mean, in the figures under the chart. Quiet: it is a reference, not a result. */
+    public static final int meanColor = 0xFF8FA6C4;
 
     // array of string report preferences to identify changes
     String[] initialPrefs;
@@ -322,7 +325,9 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
     private void initChart() {
         chart = findViewById(R.id.report_2d_chart);
 
-        chart.setBackgroundColor(Color.parseColor("#ff111111"));
+        chart.setBackgroundColor(Color.TRANSPARENT);
+        chart.setExtraOffsets(8f, 12f, 12f, 8f);
+        chart.setNoDataTextColor(0x99FFFFFF);
         chart.setTouchEnabled(true);
         chart.setOnChartValueSelectedListener(this);
         // The library writes "Description Label" in the corner unless told not
@@ -333,11 +338,16 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         chart.setScaleEnabled(true);
         chart.setPinchZoom(true);
 
+        // Grid lines quiet enough to read the line over, and no frame around
+        // the whole thing: a box drawn round a chart adds nothing but a box.
         YAxis yAxis = chart.getAxisLeft();
-        yAxis.setTextColor(Color.WHITE);
-        yAxis.setTextSize(12f);
-        yAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-        yAxis.enableGridDashedLine(10.0f, 10.0f, 0.0f);
+        yAxis.setTextColor(0x99FFFFFF);
+        yAxis.setTextSize(11f);
+        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        yAxis.setGridColor(0x1AFFFFFF);
+        yAxis.setGridLineWidth(1f);
+        yAxis.setDrawAxisLine(false);
+        yAxis.setLabelCount(5, false);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new ValueFormatter() {
@@ -357,10 +367,13 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
                 return DateUtils.formatDateTime(Report2DChartActivity.this, (long) value, flags);
             }
         });
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setTextSize(12f);
+        xAxis.setTextColor(0x99FFFFFF);
+        xAxis.setTextSize(11f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.enableGridDashedLine(10.0f, 10.0f, 0.0f);
+        // No vertical rules: the dates below the line already say where each
+        // point sits, and a grid in both directions turns it into graph paper.
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
         // The first and last dates sit at the very edges, where half of them
         // would otherwise be drawn off the side of the chart.
         xAxis.setAvoidFirstLastClipping(true);
@@ -368,16 +381,31 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         chart.getAxisRight().setEnabled(false);
 
         chart.getLegend().setEnabled(false);
+        chart.setDrawGridBackground(false);
 
         vals = new ArrayList<>();
 
         ds = new LineDataSet(vals, "");
 
-        ds.setColor(Color.YELLOW);
-        ds.setCircleColor(Color.YELLOW);
-        ds.setLineWidth(1f);
-        ds.setCircleRadius(2f);
+        // The app's own green, thick enough to be the subject of the screen,
+        // with the area under it filled: the shape of the year is easier to see
+        // as a mass than as a wire. Yellow on black was the old library default
+        // and looked like a heart monitor.
+        ds.setColor(LINE);
+        ds.setLineWidth(2.5f);
+        ds.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        ds.setDrawFilled(true);
+        ds.setFillColor(LINE);
+        ds.setFillAlpha(48);
+        ds.setDrawCircles(true);
+        ds.setCircleColor(LINE);
+        ds.setCircleRadius(3.5f);
+        ds.setCircleHoleColor(0xFF101010);
+        ds.setCircleHoleRadius(1.8f);
         ds.setDrawValues(false);
+        ds.setHighLightColor(0xFFF4EFE4);
+        ds.setHighlightLineWidth(1f);
+        ds.enableDashedHighlightLine(8f, 6f, 0f);
 
         dss = new ArrayList<>();
         dss.add(ds);
@@ -650,12 +678,16 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         ((TextView) findViewById(R.id.report_sum_result)).setText(Utils.amountToString(reportData.getCurrency(), sum.longValue()));
 
         // mean line
+        // A hairline, dashed, in the quietest colour on the screen: the mean is
+        // a reference to glance at, not a second line competing with the one the
+        // chart is about. Solid and blue it read as a second measurement.
         LimitLine ll = new LimitLine(meanWithSign.floatValue() / 100.0f, getString(R.string.mean_line_label));
-        ll.setTextColor(meanColor);
-        ll.setLineColor(meanColor);
+        ll.setTextColor(0x99FFFFFF);
+        ll.setLineColor(0x66FFFFFF);
         ll.setLineWidth(1.0f);
-        ll.setTextSize(12f);
-        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll.enableDashedLine(8f, 6f, 0f);
+        ll.setTextSize(10f);
+        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
 
         chart.getAxisLeft().removeAllLimitLines();
         chart.getAxisLeft().addLimitLine(ll);

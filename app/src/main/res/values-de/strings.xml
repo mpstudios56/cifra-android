@@ -1271,6 +1271,7 @@
   <string name="csv_map_fallback_new">„%1$s“ anlegen</string>
   <string name="csv_map_confirm">Cifra sichert zuerst alles und importiert dann. Zeilen ohne Konto landen in „%1$s“. Was fehlt — Konten, Kategorien, Empfänger — wird angelegt.</string>
   <string name="csv_map_import">Importieren</string>
+  <string name="csv_map_remembered">Spalten wie beim letzten Mal ausgefüllt</string>
   <string name="csv_map_backing_up">Zuerst die Sicherung…</string>
   <string name="csv_map_backup_failed">Die Sicherung war nicht möglich, deshalb wurde nichts importiert. Wähle unter Sichern, Wiederherstellen und Sicherheit einen Ordner für die Sicherungen und versuche es erneut.</string>
   <string name="csv_map_importing">Wird importiert…</string>
