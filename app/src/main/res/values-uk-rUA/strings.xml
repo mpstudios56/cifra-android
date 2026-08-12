@@ -205,7 +205,8 @@
     <string name="include_header">Включати\nзаголовок</string>
     <string name="include_tx_status">Включити\nTx статус</string>
     <string name="delete_account_confirm">Видалити рахунок?</string>
-    <string name="delete_transaction_confirm">Видалити цю операцію? Вона потрапить у кошик, звідки її можна повернути.</string>
+    <string name="delete_transaction_confirm">Видалити цю операцію?</string>
+    <string name="delete_goes_to_trash">Вона потрапляє у кошик, звідки її можна відновити.</string>
     <string name="delete_budget_confirm">Видалити бюджет?</string>
     <string name="delete_budget_recurring_select">Ви видаляєте копію бюджету. Видалити?</string>
     <string name="delete_budget_recurring_confirm">Видалити копії бюджетів?</string>
@@ -1391,7 +1392,12 @@
     <string name="trash_summary">Те, що ви видалили, поки це ще можна повернути</string>
     <string name="trash_empty">Кошик порожній</string>
     <string name="trash_empty_now">Спорожнити кошик</string>
-    <string name="trash_empty_confirm">%1$d речей зникне назавжди. Це не можна скасувати.</string>
+    <plurals name="trash_empty_confirm">
+        <item quantity="one">%1$d запис буде вилучено назавжди. Це не можна скасувати.</item>
+        <item quantity="few">%1$d записи буде вилучено назавжди. Це не можна скасувати.</item>
+        <item quantity="many">%1$d записів буде вилучено назавжди. Це не можна скасувати.</item>
+        <item quantity="other">%1$d запису буде вилучено назавжди. Це не можна скасувати.</item>
+    </plurals>
     <string name="trash_restore">Повернути</string>
     <string name="trash_restored">Повернуто</string>
     <string name="trash_restore_failed">Не вдалося повернути</string>

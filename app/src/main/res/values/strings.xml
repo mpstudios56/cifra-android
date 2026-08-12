@@ -222,7 +222,8 @@
     <string name="include_header">Include\nheader</string>
     <string name="include_tx_status">Include\nTx Status</string>
     <string name="delete_account_confirm">Delete account?</string>
-    <string name="delete_transaction_confirm">Delete this transaction? It goes to the bin, where you can put it back.</string>
+    <string name="delete_transaction_confirm">Delete this transaction?</string>
+    <string name="delete_goes_to_trash">It is moved to the bin, from where it can be restored.</string>
     <string name="delete_budget_confirm">Delete budget?</string>
     <string name="delete_budget_recurring_select">You\'re about to delete a recurring budget. What to delete?</string>
     <string name="delete_budget_recurring_confirm">Delete recurring budget?</string>
@@ -1424,20 +1425,23 @@
     <string name="pin_mismatch">The two do not match</string>
   <string name="budget_today">TODAY</string>
     <string name="trash">Bin</string>
-    <string name="trash_summary">What was deleted, while it can still be brought back</string>
+    <string name="trash_summary">Deleted items, while they can still be restored</string>
     <string name="trash_empty">The bin is empty</string>
     <string name="trash_empty_now">Empty the bin</string>
-    <string name="trash_empty_confirm">%1$d things will be gone for good. This cannot be undone.</string>
-    <string name="trash_restore">Put it back</string>
-    <string name="trash_restored">Put back</string>
-    <string name="trash_restore_failed">It could not be put back</string>
-    <string name="trash_forget">Delete for good</string>
-    <string name="trash_forget_confirm">This will be gone for good. This cannot be undone.</string>
+    <plurals name="trash_empty_confirm">
+        <item quantity="one">1 item will be removed permanently. This cannot be undone.</item>
+        <item quantity="other">%1$d items will be removed permanently. This cannot be undone.</item>
+    </plurals>
+    <string name="trash_restore">Restore</string>
+    <string name="trash_restored">Restored</string>
+    <string name="trash_restore_failed">The item could not be restored</string>
+    <string name="trash_forget">Delete permanently</string>
+    <string name="trash_forget_confirm">It will be removed permanently. This cannot be undone.</string>
     <string name="trash_deleted_on">Deleted on %1$s</string>
-    <string name="trash_note_days">What you delete stays here for %1$d days, then goes for good.</string>
-    <string name="trash_note_forever">What you delete stays here until you empty the bin.</string>
-    <string name="trash_days">Keep deleted things for</string>
-    <string name="trash_days_summary">After this, the bin empties itself</string>
+    <string name="trash_note_days">Deleted items can be restored within %1$d days. After that they are removed permanently.</string>
+    <string name="trash_note_forever">Deleted items can be restored until you empty the bin.</string>
+    <string name="trash_days">Keep deleted items for</string>
+    <string name="trash_days_summary">After this period the bin empties automatically</string>
     <string-array name="trash_days_entries">
         <item>7 days</item>
         <item>30 days</item>

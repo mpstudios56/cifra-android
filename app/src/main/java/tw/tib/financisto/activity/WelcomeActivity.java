@@ -114,7 +114,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.welcome_base), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, insets.top, 0, insets.bottom);
+            // Left and right as well: held sideways the navigation bar is down
+            // one side of the screen, and padding only the top and bottom slid
+            // the content under it.
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
 

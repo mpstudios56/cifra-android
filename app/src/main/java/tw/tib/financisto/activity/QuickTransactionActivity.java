@@ -27,7 +27,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import tw.tib.financisto.R;
 import tw.tib.financisto.db.DatabaseAdapter;
@@ -35,9 +37,12 @@ import tw.tib.financisto.model.Account;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.Transaction;
 import tw.tib.financisto.model.TransactionStatus;
+import tw.tib.financisto.utils.CategoryIcon;
+import tw.tib.financisto.utils.CategoryIcons;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
 import tw.tib.financisto.utils.Utils;
+import tw.tib.financisto.view.FlowLayout;
 
 /**
  * Records a transaction in as few taps as possible: type the amount, tap a
@@ -52,8 +57,12 @@ public class QuickTransactionActivity extends AppCompatActivity {
 
     private static final String PREFS = "quick_transaction";
     private static final String KEY_ACCOUNT = "account_id";
-    /** How many category shortcuts fit before the row is more work than a list. */
-    private static final int SHORTCUTS = 8;
+    /**
+     * How many category shortcuts fit before the row is more work than a list.
+     * Six, with "other categories" after them, is two lines on a normal screen
+     * and never pushes the keypad off the bottom.
+     */
+    private static final int SHORTCUTS = 6;
     private static final int PICK_CATEGORY = 1;
     private static final int NEW_ACCOUNT = 2;
 
@@ -62,6 +71,9 @@ public class QuickTransactionActivity extends AppCompatActivity {
     private long categoryId = 0;
     /** The amount as typed, in cents: digits accumulate from the right. */
     private long cents = 0;
+
+    /** The shortcut buttons by category, so the chosen one can be filled in. */
+    private final Map<Long, Button> chips = new LinkedHashMap<>();
 
     private TextView amountView;
     private TextView chosenView;
@@ -98,10 +110,6 @@ public class QuickTransactionActivity extends AppCompatActivity {
 
         accountButton.setOnClickListener(v -> pickAccount());
         findViewById(R.id.quick_save).setOnClickListener(v -> save());
-        // Outside the scrolling strip, so it stays put however many shortcuts there
-        // are: buried at the far right it was never found.
-        findViewById(R.id.quick_more).setOnClickListener(v -> startActivityForResult(
-                new Intent(this, CategorySelectorActivity.class), PICK_CATEGORY));
 
         buildKeypad();
         selectAccount(rememberedAccount());
@@ -264,49 +272,74 @@ public class QuickTransactionActivity extends AppCompatActivity {
      * would be somebody else's idea of what people spend money on.
      */
     private void buildCategoryShortcuts() {
-        var row = (android.widget.LinearLayout) findViewById(R.id.quick_categories);
+        var row = (FlowLayout) findViewById(R.id.quick_categories);
         row.removeAllViews();
-        List<long[]> ids = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
-        String sql = "select c._id, c.title, count(*) n from transactions t"
+        chips.clear();
+
+        float density = getResources().getDisplayMetrics().density;
+        int pad = Math.round(14 * density);
+        int height = Math.round(40 * density);
+
+        String sql = "select c._id, c.title, c.icon, c.accent_color, count(*) n from transactions t"
                 + " inner join category c on c._id = t.category_id"
                 + " where t.is_template = 0 and t.parent_id = 0"
                 + " and t.to_account_id = 0 and t.category_id > 0"
                 + " group by c._id order by n desc limit " + SHORTCUTS;
         try (Cursor c = db.db().rawQuery(sql, null)) {
             while (c.moveToNext()) {
-                ids.add(new long[]{c.getLong(0)});
-                titles.add(c.getString(1));
+                final long id = c.getLong(0);
+                final String title = c.getString(1);
+                Button b = chip(title, pad, height);
+                // The category's own symbol, in the colour it was given: at a
+                // glance the shortcuts are told apart by shape and colour
+                // rather than by reading four words of Italian.
+                CategoryIcon icon = CategoryIcon.parse(c.getString(2));
+                if (icon != null) {
+                    b.setCompoundDrawablesRelativeWithIntrinsicBounds(icon.iconId, 0, 0, 0);
+                    b.setCompoundDrawablePadding(Math.round(6 * density));
+                    b.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(
+                            CategoryIcons.colorOf(c.getString(3))));
+                }
+                b.setOnClickListener(v -> chooseCategory(id, title));
+                chips.put(id, b);
+                row.addView(b);
             }
         }
-        float density = getResources().getDisplayMetrics().density;
-        int pad = Math.round(16 * density);
-        int gap = Math.round(6 * density);
-        for (int i = 0; i < ids.size(); i++) {
-            final long id = ids.get(i)[0];
-            final String title = titles.get(i);
-            Button b = new Button(this);
-            b.setText(title);
-            b.setSingleLine(true);
-            b.setAllCaps(false);
-            b.setTextSize(13);
-            b.setTextColor(0xFFF4EFE4);
-            b.setBackgroundResource(R.drawable.quick_chip);
-            b.setStateListAnimator(null);
-            b.setPadding(pad, 0, pad, 0);
-            var lp = new android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
-                    Math.round(40 * density));
-            lp.setMarginEnd(gap);
-            b.setLayoutParams(lp);
-            b.setOnClickListener(v -> chooseCategory(id, title));
-            row.addView(b);
-        }
+
+        // Last, and inside the same run of shortcuts: everything else the app
+        // knows about, for the times the six on show are not the one wanted.
+        Button more = chip(getString(R.string.other_categories), pad, height);
+        more.setOnClickListener(v -> startActivityForResult(
+                new Intent(this, CategorySelectorActivity.class), PICK_CATEGORY));
+        row.addView(more);
+    }
+
+    /** One shortcut, drawn the way they all are. */
+    private Button chip(String text, int pad, int height) {
+        Button b = new Button(this);
+        b.setText(text);
+        b.setSingleLine(true);
+        b.setAllCaps(false);
+        b.setTextSize(13);
+        b.setTextColor(0xFFF4EFE4);
+        b.setBackgroundResource(R.drawable.quick_chip);
+        b.setStateListAnimator(null);
+        b.setPadding(pad, 0, pad, 0);
+        b.setMinWidth(0);
+        b.setMinimumWidth(0);
+        b.setLayoutParams(new android.view.ViewGroup.LayoutParams(
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height));
+        return b;
     }
 
     private void chooseCategory(long id, String title) {
         categoryId = id;
         chosenView.setText(title);
+        // Filled in means chosen. Picking from "other categories" leaves none
+        // of the shortcuts filled, which is right: none of them is the one.
+        for (var entry : chips.entrySet()) {
+            entry.getValue().setSelected(entry.getKey() == id);
+        }
     }
 
     @Override

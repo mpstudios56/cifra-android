@@ -10,6 +10,14 @@
             <corners android:radius="20dp" />
         </shape>
     </item>
+    <!-- the one chosen stays filled, so the screen says what it is about to save -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF2F8F63" />
+            <stroke android:width="1dp" android:color="#FF45B87E" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#14FFFFFF" />

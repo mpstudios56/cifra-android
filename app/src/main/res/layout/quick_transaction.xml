@@ -111,39 +111,17 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
+    <!--
+      The shortcuts wrap onto a second line rather than scrolling sideways. A
+      strip that scrolls leaves the last one sliced in half at the edge, which
+      reads as a fault rather than as an invitation to drag; here every one of
+      them is whole and in plain sight, "Altre" last among them.
+    -->
+    <tw.tib.financisto.view.FlowLayout
+        android:id="@+id/quick_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <HorizontalScrollView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/quick_categories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <Button
-            android:id="@+id/quick_more"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/quick_chip"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:stateListAnimator="@null"
-            android:text="@string/other_categories"
-            android:textColor="#FFF4EFE4"
-            android:textSize="13sp" />
-    </LinearLayout>
+        android:layout_marginTop="8dp" />
 
     <!--
       The pad is as big as its keys and no bigger. Stretched to fill whatever

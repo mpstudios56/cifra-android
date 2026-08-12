@@ -174,7 +174,8 @@
   <string name="field_separator">Separador\nde campo</string>
   <string name="include_header">Incluir\ncabecera</string>
   <string name="delete_account_confirm">¿Eliminar la cuenta?</string>
-  <string name="delete_transaction_confirm">Borrar este movimiento? Va a la papelera, de donde puedes devolverlo a su sitio.</string>
+  <string name="delete_transaction_confirm">¿Borrar este movimiento?</string>
+  <string name="delete_goes_to_trash">Se mueve a la papelera, desde donde se puede restaurar.</string>
   <string name="delete_budget_confirm">¿Eliminar dotación presupuestaria?</string>
   <string name="delete_budget_recurring_select">Existen otras partidas periódicas con esta dotación presupuestaria. ¿También desea eliminarlas?</string>
   <string name="delete_budget_recurring_confirm">¿Eliminar dotación presupuestaria periódica?</string>
@@ -1322,20 +1323,23 @@
   <string name="pin_mismatch">Los dos no coinciden</string>
   <string name="budget_today">HOY</string>
   <string name="trash">Papelera</string>
-  <string name="trash_summary">Lo que has borrado, mientras aún se puede recuperar</string>
+  <string name="trash_summary">Los elementos eliminados, mientras se pueden restaurar</string>
   <string name="trash_empty">La papelera está vacía</string>
   <string name="trash_empty_now">Vaciar la papelera</string>
-  <string name="trash_empty_confirm">%1$d cosas desaparecerán para siempre. No se puede deshacer.</string>
-  <string name="trash_restore">Devolverlo a su sitio</string>
-  <string name="trash_restored">Devuelto a su sitio</string>
-  <string name="trash_restore_failed">No se ha podido devolver a su sitio</string>
-  <string name="trash_forget">Borrar para siempre</string>
-  <string name="trash_forget_confirm">Desaparecerá para siempre. No se puede deshacer.</string>
+  <plurals name="trash_empty_confirm">
+    <item quantity="one">1 elemento se eliminará definitivamente. No se puede deshacer.</item>
+    <item quantity="other">%1$d elementos se eliminarán definitivamente. No se puede deshacer.</item>
+  </plurals>
+  <string name="trash_restore">Restaurar</string>
+  <string name="trash_restored">Restaurado</string>
+  <string name="trash_restore_failed">No se ha podido restaurar el elemento</string>
+  <string name="trash_forget">Eliminar definitivamente</string>
+  <string name="trash_forget_confirm">Se eliminará definitivamente. No se puede deshacer.</string>
   <string name="trash_deleted_on">Borrado el %1$s</string>
-  <string name="trash_note_days">Lo que borras se queda aquí %1$d días y luego desaparece.</string>
-  <string name="trash_note_forever">Lo que borras se queda aquí hasta que vacíes la papelera.</string>
-  <string name="trash_days">Guardar lo borrado durante</string>
-  <string name="trash_days_summary">Pasado ese tiempo, la papelera se vacía sola</string>
+  <string name="trash_note_days">Los elementos eliminados se pueden restaurar durante %1$d días. Después se eliminan definitivamente.</string>
+  <string name="trash_note_forever">Los elementos eliminados se pueden restaurar hasta que vacíes la papelera.</string>
+  <string name="trash_days">Conservar los elementos eliminados durante</string>
+  <string name="trash_days_summary">Pasado este periodo la papelera se vacía automáticamente</string>
   <string-array name="trash_days_entries">
       <item>7 días</item>
       <item>30 días</item>

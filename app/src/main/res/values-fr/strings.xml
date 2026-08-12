@@ -173,7 +173,8 @@
   <string name="field_separator">Champ\nséparateur</string>
   <string name="include_header">Inclure\ntête</string>
   <string name="delete_account_confirm">Supprimer le compte ?</string>
-  <string name="delete_transaction_confirm">Supprimer cette opération ? Elle va à la corbeille, d’où tu peux la remettre en place.</string>
+  <string name="delete_transaction_confirm">Supprimer cette opération ?</string>
+  <string name="delete_goes_to_trash">Elle est déplacée dans la corbeille, d’où elle peut être restaurée.</string>
   <string name="delete_budget_confirm">Supprimer le budget ?</string>
   <string name="delete_budget_recurring_select">Vous allez supprimer une opération planifiée. Que supprimer ?</string>
   <string name="delete_budget_recurring_confirm">Supprimer le budget récurrent ?</string>
@@ -1322,20 +1323,23 @@
   <string name="pin_mismatch">Les deux ne correspondent pas</string>
   <string name="budget_today">AUJOURD\'HUI</string>
   <string name="trash">Corbeille</string>
-  <string name="trash_summary">Ce que tu as supprimé, tant qu’on peut encore le récupérer</string>
+  <string name="trash_summary">Les éléments supprimés, tant qu’ils peuvent être restaurés</string>
   <string name="trash_empty">La corbeille est vide</string>
   <string name="trash_empty_now">Vider la corbeille</string>
-  <string name="trash_empty_confirm">%1$d choses disparaîtront pour de bon. C’est sans retour.</string>
-  <string name="trash_restore">Le remettre en place</string>
-  <string name="trash_restored">Remis en place</string>
-  <string name="trash_restore_failed">Impossible de le remettre en place</string>
-  <string name="trash_forget">Supprimer pour de bon</string>
-  <string name="trash_forget_confirm">Cela disparaîtra pour de bon. C’est sans retour.</string>
+  <plurals name="trash_empty_confirm">
+    <item quantity="one">1 élément sera supprimé définitivement. Cette action est irréversible.</item>
+    <item quantity="other">%1$d éléments seront supprimés définitivement. Cette action est irréversible.</item>
+  </plurals>
+  <string name="trash_restore">Restaurer</string>
+  <string name="trash_restored">Restauré</string>
+  <string name="trash_restore_failed">L’élément n’a pas pu être restauré</string>
+  <string name="trash_forget">Supprimer définitivement</string>
+  <string name="trash_forget_confirm">L’élément sera supprimé définitivement. Cette action est irréversible.</string>
   <string name="trash_deleted_on">Supprimé le %1$s</string>
-  <string name="trash_note_days">Ce que tu supprimes reste ici %1$d jours, puis disparaît pour de bon.</string>
-  <string name="trash_note_forever">Ce que tu supprimes reste ici jusqu’à ce que tu vides la corbeille.</string>
-  <string name="trash_days">Garder les éléments supprimés</string>
-  <string name="trash_days_summary">Passé ce délai, la corbeille se vide toute seule</string>
+  <string name="trash_note_days">Les éléments supprimés peuvent être restaurés pendant %1$d jours. Passé ce délai, ils sont supprimés définitivement.</string>
+  <string name="trash_note_forever">Les éléments supprimés peuvent être restaurés jusqu’à ce que tu vides la corbeille.</string>
+  <string name="trash_days">Conserver les éléments supprimés pendant</string>
+  <string name="trash_days_summary">Passé ce délai, la corbeille se vide automatiquement</string>
   <string-array name="trash_days_entries">
       <item>7 jours</item>
       <item>30 jours</item>

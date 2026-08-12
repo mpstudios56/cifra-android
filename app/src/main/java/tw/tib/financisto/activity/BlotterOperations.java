@@ -72,8 +72,12 @@ public class BlotterOperations {
     public void deleteTransaction() {
         int titleId = targetTransaction.isTemplate() ? R.string.delete_template_confirm
                 : (originalTransaction.isSplitChild() ? R.string.delete_transaction_parent_confirm : R.string.delete_transaction_confirm);
+        // The question on top, where the eye lands, and underneath in the
+        // smaller type what actually happens - the same shape as a settings
+        // entry, rather than one long sentence to read before answering.
         new AlertDialog.Builder(context)
-                .setMessage(titleId)
+                .setTitle(titleId)
+                .setMessage(R.string.delete_goes_to_trash)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {

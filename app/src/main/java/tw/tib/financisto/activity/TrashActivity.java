@@ -52,11 +52,18 @@ public class TrashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trash);
+        setSupportActionBar(findViewById(R.id.toolbar));
         setTitle(R.string.trash);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.trash_base), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, insets.top, 0, insets.bottom);
+            // Left and right as well: held sideways the navigation bar is down
+            // one side of the screen, and padding only the top and bottom slid
+            // the content under it.
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
 
@@ -64,7 +71,9 @@ public class TrashActivity extends AppCompatActivity {
         db.open();
 
         note = findViewById(R.id.trash_note);
-        list = findViewById(R.id.list);
+        // android.R.id.list, not one of ours: the layout uses the framework id
+        // so the empty view is wired up the way a list screen normally is.
+        list = findViewById(android.R.id.list);
         list.setEmptyView(findViewById(android.R.id.empty));
         adapter = new TrashAdapter();
         list.setAdapter(adapter);
@@ -144,7 +153,10 @@ public class TrashActivity extends AppCompatActivity {
     private void askToEmpty() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.trash_empty_now)
-                .setMessage(getString(R.string.trash_empty_confirm, adapter.items.size()))
+                // A count, so "1 item" is not written as though it were several
+                .setMessage(getResources().getQuantityString(
+                        R.plurals.trash_empty_confirm,
+                        adapter.items.size(), adapter.items.size()))
                 .setPositiveButton(R.string.trash_empty_now, (d, which) -> {
                     Trash.empty(db.db());
                     refresh();
@@ -198,6 +210,12 @@ public class TrashActivity extends AppCompatActivity {
             return R.string.budget;
         }
         return R.string.trash;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     @Override
