@@ -77,7 +77,11 @@ public class AboutActivity extends AppCompatActivity {
                 ViewHolder vh = (ViewHolder) holder;
                 switch (position) {
                     case 0:
-                        vh.webView.loadUrl(LocalisedAsset.url(vh.webView.getContext(), "about.htm"));
+                        // Loaded as text rather than by address, so the version can be
+                        // written into it: a page kept as a file cannot know it.
+                        vh.webView.loadDataWithBaseURL("file:///android_asset/",
+                                LocalisedAsset.read(vh.webView.getContext(), "about.htm"),
+                                "text/html", "UTF-8", null);
                         break;
                     case 1:
                         vh.webView.loadUrl(LocalisedAsset.url(vh.webView.getContext(), "whatsnew.htm"));

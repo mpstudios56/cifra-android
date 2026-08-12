@@ -37,6 +37,36 @@ public class LocalisedAsset {
         return "file:///android_asset/" + inLanguage(context, name);
     }
 
+    /**
+     * The page itself, in the reader's language, with the version written into
+     * it wherever it says {version}.
+     * <p>
+     * A page kept as a file cannot know what version it is being shown by, and
+     * the one place somebody looks for a version number is the about screen.
+     */
+    public static String read(Context context, String name) {
+        StringBuilder text = new StringBuilder();
+        try (InputStream in = context.getAssets().open(inLanguage(context, name))) {
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = in.read(buffer)) > 0) {
+                text.append(new String(buffer, 0, read, "UTF-8"));
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        return text.toString().replace("{version}", version(context));
+    }
+
+    private static String version(Context context) {
+        try {
+            return context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     private static String inLanguage(Context context, String name) {
         String language = language(context);
         if (language.isEmpty()) {
