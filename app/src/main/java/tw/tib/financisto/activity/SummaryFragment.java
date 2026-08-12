@@ -30,6 +30,7 @@ import tw.tib.financisto.db.DatabaseAdapter;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.Total;
 import tw.tib.financisto.utils.CurrencyCache;
+import tw.tib.financisto.utils.Identity;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PinProtection;
 import tw.tib.financisto.utils.Utils;
@@ -53,6 +54,8 @@ public class SummaryFragment extends Fragment {
     private int periodsBack = 0;
     /** Whether the spending card is showing every category or only the largest. */
     private boolean allCategories = false;
+    /** Whether the total is showing the accounts it is made of. */
+    private boolean showAccounts = false;
 
     @Nullable
     @Override
@@ -91,6 +94,12 @@ public class SummaryFragment extends Fragment {
         // are one tap away rather than on a screen of their own.
         view.findViewById(R.id.summary_categories_header).setOnClickListener(v -> {
             allCategories = !allCategories;
+            refresh();
+        });
+        // A total nobody can take apart is a number to be believed rather than
+        // read. Opening it says which accounts made it, and how much each put in.
+        view.findViewById(R.id.summary_net_worth_header).setOnClickListener(v -> {
+            showAccounts = !showAccounts;
             refresh();
         });
     }
@@ -299,6 +308,102 @@ public class SummaryFragment extends Fragment {
         view.findViewById(R.id.summary_categories_header).setClickable(worthExpanding);
     }
 
+    /**
+     * The accounts the total is made of, biggest first, and - once two people
+     * are sharing - what belongs to the shared ones and what does not.
+     * <p>
+     * The two subtotals appear only when something is actually shared. A switch
+     * in the settings for a line that means nothing until sharing is set up
+     * would be one more thing to find and one more thing to explain.
+     */
+    private void fillAccounts(LinearLayout into, Currency home) {
+        long shared = 0;
+        long mine = 0;
+        boolean anyShared = false;
+        String sql = "select a.title, a.total_amount, a.currency_id,"
+                + " (select count(*) from shared_thing s"
+                + " where s.kind = ? and s.uuid = a.uuid) as is_shared"
+                + " from account a where a.is_active = 1 and a.is_include_into_totals = 1"
+                + " order by a.total_amount desc";
+        try (Cursor c = db.db().rawQuery(sql, new String[]{"account"})) {
+            while (c.moveToNext()) {
+                String title = c.getString(0);
+                long amount = c.getLong(1);
+                Currency currency = CurrencyCache.getCurrency(c.getLong(2));
+                boolean isShared = c.getInt(3) > 0;
+                anyShared |= isShared;
+                if (isShared) {
+                    shared += amount;
+                } else {
+                    mine += amount;
+                }
+                into.addView(accountRow(title, amount, currency, isShared));
+            }
+        } catch (Exception e) {
+            return;
+        }
+        if (anyShared) {
+            into.addView(subtotal(getString(R.string.summary_shared), shared, home));
+            into.addView(subtotal(getString(R.string.summary_not_shared), mine, home));
+        }
+    }
+
+    /** One account: its name, and what is on it. */
+    private View accountRow(String title, long amount, Currency currency, boolean isShared) {
+        LinearLayout row = new LinearLayout(getContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(0, dp(6), 0, dp(6));
+
+        TextView name = new TextView(getContext());
+        name.setText(title);
+        name.setSingleLine(true);
+        name.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        row.addView(name, new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        if (isShared) {
+            // A dot in the other person\'s colour rather than a word: the line
+            // is already a name and a figure, and "condiviso" written on half of
+            // them would be noise.
+            View dot = new View(getContext());
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp(8), dp(8));
+            lp.gravity = android.view.Gravity.CENTER_VERTICAL;
+            lp.rightMargin = dp(8);
+            dot.setLayoutParams(lp);
+            android.graphics.drawable.GradientDrawable shape =
+                    new android.graphics.drawable.GradientDrawable();
+            shape.setShape(android.graphics.drawable.GradientDrawable.OVAL);
+            shape.setColor(Identity.theirs(getContext()).colour);
+            dot.setBackground(shape);
+            row.addView(dot);
+        }
+
+        TextView value = new TextView(getContext());
+        value.setSingleLine(true);
+        u.setAmountText(value, currency, amount, false);
+        row.addView(value);
+        return row;
+    }
+
+    private View subtotal(String label, long amount, Currency home) {
+        LinearLayout row = new LinearLayout(getContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(0, dp(8), 0, 0);
+
+        TextView name = new TextView(getContext());
+        name.setText(label);
+        name.setAlpha(0.7f);
+        row.addView(name, new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        TextView value = new TextView(getContext());
+        value.setSingleLine(true);
+        value.setTypeface(value.getTypeface(), android.graphics.Typeface.BOLD);
+        u.setAmountText(value, home, amount, false);
+        row.addView(value);
+        return row;
+    }
+
     /** The name and figure on one line, and under them a bar of that width. */
     private View categoryRow(String title, long amount, long share, Currency home, int colour) {
         LinearLayout block = new LinearLayout(getContext());
@@ -384,5 +489,15 @@ public class SummaryFragment extends Fragment {
         u.setAmountText(view.findViewById(R.id.summary_net_worth), home, total.balance, false);
         ((TextView) view.findViewById(R.id.summary_net_worth_note))
                 .setText(R.string.summary_net_worth_note);
+
+        LinearLayout accounts = view.findViewById(R.id.summary_accounts);
+        accounts.removeAllViews();
+        accounts.setVisibility(showAccounts ? View.VISIBLE : View.GONE);
+        if (showAccounts) {
+            fillAccounts(accounts, home);
+        }
+        ((TextView) view.findViewById(R.id.summary_net_worth_more)).setText(
+                showAccounts ? R.string.summary_accounts_hide : R.string.summary_accounts_show);
+        view.findViewById(R.id.summary_net_worth_chevron).setRotation(showAccounts ? 180 : 0);
     }
 }

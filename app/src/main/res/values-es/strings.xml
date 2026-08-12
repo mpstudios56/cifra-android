@@ -1420,4 +1420,8 @@
   <string name="sharing_functions">Funciones</string>
   <string name="trash_restore_and_share">Restaurar y volver a compartir</string>
   <string name="trash_deleted_by">Eliminado por %1$s el %2$s</string>
+  <string name="summary_accounts_show">Mostrar las cuentas</string>
+  <string name="summary_accounts_hide">Ocultar las cuentas</string>
+  <string name="summary_shared">De los cuales compartidos</string>
+  <string name="summary_not_shared">Solo tuyos</string>
 </resources>

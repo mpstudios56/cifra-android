@@ -1522,4 +1522,8 @@
     <string name="sharing_functions">Functions</string>
     <string name="trash_restore_and_share">Restore and share again</string>
     <string name="trash_deleted_by">%1$s deleted it on %2$s</string>
+    <string name="summary_accounts_show">Show the accounts</string>
+    <string name="summary_accounts_hide">Hide the accounts</string>
+    <string name="summary_shared">Of which shared</string>
+    <string name="summary_not_shared">Only yours</string>
 </resources>

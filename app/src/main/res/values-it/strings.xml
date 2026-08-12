@@ -1423,4 +1423,8 @@
   <string name="sharing_functions">Funzioni</string>
   <string name="trash_restore_and_share">Ripristina e ricondividi</string>
   <string name="trash_deleted_by">Eliminato da %1$s il %2$s</string>
+  <string name="summary_accounts_show">Mostra i conti</string>
+  <string name="summary_accounts_hide">Nascondi i conti</string>
+  <string name="summary_shared">Di cui condivisi</string>
+  <string name="summary_not_shared">Solo tuoi</string>
 </resources>
