@@ -55,6 +55,16 @@ public class Trash {
      */
     public static void keep(SQLiteDatabase db, String table, long id,
                             String title, String subtitle) {
+        keep(db, table, id, title, subtitle, "");
+    }
+
+    /**
+     * @param author who deleted it, when that was not the person holding this
+     *               phone - so the bin can say "Debora deleted this" instead of
+     *               a movement quietly disappearing overnight
+     */
+    public static void keep(SQLiteDatabase db, String table, long id,
+                            String title, String subtitle, String author) {
         try {
             JSONArray rows = new JSONArray();
             copyRow(db, rows, table, "_id=?", args(id));
@@ -83,7 +93,7 @@ public class Trash {
             values.put("subtitle", subtitle == null ? "" : subtitle);
             values.put("payload", rows.toString());
             values.put("deleted_on", System.currentTimeMillis());
-            values.put("author", "");
+            values.put("author", author == null ? "" : author);
             db.insert(TABLE, null, values);
         } catch (Exception e) {
             // Never stop a deletion because the bin could not record it: the

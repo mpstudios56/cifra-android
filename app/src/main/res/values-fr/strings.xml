@@ -1418,4 +1418,6 @@
   <string name="merge_has_children">Cette catégorie a des sous-catégories. Fusionne-les d’abord, ou vide-la</string>
   <string name="merge_none">Rien à fusionner</string>
   <string name="sharing_functions">Fonctions</string>
+  <string name="trash_restore_and_share">Restaurer et repartager</string>
+  <string name="trash_deleted_by">Supprimé par %1$s le %2$s</string>
 </resources>

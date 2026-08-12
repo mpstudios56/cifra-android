@@ -135,7 +135,8 @@ public class SyncEngine {
                 db.beginTransaction();
                 try {
                     String why = SyncPayload.apply(db, o.optString("operation", ""),
-                            o.optString("payload", "{}"));
+                            o.optString("payload", "{}"),
+                            o.optString("author", ""), o.optString("title", ""));
                     if (why != null) {
                         if (result.skipped.size() < 5) {
                             result.skipped.add(o.optString("title", "") + " — " + why);

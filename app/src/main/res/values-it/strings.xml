@@ -1421,4 +1421,6 @@
   <string name="merge_has_children">Questa categoria ha delle sottocategorie. Unisci prima quelle, oppure svuotala</string>
   <string name="merge_none">Niente da unire</string>
   <string name="sharing_functions">Funzioni</string>
+  <string name="trash_restore_and_share">Ripristina e ricondividi</string>
+  <string name="trash_deleted_by">Eliminato da %1$s il %2$s</string>
 </resources>

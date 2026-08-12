@@ -462,6 +462,18 @@ public class DatabaseAdapter extends MyEntityManager {
     }
 
     /**
+     * Notes that a movement put back from the bin should travel again.
+     * <p>
+     * Restoring writes the row straight back into the table, without going
+     * through the usual saving, so nothing would otherwise tell the other phone
+     * that the thing it deleted is here again.
+     */
+    public void noteRestoredForSharing(long transactionId, String title) {
+        noteChange(DatabaseHelper.TRANSACTION_TABLE, transactionId, ChangeLog.INSERT,
+                title, "", tw.tib.financisto.sync.SyncPayload.of(db(), transactionId));
+    }
+
+    /**
      * Writes a line in the record of who changed what.
      * <p>
      * Called from inside whatever database transaction the change is part of,

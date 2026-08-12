@@ -104,14 +104,26 @@ public class TrashActivity extends AppCompatActivity {
     // ------------------------------------------------------------------ actions
 
     private void askWhatToDo(Trash.Item item) {
+        boolean theirs = item.author != null && !item.author.trim().isEmpty();
+        // Something the other person deleted can also be put back and sent
+        // back: disagreeing with a deletion is a thing that happens, and
+        // restoring it only here would leave the two ledgers apart.
+        CharSequence[] choices = theirs
+                ? new CharSequence[]{
+                        getString(R.string.trash_restore),
+                        getString(R.string.trash_restore_and_share),
+                        getString(R.string.trash_forget)}
+                : new CharSequence[]{
+                        getString(R.string.trash_restore),
+                        getString(R.string.trash_forget)};
         new AlertDialog.Builder(this)
                 .setTitle(item.title == null || item.title.isEmpty()
                         ? getString(R.string.trash) : item.title)
-                .setItems(new CharSequence[]{
-                        getString(R.string.trash_restore),
-                        getString(R.string.trash_forget)}, (dialog, which) -> {
+                .setItems(choices, (dialog, which) -> {
                     if (which == 0) {
-                        restore(item);
+                        restore(item, false);
+                    } else if (theirs && which == 1) {
+                        restore(item, true);
                     } else {
                         askToForget(item);
                     }
@@ -119,7 +131,7 @@ public class TrashActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void restore(Trash.Item item) {
+    private void restore(Trash.Item item, boolean shareBack) {
         Trash.Restored restored = Trash.restore(db.db(), item.id);
         if (restored.outcome == Trash.Outcome.NO_ACCOUNT) {
             // Left in the bin on purpose: recreating the account puts it back
@@ -137,6 +149,11 @@ public class TrashActivity extends AppCompatActivity {
             return;
         }
         String entity = restored.entity;
+        if (shareBack && DatabaseHelper.TRANSACTION_TABLE.equals(entity)) {
+            // Written into the record as something added here, so the next round
+            // carries it back to the phone it was deleted from.
+            db.noteRestoredForSharing(item.entityId, item.title);
+        }
         if (DatabaseHelper.TRANSACTION_TABLE.equals(entity)) {
             // The money moved back, so the figures have to be made again. Doing
             // it here rather than trusting an increment: a restored transaction
@@ -206,9 +223,14 @@ public class TrashActivity extends AppCompatActivity {
             subtitle.setText(item.subtitle);
             subtitle.setVisibility(item.subtitle == null || item.subtitle.isEmpty()
                     ? View.GONE : View.VISIBLE);
-            when.setText(getString(R.string.trash_deleted_on,
-                    DateUtils.getShortDateFormat(TrashActivity.this)
-                            .format(new Date(item.deletedOn))));
+            String on = DateUtils.getShortDateFormat(TrashActivity.this)
+                    .format(new Date(item.deletedOn));
+            // Says whose deletion it was when it was not this phone's: a
+            // movement that disappears overnight with no explanation is the
+            // fastest way to make two people distrust an app about money.
+            when.setText(item.author == null || item.author.trim().isEmpty()
+                    ? getString(R.string.trash_deleted_on, on)
+                    : getString(R.string.trash_deleted_by, item.author.trim(), on));
             return convertView;
         }
     }

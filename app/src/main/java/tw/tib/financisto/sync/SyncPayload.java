@@ -111,6 +111,15 @@ public class SyncPayload {
 
     /** Why a movement could not be put back, or null when it was. */
     public static String apply(SQLiteDatabase db, String operation, String payload) {
+        return apply(db, operation, payload, "", "");
+    }
+
+    /**
+     * @param author who made the change over there, so a deletion can say whose
+     *               it was rather than a movement vanishing overnight
+     */
+    public static String apply(SQLiteDatabase db, String operation, String payload,
+                               String author, String title) {
         try {
             JSONObject o = new JSONObject(payload);
             String uuid = o.optString("uuid", "");
@@ -121,6 +130,12 @@ public class SyncPayload {
 
             if ("DELETE".equals(operation)) {
                 if (existing > 0) {
+                    // Into the bin, not straight out. Every total is right at
+                    // once, because the bin holds what is already gone from the
+                    // accounts - and nothing of somebody else's work is
+                    // destroyed by a phone doing what it was told from afar.
+                    tw.tib.financisto.db.Trash.keep(db, DatabaseHelper.TRANSACTION_TABLE,
+                            existing, title, "", author);
                     db.delete(DatabaseHelper.TRANSACTION_TABLE, "_id=?",
                             new String[]{String.valueOf(existing)});
                 }

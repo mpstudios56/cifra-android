@@ -25,12 +25,12 @@ import tw.tib.financisto.db.DatabaseHelper;
  * that joins late, or that lost its copy, catches up on the first round instead
  * of needing every change ever made to it.
  * <p>
- * <b>Matched by name before anything else.</b> Two people who both restored the
- * same backup, or who each set up their own, have a "Conto corrente" apiece with
- * different identifiers. Creating a second one next to it would give them two of
- * everything on the first round, tidily and irreversibly. So a thing arriving
- * under a name we already have is that thing, and the two phones settle on one
- * identifier for it.
+ * <b>Never joined to what is here by its name.</b> Two people each have a
+ * "Conto corrente", and after the first round each has two. That looks like a
+ * fault and is in fact the safe answer: "Casa" can be the mortgage to one of
+ * them and the cleaning to the other, and joining two things because they are
+ * spelled alike is a guess that cannot be undone once the movements have moved.
+ * The Merge screen proposes the pairs and somebody decides.
  */
 public class SyncEntities {
 
@@ -89,17 +89,11 @@ public class SyncEntities {
             return false;
         }
 
-        long byName = idByName(db, kind, name);
-        if (byName > 0) {
-            // The same thing under two identifiers. Ours takes theirs, and from
-            // now on both phones mean the same row when they say it.
-            ContentValues v = new ContentValues();
-            v.put("uuid", uuid);
-            db.update(kind, v, "_id=?", new String[]{String.valueOf(byName)});
-            SharedThings.adopt(db, kind, uuid);
-            return false;
-        }
-
+        // Deliberately not joined to whatever is here under the same name.
+        // "Casa" can be the mortgage to one person and the cleaning to the
+        // other, and a wrong guess inside somebody's accounts does not come
+        // undone. The two arrive side by side and the Merge screen proposes
+        // putting them together, which somebody then decides.
         boolean made = create(db, kind, uuid, name, o);
         if (made) {
             SharedThings.adopt(db, kind, uuid);
@@ -153,20 +147,6 @@ public class SyncEntities {
     private static long idByUuid(SQLiteDatabase db, String table, String uuid) {
         try (Cursor c = db.query(table, new String[]{"_id"}, "uuid=?",
                 new String[]{uuid}, null, null, null)) {
-            return c.moveToFirst() ? c.getLong(0) : 0;
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    private static long idByName(SQLiteDatabase db, String table, String name) {
-        if (name == null || name.trim().isEmpty()) {
-            return 0;
-        }
-        // Case and stray spaces do not make two different accounts.
-        try (Cursor c = db.query(table, new String[]{"_id"},
-                "trim(lower(" + SharedThings.nameColumn(table) + "))=?",
-                new String[]{name.trim().toLowerCase()}, null, null, "_id asc")) {
             return c.moveToFirst() ? c.getLong(0) : 0;
         } catch (Exception e) {
             return 0;

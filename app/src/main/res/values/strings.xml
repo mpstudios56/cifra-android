@@ -1520,4 +1520,6 @@
     <string name="merge_has_children">This category has subcategories under it. Merge those first, or empty it</string>
     <string name="merge_none">Nothing to merge</string>
     <string name="sharing_functions">Functions</string>
+    <string name="trash_restore_and_share">Restore and share again</string>
+    <string name="trash_deleted_by">%1$s deleted it on %2$s</string>
 </resources>
