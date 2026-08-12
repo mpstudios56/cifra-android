@@ -1503,12 +1503,12 @@
     <string name="sharing_nothing_new">Nothing new</string>
     <string name="sharing_no_folder">Choose the shared folder first</string>
     <string name="sharing_skipped">Something could not be applied: %1$s</string>
-    <string name="share_picker">What to share</string>
-    <string name="share_picker_intro">Sharing an account shares its movements. The categories, payees and places they use follow on their own.</string>
+    <string name="share_picker">Shared accounts</string>
+    <string name="share_picker_intro">Sharing an account shares its movements. The same tick is inside each account.</string>
     <string name="share_all">Select all</string>
-    <string name="share_what">What to share</string>
-    <string name="share_what_none">No account: nothing travels</string>
-    <string name="share_what_some">%1$d items</string>
+    <string name="share_what">Shared accounts</string>
+    <string name="share_what_none">None</string>
+    <string name="share_what_some">%1$d accounts</string>
     <string name="no_title">Untitled</string>
     <string name="merge">Merge</string>
     <string name="merge_intro">Puts back together two labels meaning one thing. Does not touch the movements.</string>
@@ -1525,4 +1525,6 @@
     <string name="summary_accounts_hide">Hide the accounts</string>
     <string name="summary_shared">Of which shared</string>
     <string name="summary_not_shared">Only yours</string>
+    <string name="account_shared">Share this account</string>
+    <string name="account_shared_summary">Its movements go to the other person</string>
 </resources>

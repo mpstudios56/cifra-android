@@ -20,7 +20,9 @@
 		android:paddingRight="4dip" android:paddingLeft="11dip"
 		android:gravity="center_vertical"
 		android:background="?android:attr/listChoiceBackgroundIndicator"
-		android:src="@drawable/icon" />
+		/><!-- no picture until one is chosen: what stood here was the
+		     old Financisto wallet, another app's logo sitting in the
+		     middle of a form and looking like the answer to the row -->
 	<RelativeLayout android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_marginLeft="8dip"
 		android:layout_marginTop="3dip" android:layout_marginBottom="3dip"

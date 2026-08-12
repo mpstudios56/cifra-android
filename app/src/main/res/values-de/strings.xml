@@ -1401,12 +1401,12 @@
   <string name="sharing_nothing_new">Nichts Neues</string>
   <string name="sharing_no_folder">Wähle zuerst den gemeinsamen Ordner</string>
   <string name="sharing_skipped">Etwas konnte nicht übernommen werden: %1$s</string>
-  <string name="share_picker">Was geteilt wird</string>
-  <string name="share_picker_intro">Nichts wird geteilt, bevor du es ankreuzt. Ein Konto zu teilen teilt, was darauf geschieht; eine Kategorie oder einen Namen zu teilen sorgt nur dafür, dass das andere Telefon ihn zur Hand hat.</string>
+  <string name="share_picker">Geteilte Konten</string>
+  <string name="share_picker_intro">Ein Konto zu teilen teilt seine Buchungen. Dasselbe Häkchen steht in jedem Konto.</string>
   <string name="share_all">Alle auswählen</string>
-  <string name="share_what">Was geteilt wird</string>
-  <string name="share_what_none">Noch nichts — es wird nichts übertragen</string>
-  <string name="share_what_some">%1$d Dinge</string>
+  <string name="share_what">Geteilte Konten</string>
+  <string name="share_what_none">Keines</string>
+  <string name="share_what_some">%1$d Konten</string>
   <string name="no_title">Ohne Namen</string>
   <string name="merge">Zusammenführen</string>
   <string name="merge_intro">Zwei Bezeichnungen, die dasselbe meinen, wieder vereint. Am Geld wird nichts angerührt: keine Buchung wird gelöscht, verschoben oder addiert — die mit der verschwindenden Bezeichnung nutzen künftig die bleibende.</string>
@@ -1423,4 +1423,6 @@
   <string name="summary_accounts_hide">Konten ausblenden</string>
   <string name="summary_shared">Davon geteilt</string>
   <string name="summary_not_shared">Nur deine</string>
+  <string name="account_shared">Dieses Konto teilen</string>
+  <string name="account_shared_summary">Seine Buchungen gehen an die andere Person</string>
 </resources>

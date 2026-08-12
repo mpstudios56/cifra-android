@@ -1401,12 +1401,12 @@
   <string name="sharing_nothing_new">Nada nuevo</string>
   <string name="sharing_no_folder">Elige primero la carpeta compartida</string>
   <string name="sharing_skipped">Algo no se ha podido aplicar: %1$s</string>
-  <string name="share_picker">Qué compartir</string>
-  <string name="share_picker_intro">No se comparte nada hasta que lo marques. Compartir una cuenta comparte lo que ocurre en ella; compartir una categoría o un nombre solo hace que el otro teléfono lo tenga a mano.</string>
+  <string name="share_picker">Cuentas compartidas</string>
+  <string name="share_picker_intro">Compartir una cuenta comparte sus movimientos. La misma casilla está dentro de cada cuenta.</string>
   <string name="share_all">Seleccionar todo</string>
-  <string name="share_what">Qué compartir</string>
-  <string name="share_what_none">Todavía nada: no viajará nada</string>
-  <string name="share_what_some">%1$d cosas</string>
+  <string name="share_what">Cuentas compartidas</string>
+  <string name="share_what_none">Ninguna</string>
+  <string name="share_what_some">%1$d cuentas</string>
   <string name="no_title">Sin nombre</string>
   <string name="merge">Unir</string>
   <string name="merge_intro">Dos etiquetas que significan lo mismo, reunidas. Aquí no se toca el dinero: ningún movimiento se elimina, se mueve ni se suma; los que usaban la etiqueta que desaparece usarán la que queda.</string>
@@ -1423,4 +1423,6 @@
   <string name="summary_accounts_hide">Ocultar las cuentas</string>
   <string name="summary_shared">De los cuales compartidos</string>
   <string name="summary_not_shared">Solo tuyos</string>
+  <string name="account_shared">Compartir esta cuenta</string>
+  <string name="account_shared_summary">Sus movimientos van a la otra persona</string>
 </resources>

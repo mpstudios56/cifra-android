@@ -32,9 +32,9 @@ import tw.tib.financisto.utils.PinProtection;
  * do not necessarily want the other to see the personal account, and copying
  * everything the moment a folder is chosen would make that decision for them.
  * <p>
- * Sharing an account shares what happens on it. Sharing a category or a name
- * only means the other phone has it to hand when a movement mentions it - a
- * category on its own tells nobody anything about money.
+ * The same tick sits on the account itself, which is where somebody thinks
+ * about what an account is for. This screen is the view of all of them at once,
+ * for setting up the first time or checking later what is going across.
  */
 public class SharePickerActivity extends AppCompatActivity {
 
@@ -87,7 +87,10 @@ public class SharePickerActivity extends AppCompatActivity {
         LinearLayout list = findViewById(R.id.share_list);
         list.removeAllViews();
         rows.clear();
-        for (String kind : SharedThings.KINDS) {
+        // Only accounts. Everything a shared account's movements mention
+        // follows on its own, and a list of four things to tick where one
+        // will do is three questions too many.
+        for (String kind : new String[]{SharedThings.ACCOUNT}) {
             List<SharedThings.Thing> things = SharedThings.list(db.db(), kind);
             if (things.isEmpty()) {
                 continue;

@@ -1404,12 +1404,12 @@
   <string name="sharing_nothing_new">Niente di nuovo</string>
   <string name="sharing_no_folder">Scegli prima la cartella condivisa</string>
   <string name="sharing_skipped">Qualcosa non si è potuto applicare: %1$s</string>
-  <string name="share_picker">Cosa condividere</string>
-  <string name="share_picker_intro">Condividere un conto condivide i suoi movimenti. Categorie, beneficiari e luoghi che usano seguono da soli.</string>
+  <string name="share_picker">Conti condivisi</string>
+  <string name="share_picker_intro">Condividere un conto condivide i suoi movimenti. La stessa spunta è dentro ogni conto.</string>
   <string name="share_all">Seleziona tutto</string>
-  <string name="share_what">Cosa condividere</string>
-  <string name="share_what_none">Nessun conto: non viaggia nulla</string>
-  <string name="share_what_some">%1$d elementi</string>
+  <string name="share_what">Conti condivisi</string>
+  <string name="share_what_none">Nessuno</string>
+  <string name="share_what_some">%1$d conti</string>
   <string name="no_title">Senza nome</string>
   <string name="merge">Unisci</string>
   <string name="merge_intro">Riunisce due etichette che indicano la stessa cosa. Non tocca i movimenti.</string>
@@ -1426,4 +1426,6 @@
   <string name="summary_accounts_hide">Nascondi i conti</string>
   <string name="summary_shared">Di cui condivisi</string>
   <string name="summary_not_shared">Solo tuoi</string>
+  <string name="account_shared">Condividi questo conto</string>
+  <string name="account_shared_summary">I suoi movimenti vanno all’altra persona</string>
 </resources>

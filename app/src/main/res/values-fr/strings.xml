@@ -1401,12 +1401,12 @@
   <string name="sharing_nothing_new">Rien de nouveau</string>
   <string name="sharing_no_folder">Choisis d’abord le dossier partagé</string>
   <string name="sharing_skipped">Quelque chose n’a pas pu être appliqué : %1$s</string>
-  <string name="share_picker">Quoi partager</string>
-  <string name="share_picker_intro">Rien n’est partagé tant que tu ne l’as pas coché. Partager un compte partage ce qui s’y passe ; partager une catégorie ou un nom sert seulement à ce que l’autre téléphone l’ait sous la main.</string>
+  <string name="share_picker">Comptes partagés</string>
+  <string name="share_picker_intro">Partager un compte partage ses opérations. La même case est dans chaque compte.</string>
   <string name="share_all">Tout sélectionner</string>
-  <string name="share_what">Quoi partager</string>
-  <string name="share_what_none">Rien pour l’instant — rien ne circulera</string>
-  <string name="share_what_some">%1$d éléments</string>
+  <string name="share_what">Comptes partagés</string>
+  <string name="share_what_none">Aucun</string>
+  <string name="share_what_some">%1$d comptes</string>
   <string name="no_title">Sans nom</string>
   <string name="merge">Fusionner</string>
   <string name="merge_intro">Deux étiquettes qui désignent la même chose, réunies. Rien ici ne touche à l’argent : aucune opération n’est supprimée, déplacée ni additionnée — celles qui utilisaient l’étiquette qui disparaît utiliseront celle qui reste.</string>
@@ -1423,4 +1423,6 @@
   <string name="summary_accounts_hide">Masquer les comptes</string>
   <string name="summary_shared">Dont partages</string>
   <string name="summary_not_shared">A toi seul</string>
+  <string name="account_shared">Partager ce compte</string>
+  <string name="account_shared_summary">Ses opérations vont à l’autre personne</string>
 </resources>

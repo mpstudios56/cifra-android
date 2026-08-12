@@ -21,14 +21,9 @@
     a:paddingRight="?android:attr/scrollbarSize">
 
 
-    <ToggleButton a:layout_width="wrap_content"
-                  a:id="@+id/filterToggle"
-                  a:textOn=""
-                  a:textOff=""
-                  a:layout_height="wrap_content"
-                  a:layout_gravity="center_vertical"
-                  style="@style/ListButton"
-                  a:background="@drawable/btn_toggle_filter"/>
+    <!-- A funnel used to sit here. Nothing in the app ever bound it to
+         anything: it was a control that did nothing, on every row built from
+         this layout, including the currency of an account. -->
 
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="match_parent"

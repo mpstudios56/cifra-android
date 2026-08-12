@@ -73,6 +73,7 @@ public class AccountActivity extends AbstractActivity {
 	private View limitAmountView;
 	private EditText accountTitle;
 	private EditText iconText;
+	private CheckBox isShared;
 	private EditText accentColor;
 
 	private List<Currency> currencies;
@@ -233,6 +234,12 @@ public class AccountActivity extends AbstractActivity {
 		isIncludedIntoReports = x.addCheckboxNode(layout,
 				R.id.is_included_into_reports, R.string.is_included_into_reports,
 				R.string.is_included_into_reports_summary, true);
+		// Here rather than only on the sharing screen: this is where somebody
+		// thinks about what an account is for, and a decision about who sees it
+		// belongs beside the decision about whether it counts in the totals.
+		isShared = x.addCheckboxNode(layout,
+				R.id.is_shared, R.string.account_shared,
+				R.string.account_shared_summary, false);
 
 		if (account.id > 0) {
 			editAccount();
@@ -289,6 +296,13 @@ public class AccountActivity extends AbstractActivity {
 			// stored as written; see AccountIcon for the format
 
 			long accountId = db.saveAccount(account);
+			// After saving, because a brand new account has no identifier to
+			// share until it has one.
+			tw.tib.financisto.sync.SharedThings.set(db.db(),
+					tw.tib.financisto.sync.SharedThings.ACCOUNT,
+					tw.tib.financisto.db.Uuids.of(db.db(),
+							tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, accountId),
+					isShared.isChecked());
 			long amount = amountInput.getAmount();
 			if (amount != 0) {
 				Transaction t = new Transaction();
@@ -651,6 +665,10 @@ public class AccountActivity extends AbstractActivity {
 
 		isIncludedIntoTotals.setChecked(account.isIncludeIntoTotals);
 		isIncludedIntoReports.setChecked(account.isIncludeIntoReports);
+		isShared.setChecked(tw.tib.financisto.sync.SharedThings.isShared(db.db(),
+				tw.tib.financisto.sync.SharedThings.ACCOUNT,
+				tw.tib.financisto.db.Uuids.of(db.db(),
+						tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, account.id)));
 		if (account.limitAmount != 0) {
 			limitInput.setAmount(-Math.abs(account.limitAmount));
 		}
