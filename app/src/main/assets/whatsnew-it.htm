@@ -1,0 +1,257 @@
+<!--
+  ~ Copyright (c) 2026 Marcello Pandolfo.
+  ~ Copyright (c) 2017-2026 Tiberius Teng.
+  ~ Copyright (c) 2010-2019 Denis Solonenko.
+  ~ This program is made available under the terms of the GNU Public License v2.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Cifra - Gestore di finanze personali per Android</title>
+</head>
+<style>
+    dt { margin-left: 1.5em; }
+    dt span { float: left; margin-left: -1.5em; }
+</style>
+<body>
+
+<h2>Cifra 1.7.0</h2>
+
+<ul>
+    <li><b>Condivisione, nel menu.</b> Due nomi, nessun account: nessuno fa login
+        da nessuna parte. Ognuno dei due dice chi è, sceglie un colore e un
+        simbolo, e da lì in poi il registro delle modifiche si legge con i nomi
+        invece che con un codice. Lo scambio fra i due telefoni non è ancora
+        costruito, e la schermata lo dice: da questo telefono non esce niente</li>
+    <li><b>Un registro delle modifiche.</b> Ogni movimento aggiunto, modificato o
+        eliminato scrive una riga con cosa era, cosa gli è stato fatto, quando e
+        da chi. Su un telefono solo è un diario utile; su due diventa necessario,
+        perché entrambi possono fare tutto e quindi niente dev'essere anonimo</li>
+    <li>Il cestino non ripristina più un movimento su un conto che nel frattempo
+        è stato eliminato: resta nel cestino e dice perché. Una categoria o un
+        nome spariti vengono invece tralasciati, e il messaggio lo dice</li>
+</ul>
+
+<h2>Cifra 1.6.0</h2>
+
+<ul>
+    <li><b>Il grafico a torta si legge.</b> Entrate e uscite sono due torte con un
+        interruttore fra le due, invece di un anello solo che le teneva insieme:
+        sommate non danno un totale che significhi qualcosa. Tutto quello che sta
+        sotto il tre per cento si raccoglie in un'unica fetta, così un anello di
+        quaranta fettine diventa un anello di nove più il resto, e sotto c'è
+        l'elenco di ogni categoria con la sua percentuale e il suo importo,
+        comprese quelle finite nel resto</li>
+    <li><b>Periodo, raggruppamento e valuta stanno sul grafico.</b> Tre pulsanti
+        sopra la linea, che dicono a cosa sono impostati. Prima erano dietro il
+        tasto delle impostazioni, due schermate lontano dalla cosa che
+        governavano</li>
+    <li><b>La ricerca si apre dov'è la lente.</b> In fondo allo schermo la
+        tastiera le saliva sopra, e si scriveva in una casella che non si
+        vedeva</li>
+    <li>Tre difetti di vecchia data sui grafici temporali: la scritta
+        "Description Label" nell'angolo, lo stesso mese scritto due volte di fila
+        sull'asse, e le settimane etichettate col solo mese — "Mar Mar Mar Apr
+        Apr", che non dice niente</li>
+</ul>
+
+<h2>Cifra 1.5.0</h2>
+
+<ul>
+    <li><b>Un cestino.</b> Un movimento eliminato non è perso: aspetta nel
+        cestino, con quello che era e quando è stato eliminato, e da lì si
+        ripristina. Quanto aspetta lo decidi tu — una settimana, un mese, tre
+        mesi, o finché non svuoti il cestino. L'eliminazione chiede conferma e
+        dice dove va a finire</li>
+    <li><b>Il riepilogo somma il periodo che scegli tu.</b> Settimana, mese,
+        trimestre o anno, impostato una volta nelle preferenze; poi le frecce si
+        spostano di quella stessa unità. Solo periodi interi, così uno si può
+        confrontare con quello prima</li>
+    <li><b>Le uscite per categoria si aprono.</b> La scheda mostrava le cinque
+        maggiori e si fermava lì. Una riga sotto le cinque la apre su tutte le
+        categorie del periodo, e la richiude</li>
+    <li><b>La spesa rapida mostra tutte le sue scorciatoie.</b> Prima scorrevano
+        di lato, e l'ultima restava tagliata a metà sul bordo dello schermo. Ora
+        vanno a capo, ognuna intera e con il proprio simbolo nel proprio colore.
+        E il conto si riconosce come qualcosa da toccare, perché lo è</li>
+</ul>
+
+<h2>Cifra 1.4.0</h2>
+
+<ul>
+    <li><b>Importare da un'altra app.</b> Scegli il file che l'app che stai
+        lasciando ha esportato: Cifra lo legge e ti chiede cosa sono le sue
+        colonne. Riconosce da sola il separatore, i decimali, il formato della
+        data e da che parte va il denaro, e ti mostra le prime righe lette come
+        propone di leggerle — così un errore lo vedi prima, non dopo nei saldi.
+        Prima di scrivere qualsiasi cosa fa un backup completo, sempre</li>
+    <li><b>Ogni categoria può avere un simbolo e un colore.</b> Quarantaquattro
+        simboli, scelti da una griglia. Compaiono in testa a ogni movimento, così
+        una schermata di movimenti si legge senza leggerne le parole</li>
+    <li>Un PIN nuovo dev'essere di almeno sei cifre. Quello già in uso continua a
+        sbloccare, della lunghezza che aveva. La schermata ora dice cosa sta
+        chiedendo, invece di mostrare due volte lo stesso tastierino senza
+        spiegazioni</li>
+    <li>I menu che rispondevano ancora in inglese rispondono in tutte le lingue:
+        sedici elenchi di impostazioni — primo giorno della settimana, ordinamento,
+        tempo di blocco, schermata iniziale — erano stati tradotti in una lingua
+        su diciannove</li>
+    <li>L'ucraino è completo. Italiano, tedesco, spagnolo e francese lo erano già</li>
+</ul>
+
+<h2>Cifra 1.3.1</h2>
+
+<ul>
+    <li>Le schermate di sblocco sono ridisegnate: il tastierino del PIN nel verde
+        dell'app con i tasti tondi e le cifre grandi e distanziate, e la schermata
+        dell'impronta a farle compagnia, con l'impronta grande abbastanza da
+        esserne il soggetto</li>
+    <li>Il blocco ha lasciato le impostazioni per il menu, accanto a backup e
+        ripristino — che ora è <em>Backup, ripristino e sicurezza</em>. Tenere al
+        sicuro i dati e tenerne una copia sono la stessa preoccupazione, e il PIN
+        stava sei tocchi in fondo a una schermata che nessuno apre due volte</li>
+    <li>La schermata di benvenuto dice cos'è e a cosa serve ogni riga, e le tre
+        voci di menu che sembravano la stessa cosa detta tre volte — programmati,
+        pianificatore, operazioni — dicono ciascuna cosa fa</li>
+</ul>
+
+<h2>Cifra 1.3.0</h2>
+
+<p><em>Raggiungibile col pollice, e dice cos'è.</em></p>
+
+<ul>
+    <li>La barra delle schede è passata in basso, dov'è il pollice, e i pulsanti
+        che aggiungono un movimento sono saliti in alto, lontano dalla barra di
+        navigazione che un tocco sbagliato colpiva. Ogni scheda porta il suo nome
+        sotto l'icona</li>
+    <li>Una schermata di benvenuto, mostrata una volta sola: imposta la valuta dal
+        paese del telefono — codice, simbolo, decimali, separatori e dove va il
+        simbolo — propone di accendere il backup automatico e di sceglierne la
+        cartella lì per lì, e offre dei dati di esempio da guardare. Non compare
+        mai in un'app che ha già dei conti dentro</li>
+    <li>La spesa rapida si raggiunge in tre modi: il fulmine nei movimenti, un
+        riquadro nel pannello delle impostazioni rapide, e una barra nella tendina
+        delle notifiche con spesa rapida, movimento e trasferimento. La barra è
+        spenta finché non la si chiede</li>
+    <li>Le impostazioni sono raggruppate per quello a cui servono. La vecchia
+        schermata aveva una sezione "interfaccia" che teneva la lingua, le schede,
+        l'inizio della settimana e l'anno fiscale; le due metà del widget in
+        sezioni diverse; e una sezione "altro" per quello che non aveva un posto.
+        Tutte e quarantanove le impostazioni sopravvivono al trasloco e tengono i
+        loro valori</li>
+    <li>Il menu è passato da venti righe a quattordici. Backup e ripristino su
+        file, su Drive, su Dropbox e verso la condivisione erano nove righe che
+        elencavano ogni destinazione due volte; ora sono una riga che le apre
+        tutte. Le categorie escono da dietro la parola "entità", e le valute si
+        uniscono ai loro cambi</li>
+    <li><strong>Correzione:</strong> una valuta si poteva eliminare mentre un
+        budget, l'importo originale di un movimento o un'altra valuta la
+        nominavano ancora, lasciandoli a puntare nel vuoto. Venivano controllati
+        solo i conti. E niente impediva una seconda valuta con lo stesso codice,
+        che nessuna schermata sapeva distinguere dalla prima</li>
+    <li>Un trasferimento lasciato a metà viene tenuto come bozza, e una foto
+        allegata a un movimento poi abbandonato non resta più nella cartella dei
+        backup senza niente che la nomini</li>
+    <li>Una voce nel menu per scrivere a chi mantiene l'app, con la versione e il
+        telefono già compilati, e una per offrirgli un caffè</li>
+    <li>"Integrity Fix" ora si chiama Ricalcola saldi e totali, e dice cosa fa</li>
+    <li>I modelli delle notifiche portano il nome di quello che fanno. La metà
+        dedicata agli SMS non c'è più — Google non concede più quel permesso alle
+        app nuove — ma gli stessi modelli continuano a leggere le notifiche che
+        manda la banca</li>
+</ul>
+
+<h2>Cifra 1.2.0</h2>
+
+<p><em>Più veloce da riempire, e risponde alla domanda quando la apri.</em></p>
+
+<ul>
+    <li>Spesa rapida: scrivi l'importo sul tastierino, tocchi una delle categorie
+        che usi davvero, salvi. Tutto il resto è dato per scontato — oggi, il
+        conto usato l'ultima volta, verificato — e si può sempre correggere
+        aprendo il movimento nel modulo completo. Lo apre il fulmine nella scheda
+        dei movimenti</li>
+    <li>Anche il pulsante del widget apre quella schermata, così un movimento si
+        registra senza entrare nell'app. Il modulo completo resta, dietro
+        un'impostazione</li>
+    <li>Una scheda di riepilogo: quanto è entrato questo mese, quanto è uscito, il
+        saldo fra i due, le cinque categorie che hanno preso di più, e il totale su
+        tutti i conti. Ogni blocco su un pannello suo, entrate e uscite condividono
+        una barra così la distanza si vede senza fare sottrazioni, e ogni categoria
+        porta la barra della sua quota</li>
+    <li>Il mese di quella scheda si sposta avanti e indietro, così una cifra si
+        confronta con quella di prima senza andarsene in un rapporto</li>
+    <li><strong>Correzione:</strong> il riepilogo conta gli stessi conti che
+        contano i rapporti. Un conto si può tenere fuori dai totali o fuori dai
+        rapporti, e ogni rapporto rispetta entrambe le cose; il riepilogo li
+        contava tutti, e su dati veri poteva mostrare il doppio delle entrate</li>
+    <li>Anche un trasferimento lasciato a metà viene tenuto come bozza, ed è il
+        caso in cui perdere il lavoro costava di più: bisognava riscegliere
+        entrambi i capi</li>
+    <li>Una foto allegata a un movimento poi abbandonato non resta più nella
+        cartella dei backup senza niente che la nomini</li>
+    <li>Una voce nel menu per offrire un caffè a chi mantiene l'app, con una scheda
+        sua invece di un dialogo qualunque. Niente nell'app dipende da quello, e la
+        richiesta arriva al massimo ogni due mesi</li>
+    <li>Una voce in fondo al menu per scrivere a chi mantiene l'app, con la
+        versione e il telefono già compilati. L'app non manda niente: si apre la
+        bozza e decidi tu cosa lasciarci</li>
+    <li>"Integrity Fix" ora si chiama Ricalcola saldi e totali, e dice cosa fa:
+        ricostruisce i saldi dai movimenti, e un movimento non lo tocca mai</li>
+    <li>Le righe del menu crescono per contenere la loro spiegazione, invece di
+        tagliarla dopo una riga</li>
+</ul>
+
+<h2>Cifra 1.1.0</h2>
+
+<p><em>Simboli che si leggono a colpo d'occhio.</em></p>
+
+<ul>
+    <li>Un conto può portare il marchio di chi lo tiene: circuiti delle carte,
+        servizi di pagamento, sei banche e quattro piattaforme di investimento,
+        accanto ai simboli disegnati. Ogni marchio è misurato e centrato sulla sua
+        piastrina, così nessuno resta tagliato o si perde su una riga scura</li>
+    <li>Una cassaforte si unisce ai simboli dei conti, e il simbolo degli
+        investimenti è stato ridisegnato</li>
+    <li>Ogni rapporto ha la sua icona, invece delle due che se ne dividevano
+        dodici: barre per i rapporti semplici, una linea che sale per quelli nel
+        tempo, una scala per i due che disegnano un saldo</li>
+    <li>La barra del budget si colora secondo il passo e segna dove dovrebbe
+        essere arrivata la spesa al punto in cui è il periodo, invece di mostrare
+        soltanto quanto resta</li>
+    <li>L'icona dell'app, i pulsanti del widget e il portafoglio che il widget
+        mostra quando non ha dati sono disegnati, non ingranditi da immagini
+        piccole</li>
+    <li>L'impostazione che impedisce le schermate ora porta il nome di quello che
+        fa, così si trova e si può spegnere</li>
+</ul>
+
+<h2>Cifra 1.0.0</h2>
+
+<p><em>La prima versione che è Cifra, e non un Financisto rinominato.</em></p>
+
+<ul>
+    <li>Un movimento lasciato a metà viene tenuto come bozza invece di essere
+        buttato quando si chiude la schermata o l'app viene chiusa. Le bozze hanno
+        una scheda loro, che compare solo finché c'è qualcosa di incompiuto, e si
+        possono riprendere o scartare, anche più d'una alla volta</li>
+    <li>La ricerca guarda anche progetti, luoghi e conti, oltre a nota,
+        beneficiario e categoria. Cercare un luogo o un progetto tornava a mani
+        vuote, ed è per questo che la lente sembrava non trovare niente</li>
+    <li>Progetti, luoghi e beneficiari si scelgono da un elenco. La casella di
+        ricerca che si apriva al posto del valore faceva sembrare l'elenco vuoto e
+        la scelta persa</li>
+    <li>Corretto: aprire un movimento vecchio e salvarlo ne cancellava progetto e
+        luogo ogni volta che quei campi erano spenti nelle impostazioni</li>
+    <li>I modelli hanno una scheda invece di un pulsante nella schermata dei
+        movimenti, e le schede budget e rapporti si possono spegnere per chi non
+        le usa</li>
+</ul>
+
+<p><em>Le versioni precedenti a Cifra sono quelle di Financisto Holo e di
+Financisto, e il loro elenco è disponibile in inglese.</em></p>
+
+</body>
+</html>

@@ -101,15 +101,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.icon_transfer);
             return true;
         });
-        wireIdentity(preferenceScreen, "sync_identity_me", Identity.MINE);
-        wireIdentity(preferenceScreen, "sync_identity_them", Identity.THEIRS);
-        Preference pChangeLog = preferenceScreen.findPreference("change_log");
-        if (pChangeLog != null) {
-            pChangeLog.setOnPreferenceClickListener(arg0 -> {
-                startActivity(new Intent(getActivity(), ChangeLogActivity.class));
-                return true;
-            });
-        }
         Preference pDatabaseBackupFolder = preferenceScreen.findPreference("database_backup_folder");
         pDatabaseBackupFolder.setOnPreferenceClickListener(arg0 -> {
             selectDatabaseBackupFolder();
@@ -231,32 +222,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
         preferenceScreen.findPreference("dropbox_unlink").setEnabled(dropboxAuthorized);
         preferenceScreen.findPreference("dropbox_upload_backup").setEnabled(dropboxAuthorized);
         preferenceScreen.findPreference("dropbox_upload_autobackup").setEnabled(dropboxAuthorized);
-    }
-
-    /**
-     * The two rows that open the who-is-who dialog, and show underneath them
-     * the name that was chosen - so the settings say who this phone belongs to
-     * without anybody having to open anything.
-     */
-    private void wireIdentity(PreferenceScreen screen, String key, int which) {
-        Preference preference = screen.findPreference(key);
-        if (preference == null) {
-            return;
-        }
-        showIdentity(preference, which);
-        preference.setOnPreferenceClickListener(p -> {
-            IdentityDialog.show(getActivity(), which, () -> showIdentity(preference, which));
-            return true;
-        });
-    }
-
-    private void showIdentity(Preference preference, int which) {
-        Identity identity = which == Identity.MINE
-                ? Identity.mine(getActivity()) : Identity.theirs(getActivity());
-        preference.setSummary(identity.name.isEmpty()
-                ? getString(which == Identity.MINE
-                        ? R.string.sync_author_summary : R.string.sync_partner_summary)
-                : identity.name);
     }
 
     private void selectDatabaseBackupFolder() {

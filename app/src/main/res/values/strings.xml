@@ -1483,4 +1483,16 @@
     <string name="identity_name_hint">Name</string>
     <string name="identity_colour">Colour</string>
     <string name="identity_symbol">Symbol</string>
+    <string name="sharing">Sharing</string>
+    <string name="sharing_summary">Keep one ledger between two people</string>
+    <string name="sharing_intro">Two names, no accounts. Nobody signs in to anything: the names are how the record of changes reads, and the colours are how a list shows at a glance which entries are not yours.</string>
+    <string name="sharing_me">You</string>
+    <string name="sharing_them">The other person</string>
+    <string name="sharing_me_empty">Say who you are</string>
+    <string name="sharing_them_empty">Say who they are</string>
+    <string name="sharing_not_yet">The exchange between the two phones is not built yet: nothing leaves this phone. What works today is the record of what you change, and the two names being ready for when it does.</string>
+    <string name="sharing_folder">Shared folder</string>
+    <string name="sharing_folder_empty">Not chosen. It must be a folder your cloud app keeps in step on both phones</string>
+    <string name="sharing_folder_chosen">%1$s</string>
+    <string name="sharing_folder_failed">No app on this phone can choose a folder</string>
 </resources>

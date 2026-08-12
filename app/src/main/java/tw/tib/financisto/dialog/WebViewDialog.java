@@ -45,7 +45,7 @@ public class WebViewDialog {
 
 	private static void showHTMDialog(Context context, String fileName, int dialogTitleResId) {
 		WebView webView = new WebView(context);
-		webView.loadUrl("file:///android_asset/"+fileName);
+		webView.loadUrl(tw.tib.financisto.utils.LocalisedAsset.url(context, fileName));
 		new AlertDialog.Builder(context)
 			.setView(webView)
 			.setTitle(dialogTitleResId)

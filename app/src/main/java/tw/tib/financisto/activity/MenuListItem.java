@@ -95,6 +95,12 @@ public enum MenuListItem implements SummaryEntityEnum {
             EnumUtils.showPickOneDialog(fragment.getContext(), R.string.import_export, ImportExportEntities.values(), fragment);
         }
     },
+    MENU_SHARING(R.string.sharing, R.string.sharing_summary, R.drawable.category_family) {
+        @Override
+        public void call(Fragment fragment) {
+            fragment.startActivity(new Intent(fragment.getContext(), SharingActivity.class));
+        }
+    },
     MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_action_trash) {
         @Override
         public void call(Fragment fragment) {

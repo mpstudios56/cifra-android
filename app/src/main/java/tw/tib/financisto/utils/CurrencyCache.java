@@ -58,6 +58,16 @@ public class CurrencyCache {
 		} finally {
 			c.close();
 		}
+		// Nothing marked as home, and something to choose from: the only
+		// currency there is, is the home one. Without this every total on
+		// every screen reads "N/A" - the sums are worked out in the home
+		// currency, and converting into nothing finds no exchange rate.
+		//
+		// This is the safety net for a database already in that state; the
+		// import marks one on the way in.
+		if (homeCurrency == Currency.EMPTY && currencies.size() == 1) {
+			homeCurrency = currencies.values().iterator().next();
+		}
 		CURRENCIES.putAll(currencies);
 		loaded = true;
 	}

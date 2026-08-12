@@ -1381,4 +1381,16 @@
   <string name="identity_name_hint">Name</string>
   <string name="identity_colour">Farbe</string>
   <string name="identity_symbol">Symbol</string>
+  <string name="sharing">Teilen</string>
+  <string name="sharing_summary">Ein Haushaltsbuch zu zweit führen</string>
+  <string name="sharing_intro">Zwei Namen, keine Konten. Niemand meldet sich irgendwo an: die Namen bestimmen, wie das Änderungsprotokoll zu lesen ist, und die Farben zeigen auf einen Blick, welche Einträge nicht von dir sind.</string>
+  <string name="sharing_me">Du</string>
+  <string name="sharing_them">Die andere Person</string>
+  <string name="sharing_me_empty">Sag, wer du bist</string>
+  <string name="sharing_them_empty">Sag, wer sie ist</string>
+  <string name="sharing_not_yet">Der Austausch zwischen den beiden Telefonen ist noch nicht gebaut: von diesem Telefon geht nichts weg. Was heute funktioniert, ist das Protokoll deiner eigenen Änderungen und die beiden Namen, bereit für später.</string>
+  <string name="sharing_folder">Gemeinsamer Ordner</string>
+  <string name="sharing_folder_empty">Nicht gewählt. Es muss ein Ordner sein, den deine Cloud auf beiden Telefonen abgleicht</string>
+  <string name="sharing_folder_chosen">%1$s</string>
+  <string name="sharing_folder_failed">Keine App auf diesem Telefon kann einen Ordner auswählen</string>
 </resources>

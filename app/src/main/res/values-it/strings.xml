@@ -1384,4 +1384,16 @@
   <string name="identity_name_hint">Nome</string>
   <string name="identity_colour">Colore</string>
   <string name="identity_symbol">Simbolo</string>
+  <string name="sharing">Condivisione</string>
+  <string name="sharing_summary">Tenere un bilancio in due</string>
+  <string name="sharing_intro">Due nomi, nessun account. Nessuno fa login da nessuna parte: i nomi servono a come si legge il registro delle modifiche, e i colori a riconoscere a colpo d’occhio, in un elenco, le voci che non sono tue.</string>
+  <string name="sharing_me">Tu</string>
+  <string name="sharing_them">L’altra persona</string>
+  <string name="sharing_me_empty">Di’ chi sei</string>
+  <string name="sharing_them_empty">Di’ chi è</string>
+  <string name="sharing_not_yet">Lo scambio fra i due telefoni non è ancora costruito: da questo telefono non esce niente. Quello che funziona oggi è il registro di quello che modifichi tu, e i due nomi pronti per quando arriverà.</string>
+  <string name="sharing_folder">Cartella condivisa</string>
+  <string name="sharing_folder_empty">Non scelta. Dev’essere una cartella che il tuo cloud tiene allineata su tutti e due i telefoni</string>
+  <string name="sharing_folder_chosen">%1$s</string>
+  <string name="sharing_folder_failed">Nessuna app su questo telefono sa scegliere una cartella</string>
 </resources>

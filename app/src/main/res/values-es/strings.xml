@@ -1381,4 +1381,16 @@
   <string name="identity_name_hint">Nombre</string>
   <string name="identity_colour">Color</string>
   <string name="identity_symbol">Símbolo</string>
+  <string name="sharing">Compartir</string>
+  <string name="sharing_summary">Llevar unas cuentas entre dos personas</string>
+  <string name="sharing_intro">Dos nombres, ninguna cuenta. Nadie inicia sesión en nada: los nombres son cómo se lee el registro de cambios, y los colores sirven para reconocer de un vistazo las entradas que no son tuyas.</string>
+  <string name="sharing_me">Tú</string>
+  <string name="sharing_them">La otra persona</string>
+  <string name="sharing_me_empty">Di quién eres</string>
+  <string name="sharing_them_empty">Di quién es</string>
+  <string name="sharing_not_yet">El intercambio entre los dos teléfonos aún no está construido: de este teléfono no sale nada. Lo que funciona hoy es el registro de lo que cambias tú, y los dos nombres listos para cuando llegue.</string>
+  <string name="sharing_folder">Carpeta compartida</string>
+  <string name="sharing_folder_empty">Sin elegir. Debe ser una carpeta que tu nube mantenga sincronizada en los dos teléfonos</string>
+  <string name="sharing_folder_chosen">%1$s</string>
+  <string name="sharing_folder_failed">Ninguna aplicación de este teléfono sabe elegir una carpeta</string>
 </resources>

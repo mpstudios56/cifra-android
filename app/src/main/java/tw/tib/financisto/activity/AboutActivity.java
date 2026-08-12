@@ -30,6 +30,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import tw.tib.financisto.R;
+import tw.tib.financisto.utils.LocalisedAsset;
 import tw.tib.financisto.utils.Utils;
 
 /**
@@ -76,10 +77,10 @@ public class AboutActivity extends AppCompatActivity {
                 ViewHolder vh = (ViewHolder) holder;
                 switch (position) {
                     case 0:
-                        vh.webView.loadUrl("file:///android_asset/about.htm");
+                        vh.webView.loadUrl(LocalisedAsset.url(vh.webView.getContext(), "about.htm"));
                         break;
                     case 1:
-                        vh.webView.loadUrl("file:///android_asset/whatsnew.htm");
+                        vh.webView.loadUrl(LocalisedAsset.url(vh.webView.getContext(), "whatsnew.htm"));
                         webView = vh.webView;
                         webView.setWebViewClient(new WebViewClient() {
                             @Override

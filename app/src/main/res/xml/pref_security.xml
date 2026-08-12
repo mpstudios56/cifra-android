@@ -5,10 +5,18 @@
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
+        <!--
+          Off out of the box. Blocking screenshots protects a screen full of
+          somebody's money, which is the right instinct - but it also stops the
+          person using it from photographing a fault to report it, and a fault
+          nobody can show is a fault nobody fixes. Whoever wants the block can
+          have it in one tap; whoever wants to send a picture does not have to
+          go looking for a setting first.
+        -->
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="secure_window"
             android:summary="@string/secure_window_summary"
             android:title="@string/secure_window" />

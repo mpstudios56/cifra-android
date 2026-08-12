@@ -245,32 +245,10 @@
     </PreferenceCategory>
 
     <!--
-      Two names, not two accounts. Nobody signs in to anything: the names are
-      only how the record of changes reads, so that "chi ha messo questi
-      ottanta euro" has an answer between two people who can both do
-      everything.
+      Sharing used to live here, as three rows among forty. It is a thing the
+      app does, not a preference, and buried in this list nobody found it; it
+      has a screen of its own in the menu now.
     -->
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_sharing">
-        <Preference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:key="sync_identity_me"
-            android:summary="@string/sync_author_summary"
-            android:title="@string/sync_author" />
-        <Preference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:key="sync_identity_them"
-            android:summary="@string/sync_partner_summary"
-            android:title="@string/sync_partner" />
-        <Preference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:key="change_log"
-            android:summary="@string/change_log_summary"
-            android:title="@string/change_log" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/database_backup">
         <Preference
             app:iconSpaceReserved="false"

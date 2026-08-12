@@ -1381,4 +1381,16 @@
   <string name="identity_name_hint">Nom</string>
   <string name="identity_colour">Couleur</string>
   <string name="identity_symbol">Symbole</string>
+  <string name="sharing">Partage</string>
+  <string name="sharing_summary">Tenir un budget à deux</string>
+  <string name="sharing_intro">Deux noms, aucun compte. Personne ne se connecte à quoi que ce soit : les noms servent à la lecture du journal des modifications, et les couleurs à reconnaître d’un coup d’œil les lignes qui ne sont pas les tiennes.</string>
+  <string name="sharing_me">Toi</string>
+  <string name="sharing_them">L’autre personne</string>
+  <string name="sharing_me_empty">Dis qui tu es</string>
+  <string name="sharing_them_empty">Dis qui c’est</string>
+  <string name="sharing_not_yet">L’échange entre les deux téléphones n’est pas encore construit : rien ne quitte ce téléphone. Ce qui fonctionne aujourd’hui, c’est le journal de ce que tu modifies, et les deux noms prêts pour la suite.</string>
+  <string name="sharing_folder">Dossier partagé</string>
+  <string name="sharing_folder_empty">Pas choisi. Ce doit être un dossier que ton cloud garde à jour sur les deux téléphones</string>
+  <string name="sharing_folder_chosen">%1$s</string>
+  <string name="sharing_folder_failed">Aucune application de ce téléphone ne sait choisir un dossier</string>
 </resources>

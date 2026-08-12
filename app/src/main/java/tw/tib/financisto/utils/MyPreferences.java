@@ -175,7 +175,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isSecureWindow() {
-		return getBoolean("secure_window", true);
+		return getBoolean("secure_window", false);
 	}
 
 	public static boolean isPinProtected() {
@@ -579,6 +579,21 @@ public class MyPreferences {
 	 */
 	public static String getSyncAuthor() {
 		return getString("sync_author", "");
+	}
+
+	/**
+	 * The folder the two phones meet in, as a document tree address, or empty.
+	 * <p>
+	 * It has to be a folder a cloud app keeps in step - the app writes a file
+	 * and reads the other phone's, and it is the cloud that carries it across.
+	 * Nothing here talks to Drive or Dropbox: it talks to a folder.
+	 */
+	public static String getSyncFolder() {
+		return getString("sync_folder", "");
+	}
+
+	public static void setSyncFolder(String uri) {
+		edit().putString("sync_folder", uri == null ? "" : uri).apply();
 	}
 
 	/** What the other person's changes are called when they arrive. */
