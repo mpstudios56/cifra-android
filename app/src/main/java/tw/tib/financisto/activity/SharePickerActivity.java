@@ -72,10 +72,15 @@ public class SharePickerActivity extends AppCompatActivity {
         db = new DatabaseAdapter(this);
         db.open();
 
-        findViewById(R.id.share_all).setOnClickListener(v -> tickAll(true));
-        findViewById(R.id.share_none).setOnClickListener(v -> tickAll(false));
-
         build();
+
+        CheckBox all = findViewById(R.id.share_all);
+        all.setChecked(!rows.isEmpty() && allTicked());
+        all.setOnCheckedChangeListener((b, checked) -> {
+            if (b.isPressed()) {
+                tickAll(checked);
+            }
+        });
     }
 
     private void build() {
@@ -97,8 +102,16 @@ public class SharePickerActivity extends AppCompatActivity {
                 ((TextView) row.findViewById(R.id.share_name)).setText(
                         thing.name.isEmpty() ? getString(R.string.no_title) : thing.name);
                 box.setChecked(thing.shared);
-                box.setOnCheckedChangeListener((b, checked) ->
-                        SharedThings.set(db.db(), kind, thing.uuid, checked));
+                box.setOnCheckedChangeListener((b, checked) -> {
+                    SharedThings.set(db.db(), kind, thing.uuid, checked);
+                    // The tick at the top follows what is underneath it, or it
+                    // would sit there claiming everything is chosen when one has
+                    // just been taken off.
+                    CheckBox all = findViewById(R.id.share_all);
+                    if (all != null && all.isChecked() != allTicked()) {
+                        all.setChecked(allTicked());
+                    }
+                });
                 row.setOnClickListener(v -> box.setChecked(!box.isChecked()));
                 list.addView(row);
                 rows.add(new Row(kind, thing, box));
@@ -110,6 +123,16 @@ public class SharePickerActivity extends AppCompatActivity {
         for (Row row : rows) {
             row.box.setChecked(shared);
         }
+    }
+
+    /** Whether the tick at the top should be on: everything below already is. */
+    private boolean allTicked() {
+        for (Row row : rows) {
+            if (!row.box.isChecked()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private int headingFor(String kind) {

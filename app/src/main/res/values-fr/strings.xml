@@ -1403,8 +1403,7 @@
   <string name="sharing_skipped">Quelque chose n’a pas pu être appliqué : %1$s</string>
   <string name="share_picker">Quoi partager</string>
   <string name="share_picker_intro">Rien n’est partagé tant que tu ne l’as pas coché. Partager un compte partage ce qui s’y passe ; partager une catégorie ou un nom sert seulement à ce que l’autre téléphone l’ait sous la main.</string>
-  <string name="share_all">Tout cocher</string>
-  <string name="share_none">Tout décocher</string>
+  <string name="share_all">Tout sélectionner</string>
   <string name="share_what">Quoi partager</string>
   <string name="share_what_none">Rien pour l’instant — rien ne circulera</string>
   <string name="share_what_some">%1$d éléments</string>

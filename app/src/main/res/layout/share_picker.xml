@@ -29,39 +29,21 @@
         android:text="@string/share_picker_intro"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <LinearLayout
+    <!--
+      One tick rather than two buttons. "Select all" and "unselect all" say the
+      same thing twice: taking the tick off is plainly the opposite of putting
+      it on, and nobody needs telling.
+    -->
+    <CheckBox
+        android:id="@+id/share_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="6dp">
-
-        <Button
-            android:id="@+id/share_all"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:background="@drawable/quick_chip"
-            android:stateListAnimator="@null"
-            android:text="@string/share_all"
-            android:textAllCaps="false"
-            android:textColor="#FFF4EFE4"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/share_none"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/quick_chip"
-            android:stateListAnimator="@null"
-            android:text="@string/share_none"
-            android:textAllCaps="false"
-            android:textColor="#FFF4EFE4"
-            android:textSize="14sp" />
-    </LinearLayout>
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        android:text="@string/share_all"
+        android:textSize="15sp" />
 
     <ScrollView
         android:layout_width="match_parent"

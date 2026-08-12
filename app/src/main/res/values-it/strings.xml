@@ -1406,8 +1406,7 @@
   <string name="sharing_skipped">Qualcosa non si è potuto applicare: %1$s</string>
   <string name="share_picker">Cosa condividere</string>
   <string name="share_picker_intro">Condividere un conto condivide i suoi movimenti. Categorie, beneficiari e luoghi che usano seguono da soli.</string>
-  <string name="share_all">Spunta tutto</string>
-  <string name="share_none">Togli tutto</string>
+  <string name="share_all">Seleziona tutto</string>
   <string name="share_what">Cosa condividere</string>
   <string name="share_what_none">Nessun conto: non viaggia nulla</string>
   <string name="share_what_some">%1$d elementi</string>

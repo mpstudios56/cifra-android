@@ -1403,8 +1403,7 @@
   <string name="sharing_skipped">Etwas konnte nicht übernommen werden: %1$s</string>
   <string name="share_picker">Was geteilt wird</string>
   <string name="share_picker_intro">Nichts wird geteilt, bevor du es ankreuzt. Ein Konto zu teilen teilt, was darauf geschieht; eine Kategorie oder einen Namen zu teilen sorgt nur dafür, dass das andere Telefon ihn zur Hand hat.</string>
-  <string name="share_all">Alles ankreuzen</string>
-  <string name="share_none">Alles abwählen</string>
+  <string name="share_all">Alle auswählen</string>
   <string name="share_what">Was geteilt wird</string>
   <string name="share_what_none">Noch nichts — es wird nichts übertragen</string>
   <string name="share_what_some">%1$d Dinge</string>

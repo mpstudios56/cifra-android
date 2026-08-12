@@ -1403,8 +1403,7 @@
   <string name="sharing_skipped">Algo no se ha podido aplicar: %1$s</string>
   <string name="share_picker">Qué compartir</string>
   <string name="share_picker_intro">No se comparte nada hasta que lo marques. Compartir una cuenta comparte lo que ocurre en ella; compartir una categoría o un nombre solo hace que el otro teléfono lo tenga a mano.</string>
-  <string name="share_all">Marcar todo</string>
-  <string name="share_none">Desmarcar todo</string>
+  <string name="share_all">Seleccionar todo</string>
   <string name="share_what">Qué compartir</string>
   <string name="share_what_none">Todavía nada: no viajará nada</string>
   <string name="share_what_some">%1$d cosas</string>
