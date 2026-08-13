@@ -60,7 +60,11 @@ public class SyncPayload {
             }
 
             JSONObject o = new JSONObject();
-            o.put("uuid", string(c, "uuid"));
+            // Its own name, made now if it has not got one. References were
+            // already named on demand; the movement itself was not, so anything
+            // written between two rounds went out saying "senza identificativo"
+            // and was refused at the other end.
+            o.put("uuid", uuidOf(db, DatabaseHelper.TRANSACTION_TABLE, transactionId));
 
             if (fromShared) {
                 o.put("from_account", uuidOf(db, DatabaseHelper.ACCOUNT_TABLE, fromId));

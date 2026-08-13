@@ -170,6 +170,11 @@ public class TransactionInfoDialog {
             add(layout, R.string.note, ti.note);
         }
 
+        // Who wrote it, when it was not written here. A colour on the row says
+        // "not yours"; the name says whose, which is the question somebody asks
+        // when a payment they do not recognise turns up in a shared account.
+        addAuthor(layout, ti.id);
+
         MyLocation location = ti.location;
         String locationTitle;
         if (location != null && location.id > 0) {
@@ -227,6 +232,32 @@ public class TransactionInfoDialog {
     private void add(LinearLayout layout, int labelId, String data, AccountType accountType) {
         inflater.new Builder(layout, R.layout.select_entry_simple_icon)
                 .withIcon(accountType.iconId).withLabel(labelId).withData(data).create();
+    }
+
+    /** The line "Generato da: X", shown only on movements that came from somebody. */
+    private void addAuthor(LinearLayout layout, long transactionId) {
+        String createdBy = "";
+        try (android.database.Cursor c = db.db().query("transactions",
+                new String[]{"created_by"}, "_id=?",
+                new String[]{String.valueOf(transactionId)}, null, null, null)) {
+            if (c.moveToFirst() && c.getString(0) != null) {
+                createdBy = c.getString(0);
+            }
+        } catch (Exception ignored) {
+        }
+        if (createdBy.isEmpty()
+                || tw.tib.financisto.utils.Identity.isMine(createdBy)) {
+            return;
+        }
+        String who = createdBy;
+        for (tw.tib.financisto.sync.People.Person p
+                : tw.tib.financisto.sync.People.all(db.db())) {
+            if (createdBy.equals(p.mark)) {
+                who = p.label();
+                break;
+            }
+        }
+        add(layout, R.string.transaction_written_by, who);
     }
 
     private TextView add(LinearLayout layout, int labelId, String data) {

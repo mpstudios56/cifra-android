@@ -185,7 +185,8 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
                     cursor.getString(BlotterColumns.created_by.ordinal()));
             v.authorMark.setVisibility(theirs ? View.VISIBLE : View.GONE);
             if (theirs) {
-                v.authorMark.getBackground().setTint(theirColour(context));
+                v.authorMark.getBackground().setTint(colourOfAuthor(
+                        cursor.getString(BlotterColumns.created_by.ordinal())));
             }
         }
 
@@ -415,14 +416,28 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         notifyDataSetInvalidated();
     }
 
-    /** Read once and kept: the colour is the same for every row on the screen. */
-    private int theirColour = 0;
+    /**
+     * The colour of whoever wrote a movement, by the code it is signed with.
+     * <p>
+     * Read once for the whole screen rather than once per row, and it is a
+     * colour per person now: it used to be the colour of "the other person",
+     * one identity from when sharing was between two, so every movement from
+     * anybody came out the same amber.
+     */
+    private java.util.Map<String, Integer> authorColours;
 
-    private int theirColour(Context context) {
-        if (theirColour == 0) {
-            theirColour = Identity.theirs(context).colour;
+    private int colourOfAuthor(String createdBy) {
+        if (authorColours == null) {
+            authorColours = new java.util.HashMap<>();
+            for (tw.tib.financisto.sync.People.Person p
+                    : tw.tib.financisto.sync.People.all(db.db())) {
+                if (p.colour != 0) {
+                    authorColours.put(p.mark, p.colour);
+                }
+            }
         }
-        return theirColour;
+        Integer colour = createdBy == null ? null : authorColours.get(createdBy);
+        return colour == null ? Identity.COLOURS[1] : colour;
     }
 
     public static class BlotterViewHolder {

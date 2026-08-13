@@ -1504,4 +1504,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_person_look">Farbe</string>
   <string name="sharing_account_nobody">noch niemand</string>
   <string name="sharing_choose_folder_first">Gemeinsamen Ordner wählen</string>
+  <string name="transaction_written_by">Geschrieben von</string>
 </resources>
