@@ -282,9 +282,14 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // it takes one tap to reach, and a menu would put it behind two.
         ImageButton bQuick = view.findViewById(R.id.bQuick);
         if (bQuick != null) {
-            bQuick.setOnClickListener(arg0 -> startActivityForResult(
-                    new Intent(getContext(), QuickTransactionActivity.class),
-                    NEW_TRANSACTION_REQUEST));
+            bQuick.setOnClickListener(arg0 -> {
+                Intent quick = new Intent(getContext(), QuickTransactionActivity.class);
+                long account = accountBeingLookedAt();
+                if (account > 0) {
+                    quick.putExtra(QuickTransactionActivity.ACCOUNT_ID_EXTRA, account);
+                }
+                startActivityForResult(quick, NEW_TRANSACTION_REQUEST);
+            });
         }
 
         if (showAllBlotterButtons) {
@@ -1194,6 +1199,20 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
     protected void updateFilterImage() {
         FilterState.updateFilterColor(getContext(), blotterFilter, bFilter);
+    }
+
+    /**
+     * The account this list is showing, or zero when it is showing them all.
+     * <p>
+     * Read from the filter, which is what the list is actually drawn from, so
+     * it cannot disagree with what is on screen.
+     */
+    private long accountBeingLookedAt() {
+        try {
+            return blotterFilter == null ? 0 : blotterFilter.getAccountId();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

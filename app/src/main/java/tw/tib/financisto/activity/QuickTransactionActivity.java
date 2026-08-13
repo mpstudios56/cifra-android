@@ -112,7 +112,13 @@ public class QuickTransactionActivity extends AppCompatActivity {
         findViewById(R.id.quick_save).setOnClickListener(v -> save());
 
         buildKeypad();
-        selectAccount(rememberedAccount());
+        // Opened from inside an account, that is the account: somebody looking
+        // at the coffee they bought with the cash tin does not mean to write
+        // the next one against the credit card because that is where they were
+        // yesterday. Opened from anywhere else, the last one used stands.
+        long asked = getIntent() == null ? 0
+                : getIntent().getLongExtra(ACCOUNT_ID_EXTRA, 0);
+        selectAccount(asked > 0 ? asked : rememberedAccount());
         buildCategoryShortcuts();
         showAmount();
     }
@@ -219,6 +225,9 @@ public class QuickTransactionActivity extends AppCompatActivity {
     }
 
     // ----------------------------------------------------------------- account
+
+    /** Which account to start on, when whoever opened this knows. */
+    public static final String ACCOUNT_ID_EXTRA = "accountId";
 
     private long rememberedAccount() {
         return getSharedPreferences(PREFS, MODE_PRIVATE).getLong(KEY_ACCOUNT, -1);
