@@ -64,9 +64,14 @@ public class SharedWith {
      */
     public static java.util.List<String[]> accountsAndWho(SQLiteDatabase db) {
         java.util.List<String[]> rows = new java.util.ArrayList<>();
+        // Starts from the accounts that are shared, not from the people they
+        // are assigned to: an account ticked as shared but not yet given to
+        // anybody was falling out of the list entirely, which is exactly the
+        // account somebody is looking for when they open this.
         String sql = "select a.title, group_concat(p.name, ', ')"
                 + " from account a"
-                + " inner join " + TABLE + " s on s.uuid = a.uuid"
+                + " inner join shared_thing t on t.uuid = a.uuid and t.kind = 'account'"
+                + " left join " + TABLE + " s on s.uuid = a.uuid"
                 + " left join person p on p.mark = s.mark"
                 + " group by a._id order by a.sort_order, a.title";
         try (Cursor c = db.rawQuery(sql, null)) {
