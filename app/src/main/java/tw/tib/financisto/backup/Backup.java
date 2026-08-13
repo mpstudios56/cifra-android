@@ -33,7 +33,14 @@ public final class Backup {
 			CURRENCY_TABLE, LOCATIONS_TABLE, PROJECT_TABLE, TRANSACTION_TABLE,
 			PAYEE_TABLE, CCARD_CLOSING_DATE_TABLE, SMS_TEMPLATES_TABLE,
 			"split", /* todo: seems not used, found only in old 20110422_0051_create_split_table.sql, should be removed then */
-			EXCHANGE_RATES_TABLE};
+			EXCHANGE_RATES_TABLE,
+			// The sharing: who you share with and the code you share with them,
+			// which accounts travel, and to whom. Left out until now, so a
+			// backup restored on a new phone came back with the accounts and
+			// the movements and nothing of the arrangement that carried them -
+			// and the arrangement is the half that cannot be worked out again
+			// from the data.
+			"person", "shared_thing", "shared_with"};
 
 	public static final String[] BACKUP_TABLES_WITH_SYSTEM_IDS = {
 			ATTRIBUTES_TABLE, CATEGORY_TABLE, PROJECT_TABLE, LOCATIONS_TABLE};
