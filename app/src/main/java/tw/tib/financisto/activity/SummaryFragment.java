@@ -369,23 +369,46 @@ public class SummaryFragment extends Fragment {
             // A dot in the other person\'s colour rather than a word: the line
             // is already a name and a figure, and "condiviso" written on half of
             // them would be noise.
-            View dot = new View(getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp(8), dp(8));
-            lp.gravity = android.view.Gravity.CENTER_VERTICAL;
-            lp.rightMargin = dp(8);
-            dot.setLayoutParams(lp);
-            android.graphics.drawable.GradientDrawable shape =
-                    new android.graphics.drawable.GradientDrawable();
-            shape.setShape(android.graphics.drawable.GradientDrawable.OVAL);
-            // The colour of the person the account is actually held with. It
-            // used to be the colour of "the other person", a single identity
-            // from when sharing was between two people: every dot came out the
-            // same amber whatever anybody had chosen.
+            // One dot per person the account is held with, in the same square
+            // block as the account list: a single dot said "shared" and hid
+            // that it was shared with two.
             java.util.List<Integer> theirs = sharedColours.get(accountId);
-            shape.setColor(theirs == null || theirs.isEmpty()
-                    ? Identity.COLOURS[1] : theirs.get(0));
-            dot.setBackground(shape);
-            row.addView(dot);
+            if (theirs == null || theirs.isEmpty()) {
+                theirs = java.util.Collections.singletonList(Identity.COLOURS[1]);
+            }
+            int many = Math.min(theirs.size(), 9);
+            int perRow = many <= 1 ? 1 : (many <= 4 ? 2 : 3);
+            int size = many <= 1 ? 8 : (many <= 4 ? 6 : 4);
+
+            LinearLayout dots = new LinearLayout(getContext());
+            dots.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams blockLp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            blockLp.gravity = android.view.Gravity.CENTER_VERTICAL;
+            blockLp.rightMargin = dp(8);
+            dots.setLayoutParams(blockLp);
+
+            LinearLayout line = null;
+            for (int i = 0; i < many; i++) {
+                if (i % perRow == 0) {
+                    line = new LinearLayout(getContext());
+                    line.setOrientation(LinearLayout.HORIZONTAL);
+                    dots.addView(line);
+                }
+                View dot = new View(getContext());
+                LinearLayout.LayoutParams lp =
+                        new LinearLayout.LayoutParams(dp(size), dp(size));
+                lp.setMargins(dp(1), dp(1), dp(1), dp(1));
+                dot.setLayoutParams(lp);
+                android.graphics.drawable.GradientDrawable shape =
+                        new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.OVAL);
+                shape.setColor(theirs.get(i));
+                dot.setBackground(shape);
+                line.addView(dot);
+            }
+            row.addView(dots);
         }
 
         TextView value = new TextView(getContext());
