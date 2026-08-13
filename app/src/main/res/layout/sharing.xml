@@ -256,6 +256,17 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
+            <!--
+              The same sharing read the other way round: by account, with the
+              people underneath. The list above answers "who do I share with";
+              this one answers "who sees this account".
+            -->
+            <LinearLayout
+                android:id="@+id/sharing_what_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
             <LinearLayout
                 android:id="@+id/sharing_duplicates"
                 android:layout_width="match_parent"

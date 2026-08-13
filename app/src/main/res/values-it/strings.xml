@@ -1513,4 +1513,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
       <item quantity="one">%d persona</item>
     <item quantity="other">%d persone</item>
   </plurals>
+  <string name="sharing_account_nobody">ancora nessuno</string>
 </resources>

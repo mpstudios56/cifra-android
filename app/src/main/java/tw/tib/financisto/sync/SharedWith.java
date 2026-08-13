@@ -57,6 +57,29 @@ public class SharedWith {
         return colours;
     }
 
+    /**
+     * Every shared account with the names it is held with, in the order the
+     * accounts are listed. The other way round from the people list: there by
+     * person, here by account.
+     */
+    public static java.util.List<String[]> accountsAndWho(SQLiteDatabase db) {
+        java.util.List<String[]> rows = new java.util.ArrayList<>();
+        String sql = "select a.title, group_concat(p.name, ', ')"
+                + " from account a"
+                + " inner join " + TABLE + " s on s.uuid = a.uuid"
+                + " left join person p on p.mark = s.mark"
+                + " group by a._id order by a.sort_order, a.title";
+        try (Cursor c = db.rawQuery(sql, null)) {
+            while (c.moveToNext()) {
+                rows.add(new String[]{c.getString(0),
+                        c.getString(1) == null ? "" : c.getString(1)});
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "could not read the shared accounts", e);
+        }
+        return rows;
+    }
+
     /** The people this account goes to, or empty for everybody. */
     public static Set<String> of(SQLiteDatabase db, String accountUuid) {
         Set<String> marks = new HashSet<>();

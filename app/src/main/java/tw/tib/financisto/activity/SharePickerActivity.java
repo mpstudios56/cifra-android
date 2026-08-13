@@ -107,6 +107,13 @@ public class SharePickerActivity extends AppCompatActivity {
                 box.setChecked(thing.shared);
                 box.setOnCheckedChangeListener((b, checked) -> {
                     SharedThings.set(db.db(), kind, thing.uuid, checked);
+                    if (!checked) {
+                        // Taking the tick off here stops the account for
+                        // everybody, so the list of who it was held with goes
+                        // with it: otherwise the account would still be named
+                        // in the recap under people who no longer receive it.
+                        tw.tib.financisto.sync.SharedWith.set(db.db(), thing.uuid, null);
+                    }
                     // The tick at the top follows what is underneath it, or it
                     // would sit there claiming everything is chosen when one has
                     // just been taken off.

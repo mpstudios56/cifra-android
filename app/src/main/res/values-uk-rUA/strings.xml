@@ -1477,4 +1477,5 @@
     <string name="account_shared_with_nobody">Ніхто — цей рахунок лише ваш</string>
     <string name="sharing_person_code_is">kod %1$s</string>
     <string name="sharing_person_look">Kolir</string>
+    <string name="sharing_account_nobody">poky nikoho</string>
 </resources>

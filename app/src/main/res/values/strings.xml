@@ -1612,4 +1612,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
         <item quantity="one">%d person</item>
         <item quantity="other">%d people</item>
     </plurals>
+    <string name="sharing_account_nobody">nobody yet</string>
 </resources>

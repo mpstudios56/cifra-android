@@ -1502,4 +1502,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="account_shared_with_nobody">Niemand — dieses Konto gehört nur Ihnen</string>
   <string name="sharing_person_code_is">Code %1$s</string>
   <string name="sharing_person_look">Farbe</string>
+  <string name="sharing_account_nobody">noch niemand</string>
 </resources>
