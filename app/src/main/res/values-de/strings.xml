@@ -1488,4 +1488,8 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="account_shared_with_all">Allen in der Gruppe</string>
   <string name="account_shared_with_nobody_yet">Im gemeinsamen Ordner ist noch niemand aufgetaucht. Nach einem Austausch kann hier gewählt werden.</string>
   <string name="merge_summary">Zwei Bezeichnungen mit derselben Bedeutung zusammenführen</string>
+  <string name="sharing_people">Personen der Gruppe</string>
+  <string name="sharing_people_none">Noch niemand — sie erscheinen nach dem ersten Austausch</string>
+  <string name="sharing_people_how">Niemand wird von Hand hinzugefügt. Jedes Telefon schreibt im gemeinsamen Ordner eine Datei mit dem Namen seines Besitzers. Gemeinsam haben müssen alle den Ordner und den Gruppencode.</string>
+  <string name="sharing_people_me">Dieses Telefon: %1$s (%2$s)</string>
 </resources>

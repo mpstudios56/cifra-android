@@ -182,6 +182,37 @@
 
 
             <!--
+              Who is in the group. Nobody types them in: every phone writes a
+              file called after its owner, so one round of exchange is enough to
+              learn them. Shown because a list the app keeps and never displays
+              is a list nobody believes in.
+            -->
+            <LinearLayout
+                android:id="@+id/sharing_people"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sharing_people"
+                    android:textAppearance="@style/ListPrimary" />
+
+                <TextView
+                    android:id="@+id/sharing_people_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <!--
               The code that says who belongs together. Everybody in a group
               writes the same one; a phone reads only the files carrying it. It
               is what allows one folder to hold two households, and a group to

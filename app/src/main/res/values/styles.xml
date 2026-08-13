@@ -92,10 +92,14 @@
 	  The calculator keys: circles, like the quick entry keypad and the unlock
 	  keypad, because all three are a digit typed with a thumb.
 	-->
+	<!--
+	  Fixed sizes, not proportions: the keypad lives in a window that fits
+	  itself to its contents, and a key asking for a share of the width there
+	  measures zero. Everything disappeared and only the figure was left.
+	-->
 	<style name="CalcKey">
-		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_width">62dp</item>
 		<item name="android:layout_height">62dp</item>
-		<item name="android:layout_weight">1</item>
 		<item name="android:layout_margin">4dp</item>
 		<item name="android:background">@drawable/calc_key</item>
 		<item name="android:textColor">#FFF4EFE4</item>
@@ -114,6 +118,7 @@
 		<item name="android:textStyle">bold</item>
 	</style>
 	<style name="CalcKeySmall" parent="@style/CalcKey">
+		<item name="android:layout_width">58dp</item>
 		<item name="android:layout_height">40dp</item>
 		<item name="android:textSize">13sp</item>
 		<item name="android:alpha">0.75</item>

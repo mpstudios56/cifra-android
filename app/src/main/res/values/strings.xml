@@ -1590,4 +1590,8 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="account_shared_with_all">Everybody in the group</string>
     <string name="account_shared_with_nobody_yet">Nobody has appeared in the shared folder yet. After one round of exchange the people in the group can be chosen here.</string>
     <string name="merge_summary">Put two labels that mean the same thing back together</string>
+    <string name="sharing_people">People in the group</string>
+    <string name="sharing_people_none">Nobody yet — they appear after the first exchange</string>
+    <string name="sharing_people_how">Nobody is added by hand. Every phone writes a file in the shared folder called after its owner, so one round of exchange is enough for each to learn who the others are. What they need to have in common is the folder and the group code.</string>
+    <string name="sharing_people_me">This phone: %1$s (%2$s)</string>
 </resources>

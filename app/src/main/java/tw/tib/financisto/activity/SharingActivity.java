@@ -75,6 +75,7 @@ public class SharingActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_group).setOnClickListener(v -> askGroupCode());
+        findViewById(R.id.sharing_people).setOnClickListener(v -> showPeople());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
         findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
                 startActivity(new Intent(this, DuplicatesActivity.class)));
@@ -204,6 +205,17 @@ public class SharingActivity extends AppCompatActivity {
                 ? getString(R.string.sharing_never)
                 : getString(R.string.sharing_last, android.text.format.DateFormat
                         .getTimeFormat(this).format(new java.util.Date(last))));
+        java.util.List<tw.tib.financisto.sync.People.Person> people =
+                tw.tib.financisto.sync.People.all(db.db());
+        StringBuilder who = new StringBuilder();
+        for (tw.tib.financisto.sync.People.Person p : people) {
+            if (who.length() > 0) who.append(", ");
+            who.append(p.label());
+        }
+        ((TextView) findViewById(R.id.sharing_people_value)).setText(people.isEmpty()
+                ? getString(R.string.sharing_people_none)
+                : who.toString());
+
         String group = MyPreferences.getSyncGroupCode();
         ((TextView) findViewById(R.id.sharing_group_value)).setText(group.isEmpty()
                 ? getString(R.string.sharing_group_empty)
@@ -216,6 +228,40 @@ public class SharingActivity extends AppCompatActivity {
         findViewById(R.id.sharing_now).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         file.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * Who is in the group, and how they got there.
+     * <p>
+     * Nobody is typed in. Every phone writes a file called after its owner, so
+     * one round of exchange is enough to learn who else is in the folder and
+     * what to call them. This screen only shows the result - and says so, since
+     * otherwise the obvious question is where the button to add somebody is.
+     */
+    private void showPeople() {
+        java.util.List<tw.tib.financisto.sync.People.Person> people =
+                tw.tib.financisto.sync.People.all(db.db());
+        StringBuilder text = new StringBuilder();
+        text.append(getString(R.string.sharing_people_how)).append("\n");
+        if (people.isEmpty()) {
+            text.append("\n").append(getString(R.string.sharing_people_none));
+        } else {
+            for (tw.tib.financisto.sync.People.Person p : people) {
+                text.append("\n").append("• ").append(p.label())
+                        .append("  (").append(p.mark).append(")");
+            }
+        }
+        text.append("\n\n").append(getString(R.string.sharing_people_me,
+                MyPreferences.getSyncAuthor().isEmpty()
+                        ? getString(R.string.sharing_me_empty)
+                        : MyPreferences.getSyncAuthor(),
+                tw.tib.financisto.sync.People.myMark()));
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.sharing_people)
+                .setMessage(text.toString())
+                .setPositiveButton(R.string.ok, null)
+                .show();
     }
 
     /**
