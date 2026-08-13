@@ -51,13 +51,14 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
     /** Which accounts are held together with somebody, worked out once. */
     private java.util.Set<Long> sharedAccounts = java.util.Collections.emptySet();
     /** And in whose colour, by account. */
-    private java.util.Map<Long, Integer> sharedColours = java.util.Collections.emptyMap();
+    private java.util.Map<Long, java.util.List<Integer>> sharedColours =
+            java.util.Collections.emptyMap();
 
     public void setSharedAccounts(java.util.Set<Long> ids) {
         this.sharedAccounts = ids == null ? java.util.Collections.emptySet() : ids;
     }
 
-    public void setSharedColours(java.util.Map<Long, Integer> colours) {
+    public void setSharedColours(java.util.Map<Long, java.util.List<Integer>> colours) {
         this.sharedColours = colours == null ? java.util.Collections.emptyMap() : colours;
     }
 
@@ -94,6 +95,40 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         return new AccountRecyclerAdapter.ViewHolder(view, this.onClickListener, this.onLongClickListener);
     }
 
+    /**
+     * A dot for each person the account is held with, in a square block: one
+     * alone, four two by two, nine three by three - the shape of the keys on a
+     * keypad, which is where the eye already knows to read a small grid.
+     */
+    private void drawSharedDots(android.widget.LinearLayout box, java.util.List<Integer> colours) {
+        box.removeAllViews();
+        if (colours == null || colours.isEmpty()) {
+            colours = java.util.Collections.singletonList(
+                    tw.tib.financisto.utils.Identity.COLOURS[1]);
+        }
+        int many = Math.min(colours.size(), 9);
+        int perRow = many <= 1 ? 1 : (many <= 4 ? 2 : 3);
+        float density = context.getResources().getDisplayMetrics().density;
+        int size = Math.round((many <= 1 ? 8 : (many <= 4 ? 6 : 4)) * density);
+        int gap = Math.round(1.5f * density);
+        android.widget.LinearLayout row = null;
+        for (int i = 0; i < many; i++) {
+            if (i % perRow == 0) {
+                row = new android.widget.LinearLayout(context);
+                row.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+                box.addView(row);
+            }
+            View dot = new View(context);
+            android.widget.LinearLayout.LayoutParams lp =
+                    new android.widget.LinearLayout.LayoutParams(size, size);
+            lp.setMargins(gap, gap, gap, gap);
+            dot.setLayoutParams(lp);
+            dot.setBackgroundResource(R.drawable.dot);
+            dot.getBackground().setTint(colours.get(i));
+            row.addView(dot);
+        }
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder v, int position) {
         v.used++;
@@ -115,14 +150,10 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         // shared account looks exactly like a private one, and the difference
         // matters most when somebody is about to write something in it.
         if (sharedAccounts.contains(a.getId())) {
-            v.sharedDot.setVisibility(View.VISIBLE);
-            // The colour of the person it is held with, so the dot on the
-            // account and the dot beside their name are the same colour.
-            Integer colour = sharedColours.get(a.getId());
-            v.sharedDot.getBackground().setTint(colour == null
-                    ? tw.tib.financisto.utils.Identity.COLOURS[1] : colour);
+            v.sharedDots.setVisibility(View.VISIBLE);
+            drawSharedDots(v.sharedDots, sharedColours.get(a.getId()));
         } else {
-            v.sharedDot.setVisibility(View.GONE);
+            v.sharedDots.setVisibility(View.GONE);
         }
 
         AccountType type = AccountType.valueOf(a.type);
@@ -298,7 +329,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         public final View accent;
         public final ImageView activeIcon;
         public final TextView sortOrder;
-        public final View sharedDot;
+        public final android.widget.LinearLayout sharedDots;
         public final TextView top;
         public final TextView bottom;
         public final View balanceTouch;
@@ -318,7 +349,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             centerTouch = v.findViewById(R.id.center_touch);
             activeIcon = v.findViewById(R.id.active_icon);
             sortOrder = v.findViewById(R.id.sort_order);
-            sharedDot = v.findViewById(R.id.shared_dot);
+            sharedDots = v.findViewById(R.id.shared_dots);
             top = v.findViewById(R.id.top);
             bottom = v.findViewById(R.id.bottom);
             balanceTouch = v.findViewById(R.id.balance_touch);

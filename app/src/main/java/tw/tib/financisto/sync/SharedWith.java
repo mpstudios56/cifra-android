@@ -31,16 +31,24 @@ public class SharedWith {
      * The colour of the first person each shared account is held with, by
      * account. For drawing the list without a query per row.
      */
-    public static java.util.Map<Long, Integer> coloursByAccount(SQLiteDatabase db) {
-        java.util.Map<Long, Integer> colours = new java.util.HashMap<>();
+    public static java.util.Map<Long, java.util.List<Integer>> coloursByAccount(SQLiteDatabase db) {
+        java.util.Map<Long, java.util.List<Integer>> colours = new java.util.HashMap<>();
         String sql = "select a._id, p.colour from account a"
                 + " inner join " + TABLE + " s on s.uuid = a.uuid"
                 + " inner join person p on p.mark = s.mark";
         try (Cursor c = db.rawQuery(sql, null)) {
             while (c.moveToNext()) {
                 int colour = c.getInt(1);
-                if (colour != 0 && !colours.containsKey(c.getLong(0))) {
-                    colours.put(c.getLong(0), colour);
+                if (colour == 0) {
+                    continue;
+                }
+                java.util.List<Integer> theirs = colours.get(c.getLong(0));
+                if (theirs == null) {
+                    theirs = new java.util.ArrayList<>();
+                    colours.put(c.getLong(0), theirs);
+                }
+                if (!theirs.contains(colour)) {
+                    theirs.add(colour);
                 }
             }
         } catch (Exception e) {

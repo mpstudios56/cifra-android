@@ -101,12 +101,18 @@
                   together. Not a word: the row is already full, and a colour
                   answers "is this one of ours?" at a glance.
                 -->
-                <View android:id="@+id/shared_dot"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
+                <!--
+                  One dot per person the account is held with, in a square
+                  block: one alone, four two by two, nine three by three. In a
+                  row they would push the name along by a different amount on
+                  every account.
+                -->
+                <LinearLayout android:id="@+id/shared_dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="6sp"
-                    android:background="@drawable/dot"
+                    android:orientation="vertical"
                     android:visibility="gone" />
 
                 <TextView android:id="@+id/top"
