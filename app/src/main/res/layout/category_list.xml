@@ -37,22 +37,22 @@
         <ImageButton
             android:id="@+id/bAttributes"
             style="@style/BottomBarButton"
-            android:src="@drawable/actionbar_tags" />
+            android:src="@drawable/bar_tags" />
 
         <ImageButton
             android:id="@+id/bExpandAll"
             style="@style/BottomBarButton"
-            android:src="@drawable/actionbar_expand" />
+            android:src="@drawable/bar_expand" />
 
         <ImageButton
             android:id="@+id/bCollapseAll"
             style="@style/BottomBarButton"
-            android:src="@drawable/actionbar_collapse" />
+            android:src="@drawable/bar_collapse" />
 
         <ImageButton
             android:id="@+id/bSort"
             style="@style/BottomBarButton"
-            android:src="@drawable/actionbar_sort_2" />
+            android:src="@drawable/bar_sort" />
 
         <ImageButton
             android:id="@+id/bFix"

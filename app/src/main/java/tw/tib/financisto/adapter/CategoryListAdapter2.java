@@ -56,8 +56,8 @@ public class CategoryListAdapter2 extends BaseAdapter {
 		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.categories = categories;
         Resources resources = context.getResources();
-        this.expandedDrawable = resources.getDrawable(R.drawable.expander_ic_maximized);
-		this.collapsedDrawable = resources.getDrawable(R.drawable.expander_ic_minimized);
+        this.expandedDrawable = resources.getDrawable(R.drawable.tree_open);
+		this.collapsedDrawable = resources.getDrawable(R.drawable.tree_closed);
         this.incomeColor = resources.getColor(R.color.category_type_income);
         this.expenseColor = resources.getColor(R.color.category_type_expense);
         this.levelPadding = resources.getDimensionPixelSize(R.dimen.category_padding);

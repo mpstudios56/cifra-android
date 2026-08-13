@@ -42,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/expander_ic_minimized"
+        android:src="@drawable/tree_closed"
         android:layout_marginTop="8dp" />
     <!--
       The symbol, between the expander and the name. Absent categories keep the
