@@ -231,6 +231,10 @@ public class SyncEngine {
                             o.optString("payload", "{}"),
                             o.optString("author", ""), o.optString("title", ""));
                     if (why != null) {
+                        // In the log as well as on screen: five reasons in a
+                        // toast is what somebody sees, and the sixth is the one
+                        // that explains the other five.
+                        Log.i(TAG, "skipped '" + o.optString("title", "") + "': " + why);
                         if (result.skipped.size() < 5) {
                             result.skipped.add(o.optString("title", "") + " — " + why);
                         }
@@ -261,23 +265,16 @@ public class SyncEngine {
     /**
      * Whether a line is for this phone.
      * <p>
-     * A line with no list of recipients is for everybody in the group: that is
-     * what sharing meant before anybody could be named, and it keeps a phone
-     * that joins later from being cut out of what was written before it
-     * arrived.
+     * It is, if it is in a file this phone can read: one file per pair, found
+     * by the code the two of them share, is what keeps two sharings apart. The
+     * list of recipients inside each line is left over from when everybody
+     * wrote into one file, and it was being compared against the phone's own
+     * identifier while the lines carry the pair code - so every addressed line
+     * was refused on arrival, accounts included, and the movements that needed
+     * those accounts had nowhere to go.
      */
     private static boolean addressedToUs(JSONObject o) {
-        org.json.JSONArray to = o.optJSONArray("to");
-        if (to == null || to.length() == 0) {
-            return true;
-        }
-        String me = People.myMark();
-        for (int i = 0; i < to.length(); i++) {
-            if (me.equals(to.optString(i, ""))) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 
     private static boolean seen(SQLiteDatabase db, String changeUuid) {
