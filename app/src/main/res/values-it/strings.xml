@@ -1388,7 +1388,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="identity_symbol">Simbolo</string>
   <string name="sharing">Condivisione</string>
   <string name="sharing_summary">Un bilancio tenuto da due persone</string>
-  <string name="sharing_intro">Due nomi, nessun account. I colori distinguono a colpo d’occhio le voci non tue.</string>
+  <string name="sharing_intro">Un bilancio tenuto da più persone, ognuna dal proprio telefono.</string>
   <string name="sharing_me">Tu</string>
   <string name="sharing_them">L’altra persona</string>
   <string name="sharing_me_empty">Non impostato</string>
@@ -1490,22 +1490,22 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="account_shared_with">Condiviso con</string>
   <string name="account_shared_with_all">Tutte le persone del gruppo</string>
   <string name="account_shared_with_nobody_yet">Nella cartella condivisa non è ancora comparso nessuno. Dopo un giro di scambio potrai scegliere qui le persone del gruppo.</string>
-  <string name="merge_summary">Rimetti insieme due etichette che vogliono dire la stessa cosa</string>
+  <string name="merge_summary">Rimetti insieme due etichette uguali</string>
   <string name="sharing_people">Condivisioni</string>
   <string name="sharing_people_none">Ancora nessuno — compaiono dopo il primo scambio</string>
   <string name="sharing_people_how">Non si aggiunge nessuno a mano. Ogni telefono scrive nella cartella condivisa un file col nome del suo proprietario, quindi basta un giro di scambio perché ognuno impari chi sono gli altri. Quello che devono avere in comune è la cartella e il codice del gruppo.</string>
   <string name="sharing_people_me">Questo telefono: %1$s (%2$s)</string>
   <string name="sharing_person_add">Aggiungi una persona</string>
-  <string name="sharing_person_name">Come si chiama</string>
-  <string name="sharing_person_code">Codice condiviso con lei</string>
-  <string name="sharing_person_why">Lo stesso codice va scritto sul suo telefono accanto al tuo nome. Sono quelle due righe a fare la coppia — ed è quello che tiene separata questa condivisione da ogni altra che hai.</string>
+  <string name="sharing_person_name">Nome</string>
+  <string name="sharing_person_code">Codice</string>
+  <string name="sharing_person_why">Lo stesso codice va scritto anche sul suo telefono, accanto al tuo nome.</string>
   <plurals name="sharing_person_accounts">
       <item quantity="one">%d conto condiviso con lei</item>
     <item quantity="other">%d conti condivisi con lei</item>
   </plurals>
-  <string name="sharing_people_none_yet">Ancora nessuno — tocca per aggiungere una persona e il codice che avete in comune</string>
+  <string name="sharing_people_none_yet">Nessuna: tocca il più per aggiungerne una</string>
   <string name="sharing_section_setup">Impostazione</string>
-  <string name="sharing_section_manage">Gestione della condivisione</string>
+  <string name="sharing_section_manage">Gestione</string>
   <string name="account_shared_with_nobody">Nessuno — questo conto è solo tuo</string>
   <string name="sharing_person_code_is">codice %1$s</string>
   <string name="sharing_person_look">Colore</string>

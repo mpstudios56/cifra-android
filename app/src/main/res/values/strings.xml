@@ -1475,7 +1475,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sync_partner">The other person</string>
     <string name="sync_partner_summary">What their changes are called when they arrive</string>
     <string name="change_log">Record of changes</string>
-    <string name="change_log_summary">Who added, edited or deleted what</string>
+    <string name="change_log_summary">Who added, changed or deleted what</string>
     <string name="change_log_empty">Nothing has been changed yet</string>
     <string name="change_log_note">Changes made on this phone are signed %1$s.</string>
     <string name="change_log_note_unsigned">Nobody has said who uses this phone, so the changes are unsigned. The name is set in the settings.</string>
@@ -1487,7 +1487,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="identity_symbol">Symbol</string>
     <string name="sharing">Sharing</string>
     <string name="sharing_summary">A ledger kept by two people</string>
-    <string name="sharing_intro">Two names, no accounts. The colours tell at a glance which entries are not yours.</string>
+    <string name="sharing_intro">One ledger kept by more than one person, each from their own phone.</string>
     <string name="sharing_me">You</string>
     <string name="sharing_them">The other person</string>
     <string name="sharing_me_empty">Not set</string>
@@ -1595,16 +1595,16 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sharing_people_how">Nobody is added by hand. Every phone writes a file in the shared folder called after its owner, so one round of exchange is enough for each to learn who the others are. What they need to have in common is the folder and the group code.</string>
     <string name="sharing_people_me">This phone: %1$s (%2$s)</string>
     <string name="sharing_person_add">Add a person</string>
-    <string name="sharing_person_name">Their name</string>
-    <string name="sharing_person_code">Code shared with them</string>
-    <string name="sharing_person_why">The same code has to be written on their phone against your name. That pair of entries is what makes the two of you a pair - and it is what keeps this sharing apart from any other you have.</string>
+    <string name="sharing_person_name">Name</string>
+    <string name="sharing_person_code">Code</string>
+    <string name="sharing_person_why">The same code goes on their phone too, against your name.</string>
     <plurals name="sharing_person_accounts">
         <item quantity="one">%d account held with them</item>
         <item quantity="other">%d accounts held with them</item>
     </plurals>
-    <string name="sharing_people_none_yet">Nobody yet — tap to add somebody and the code you share with them</string>
+    <string name="sharing_people_none_yet">None: tap the plus to add one</string>
     <string name="sharing_section_setup">Setting up</string>
-    <string name="sharing_section_manage">Managing the sharing</string>
+    <string name="sharing_section_manage">Managing</string>
     <string name="account_shared_with_nobody">Nobody — this account is only yours</string>
     <string name="sharing_person_code_is">code %1$s</string>
     <string name="sharing_person_look">Colour</string>
