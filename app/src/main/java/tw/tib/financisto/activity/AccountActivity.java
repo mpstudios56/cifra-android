@@ -316,9 +316,7 @@ public class AccountActivity extends AbstractActivity {
 			tw.tib.financisto.sync.SharedThings.set(db.db(),
 					tw.tib.financisto.sync.SharedThings.ACCOUNT, accountUuid, nowShared);
 			tw.tib.financisto.sync.SharedWith.set(db.db(), accountUuid, sharedWithMarks);
-			if (nowShared && !wasShared) {
-				askWhatToShareOfThePast(accountId, accountUuid, account.title);
-			}
+
 			long amount = amountInput.getAmount();
 			if (amount != 0) {
 				Transaction t = new Transaction();
@@ -332,7 +330,15 @@ public class AccountActivity extends AbstractActivity {
 			Intent intent1 = new Intent();
 			intent1.putExtra(ACCOUNT_ID_EXTRA, accountId);
 			setResult(RESULT_OK, intent1);
-			finish();
+			// Shared for the first time: ask before leaving, and leave when the
+			// answer is given. It used to be asked and closed in the same
+			// breath, so the question was on screen for as long as it took the
+			// screen to go away.
+			if (nowShared && !wasShared) {
+				askWhatToShareOfThePast(accountId, accountUuid, account.title);
+			} else {
+				finish();
+			}
 		});
 
 		Button bCancel = findViewById(R.id.bCancel);
@@ -462,8 +468,9 @@ public class AccountActivity extends AbstractActivity {
 					if (queued > 0) {
 						Toast.makeText(this,
 								getString(R.string.share_past_queued, queued),
-								Toast.LENGTH_LONG).show();
+								Toast.LENGTH_SHORT).show();
 					}
+					finish();
 				})
 				.setCancelable(false)
 				.show();
