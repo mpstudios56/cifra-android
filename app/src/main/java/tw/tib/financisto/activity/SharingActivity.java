@@ -74,6 +74,7 @@ public class SharingActivity extends AppCompatActivity {
         findViewById(R.id.sharing_log).setOnClickListener(v ->
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
+        findViewById(R.id.sharing_group).setOnClickListener(v -> askGroupCode());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
         findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
                 startActivity(new Intent(this, DuplicatesActivity.class)));
@@ -203,6 +204,11 @@ public class SharingActivity extends AppCompatActivity {
                 ? getString(R.string.sharing_never)
                 : getString(R.string.sharing_last, android.text.format.DateFormat
                         .getTimeFormat(this).format(new java.util.Date(last))));
+        String group = MyPreferences.getSyncGroupCode();
+        ((TextView) findViewById(R.id.sharing_group_value)).setText(group.isEmpty()
+                ? getString(R.string.sharing_group_empty)
+                : group);
+
         TextView file = findViewById(R.id.sharing_file);
         file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
                 MyPreferences.getSyncAuthor(), MyPreferences.getSyncDeviceId())));
@@ -210,6 +216,36 @@ public class SharingActivity extends AppCompatActivity {
         findViewById(R.id.sharing_now).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         file.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * The code everybody in the group writes, the same on every phone.
+     * <p>
+     * Free text on purpose: it is not a password and it is not checked against
+     * anything - it only has to be typed the same way by the people who mean to
+     * be together. Changing it changes the name of the file this phone writes,
+     * so the old one is left behind in the folder and should be deleted.
+     */
+    private void askGroupCode() {
+        final android.widget.EditText field = new android.widget.EditText(this);
+        field.setSingleLine(true);
+        field.setText(MyPreferences.getSyncGroupCode());
+        field.setHint(R.string.sharing_group_hint);
+        int pad = Math.round(16 * getResources().getDisplayMetrics().density);
+        android.widget.FrameLayout box = new android.widget.FrameLayout(this);
+        box.setPadding(pad, pad / 2, pad, 0);
+        box.addView(field);
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.sharing_group)
+                .setMessage(R.string.sharing_group_why)
+                .setView(box)
+                .setPositiveButton(R.string.ok, (d, w) -> {
+                    MyPreferences.setSyncGroupCode(field.getText().toString());
+                    show();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void show(Identity identity, int nameId, int dotId, int iconId, int emptyId) {

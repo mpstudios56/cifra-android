@@ -614,6 +614,26 @@ public class MyPreferences {
 		edit().putString("sync_folder", uri == null ? "" : uri).apply();
 	}
 
+	/**
+	 * The code that says which people belong together.
+	 * <p>
+	 * Everybody in a group writes the same one, and it goes in the name of the
+	 * file each phone writes. A phone reads only the files carrying its own
+	 * code, which means one cloud folder can hold more than one group without
+	 * them mixing - and that a group can be more than two people, because what
+	 * makes a group is the code and not the being two.
+	 * <p>
+	 * Empty means "no code": then the old behaviour stands and every file in
+	 * the folder is read, so nobody who set this up before is cut off.
+	 */
+	public static String getSyncGroupCode() {
+		return getString("sync_group_code", "");
+	}
+
+	public static void setSyncGroupCode(String code) {
+		edit().putString("sync_group_code", code == null ? "" : code.trim()).apply();
+	}
+
 	/** What the other person's changes are called when they arrive. */
 	public static String getSyncPartner() {
 		return getString("sync_partner", "");

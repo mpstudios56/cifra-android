@@ -1455,4 +1455,8 @@
     <string name="change_log_clear_sure_why">Скасувати це буде нічим.</string>
     <string name="change_log_clear_now">Очистити</string>
     <string name="change_log_cleared">Журнал очищено: рядків видалено %1$d.</string>
+    <string name="sharing_group">Код групи</string>
+    <string name="sharing_group_empty">Немає — читаються всі файли теки</string>
+    <string name="sharing_group_why">Усі, хто ділиться між собою, пишуть той самий код. Читаються лише файли з ним.</string>
+    <string name="sharing_group_hint">наприклад ДІМ24</string>
 </resources>

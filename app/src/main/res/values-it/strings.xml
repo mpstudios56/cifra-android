@@ -1483,4 +1483,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="change_log_clear_sure_why">Non c’è niente con cui tornare indietro.</string>
   <string name="change_log_clear_now">Azzera</string>
   <string name="change_log_cleared">Registro azzerato: %1$d righe eliminate.</string>
+  <string name="sharing_group">Codice del gruppo</string>
+  <string name="sharing_group_empty">Nessuno — vengono letti tutti i file della cartella</string>
+  <string name="sharing_group_why">Tutte le persone che condividono fra loro scrivono lo stesso codice. Vengono letti solo i file che lo portano, così una cartella può contenere più gruppi — e un gruppo può essere di più di due persone.</string>
+  <string name="sharing_group_hint">per esempio CASA24</string>
 </resources>

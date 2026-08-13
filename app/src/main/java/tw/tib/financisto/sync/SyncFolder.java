@@ -80,20 +80,40 @@ public class SyncFolder {
      * still inside every line, which is what the reading actually goes by.
      */
     public static String nameFor(String author, String deviceId) {
+        return nameFor(author, tw.tib.financisto.utils.MyPreferences.getSyncGroupCode(), deviceId);
+    }
+
+    /**
+     * cifra - name - group code - phone.
+     * <p>
+     * The name is for the person looking in the folder. The group code says who
+     * belongs with whom, so one folder can hold more than one group and a group
+     * can be more than two people. The last part keeps two people called the
+     * same thing apart: without it they would share one file and each would
+     * wipe the other's changes.
+     */
+    public static String nameFor(String author, String groupCode, String deviceId) {
         String mark = deviceId == null ? "" : deviceId.replace("-", "");
         if (mark.length() > 8) {
             mark = mark.substring(0, 8);
         }
+        StringBuilder sb = new StringBuilder(PREFIX);
         String name = tidy(author);
-        if (name.isEmpty()) {
-            // Nobody has given themselves a name yet: the mark alone still
-            // keeps the two phones from writing over each other.
-            return PREFIX + mark + SUFFIX;
+        if (!name.isEmpty()) {
+            sb.append(name).append('-');
         }
-        // Name and mark both: the name is for the person looking in the folder,
-        // the mark is what keeps two people called the same thing apart. Without
-        // it they would share one file and each would wipe the other's changes.
-        return PREFIX + name + "-" + mark + SUFFIX;
+        String group = tidy(groupCode);
+        if (!group.isEmpty()) {
+            sb.append(group).append('-');
+        }
+        sb.append(mark).append(SUFFIX);
+        return sb.toString();
+    }
+
+    /** The part of a file name that says which group it belongs to, or empty. */
+    private static String groupPart() {
+        String group = tidy(tw.tib.financisto.utils.MyPreferences.getSyncGroupCode());
+        return group.isEmpty() ? "" : "-" + group + "-";
     }
 
     /** A name a file system will accept, with the spaces and slashes taken out. */
@@ -168,9 +188,17 @@ public class SyncFolder {
         List<String> lines = new ArrayList<>();
         String mine = nameFor(author, deviceId);
         try {
+            String group = groupPart();
             for (DocumentFile file : folder.listFiles()) {
                 String name = file.getName();
                 if (name == null || !name.startsWith(PREFIX) || name.equals(mine)) {
+                    continue;
+                }
+                // With a group code set, only the files carrying it are read.
+                // Without one, everything is read, so anybody who set this up
+                // before the code existed carries on working.
+                if (!group.isEmpty() && !name.contains(group)) {
+                    Log.i(TAG, "not our group, left alone: " + name);
                     continue;
                 }
                 Log.i(TAG, "reading " + name);
@@ -205,9 +233,11 @@ public class SyncFolder {
         int count = 0;
         String mine = nameFor(author, deviceId);
         try {
+            String group = groupPart();
             for (DocumentFile file : folder.listFiles()) {
                 String name = file.getName();
-                if (name != null && name.startsWith(PREFIX) && !name.equals(mine)) {
+                if (name != null && name.startsWith(PREFIX) && !name.equals(mine)
+                        && (group.isEmpty() || name.contains(group))) {
                     count++;
                 }
             }

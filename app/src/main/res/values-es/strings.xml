@@ -1480,4 +1480,8 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="change_log_clear_sure_why">No hay nada con lo que deshacerlo.</string>
   <string name="change_log_clear_now">Vaciar</string>
   <string name="change_log_cleared">Registro vaciado: %1$d líneas eliminadas.</string>
+  <string name="sharing_group">Código del grupo</string>
+  <string name="sharing_group_empty">Ninguno — se leen todos los archivos de la carpeta</string>
+  <string name="sharing_group_why">Todas las personas que comparten entre sí escriben el mismo código. Solo se leen los archivos que lo llevan.</string>
+  <string name="sharing_group_hint">por ejemplo CASA24</string>
 </resources>

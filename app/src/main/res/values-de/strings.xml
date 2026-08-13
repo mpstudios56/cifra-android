@@ -1480,4 +1480,8 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="change_log_clear_sure_why">Es gibt nichts, womit sich das rückgängig machen lässt.</string>
   <string name="change_log_clear_now">Leeren</string>
   <string name="change_log_cleared">Aufzeichnung geleert: %1$d Zeilen entfernt.</string>
+  <string name="sharing_group">Gruppencode</string>
+  <string name="sharing_group_empty">Keiner — jede Datei im Ordner wird gelesen</string>
+  <string name="sharing_group_why">Alle, die miteinander teilen, schreiben denselben Code. Nur Dateien mit diesem Code werden gelesen.</string>
+  <string name="sharing_group_hint">zum Beispiel HAUS24</string>
 </resources>

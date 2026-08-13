@@ -1480,4 +1480,8 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="change_log_clear_sure_why">Rien ne permet de revenir en arrière.</string>
   <string name="change_log_clear_now">Vider</string>
   <string name="change_log_cleared">Registre vidé : %1$d lignes supprimées.</string>
+  <string name="sharing_group">Code du groupe</string>
+  <string name="sharing_group_empty">Aucun — tous les fichiers du dossier sont lus</string>
+  <string name="sharing_group_why">Toutes les personnes qui partagent entre elles écrivent le même code. Seuls les fichiers qui le portent sont lus.</string>
+  <string name="sharing_group_hint">par exemple MAISON24</string>
 </resources>
