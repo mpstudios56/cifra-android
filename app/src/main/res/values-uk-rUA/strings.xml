@@ -1443,10 +1443,10 @@
     <string name="crash_send">Надіслати звіт</string>
     <string name="crash_no">Ні, дякую</string>
     <string name="crash_subject">Cifra — звіт про збій</string>
-    <string name="share_past_title">Що з минулого?</string>
-    <string name="share_past_everything">Усі операції</string>
-    <string name="share_past_balance">Лише залишок</string>
-    <string name="share_past_nothing">Відтепер</string>
+    <string name="share_past_title">Які операції ділити?</string>
+    <string name="share_past_everything">Усі</string>
+    <string name="share_past_balance">Початковий залишок</string>
+    <string name="share_past_nothing">Нові від сьогодні</string>
     <string name="share_past_queued">%1$d операцій в дорозі</string>
     <string name="change_log_clear">Очистити журнал</string>
     <string name="change_log_clear_why">Журнал — це пам’ять про вже обмінене. Після очищення записи іншого телефона знову виглядатимуть новими й повернуться, а власні незібрані зміни зникнуть назавжди.</string>

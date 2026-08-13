@@ -1468,10 +1468,10 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="crash_send">Enviar el informe</string>
   <string name="crash_no">No, gracias</string>
   <string name="crash_subject">Cifra — informe de cierre</string>
-  <string name="share_past_title">¿Qué pasa del pasado?</string>
-  <string name="share_past_everything">Todos los movimientos</string>
-  <string name="share_past_balance">Solo el saldo de hoy</string>
-  <string name="share_past_nothing">A partir de ahora</string>
+  <string name="share_past_title">¿Qué movimientos compartir?</string>
+  <string name="share_past_everything">Todos</string>
+  <string name="share_past_balance">Generar saldo</string>
+  <string name="share_past_nothing">Nuevos desde hoy</string>
   <string name="share_past_queued">%1$d movimientos en camino</string>
   <string name="change_log_clear">Vaciar el registro</string>
   <string name="change_log_clear_why">El registro es la memoria de lo ya intercambiado. Al vaciarlo, las entradas del otro teléfono vuelven a parecer nuevas y regresan, y tus cambios aún no recogidos se pierden.</string>
