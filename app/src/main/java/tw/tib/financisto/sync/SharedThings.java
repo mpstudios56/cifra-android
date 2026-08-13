@@ -200,7 +200,15 @@ public class SharedThings {
     }
 
     /** Places call it a name; everything else calls it a title. */
+    /**
+     * The column holding what a row is called.
+     * <p>
+     * Every one of them is "title". Places had a "name" until it was replaced
+     * in February 2024, and this went on asking for the old one - so every
+     * query about places failed quietly and no place was ever shared or ever
+     * proposed for merging.
+     */
     public static String nameColumn(String kind) {
-        return LOCATION.equals(kind) ? "name" : "title";
+        return "title";
     }
 }
