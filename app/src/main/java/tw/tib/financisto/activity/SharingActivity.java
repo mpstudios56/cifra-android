@@ -213,7 +213,6 @@ public class SharingActivity extends AppCompatActivity {
                 : getResources().getQuantityString(
                         R.plurals.sharing_people_count, people.size(), people.size()));
         drawPeople(people);
-        drawSharedAccounts();
 
         TextView file = findViewById(R.id.sharing_file);
         file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
@@ -290,39 +289,6 @@ public class SharingActivity extends AppCompatActivity {
 
             row.setOnClickListener(v -> bubbleFor(person, v));
             list.addView(row);
-        }
-    }
-
-    /**
-     * The accounts being shared, each with the people under it.
-     * <p>
-     * The same fact as the list of people, read the other way round: that one
-     * answers "who do I share with", this one "who sees this account", and it
-     * is the second question somebody asks when they are about to write
-     * something down.
-     */
-    private void drawSharedAccounts() {
-        android.widget.LinearLayout list = findViewById(R.id.sharing_what_list);
-        list.removeAllViews();
-        float density = getResources().getDisplayMetrics().density;
-        int pad = Math.round(16 * density);
-        for (String[] row : tw.tib.financisto.sync.SharedWith.accountsAndWho(db.db())) {
-            android.widget.LinearLayout words = new android.widget.LinearLayout(this);
-            words.setOrientation(android.widget.LinearLayout.VERTICAL);
-            words.setPadding(pad, pad / 3, pad, pad / 3);
-
-            TextView title = new TextView(this);
-            title.setText(row[0]);
-            title.setTextAppearance(R.style.ListPrimary);
-            words.addView(title);
-
-            TextView who = new TextView(this);
-            who.setText(row[1].isEmpty() ? getString(R.string.sharing_account_nobody) : row[1]);
-            who.setAlpha(0.7f);
-            who.setTextSize(12.5f);
-            words.addView(who);
-
-            list.addView(words);
         }
     }
 

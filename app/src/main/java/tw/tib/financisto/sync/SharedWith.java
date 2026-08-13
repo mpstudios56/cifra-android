@@ -85,6 +85,32 @@ public class SharedWith {
         return rows;
     }
 
+    /** The people an account is held with, written out, or empty. */
+    public static String namesOf(SQLiteDatabase db, String accountUuid) {
+        if (accountUuid == null || accountUuid.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        String sql = "select p.name from " + TABLE + " s"
+                + " inner join person p on p.mark = s.mark"
+                + " where s.uuid = ? order by p.seen_on";
+        try (Cursor c = db.rawQuery(sql, new String[]{accountUuid})) {
+            while (c.moveToNext()) {
+                String name = c.getString(0);
+                if (name == null || name.isEmpty()) {
+                    continue;
+                }
+                if (sb.length() > 0) {
+                    sb.append(", ");
+                }
+                sb.append(name);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "could not read who holds " + accountUuid, e);
+        }
+        return sb.toString();
+    }
+
     /** The people this account goes to, or empty for everybody. */
     public static Set<String> of(SQLiteDatabase db, String accountUuid) {
         Set<String> marks = new HashSet<>();

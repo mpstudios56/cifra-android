@@ -104,6 +104,17 @@ public class SharePickerActivity extends AppCompatActivity {
                 CheckBox box = row.findViewById(R.id.share_box);
                 ((TextView) row.findViewById(R.id.share_name)).setText(
                         thing.name.isEmpty() ? getString(R.string.no_title) : thing.name);
+
+                // Under the name, the people it is held with. An account can be
+                // ticked as shared and given to nobody yet, and that is worth
+                // seeing here rather than after a round that delivers nothing.
+                TextView who = row.findViewById(R.id.share_who);
+                if (who != null && SharedThings.ACCOUNT.equals(kind)) {
+                    String names = tw.tib.financisto.sync.SharedWith.namesOf(db.db(), thing.uuid);
+                    who.setVisibility(thing.shared ? View.VISIBLE : View.GONE);
+                    who.setText(names.isEmpty()
+                            ? getString(R.string.sharing_account_nobody) : names);
+                }
                 box.setChecked(thing.shared);
                 box.setOnCheckedChangeListener((b, checked) -> {
                     SharedThings.set(db.db(), kind, thing.uuid, checked);
