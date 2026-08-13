@@ -1463,7 +1463,7 @@
     <string name="account_shared_with_all">Усіма в групі</string>
     <string name="account_shared_with_nobody_yet">У спільній теці ще нікого не з’явилося. Після обміну тут можна буде вибрати людей.</string>
     <string name="merge_summary">Об’єднати дві однакові за змістом позначки</string>
-    <string name="sharing_people">Люди групи</string>
+    <string name="sharing_people">Спільні доступи</string>
     <string name="sharing_people_none">Поки нікого — з’являться після першого обміну</string>
     <string name="sharing_people_how">Нікого не додають вручну. Кожен телефон пише у спільній теці файл з іменем власника. Спільними мають бути тека і код групи.</string>
     <string name="sharing_people_me">Цей телефон: %1$s (%2$s)</string>

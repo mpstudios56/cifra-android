@@ -1488,7 +1488,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="account_shared_with_all">Tout le groupe</string>
   <string name="account_shared_with_nobody_yet">Personne n’est encore apparu dans le dossier partagé. Après un échange, vous pourrez choisir ici.</string>
   <string name="merge_summary">Réunir deux libellés qui veulent dire la même chose</string>
-  <string name="sharing_people">Personnes du groupe</string>
+  <string name="sharing_people">Partages</string>
   <string name="sharing_people_none">Personne encore — elles apparaissent après le premier échange</string>
   <string name="sharing_people_how">On n’ajoute personne à la main. Chaque téléphone écrit dans le dossier partagé un fichier portant le nom de son propriétaire. Ce qu’il faut partager, c’est le dossier et le code du groupe.</string>
   <string name="sharing_people_me">Ce téléphone : %1$s (%2$s)</string>

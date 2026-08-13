@@ -1488,7 +1488,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="account_shared_with_all">Todas las personas del grupo</string>
   <string name="account_shared_with_nobody_yet">Todavía no ha aparecido nadie en la carpeta compartida. Tras un intercambio podrás elegir aquí.</string>
   <string name="merge_summary">Unir dos etiquetas que significan lo mismo</string>
-  <string name="sharing_people">Personas del grupo</string>
+  <string name="sharing_people">Comparticiones</string>
   <string name="sharing_people_none">Todavía nadie — aparecen tras el primer intercambio</string>
   <string name="sharing_people_how">No se añade a nadie a mano. Cada teléfono escribe en la carpeta compartida un archivo con el nombre de su propietario. Lo que deben compartir es la carpeta y el código del grupo.</string>
   <string name="sharing_people_me">Este teléfono: %1$s (%2$s)</string>

@@ -73,6 +73,7 @@ public class SharingActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_people).setOnClickListener(v -> showPeople());
+        findViewById(R.id.sharing_people_add).setOnClickListener(v -> askPerson(null));
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
         findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
                 startActivity(new Intent(this, DuplicatesActivity.class)));
@@ -280,6 +281,35 @@ public class SharingActivity extends AppCompatActivity {
         box.addView(name);
         box.addView(code);
 
+        // The colour, chosen here rather than on a screen of its own: it is one
+        // of three things about a person and the other two are on this dialog.
+        final int[] chosenColour = {existing != null && existing.colour != 0
+                ? existing.colour : Identity.COLOURS[0]};
+        android.widget.LinearLayout swatches = new android.widget.LinearLayout(this);
+        swatches.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        swatches.setPadding(0, pad, 0, 0);
+        for (int colour : Identity.COLOURS) {
+            View dot = new View(this);
+            android.widget.LinearLayout.LayoutParams lp =
+                    new android.widget.LinearLayout.LayoutParams(
+                            Math.round(30 * getResources().getDisplayMetrics().density),
+                            Math.round(30 * getResources().getDisplayMetrics().density));
+            lp.rightMargin = pad / 2;
+            dot.setLayoutParams(lp);
+            dot.setBackgroundResource(R.drawable.circle);
+            dot.getBackground().setTint(colour);
+            dot.setAlpha(colour == chosenColour[0] ? 1f : 0.35f);
+            dot.setOnClickListener(v -> {
+                chosenColour[0] = colour;
+                for (int k = 0; k < swatches.getChildCount(); k++) {
+                    swatches.getChildAt(k).setAlpha(
+                            Identity.COLOURS[k] == colour ? 1f : 0.35f);
+                }
+            });
+            swatches.addView(dot);
+        }
+        box.addView(swatches);
+
         android.app.AlertDialog.Builder b = new android.app.AlertDialog.Builder(this)
                 .setTitle(existing == null ? R.string.sharing_person_add : R.string.sharing_people)
                 .setMessage(R.string.sharing_person_why)
@@ -289,7 +319,8 @@ public class SharingActivity extends AppCompatActivity {
                         tw.tib.financisto.sync.People.forget(db.db(), existing.mark);
                     }
                     tw.tib.financisto.sync.People.seen(db.db(),
-                            code.getText().toString(), name.getText().toString());
+                            code.getText().toString(), name.getText().toString(),
+                            chosenColour[0]);
                     show();
                 })
                 .setNegativeButton(R.string.cancel, null);

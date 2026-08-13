@@ -34,11 +34,14 @@ public class People {
         public final String mark;
         public final String name;
         public final long seenOn;
+        /** Their colour, so their entries are told apart at a glance. */
+        public final int colour;
 
-        public Person(String mark, String name, long seenOn) {
+        public Person(String mark, String name, long seenOn, int colour) {
             this.mark = mark;
             this.name = name;
             this.seenOn = seenOn;
+            this.colour = colour;
         }
 
         /** What to show: the name if they gave one, otherwise their mark. */
@@ -53,10 +56,10 @@ public class People {
     /** Everybody written down here, in the order they were added. */
     public static List<Person> all(SQLiteDatabase db) {
         List<Person> people = new ArrayList<>();
-        try (Cursor c = db.query(TABLE, new String[]{"mark", "name", "seen_on"},
+        try (Cursor c = db.query(TABLE, new String[]{"mark", "name", "seen_on", "colour"},
                 null, null, null, null, "seen_on asc")) {
             while (c.moveToNext()) {
-                people.add(new Person(c.getString(0), c.getString(1), c.getLong(2)));
+                people.add(new Person(c.getString(0), c.getString(1), c.getLong(2), c.getInt(3)));
             }
         } catch (Exception e) {
             Log.e(TAG, "could not read the people", e);
@@ -70,6 +73,10 @@ public class People {
      * @param mark the code, which must be the same on their phone
      */
     public static void seen(SQLiteDatabase db, String mark, String name) {
+        seen(db, mark, name, 0);
+    }
+
+    public static void seen(SQLiteDatabase db, String mark, String name, int colour) {
         if (mark == null || mark.trim().isEmpty()) {
             return;
         }
@@ -79,6 +86,7 @@ public class People {
             v.put("mark", mark);
             v.put("name", name == null ? "" : name);
             v.put("seen_on", System.currentTimeMillis());
+            v.put("colour", colour);
             db.insertWithOnConflict(TABLE, null, v, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Exception e) {
             Log.e(TAG, "could not remember " + mark, e);

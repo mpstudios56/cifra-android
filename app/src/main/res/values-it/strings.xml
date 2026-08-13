@@ -1491,7 +1491,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="account_shared_with_all">Tutte le persone del gruppo</string>
   <string name="account_shared_with_nobody_yet">Nella cartella condivisa non è ancora comparso nessuno. Dopo un giro di scambio potrai scegliere qui le persone del gruppo.</string>
   <string name="merge_summary">Rimetti insieme due etichette che vogliono dire la stessa cosa</string>
-  <string name="sharing_people">Persone del gruppo</string>
+  <string name="sharing_people">Condivisioni</string>
   <string name="sharing_people_none">Ancora nessuno — compaiono dopo il primo scambio</string>
   <string name="sharing_people_how">Non si aggiunge nessuno a mano. Ogni telefono scrive nella cartella condivisa un file col nome del suo proprietario, quindi basta un giro di scambio perché ognuno impari chi sono gli altri. Quello che devono avere in comune è la cartella e il codice del gruppo.</string>
   <string name="sharing_people_me">Questo telefono: %1$s (%2$s)</string>
