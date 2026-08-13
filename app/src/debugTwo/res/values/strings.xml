@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The second test copy calls itself Cifra 2 so the two are not confused on the
+  home screen. Nothing else about it differs: it is the same build, under a
+  different package name, with its own database - which is what makes it the
+  other person for the purposes of trying sharing out.
+-->
+<resources>
+    <string name="app_name">Cifra 2</string>
+</resources>

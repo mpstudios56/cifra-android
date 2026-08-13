@@ -77,6 +77,19 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
         }
+        // A second copy of the test build, side by side with the first.
+        //
+        // Sharing works through a folder, so two installations pointing at the
+        // same folder exchange with each other whether or not they are on the
+        // same phone. Testing it used to mean two phones and a wait for the
+        // store to look the build over; with this it takes one phone and a
+        // minute. Debug-signed like the other, and never published.
+        debugTwo {
+            initWith debug
+            applicationIdSuffix ".dev2"
+            versionNameSuffix "-dev2"
+            matchingFallbacks = ['debug']
+        }
     }
     packagingOptions {
         pickFirst 'META-INF/LICENSE'

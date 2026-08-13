@@ -1463,4 +1463,9 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="csv_map_duplicates_skipped">%1$d waren bereits vorhanden und wurden ausgelassen.</string>
   <string name="transaction_status_now">Jetzt: %1$s</string>
   <string name="sharing_file_is">Dieses Telefon schreibt: %1$s</string>
+  <string name="crash_title">Cifra wurde unerwartet beendet</string>
+  <string name="crash_message">Beim letzten Mal hat sich Cifra von selbst beendet. Der Bericht enthält Version, Telefonmodell und die Stelle im Programm — keine Konten, Beträge oder Namen.</string>
+  <string name="crash_send">Bericht senden</string>
+  <string name="crash_no">Nein, danke</string>
+  <string name="crash_subject">Cifra – Absturzbericht</string>
 </resources>

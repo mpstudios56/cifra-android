@@ -1463,4 +1463,9 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="csv_map_duplicates_skipped">%1$d étaient déjà là et ont été laissées de côté.</string>
   <string name="transaction_status_now">Maintenant : %1$s</string>
   <string name="sharing_file_is">Ce téléphone écrit : %1$s</string>
+  <string name="crash_title">Cifra s’est fermé tout seul</string>
+  <string name="crash_message">La dernière fois, Cifra s’est fermé tout seul. Le rapport contient la version, le modèle du téléphone et l’endroit dans le programme : aucun compte, montant ni nom.</string>
+  <string name="crash_send">Envoyer le rapport</string>
+  <string name="crash_no">Non merci</string>
+  <string name="crash_subject">Cifra — rapport de fermeture</string>
 </resources>

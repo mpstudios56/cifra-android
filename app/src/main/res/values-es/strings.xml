@@ -1463,4 +1463,9 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="csv_map_duplicates_skipped">%1$d ya estaban y se han dejado fuera.</string>
   <string name="transaction_status_now">Ahora: %1$s</string>
   <string name="sharing_file_is">Este teléfono escribe: %1$s</string>
+  <string name="crash_title">Cifra se ha cerrado sola</string>
+  <string name="crash_message">La última vez Cifra se cerró sola. El informe contiene la versión, el modelo del teléfono y el punto del programa: ninguna cuenta, importe ni nombre.</string>
+  <string name="crash_send">Enviar el informe</string>
+  <string name="crash_no">No, gracias</string>
+  <string name="crash_subject">Cifra — informe de cierre</string>
 </resources>

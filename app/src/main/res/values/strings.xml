@@ -1565,4 +1565,9 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="csv_map_duplicates_skipped">%1$d were already there and were left out.</string>
     <string name="transaction_status_now">Now: %1$s</string>
     <string name="sharing_file_is">This phone writes: %1$s</string>
+    <string name="crash_title">Cifra closed unexpectedly</string>
+    <string name="crash_message">Last time, Cifra closed on its own. Sending the reason helps get it fixed: it holds the version, the phone and where in the code it happened - no accounts, no amounts, no names.</string>
+    <string name="crash_send">Send the report</string>
+    <string name="crash_no">No thanks</string>
+    <string name="crash_subject">Cifra - crash report</string>
 </resources>

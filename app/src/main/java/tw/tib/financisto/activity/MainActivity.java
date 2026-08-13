@@ -41,6 +41,7 @@ import tw.tib.financisto.bus.GreenRobotBus_;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.DonatePrompt;
 import tw.tib.financisto.sync.AutoSync;
+import tw.tib.financisto.utils.CrashCatcher;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.service.QuickBar;
 import tw.tib.financisto.utils.PinProtection;
@@ -283,6 +284,35 @@ public class MainActivity extends AppCompatActivity {
         // of minutes while it is open.
         AutoSync.whenReturning(this);
         AutoSync.keepGoing(this);
+        offerToReportACrash();
+    }
+
+    /**
+     * Asks, once, whether to send the reason the app closed last time.
+     * <p>
+     * Testers can say "si è chiuso" and no more, and the store only collects
+     * crashes from people who agreed to send them - so the ones who did not are
+     * invisible. Nothing leaves the phone unless this button is pressed, and
+     * what leaves is the version, the phone and the trace.
+     */
+    private void offerToReportACrash() {
+        String report = CrashCatcher.waiting(this);
+        if (report == null) {
+            return;
+        }
+        CrashCatcher.clear(this);
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.crash_title)
+                .setMessage(R.string.crash_message)
+                .setPositiveButton(R.string.crash_send, (d, w) -> {
+                    Intent send = new Intent(Intent.ACTION_SEND);
+                    send.setType("text/plain");
+                    send.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crash_subject));
+                    send.putExtra(Intent.EXTRA_TEXT, report);
+                    startActivity(Intent.createChooser(send, getString(R.string.crash_send)));
+                })
+                .setNegativeButton(R.string.crash_no, null)
+                .show();
     }
 
     @Override

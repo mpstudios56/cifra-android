@@ -1438,4 +1438,9 @@
     <string name="csv_map_duplicates_skipped">%1$d вже були і їх пропущено.</string>
     <string name="transaction_status_now">Тепер: %1$s</string>
     <string name="sharing_file_is">Цей телефон пише: %1$s</string>
+    <string name="crash_title">Cifra закрилася сама</string>
+    <string name="crash_message">Минулого разу Cifra закрилася сама. У звіті — версія, модель телефона й місце в програмі: жодних рахунків, сум чи імен.</string>
+    <string name="crash_send">Надіслати звіт</string>
+    <string name="crash_no">Ні, дякую</string>
+    <string name="crash_subject">Cifra — звіт про збій</string>
 </resources>

@@ -1466,4 +1466,9 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="csv_map_duplicates_skipped">%1$d c’erano già e sono stati lasciati fuori.</string>
   <string name="transaction_status_now">Ora è: %1$s</string>
   <string name="sharing_file_is">Questo telefono scrive: %1$s</string>
+  <string name="crash_title">Cifra si è chiusa da sola</string>
+  <string name="crash_message">L’ultima volta Cifra si è chiusa da sola. Mandare il motivo serve a farlo correggere: dentro ci sono la versione, il modello del telefono e il punto del programma in cui è successo — nessun conto, nessun importo, nessun nome.</string>
+  <string name="crash_send">Manda la segnalazione</string>
+  <string name="crash_no">No, grazie</string>
+  <string name="crash_subject">Cifra — segnalazione di chiusura</string>
 </resources>

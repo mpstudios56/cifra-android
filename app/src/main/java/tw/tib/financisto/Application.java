@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 
 import tw.tib.financisto.activity.PinActivity;
+import tw.tib.financisto.utils.CrashCatcher;
 import tw.tib.financisto.activity.PrivacyButton;
 
 public class Application extends MultiDexApplication {
@@ -40,6 +41,7 @@ public class Application extends MultiDexApplication {
         instance = this;
         executor = Executors.newCachedThreadPool();
         copiedUneditedTransactions = new Long2LongOpenHashMap();
+        CrashCatcher.install(this);
         putPrivacyButtonOnEveryScreen();
 
         if (BuildConfig.DEBUG) {
