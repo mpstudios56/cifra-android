@@ -17,71 +17,45 @@
 </style>
 <body>
 
-<h2>Cifra 1.8.1</h2>
+<h2>Cifra 1.9.0</h2>
 
 <ul>
-    <li><b>Sharing works now.</b> The part that sends the shared accounts,
-        categories, payees and places was written and never called: movements
-        went out, reached the other phone pointing at an account it had never
-        heard of, and were skipped in silence. The shared things now travel in
-        the same file, ahead of the movements that refer to them</li>
-    <li><b>And it runs by itself:</b> a round when you come back to the app,
-        every couple of minutes while it stays open, and straight after a
-        movement is saved. It used to run only from the button on the Sharing
-        screen. Nothing runs while the app is closed</li>
-    <li><b>The file in the shared folder</b> is now named after you -
-        <i>cifra-Marcello-531439ae.txt</i> - instead of a string of hex, and
-        the Sharing screen says which one it is, so you can check the cloud</li>
-    <li><b>Import and Delete old movements were blocked.</b> Both take a backup
-        before touching anything and stop if it fails - and it always failed
-        for anybody who had not picked a backup folder by hand, which is nearly
-        everybody. It works with the default folder now</li>
-    <li><b>Importing next month's statement</b> no longer brings the
-        overlapping days in twice: lines already in the account are left out
-        and the summary says how many. Two genuine payments of the same amount
-        on the same day still both come in</li>
-    <li><b>If the app closes on its own</b>, it asks on the next start whether
-        to send the reason: version, phone and the place in the code, no data
-        of yours, and only if you press the button</li>
-    <li><b>The import and export screens have been redrawn.</b> CSV and QIF
-        still looked like 2011: tiny labels, spinners drawn as underlined
-        lines, hairline dividers, and the export options crammed into a
-        three-column grid that cut entries off on a narrow screen. They now
-        have sections with a heading and a line of explanation, like the
-        settings</li>
-    <li><b>The row for choosing a file</b> is no longer a text box you cannot
-        type in with a small yellow folder beside it: it is one row you tap,
-        showing the file you picked</li>
-    <li><b>At the foot of every form</b> the button that saves is filled in
-        green and the one that cancels is an outline: they used to be two
-        identical grey rectangles, everywhere in the app</li>
-    <li><b>Importing from other apps.</b> These are read from end to end by an
-        automatic test, so they stay working through later changes:
-        <b>Bluecoins</b>, <b>My Expenses</b> and <b>Monefy</b>. The others work
-        too - the columns are assigned by hand and the assignment is
-        remembered - but these three are verified</li>
-    <li>In the CSV import the account you pick is now called the <b>default
-        account</b>, with a line saying what it actually does: it applies only
-        to rows that do not name an account of their own</li>
-    <li><b>Hide the figures.</b> One tap on the eye at the bottom right and
-        every amount in the app turns into dots: balances, movements, totals,
-        summary, reports and the widget. The red and green go too, or money in
-        and money out would still be plain. Another tap brings them back; an
-        app closed with the figures out opens with them out</li>
-    <li><b>The report charts have been redrawn:</b> a thick line with the area
-        under it filled, a barely-there grid, no frame, and the average reduced
-        to a hairline. After "10 years" the period of reference offers "From
-        the beginning", which starts at the earliest movement</li>
-    <li><b>The long-press menu</b> carries the same symbols as the grid a short
-        tap brings up, no longer scrolls, and moves up when the row is near the
-        bottom of the screen</li>
-    <li><b>The currency screen</b> has the dark bar the other screens have,
-        buttons with legible symbols, and rows with proper margins</li>
-    <li><b>The backup settings</b> (folder, automatic copy, Dropbox, Google
-        Drive) moved from the general settings into the Backup, restore and
-        security menu, beside the buttons that use them</li>
-    <li>Importing another CSV of the same shape arrives with the columns
-        already assigned as last time</li>
+    <li><b>Sharing works.</b> Nothing used to arrive: the part that sends
+        accounts, categories, payees and places was written and never called,
+        and rows were named too late, so movements went out without saying
+        which account they belonged to</li>
+    <li><b>You share with people, not with "the other phone".</b> Add one with
+        the <b>+</b>: a name, a colour and a <b>code</b> that goes on their
+        phone too, against your name. That code is the pair. There can be more
+        than one, and the accounts you share with Debora are not the ones you
+        share with Antonio</li>
+    <li><b>One question in the account:</b> who it is shared with</li>
+    <li><b>Told apart at a glance:</b> every person has a colour, and a shared
+        account carries a dot for each - one, four two by two, nine three by
+        three. In the summary as well</li>
+    <li><b>Switching sharing on</b> asks what of the past goes across: all of
+        it, today's balance as one opening line, or nothing</li>
+    <li><b>The exchange runs by itself:</b> on coming back to the app, every
+        couple of minutes while it is open, and after a movement is saved</li>
+    <li>The change log can be emptied, asked twice</li>
+</ul>
+
+<h3>The rest</h3>
+
+<ul>
+    <li>The CSV and QIF import and export screens have been redrawn, and the
+        button that saves is filled green while the one that cancels is an
+        outline</li>
+    <li>A fault blocked importing and deleting old movements for anybody who
+        had not picked a backup folder by hand</li>
+    <li>Importing next month's statement no longer brings the overlapping days
+        in twice</li>
+    <li>The calculator is in the app's colours with one memory instead of four,
+        and the amount wheels have been redrawn</li>
+    <li>Hide the figures: one tap and every amount turns into dots</li>
+    <li>Report charts, the currency screen, the long-press menu and the
+        category screens redrawn</li>
+    <li>If the app closes on its own it offers to send the reason</li>
 </ul>
 
 <p>With particular thanks to <b>Roberto Pandolfo</b> for the feedback and the
