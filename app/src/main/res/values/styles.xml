@@ -93,6 +93,10 @@
 	<style name="FormFieldLabel">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
+		<!-- two lines' worth whatever the label says, so boxes side by side
+		     start at the same height even when one name wraps -->
+		<item name="android:minLines">2</item>
+		<item name="android:gravity">bottom</item>
 		<item name="android:layout_marginTop">10dp</item>
 		<item name="android:layout_marginBottom">3dp</item>
 		<item name="android:alpha">0.55</item>
@@ -104,7 +108,8 @@
 		<item name="android:background">@drawable/form_field</item>
 		<item name="android:minHeight">46dp</item>
 		<item name="android:paddingStart">12dp</item>
-		<item name="android:paddingEnd">8dp</item>
+		<!-- room for the chevron drawn into the background -->
+		<item name="android:paddingEnd">36dp</item>
 	</style>
 	<style name="FormCheckBox">
 		<item name="android:layout_width">match_parent</item>

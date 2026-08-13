@@ -591,7 +591,7 @@
   <string name="remember_last_category_for_payee">Dernière catégorie</string>
   <string name="remember_last_category_for_payee_summary">Bénéficiaires: se souvenir de la dernière catégorie (ou compte si pas de bénéficiaire)</string>
   <string name="currency_symbol_format">Format de symbole</string>
-  <string name="use_header_from_file">Utilisez-tête du fichier</string>
+  <string name="use_header_from_file">La première ligne nomme les colonnes</string>
   <string name="info">Info</string>
   <string name="balance">Information</string>
   <string name="show_category_in_transfer">Catégorie de virement</string>

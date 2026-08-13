@@ -626,7 +626,7 @@
   <string name="remember_last_category_for_payee">Ultima categoria</string>
   <string name="remember_last_category_for_payee_summary">Ricorda ultima categoria per il beneficiario selezionato (o il conto se beneficiario disabilitato)</string>
   <string name="currency_symbol_format">Formato del simbolo</string>
-  <string name="use_header_from_file">Usa intestazione da file</string>
+  <string name="use_header_from_file">La prima riga è l’intestazione</string>
   <string name="info">Informazioni</string>
   <string name="balance">Bilancio</string>
   <string name="show_category_in_transfer">Categoria del trasferimento</string>

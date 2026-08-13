@@ -592,7 +592,7 @@
   <string name="remember_last_category_for_payee">Recordar Categoría</string>
   <string name="remember_last_category_for_payee_summary">Recordar la última categoría para el beneficiario elegido (o cuenta, si el beneficiario está desactivado)</string>
   <string name="currency_symbol_format">Formato de Símbolo</string>
-  <string name="use_header_from_file">Utilizar encabezado del archivo</string>
+  <string name="use_header_from_file">La primera línea son los encabezados</string>
   <string name="info">Información</string>
   <string name="balance">Balance</string>
   <string name="show_category_in_transfer">Categoría de transferencia</string>

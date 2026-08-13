@@ -592,7 +592,7 @@
   <string name="remember_last_category_for_payee">Letzte Kategorie</string>
   <string name="remember_last_category_for_payee_summary">Letzte Kategorie für gewählten Zahlungsempfänger merken (oder für Konto, falls Empfänger deaktiviert)</string>
   <string name="currency_symbol_format">Symbol-Format</string>
-  <string name="use_header_from_file">Header aus Datei verwenden</string>
+  <string name="use_header_from_file">Die erste Zeile benennt die Spalten</string>
   <string name="info">Info</string>
   <string name="balance">Saldo</string>
   <string name="show_category_in_transfer">Kategorie in Transfer</string>

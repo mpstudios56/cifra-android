@@ -852,7 +852,7 @@
     <string name="currency_symbol_format">Symbol format</string>
     <string name="currency_number_format">Number format</string>
 
-    <string name="use_header_from_file">Use header from file</string>
+    <string name="use_header_from_file">The first line names the columns</string>
 
     <string name="info">Info</string>
     <string name="balance">Balance</string>
