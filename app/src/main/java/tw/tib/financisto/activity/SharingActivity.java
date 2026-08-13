@@ -258,7 +258,7 @@ public class SharingActivity extends AppCompatActivity {
                     new android.widget.LinearLayout.LayoutParams(size, size);
             dotLp.rightMargin = pad / 2;
             dot.setLayoutParams(dotLp);
-            dot.setBackgroundResource(R.drawable.circle);
+            dot.setBackgroundResource(R.drawable.dot);
             dot.getBackground().setTint(person.colour == 0
                     ? Identity.COLOURS[(list.getChildCount() + 1) % Identity.COLOURS.length]
                     : person.colour);
@@ -380,7 +380,7 @@ public class SharingActivity extends AppCompatActivity {
                             Math.round(30 * getResources().getDisplayMetrics().density));
             lp.rightMargin = pad / 2;
             dot.setLayoutParams(lp);
-            dot.setBackgroundResource(R.drawable.circle);
+            dot.setBackgroundResource(R.drawable.dot);
             dot.getBackground().setTint(colour);
             dot.setAlpha(colour == chosenColour[0] ? 1f : 0.35f);
             dot.setOnClickListener(v -> {

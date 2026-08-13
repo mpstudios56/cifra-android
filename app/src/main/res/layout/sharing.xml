@@ -101,7 +101,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_marginEnd="12dp"
-                    android:background="@drawable/circle" />
+                    android:background="@drawable/dot" />
 
                 <ImageView
                     android:id="@+id/sharing_me_icon"
