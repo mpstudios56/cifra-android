@@ -141,6 +141,14 @@ public class SyncEngine {
                     o.put("title", c.getString(c.getColumnIndexOrThrow("title")));
                     o.put("subtitle", c.getString(c.getColumnIndexOrThrow("subtitle")));
                     String payload = c.getString(c.getColumnIndexOrThrow("payload"));
+                    // Written before movements were named on demand: no
+                    // identifier, so the far end can do nothing with it but
+                    // refuse it, round after round. Emptied here so it stops
+                    // travelling and stops being reported.
+                    if (!hasIdentifier(payload)) {
+                        forget(db, c.getString(c.getColumnIndexOrThrow("change_uuid")));
+                        continue;
+                    }
                     if (!SyncPayload.isFor(db, payload, person.mark)) {
                         continue;
                     }
@@ -176,6 +184,29 @@ public class SyncEngine {
             }
         }
         Log.i(TAG, "labels the shared accounts depend on: " + adopted);
+    }
+
+    /** Whether a written-out change carries the name of what it is about. */
+    private static boolean hasIdentifier(String payload) {
+        if (payload == null || payload.isEmpty()) {
+            return false;
+        }
+        try {
+            return !new JSONObject(payload).optString("uuid", "").isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /** Leaves the line in the record, with nothing left to send. */
+    private static void forget(SQLiteDatabase db, String changeUuid) {
+        try {
+            ContentValues v = new ContentValues();
+            v.put("payload", "");
+            db.update(ChangeLog.TABLE, v, "change_uuid=?", new String[]{changeUuid});
+        } catch (Exception e) {
+            Log.e(TAG, "could not clear " + changeUuid, e);
+        }
     }
 
     // --------------------------------------------------------------- taking in
