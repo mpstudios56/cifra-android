@@ -1487,4 +1487,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="account_shared_with">Geteilt mit</string>
   <string name="account_shared_with_all">Allen in der Gruppe</string>
   <string name="account_shared_with_nobody_yet">Im gemeinsamen Ordner ist noch niemand aufgetaucht. Nach einem Austausch kann hier gewählt werden.</string>
+  <string name="merge_summary">Zwei Bezeichnungen mit derselben Bedeutung zusammenführen</string>
 </resources>

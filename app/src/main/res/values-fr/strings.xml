@@ -1487,4 +1487,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="account_shared_with">Partagé avec</string>
   <string name="account_shared_with_all">Tout le groupe</string>
   <string name="account_shared_with_nobody_yet">Personne n’est encore apparu dans le dossier partagé. Après un échange, vous pourrez choisir ici.</string>
+  <string name="merge_summary">Réunir deux libellés qui veulent dire la même chose</string>
 </resources>

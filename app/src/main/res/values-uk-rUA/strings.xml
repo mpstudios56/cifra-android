@@ -1462,4 +1462,5 @@
     <string name="account_shared_with">Спільно з</string>
     <string name="account_shared_with_all">Усіма в групі</string>
     <string name="account_shared_with_nobody_yet">У спільній теці ще нікого не з’явилося. Після обміну тут можна буде вибрати людей.</string>
+    <string name="merge_summary">Об’єднати дві однакові за змістом позначки</string>
 </resources>

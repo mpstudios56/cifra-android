@@ -1589,4 +1589,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="account_shared_with">Held with</string>
     <string name="account_shared_with_all">Everybody in the group</string>
     <string name="account_shared_with_nobody_yet">Nobody has appeared in the shared folder yet. After one round of exchange the people in the group can be chosen here.</string>
+    <string name="merge_summary">Put two labels that mean the same thing back together</string>
 </resources>

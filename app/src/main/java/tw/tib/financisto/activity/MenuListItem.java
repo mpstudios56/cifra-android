@@ -101,6 +101,17 @@ public enum MenuListItem implements SummaryEntityEnum {
             fragment.startActivity(new Intent(fragment.getContext(), SharingActivity.class));
         }
     },
+    /**
+     * Reachable here as well as from the sharing screen: two labels meaning the
+     * same thing is not only something the exchange produces. Anybody who has
+     * typed "Coop" and "COOP" over three years has the same list to tidy.
+     */
+    MENU_MERGE(R.string.merge, R.string.merge_summary, R.drawable.ic_merge_duplicates) {
+        @Override
+        public void call(Fragment fragment) {
+            fragment.startActivity(new Intent(fragment.getContext(), MergeActivity.class));
+        }
+    },
     MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_action_trash) {
         @Override
         public void call(Fragment fragment) {

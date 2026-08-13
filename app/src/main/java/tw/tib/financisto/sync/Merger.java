@@ -140,10 +140,27 @@ public class Merger {
      * screen into a list nobody reads.
      */
     private static boolean alike(String a, String b) {
-        if (Math.abs(a.length() - b.length()) > 1 || a.length() < 4) {
+        if (a.length() < 4 || b.length() < 4) {
             return false;
         }
-        return distance(a, b) == 1;
+        // One letter out on a short name, two on a long one: "Farmacia" and
+        // "Farmacie" are worth asking about, and so are "Supermercato" and
+        // "Supermarcato", while three letters apart on eight is a different
+        // word.
+        int allowed = Math.max(a.length(), b.length()) >= 8 ? 2 : 1;
+        if (Math.abs(a.length() - b.length()) > allowed) {
+            return false;
+        }
+        if (distance(a, b) <= allowed) {
+            return true;
+        }
+        // And the case nobody thinks of: one name written inside the other,
+        // "Coop" against "Coop Centro", which no count of single letters ever
+        // catches.
+        String longer = a.length() >= b.length() ? a : b;
+        String shorter = a.length() >= b.length() ? b : a;
+        return shorter.length() >= 4
+                && (longer.startsWith(shorter + " ") || longer.endsWith(" " + shorter));
     }
 
     private static int distance(String a, String b) {

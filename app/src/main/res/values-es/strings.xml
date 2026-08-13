@@ -1487,4 +1487,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="account_shared_with">Compartida con</string>
   <string name="account_shared_with_all">Todas las personas del grupo</string>
   <string name="account_shared_with_nobody_yet">Todavía no ha aparecido nadie en la carpeta compartida. Tras un intercambio podrás elegir aquí.</string>
+  <string name="merge_summary">Unir dos etiquetas que significan lo mismo</string>
 </resources>
