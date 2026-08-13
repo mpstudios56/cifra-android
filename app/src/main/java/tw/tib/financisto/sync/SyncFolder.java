@@ -36,8 +36,13 @@ public class SyncFolder {
 
     private static final String TAG = "SyncFolder";
     /** Deliberately not the backup's name or place: they are different things. */
-    private static final String PREFIX = "cifra-sync-";
-    private static final String SUFFIX = ".log";
+    private static final String PREFIX = "cifra-";
+    /**
+     * Plain text, and named .txt rather than .log, because the first thing
+     * anybody does when the exchange looks stuck is open the cloud folder on a
+     * computer to see whether the file is even there. A .log opens in nothing.
+     */
+    private static final String SUFFIX = ".txt";
     private static final String MIME = "text/plain";
 
     private final Context context;
@@ -65,8 +70,46 @@ public class SyncFolder {
         }
     }
 
-    private String nameFor(String deviceId) {
-        return PREFIX + deviceId + SUFFIX;
+    /**
+     * The name each phone writes under: the name its owner gave themselves,
+     * so the folder reads "cifra-Marcello.txt" and "cifra-Debora.txt".
+     * <p>
+     * It used to be the device identifier - thirty-six characters of hex - which
+     * is unmistakable to a program and useless to the person looking at the
+     * folder wondering whether anything is arriving at all. The identifier is
+     * still inside every line, which is what the reading actually goes by.
+     */
+    public static String nameFor(String author, String deviceId) {
+        String name = tidy(author);
+        if (name.isEmpty()) {
+            // No name given yet: fall back to something unique rather than to
+            // "cifra-.txt", which both phones would then fight over.
+            name = deviceId.length() > 8 ? deviceId.substring(0, 8) : deviceId;
+        }
+        return PREFIX + name + SUFFIX;
+    }
+
+    /** A name a file system will accept, with the spaces and slashes taken out. */
+    private static String tidy(String author) {
+        if (author == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : author.trim().toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                sb.append(c);
+            } else if ((c == ' ' || c == '-' || c == '_') && sb.length() > 0
+                    && sb.charAt(sb.length() - 1) != '-') {
+                sb.append('-');
+            }
+            if (sb.length() >= 40) {
+                break;
+            }
+        }
+        while (sb.length() > 0 && sb.charAt(sb.length() - 1) == '-') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
     }
 
     /**
@@ -76,9 +119,10 @@ public class SyncFolder {
      * provider is not reliably supported, and rewriting a file of a few hundred
      * lines costs nothing - while a half-appended line costs an afternoon.
      */
-    public boolean write(String deviceId, List<String> lines) {
+    public boolean write(String author, String deviceId, List<String> lines) {
         try {
-            String name = nameFor(deviceId);
+            String name = nameFor(author, deviceId);
+            Log.i(TAG, "writing " + lines.size() + " lines to " + name);
             DocumentFile file = folder.findFile(name);
             if (file == null) {
                 file = folder.createFile(MIME, name);
@@ -105,17 +149,24 @@ public class SyncFolder {
         }
     }
 
-    /** Every line written by any phone but this one. */
-    public List<String> readOthers(String deviceId) {
+    /**
+     * Every line written by any phone but this one.
+     * <p>
+     * Anything in the folder that is not this phone's own file is read,
+     * whatever it is called - a name changed on the other phone must not stop
+     * the exchange, and old files from before the naming changed are still
+     * perfectly good text.
+     */
+    public List<String> readOthers(String author, String deviceId) {
         List<String> lines = new ArrayList<>();
-        String mine = nameFor(deviceId);
+        String mine = nameFor(author, deviceId);
         try {
             for (DocumentFile file : folder.listFiles()) {
                 String name = file.getName();
-                if (name == null || !name.startsWith(PREFIX) || !name.endsWith(SUFFIX)
-                        || name.equals(mine)) {
+                if (name == null || !name.startsWith(PREFIX) || name.equals(mine)) {
                     continue;
                 }
+                Log.i(TAG, "reading " + name);
                 read(file, lines);
             }
         } catch (Exception e) {
@@ -143,14 +194,13 @@ public class SyncFolder {
     }
 
     /** How many other phones have left a file here. */
-    public int otherPhones(String deviceId) {
+    public int otherPhones(String author, String deviceId) {
         int count = 0;
-        String mine = nameFor(deviceId);
+        String mine = nameFor(author, deviceId);
         try {
             for (DocumentFile file : folder.listFiles()) {
                 String name = file.getName();
-                if (name != null && name.startsWith(PREFIX) && name.endsWith(SUFFIX)
-                        && !name.equals(mine)) {
+                if (name != null && name.startsWith(PREFIX) && !name.equals(mine)) {
                     count++;
                 }
             }

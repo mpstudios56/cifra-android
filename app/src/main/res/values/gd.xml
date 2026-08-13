@@ -26,14 +26,21 @@
 
     <style name="GreenDroid.Widget.QuickAction.Item">
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">#FFF4EFE4</item>
     </style>
+    <!--
+      Room for two lines under the symbol. One line at 14sp cut every label
+      longer than a word in half - 'Segna contabilizz...' - which left the grid
+      readable only to somebody who already knew what was in it.
+    -->
     <style name="GreenDroid.Widget.QuickAction.Grid.Item" parent="@style/GreenDroid.Widget.QuickAction.Item">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_height">92dp</item>
     </style>
 
     <style name="GreenDroid.Animation" />

@@ -1462,4 +1462,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="csv_map_skip_duplicates_summary">Une ligne correspondant à une opération déjà présente sur ce compte, le même jour et pour le même montant, n’est pas importée de nouveau.</string>
   <string name="csv_map_duplicates_skipped">%1$d étaient déjà là et ont été laissées de côté.</string>
   <string name="transaction_status_now">Maintenant : %1$s</string>
+  <string name="sharing_file_is">Ce téléphone écrit : %1$s</string>
 </resources>

@@ -40,6 +40,7 @@ import tw.tib.financisto.dialog.WebViewDialog;
 import tw.tib.financisto.bus.GreenRobotBus_;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.DonatePrompt;
+import tw.tib.financisto.sync.AutoSync;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.service.QuickBar;
 import tw.tib.financisto.utils.PinProtection;
@@ -277,6 +278,11 @@ public class MainActivity extends AppCompatActivity {
             WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this);
             DonatePrompt.maybeAsk(this);
         }
+        // Sharing used to move only when somebody pressed the button on its own
+        // screen. Now a round happens on coming back to the app and every couple
+        // of minutes while it is open.
+        AutoSync.whenReturning(this);
+        AutoSync.keepGoing(this);
     }
 
     @Override
@@ -284,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         greenRobotBus.unregister(this);
         PinProtection.lock(this);
+        AutoSync.stop();
     }
 
     @Override

@@ -1462,4 +1462,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="csv_map_skip_duplicates_summary">Eine Zeile, die einer bereits vorhandenen Buchung desselben Kontos am selben Tag über denselben Betrag entspricht, wird nicht erneut importiert.</string>
   <string name="csv_map_duplicates_skipped">%1$d waren bereits vorhanden und wurden ausgelassen.</string>
   <string name="transaction_status_now">Jetzt: %1$s</string>
+  <string name="sharing_file_is">Dieses Telefon schreibt: %1$s</string>
 </resources>

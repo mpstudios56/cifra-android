@@ -1564,4 +1564,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="csv_map_skip_duplicates_summary">A line matching a movement already in that account, on the same day and for the same amount, is not imported again. Two genuine payments of the same amount on the same day both come in.</string>
     <string name="csv_map_duplicates_skipped">%1$d were already there and were left out.</string>
     <string name="transaction_status_now">Now: %1$s</string>
+    <string name="sharing_file_is">This phone writes: %1$s</string>
 </resources>

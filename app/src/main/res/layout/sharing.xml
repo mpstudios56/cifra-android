@@ -199,6 +199,22 @@
                 android:textColor="#FFFFFFFF"
                 android:textStyle="bold" />
 
+            <!--
+              What this phone writes under. The first thing anybody does when
+              the exchange looks stuck is open the folder on a computer, and
+              until this was here they had nothing to look for.
+            -->
+            <TextView
+                android:id="@+id/sharing_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.55"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
             <TextView
                 android:id="@+id/sharing_last"
                 android:layout_width="match_parent"

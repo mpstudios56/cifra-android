@@ -48,6 +48,7 @@ import tw.tib.financisto.recur.NotificationOptions;
 import tw.tib.financisto.recur.Recurrence;
 import tw.tib.financisto.utils.EnumUtils;
 import tw.tib.financisto.export.Export;
+import tw.tib.financisto.sync.AutoSync;
 import tw.tib.financisto.utils.MyPreferences;
 import tw.tib.financisto.utils.PicturesUtil;
 import tw.tib.financisto.utils.TransactionDraft;
@@ -477,6 +478,9 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 	private boolean saveAndFinish() {
 		long id = save();
 		if (id > 0) {
+			// Straight out to the other phone, rather than waiting for whoever
+			// wrote it down to go and press a button on another screen.
+			AutoSync.afterAChange(this);
 			Intent data = new Intent();
 			data.putExtra(TransactionColumns._id.name(), id);
 			setResult(RESULT_OK, data);

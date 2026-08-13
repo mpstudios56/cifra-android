@@ -203,8 +203,13 @@ public class SharingActivity extends AppCompatActivity {
                 ? getString(R.string.sharing_never)
                 : getString(R.string.sharing_last, android.text.format.DateFormat
                         .getTimeFormat(this).format(new java.util.Date(last))));
+        TextView file = findViewById(R.id.sharing_file);
+        file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
+                MyPreferences.getSyncAuthor(), MyPreferences.getSyncDeviceId())));
+
         findViewById(R.id.sharing_now).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+        file.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void show(Identity identity, int nameId, int dotId, int iconId, int emptyId) {

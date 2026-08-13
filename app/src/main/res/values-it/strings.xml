@@ -1465,4 +1465,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="csv_map_skip_duplicates_summary">Una riga che corrisponde a un movimento già presente in quel conto, stesso giorno e stesso importo, non viene importata di nuovo. Due pagamenti veri dello stesso importo nello stesso giorno entrano comunque tutti e due.</string>
   <string name="csv_map_duplicates_skipped">%1$d c’erano già e sono stati lasciati fuori.</string>
   <string name="transaction_status_now">Ora è: %1$s</string>
+  <string name="sharing_file_is">Questo telefono scrive: %1$s</string>
 </resources>

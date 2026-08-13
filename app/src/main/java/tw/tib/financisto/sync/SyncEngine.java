@@ -67,15 +67,20 @@ public class SyncEngine {
         }
 
         String me = MyPreferences.getSyncDeviceId();
+        String myName = MyPreferences.getSyncAuthor();
         SQLiteDatabase database = db.db();
 
         // Anything written before sharing existed still needs a name before it
         // can be spoken about.
         Uuids.fillBlanks(database);
 
-        result.received = takeIn(database, folder.readOthers(me), result);
-        result.sent = putOut(database, folder, me);
+        List<String> theirs = folder.readOthers(myName, me);
+        Log.i(TAG, "round: " + theirs.size() + " lines from the other phone");
+        result.received = takeIn(database, theirs, result);
+        result.sent = putOut(database, folder, me, myName);
         result.ran = true;
+        Log.i(TAG, "round done: " + result.received + " taken in, "
+                + result.sent + " written out, " + result.skipped.size() + " skipped");
 
         if (result.received > 0) {
             // The money moved, so the figures are made again. Once per round,
@@ -92,8 +97,16 @@ public class SyncEngine {
     // -------------------------------------------------------------- putting out
 
     /** Writes out every change made here that carries something to say. */
-    private static int putOut(SQLiteDatabase db, SyncFolder folder, String me) {
+    private static int putOut(SQLiteDatabase db, SyncFolder folder, String me, String myName) {
         List<String> lines = new ArrayList<>();
+        // The accounts, categories, payees and places being shared go out first,
+        // in the same file and ahead of the movements that refer to them. Without
+        // them the other phone receives a payment pointing at an account it has
+        // never heard of, and can do nothing but skip it - which is exactly what
+        // it did, silently, for as long as this was left unconnected.
+        List<String> things = SyncEntities.lines(db);
+        lines.addAll(things);
+        Log.i(TAG, "sending " + things.size() + " shared things");
         try (Cursor c = db.query(ChangeLog.TABLE, null, "device=? and payload<>''",
                 new String[]{me}, null, null, "made_on asc")) {
             while (c.moveToNext()) {
@@ -114,13 +127,40 @@ public class SyncEngine {
                 }
             }
         }
-        return folder.write(me, lines) ? lines.size() : 0;
+        boolean written = folder.write(myName, me, lines);
+        Log.i(TAG, "wrote " + lines.size() + " lines: " + (written ? "yes" : "FAILED"));
+        return written ? lines.size() : 0;
     }
 
     // --------------------------------------------------------------- taking in
 
     private static int takeIn(SQLiteDatabase db, List<String> lines, Result result) {
         int applied = 0;
+
+        // Two passes over the same file. The things a movement refers to have to
+        // be here before the movement is, and one file holds both.
+        int things = 0;
+        for (String line : lines) {
+            try {
+                JSONObject o = new JSONObject(line);
+                if (o.optString("thing", "").isEmpty()) {
+                    continue;
+                }
+                db.beginTransaction();
+                try {
+                    if (SyncEntities.take(db, o)) {
+                        things++;
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "could not take in a shared thing", e);
+            }
+        }
+        Log.i(TAG, "shared things created or renamed: " + things);
+
         for (String line : lines) {
             try {
                 JSONObject o = new JSONObject(line);

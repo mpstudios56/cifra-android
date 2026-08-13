@@ -1462,4 +1462,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="csv_map_skip_duplicates_summary">Una línea que coincide con un movimiento ya presente en esa cuenta, el mismo día y por el mismo importe, no se importa otra vez.</string>
   <string name="csv_map_duplicates_skipped">%1$d ya estaban y se han dejado fuera.</string>
   <string name="transaction_status_now">Ahora: %1$s</string>
+  <string name="sharing_file_is">Este teléfono escribe: %1$s</string>
 </resources>
