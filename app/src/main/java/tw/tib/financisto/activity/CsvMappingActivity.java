@@ -453,6 +453,8 @@ public class CsvMappingActivity extends AppCompatActivity {
                 this, null, getString(R.string.csv_map_backing_up), true);
         MappedCsvImportTask task = new MappedCsvImportTask(
                 this, progress, guess.mapping, fileUri, chosenFallbackAccount());
+        android.widget.CheckBox skip = findViewById(R.id.csv_map_skip_duplicates);
+        task.setSkipDuplicates(skip == null || skip.isChecked());
         task.setShowResultMessage(false);
         task.setListener(result -> {
             if (result instanceof MappedCsvImport.Result) {
@@ -466,6 +468,9 @@ public class CsvMappingActivity extends AppCompatActivity {
     private void report(MappedCsvImport.Result result) {
         StringBuilder text = new StringBuilder();
         text.append(getString(R.string.csv_map_imported, result.imported));
+        if (result.duplicates > 0) {
+            text.append('\n').append(getString(R.string.csv_map_duplicates_skipped, result.duplicates));
+        }
         if (result.skipped > 0) {
             text.append('\n').append(getString(R.string.csv_map_unreadable_lines, result.skipped));
         }

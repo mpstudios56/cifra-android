@@ -9,7 +9,7 @@
   <string name="projects">Progetti</string>
   <string name="ok">OK</string>
   <string name="reset">Reset</string>
-  <string name="clear">Azzera</string>
+  <string name="clear">Segna contabilizzato</string>
   <string name="save">Salva</string>
   <string name="cancel">Annulla</string>
   <string name="close">Chiudi</string>
@@ -495,9 +495,9 @@
   <string name="notification_led">Led</string>
   <string name="transaction_status">Stato</string>
   <string name="transaction_status_pending">In attesa</string>
-  <string name="transaction_status_unreconciled">Non risolto</string>
-  <string name="transaction_status_cleared">Pagato</string>
-  <string name="transaction_status_reconciled">Risolto</string>
+  <string name="transaction_status_unreconciled">Da verificare</string>
+  <string name="transaction_status_cleared">Contabilizzato</string>
+  <string name="transaction_status_reconciled">Riconciliato</string>
   <string name="scheduled">(programmato)</string>
   <string name="expired">(scaduto)</string>
   <string name="pending">(in attesa)</string>
@@ -643,7 +643,8 @@
   <string name="create_new_folder_fail">Impossibile creare la cartella</string>
   <string name="database_backup">Backup del database</string>
   <string name="database_backup_folder">Cartella backup</string>
-  <string name="database_backup_folder_summary">Cartella corrente di backup del database: %s</string>
+  <string name="database_backup_folder_summary">Adesso: %s
+Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o altri servizi: i backup ci finiscono dentro ed è quell’app a sincronizzarli. Drive e Dropbox hanno i pulsanti qui sotto perché Cifra li carica da sola.</string>
   <string name="backup_database_to">Invia il backup a...</string>
   <string name="backup_database_to_title">Invia il backup del database a...</string>
   <string name="license">Licenza</string>
@@ -727,7 +728,7 @@
   <string name="split_transfer_not_supported_yet">Suddivisioni con valuta differente da quella del conto non ancora supportate</string>
   <string name="show_currency">Mostra valuta</string>
   <string name="show_currency_summary">Mostra il selettore valuta nella creazione conto</string>
-  <string name="reconcile">Riconcilia</string>
+  <string name="reconcile">Segna riconciliato</string>
   <string-array name="attribute_types">
     <item>Testo</item>
     <item>Numero</item>
@@ -1460,4 +1461,8 @@
   <string name="csv_export_where">Dove finisce</string>
   <string name="csv_export_where_note">Il file viene comunque salvato sul telefono. Questi ne mandano anche una copia.</string>
   <string name="qif_export_accounts_note">Quali conti vengono esportati.</string>
+  <string name="csv_map_skip_duplicates">Lascia fuori quello che c’è già</string>
+  <string name="csv_map_skip_duplicates_summary">Una riga che corrisponde a un movimento già presente in quel conto, stesso giorno e stesso importo, non viene importata di nuovo. Due pagamenti veri dello stesso importo nello stesso giorno entrano comunque tutti e due.</string>
+  <string name="csv_map_duplicates_skipped">%1$d c’erano già e sono stati lasciati fuori.</string>
+  <string name="transaction_status_now">Ora è: %1$s</string>
 </resources>

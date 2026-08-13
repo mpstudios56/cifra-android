@@ -608,7 +608,8 @@
   <string name="create_new_folder_fail">Échec à créer le dossier</string>
   <string name="database_backup">Sauvegarde de la base de données</string>
   <string name="database_backup_folder">Dossier de sauvegarde</string>
-  <string name="database_backup_folder_summary">Actuel dossier de sauvegarde de bases de données: %s</string>
+  <string name="database_backup_folder_summary">Actuellement : %s
+N’importe quel dossier proposé par le sélecteur convient, y compris de OneDrive ou Nextcloud : les sauvegardes y sont écrites et cette application les synchronise. Drive et Dropbox ont leurs boutons ci-dessous car Cifra y dépose lui-même.</string>
   <string name="backup_database_to">Envoyer la sauvegarde de...</string>
   <string name="backup_database_to_title">Envoyer la sauvegarde de la base de données à...</string>
   <string name="license">Licence</string>
@@ -1457,4 +1458,8 @@
   <string name="csv_export_where">Où il va</string>
   <string name="csv_export_where_note">Le fichier est de toute façon enregistré sur le téléphone. Ceci en envoie une copie en plus.</string>
   <string name="qif_export_accounts_note">Quels comptes sont exportés.</string>
+  <string name="csv_map_skip_duplicates">Laisser de côté ce qui existe déjà</string>
+  <string name="csv_map_skip_duplicates_summary">Une ligne correspondant à une opération déjà présente sur ce compte, le même jour et pour le même montant, n’est pas importée de nouveau.</string>
+  <string name="csv_map_duplicates_skipped">%1$d étaient déjà là et ont été laissées de côté.</string>
+  <string name="transaction_status_now">Maintenant : %1$s</string>
 </resources>

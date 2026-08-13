@@ -609,7 +609,8 @@
   <string name="create_new_folder_fail">No se pudo crear la carpeta</string>
   <string name="database_backup">Backup de base de datos</string>
   <string name="database_backup_folder">Carpeta de backup</string>
-  <string name="database_backup_folder_summary">Carpeta de backup de base de datos actual: %s</string>
+  <string name="database_backup_folder_summary">Ahora: %s
+Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDrive o Nextcloud: las copias se escriben ahí y esa app las sincroniza. Drive y Dropbox tienen sus botones abajo porque Cifra sube a ellos por su cuenta.</string>
   <string name="backup_database_to">Enviar backup a...</string>
   <string name="backup_database_to_title">Enviar backup de base de datos a...</string>
   <string name="license">Licencia</string>
@@ -1457,4 +1458,8 @@
   <string name="csv_export_where">Dónde va</string>
   <string name="csv_export_where_note">El archivo se guarda igualmente en el teléfono. Esto envía además una copia.</string>
   <string name="qif_export_accounts_note">Qué cuentas se exportan.</string>
+  <string name="csv_map_skip_duplicates">Dejar fuera lo que ya está</string>
+  <string name="csv_map_skip_duplicates_summary">Una línea que coincide con un movimiento ya presente en esa cuenta, el mismo día y por el mismo importe, no se importa otra vez.</string>
+  <string name="csv_map_duplicates_skipped">%1$d ya estaban y se han dejado fuera.</string>
+  <string name="transaction_status_now">Ahora: %1$s</string>
 </resources>

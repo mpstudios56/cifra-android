@@ -33,6 +33,7 @@ public class MappedCsvImportTask extends ImportExportAsyncTask {
     private final CsvColumnMapping mapping;
     private final Uri uri;
     private final String fallbackAccount;
+    private boolean skipDuplicates = true;
 
     public MappedCsvImportTask(Activity activity, ProgressDialog dialog,
                                CsvColumnMapping mapping, Uri uri, String fallbackAccount) {
@@ -40,6 +41,11 @@ public class MappedCsvImportTask extends ImportExportAsyncTask {
         this.mapping = mapping;
         this.uri = uri;
         this.fallbackAccount = fallbackAccount;
+    }
+
+    /** Whether lines already in the account are left out. */
+    public void setSkipDuplicates(boolean skipDuplicates) {
+        this.skipDuplicates = skipDuplicates;
     }
 
     @Override
@@ -54,6 +60,7 @@ public class MappedCsvImportTask extends ImportExportAsyncTask {
 
         publishProgress(context.getString(R.string.csv_map_importing));
         MappedCsvImport importer = new MappedCsvImport(context, db, mapping, uri, fallbackAccount);
+        importer.setSkipDuplicates(skipDuplicates);
         importer.setProgressListener(percentage ->
                 publishProgress(context.getString(R.string.csv_map_importing_progress, percentage)));
         return importer.doImport();

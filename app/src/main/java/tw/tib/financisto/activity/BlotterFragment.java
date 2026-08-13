@@ -700,11 +700,27 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     private void clearTransaction(long selectedId) {
         new BlotterOperations(getContext(), this, db, selectedId).clearTransaction();
         recreateCursor();
+        saidSo(R.string.transaction_status_cleared);
     }
 
     private void reconcileTransaction(long selectedId) {
         new BlotterOperations(getContext(), this, db, selectedId).reconcileTransaction();
         recreateCursor();
+        saidSo(R.string.transaction_status_reconciled);
+    }
+
+    /**
+     * Says out loud what the state has become.
+     * <p>
+     * The state is otherwise shown by the colour of a strip eight pixels wide at
+     * the left edge of the row, and two of the five states are two shades of the
+     * same green. Somebody who taps the command and looks at the row cannot tell
+     * whether anything happened at all.
+     */
+    private void saidSo(int statusId) {
+        Toast.makeText(getContext(),
+                getString(R.string.transaction_status_now, getString(statusId)),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -871,7 +871,8 @@
 
     <string name="database_backup">Database Backup</string>
     <string name="database_backup_folder">Backup Folder</string>
-    <string name="database_backup_folder_summary">Current database backup folder: %s</string>
+    <string name="database_backup_folder_summary">Now: %s
+Any folder the system picker offers works, including one belonging to OneDrive, Nextcloud or another service - the backups are written there and that app syncs them. Drive and Dropbox have their own buttons below because Cifra uploads to those itself.</string>
 
     <string name="backup_database_to">Send Backup To…</string>
     <string name="backup_database_to_title">Send Database Backup to…</string>
@@ -1559,4 +1560,8 @@
     <string name="csv_export_where">Where it goes</string>
     <string name="csv_export_where_note">The file is saved on the phone in any case. These send a copy on as well.</string>
     <string name="qif_export_accounts_note">Which accounts are written out.</string>
+    <string name="csv_map_skip_duplicates">Leave out what is already there</string>
+    <string name="csv_map_skip_duplicates_summary">A line matching a movement already in that account, on the same day and for the same amount, is not imported again. Two genuine payments of the same amount on the same day both come in.</string>
+    <string name="csv_map_duplicates_skipped">%1$d were already there and were left out.</string>
+    <string name="transaction_status_now">Now: %1$s</string>
 </resources>

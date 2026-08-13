@@ -1433,4 +1433,8 @@
     <string name="csv_export_where">Куди він потрапляє</string>
     <string name="csv_export_where_note">Файл у будь-якому разі зберігається на телефоні. Це надсилає ще й копію.</string>
     <string name="qif_export_accounts_note">Які рахунки експортуються.</string>
+    <string name="csv_map_skip_duplicates">Пропускати те, що вже є</string>
+    <string name="csv_map_skip_duplicates_summary">Рядок, що збігається з операцією на тому ж рахунку в той самий день і на ту саму суму, не імпортується вдруге.</string>
+    <string name="csv_map_duplicates_skipped">%1$d вже були і їх пропущено.</string>
+    <string name="transaction_status_now">Тепер: %1$s</string>
 </resources>

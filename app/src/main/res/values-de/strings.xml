@@ -609,7 +609,8 @@
   <string name="create_new_folder_fail">Erstellen des Ordners fehlgeschlagen</string>
   <string name="database_backup">Datenbanksicherung</string>
   <string name="database_backup_folder">Ordner für Sicherung</string>
-  <string name="database_backup_folder_summary">Aktueller Ordner für Datenbanksicherung: %s</string>
+  <string name="database_backup_folder_summary">Jetzt: %s
+Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Nextcloud - die Sicherungen landen dort und jene App synchronisiert sie. Drive und Dropbox haben unten eigene Schaltflächen, weil Cifra dorthin selbst hochlädt.</string>
   <string name="backup_database_to">Sicherung senden zu ...</string>
   <string name="backup_database_to_title">Sende Datenbanksicherung an...</string>
   <string name="license">Lizenz</string>
@@ -1457,4 +1458,8 @@
   <string name="csv_export_where">Wohin sie geht</string>
   <string name="csv_export_where_note">Die Datei wird ohnehin auf dem Telefon gespeichert. Dies sendet zusätzlich eine Kopie.</string>
   <string name="qif_export_accounts_note">Welche Konten ausgegeben werden.</string>
+  <string name="csv_map_skip_duplicates">Vorhandenes auslassen</string>
+  <string name="csv_map_skip_duplicates_summary">Eine Zeile, die einer bereits vorhandenen Buchung desselben Kontos am selben Tag über denselben Betrag entspricht, wird nicht erneut importiert.</string>
+  <string name="csv_map_duplicates_skipped">%1$d waren bereits vorhanden und wurden ausgelassen.</string>
+  <string name="transaction_status_now">Jetzt: %1$s</string>
 </resources>

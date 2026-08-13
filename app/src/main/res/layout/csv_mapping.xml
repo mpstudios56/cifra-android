@@ -127,6 +127,23 @@
                     android:text="@string/csv_map_preview_summary"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
+                <CheckBox
+                    android:id="@+id/csv_map_skip_duplicates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:checked="true"
+                    android:minHeight="44dp"
+                    android:text="@string/csv_map_skip_duplicates" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="34dp"
+                    android:alpha="0.55"
+                    android:text="@string/csv_map_skip_duplicates_summary"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
                 <TextView
                     android:id="@+id/csv_map_preview"
                     android:layout_width="match_parent"

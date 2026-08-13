@@ -56,6 +56,8 @@ public class MappedCsvImport {
         public int imported;
         /** Lines with no readable date or amount. Reported, never guessed at. */
         public int skipped;
+        /** Lines left out because that movement was already in the account. */
+        public int duplicates;
         public int accountsCreated;
         public int categoriesCreated;
         public int payeesCreated;
@@ -74,6 +76,14 @@ public class MappedCsvImport {
      */
     private final String fallbackAccount;
 
+    /**
+     * Whether to leave out lines that are already in the account.
+     * <p>
+     * On by default: the ordinary way of using this is a bank statement a month,
+     * and consecutive statements overlap by a few days.
+     */
+    private boolean skipDuplicates = true;
+
     private ProgressListener progressListener;
 
     public MappedCsvImport(Context context, DatabaseAdapter db, CsvColumnMapping mapping,
@@ -83,6 +93,10 @@ public class MappedCsvImport {
         this.mapping = mapping;
         this.uri = uri;
         this.fallbackAccount = fallbackAccount == null ? null : fallbackAccount.trim();
+    }
+
+    public void setSkipDuplicates(boolean skipDuplicates) {
+        this.skipDuplicates = skipDuplicates;
     }
 
     public void setProgressListener(ProgressListener progressListener) {
@@ -253,11 +267,23 @@ public class MappedCsvImport {
         SQLiteDatabase database = db.db();
         database.beginTransaction();
         try {
+            Map<String, Integer> already = skipDuplicates
+                    ? whatIsAlreadyThere(rows, accounts) : new java.util.HashMap<>();
             int count = 0;
             for (CsvRow row : rows) {
                 Transaction t = build(row, accounts, categories, payees);
                 if (t == null) {
                     result.skipped++;
+                    continue;
+                }
+                String key = key(t.fromAccountId, t.dateTime, t.fromAmount);
+                Integer seen = already.get(key);
+                if (seen != null && seen > 0) {
+                    // One of the copies already in the account is accounted for by
+                    // this line. Counting rather than matching is what lets two
+                    // genuine coffees on the same day at the same price both in.
+                    already.put(key, seen - 1);
+                    result.duplicates++;
                     continue;
                 }
                 db.insertOrUpdateInTransaction(t, noAttributes);
@@ -270,6 +296,69 @@ public class MappedCsvImport {
         } finally {
             database.endTransaction();
         }
+    }
+
+    /**
+     * How many movements the accounts in this file already hold, by day and
+     * amount, over the days the file covers.
+     * <p>
+     * The day and not the minute: a statement re-exported a week later can carry
+     * a different time of day for the same payment, or no time at all, and a
+     * comparison to the second would let every one of them in a second time.
+     */
+    private Map<String, Integer> whatIsAlreadyThere(List<CsvRow> rows, Map<String, Account> accounts) {
+        Set<Long> accountIds = new HashSet<>();
+        for (Account a : accounts.values()) {
+            accountIds.add(a.id);
+        }
+        long from = Long.MAX_VALUE, to = Long.MIN_VALUE;
+        for (CsvRow row : rows) {
+            if (row.date == null) continue;
+            from = Math.min(from, row.date.getTime());
+            to = Math.max(to, row.date.getTime());
+        }
+        Map<String, Integer> already = new java.util.HashMap<>();
+        if (accountIds.isEmpty() || from > to) {
+            return already;
+        }
+        StringBuilder ids = new StringBuilder();
+        for (Long id : accountIds) {
+            if (ids.length() > 0) ids.append(',');
+            ids.append(id);
+        }
+        String where = "from_account_id in (" + ids + ")"
+                + " and datetime between ? and ?"
+                + " and is_template = 0";
+        try (android.database.Cursor c = db.db().query("transactions",
+                new String[]{"from_account_id", "datetime", "from_amount"},
+                where,
+                new String[]{String.valueOf(startOfDay(from)), String.valueOf(endOfDay(to))},
+                null, null, null)) {
+            while (c.moveToNext()) {
+                String key = key(c.getLong(0), c.getLong(1), c.getLong(2));
+                Integer n = already.get(key);
+                already.put(key, n == null ? 1 : n + 1);
+            }
+        }
+        return already;
+    }
+
+    private static String key(long accountId, long dateTime, long amount) {
+        return accountId + "|" + startOfDay(dateTime) + "|" + amount;
+    }
+
+    private static long startOfDay(long time) {
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        c.setTimeInMillis(time);
+        c.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        c.set(java.util.Calendar.MINUTE, 0);
+        c.set(java.util.Calendar.SECOND, 0);
+        c.set(java.util.Calendar.MILLISECOND, 0);
+        return c.getTimeInMillis();
+    }
+
+    private static long endOfDay(long time) {
+        return startOfDay(time) + 24L * 60 * 60 * 1000 - 1;
     }
 
     private Transaction build(CsvRow row, Map<String, Account> accounts,
