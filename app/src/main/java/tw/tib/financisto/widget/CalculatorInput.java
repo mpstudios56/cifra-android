@@ -54,7 +54,7 @@ public class CalculatorInput extends DialogFragment {
             R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.bAdd,
             R.id.bSubtract, R.id.bDivide, R.id.bMultiply, R.id.bPercent,
             R.id.bPlusMinus, R.id.bDot, R.id.bResult, R.id.bClear, R.id.bDelete,
-            R.id.bSTO, R.id.bX, R.id.bY, R.id.bZ, R.id.bT})
+            R.id.bSTO, R.id.bX})
     protected List<Button> buttons;
 
     @SystemService
@@ -103,7 +103,7 @@ public class CalculatorInput extends DialogFragment {
             R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.bAdd,
             R.id.bSubtract, R.id.bDivide, R.id.bMultiply, R.id.bPercent,
             R.id.bPlusMinus, R.id.bDot, R.id.bResult, R.id.bClear, R.id.bDelete,
-            R.id.bSTO, R.id.bX, R.id.bY, R.id.bZ, R.id.bT})
+            R.id.bSTO, R.id.bX})
     public void onButtonClick(View v) {
         Button b = (Button) v;
         char c = b.getText().charAt(0);
@@ -144,10 +144,7 @@ public class CalculatorInput extends DialogFragment {
                 doBackspace();
                 break;
             case 'S':
-            case 'X':
-            case 'Y':
-            case 'Z':
-            case 'T':
+            case 'M':
                 doMemories(c);
                 break;
             default:
@@ -176,15 +173,23 @@ public class CalculatorInput extends DialogFragment {
         setDisplay(newDisplay);
     }
 
+    /**
+     * The one memory: STO puts the figure on the display into it, M takes it
+     * back out.
+     * <p>
+     * There were four - X, Y, Z and T, the registers of a scientific
+     * calculator from the seventies - taking a whole row of the keypad for
+     * something nobody keeping accounts has ever needed twice at once.
+     */
     private void doMemories(char c) {
         if (c == 'S') {
-                isInStore = !isInStore;
+            isInStore = !isInStore;
         } else {
             if (isInStore) {
-                prefs.edit().putString("M" + c, result).apply();
+                prefs.edit().putString("M", result).apply();
                 isInStore = false;
             } else {
-                setDisplay(prefs.getString("M" + c, "0"));
+                setDisplay(prefs.getString("M", "0"));
             }
         }
 
