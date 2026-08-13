@@ -76,6 +76,8 @@ public class AccountActivity extends AbstractActivity {
 	private TextView sharedWith;
 	/** Empty means everybody in the group. */
 	private final java.util.List<String> sharedWithMarks = new java.util.ArrayList<>();
+	/** Who it was held with when the screen opened, to see who is new on saving. */
+	private final java.util.List<String> sharedWithBefore = new java.util.ArrayList<>();
 	private EditText accentColor;
 
 	private List<Currency> currencies;
@@ -334,7 +336,17 @@ public class AccountActivity extends AbstractActivity {
 			// answer is given. It used to be asked and closed in the same
 			// breath, so the question was on screen for as long as it took the
 			// screen to go away.
-			if (nowShared && !wasShared) {
+			// Asked whenever somebody new is added, not only the first time the
+			// account is shared: a person added to an account already held with
+			// others would otherwise receive nothing of what came before them.
+			boolean somebodyNew = false;
+			for (String mark : sharedWithMarks) {
+				if (!sharedWithBefore.contains(mark)) {
+					somebodyNew = true;
+					break;
+				}
+			}
+			if (somebodyNew) {
 				askWhatToShareOfThePast(accountId, accountUuid, account.title);
 			} else {
 				finish();
@@ -785,6 +797,8 @@ public class AccountActivity extends AbstractActivity {
 				tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, account.id);
 		sharedWithMarks.clear();
 		sharedWithMarks.addAll(tw.tib.financisto.sync.SharedWith.of(db.db(), uuid));
+		sharedWithBefore.clear();
+		sharedWithBefore.addAll(sharedWithMarks);
 		showWhoWith(tw.tib.financisto.sync.People.all(db.db()));
 		if (account.limitAmount != 0) {
 			limitInput.setAmount(-Math.abs(account.limitAmount));
