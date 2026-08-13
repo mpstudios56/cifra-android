@@ -202,8 +202,8 @@
     <string name="decimal_separator">Десятковий\nроздільник</string>
     <string name="group_separator">Роздільник\nгруп</string>
     <string name="field_separator">Роздільник\nполів</string>
-    <string name="include_header">Включати\nзаголовок</string>
-    <string name="include_tx_status">Включити\nTx статус</string>
+    <string name="include_header">Включати заголовок</string>
+    <string name="include_tx_status">Включити Tx статус</string>
     <string name="delete_account_confirm">Видалити рахунок?</string>
     <string name="delete_transaction_confirm">Видалити цю операцію?</string>
     <string name="delete_goes_to_trash">Вона потрапляє у кошик, звідки її можна відновити.</string>
@@ -835,8 +835,8 @@
     <string name="home_currency_total">Всього в домашній валюті</string>
     <string name="total_rate">Курс: %0.5f</string>
     <string name="home_currency">Домашня валюта</string>
-    <string name="upload_to_dropbox">Вивантажити до\nDropbox</string>
-    <string name="upload_to_gdrive">Вивантажити до\nGoogle Drive</string>
+    <string name="upload_to_dropbox">Вивантажити до Dropbox</string>
+    <string name="upload_to_gdrive">Вивантажити до Google Drive</string>
     <string name="not_available">Н/Д</string>
     <string name="rate_not_available_on_date_error" formatted="false">Немає обмінного курсу на %s, щоб обчислити суму від %s до %s</string>
     <string name="rate_not_available_error" formatted="false">Немає обмінного курсу від %s до %s</string>

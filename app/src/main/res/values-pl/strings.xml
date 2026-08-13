@@ -171,7 +171,7 @@
   <string name="decimal_separator">Separator\ndziesiętnych</string>
   <string name="group_separator">Separator\ngrupy</string>
   <string name="field_separator">Separator\npola</string>
-  <string name="include_header">Uwzględniaj\nnagłówek</string>
+  <string name="include_header">Uwzględniaj nagłówek</string>
   <string name="delete_account_confirm">Usunąć rachunek?</string>
   <string name="delete_transaction_confirm">Usunąć transakcję?</string>
   <string name="delete_budget_confirm">Usunąć budżet?</string>
@@ -645,7 +645,7 @@
   <string name="home_currency_total">Total in home currency</string>
   <string name="total_rate">Rate: %0.5f</string>
   <string name="home_currency">Home currency</string>
-  <string name="upload_to_dropbox">Upload to\nDropbox</string>
+  <string name="upload_to_dropbox">Upload to Dropbox</string>
   <string name="not_available">N/A</string>
   <string name="rate_not_available_on_date_error" formatted="false">No exchange rate specified on %s to calculate between %s and %s</string>
   <string name="rate_not_available_error" formatted="false">No exchange rate specified between %s and %s</string>

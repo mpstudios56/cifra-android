@@ -219,8 +219,8 @@
     <string name="decimal_separator">Decimal\nseparator</string>
     <string name="group_separator">Group\nseparator</string>
     <string name="field_separator">Field\nseparator</string>
-    <string name="include_header">Include\nheader</string>
-    <string name="include_tx_status">Include\nTx Status</string>
+    <string name="include_header">Include the header line</string>
+    <string name="include_tx_status">Include the transaction status</string>
     <string name="delete_account_confirm">Delete account?</string>
     <string name="delete_transaction_confirm">Delete this transaction?</string>
     <string name="delete_goes_to_trash">It is moved to the bin, from where it can be restored.</string>
@@ -938,8 +938,8 @@
     <string name="home_currency_total">Total in home currency</string>
     <string name="total_rate">Rate: %0.5f</string>
     <string name="home_currency">Home currency</string>
-    <string name="upload_to_dropbox">Upload to\nDropbox</string>
-    <string name="upload_to_gdrive">Upload to\nGoogle Drive</string>
+    <string name="upload_to_dropbox">Upload to Dropbox</string>
+    <string name="upload_to_gdrive">Upload to Google Drive</string>
     <string name="not_available">N/A</string>
     <string name="rate_not_available_on_date_error" formatted="false">No exchange rate specified on %s to calculate between %s and %s</string>
     <string name="rate_not_available_error" formatted="false">No exchange rate specified between %s and %s</string>

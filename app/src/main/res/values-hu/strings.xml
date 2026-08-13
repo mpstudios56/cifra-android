@@ -172,7 +172,7 @@
   <string name="decimal_separator">Tizedesjegy\nelválasztó</string>
   <string name="group_separator">Csoport\nelválasztó</string>
   <string name="field_separator">Mező\nelválasztó</string>
-  <string name="include_header">Fejléc\nbelefoglalása</string>
+  <string name="include_header">Fejléc belefoglalása</string>
   <string name="delete_account_confirm">Törli a számlát?</string>
   <string name="delete_transaction_confirm">Törli a tranzakciót?</string>
   <string name="delete_budget_confirm">Törli a költségvetést?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">Összesen a saját pénznemben</string>
   <string name="total_rate">Árfolyam: %0.5f</string>
   <string name="home_currency">Saját pénznem</string>
-  <string name="upload_to_dropbox">Feltöltés\nDropboxra</string>
+  <string name="upload_to_dropbox">Feltöltés Dropboxra</string>
   <string name="not_available">-</string>
   <string name="rate_not_available_on_date_error" formatted="false">Nincs megadva %s-(je)i átváltási árfolyam a(z) %s és %s között</string>
   <string name="rate_not_available_error" formatted="false">Nincs megadva átváltási árfolyam a(z) %s és %s között</string>

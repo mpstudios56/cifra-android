@@ -172,7 +172,7 @@
   <string name="decimal_separator">Separador\nde decimal</string>
   <string name="group_separator">Separador\nde grupo</string>
   <string name="field_separator">Campo\nseparador</string>
-  <string name="include_header">Incluir\ncabeçalho</string>
+  <string name="include_header">Incluir cabeçalho</string>
   <string name="delete_account_confirm">Apagar conta?</string>
   <string name="delete_transaction_confirm">Apagar transação?</string>
   <string name="delete_budget_confirm">Apagar orçamento?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">Total na moeda base</string>
   <string name="total_rate">Taxa: %0.5f</string>
   <string name="home_currency">Moeda base</string>
-  <string name="upload_to_dropbox">Carregar para o\nDropbox</string>
+  <string name="upload_to_dropbox">Carregar para o Dropbox</string>
   <string name="not_available">N/D</string>
   <string name="rate_not_available_on_date_error" formatted="false">Nenhuma taxa de câmbio especificada em %s para calcular entre %s e %s</string>
   <string name="rate_not_available_error" formatted="false">Nenhuma taxa de câmbio especificada entre %s e %s</string>

@@ -172,7 +172,7 @@
   <string name="decimal_separator">Separador\ndecimal</string>
   <string name="group_separator">Separador\nmillares</string>
   <string name="field_separator">Separador\nde campo</string>
-  <string name="include_header">Incluir\ncabecera</string>
+  <string name="include_header">Incluir cabecera</string>
   <string name="delete_account_confirm">¿Eliminar la cuenta?</string>
   <string name="delete_transaction_confirm">¿Borrar este movimiento?</string>
   <string name="delete_goes_to_trash">Se mueve a la papelera, desde donde se puede restaurar.</string>
@@ -650,7 +650,7 @@
   <string name="home_currency_total">Total in home currency</string>
   <string name="total_rate">Rate: %0.5f</string>
   <string name="home_currency">Home currency</string>
-  <string name="upload_to_dropbox">Upload to\nDropbox</string>
+  <string name="upload_to_dropbox">Upload to Dropbox</string>
   <string name="not_available">N/A</string>
   <string name="rate_not_available_on_date_error" formatted="false">No exchange rate specified on %s to calculate between %s and %s</string>
   <string name="rate_not_available_error" formatted="false">No exchange rate specified between %s and %s</string>
@@ -1048,7 +1048,7 @@
   <string name="import_settings_success">Se han aplicado %1$d ajustes.</string>
   <string name="import_settings_summary">Aplica los ajustes de la aplicación desde un archivo exportado antes</string>
   <string name="import_wrong_currency_2">Divisa incorrecta en el archivo: <xliff:g id="currency">%1$s</xliff:g> (debe coincidir con la de la cuenta, que es <xliff:g id="currency">%2$s</xliff:g>)</string>
-  <string name="include_tx_status">Incluir\nel estado</string>
+  <string name="include_tx_status">Incluir el estado</string>
   <string name="installed_on_sd_card_warning">Las transacciones programadas pueden no funcionar si la aplicación está instalada en la tarjeta SD. Muévela a la memoria del dispositivo.</string>
   <string name="integrity_error_message">%s%n(Toca para cerrar este mensaje)</string>
   <string name="integrity_fix_summary">Reconstruye los saldos de las cuentas y los totales acumulados a partir de los propios movimientos. Úsalo cuando un saldo no coincide con la suma de sus apuntes, algo habitual tras una restauración o una importación. No borra ni modifica ningún movimiento.</string>
@@ -1169,7 +1169,7 @@
   <string name="ui_theme">Tema</string>
   <string name="ui_theme_summary">Define el tema de la interfaz (requiere reiniciar)</string>
   <string name="update_exchange_rate">Incluir en la actualización de cambios</string>
-  <string name="upload_to_gdrive">Subir a\nGoogle Drive</string>
+  <string name="upload_to_gdrive">Subir a Google Drive</string>
   <string name="use_exchange_rate_service_with_historical">Elige un servicio de cambios que ofrezca también históricos, como OpenExchangeRates.org</string>
   <string name="use_pin">Usar el código</string>
   <string name="bank_bbva">BBVA</string>

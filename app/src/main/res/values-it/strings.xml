@@ -172,7 +172,7 @@
   <string name="decimal_separator">Separatore\ndecimali</string>
   <string name="group_separator">Separatore\ngruppo</string>
   <string name="field_separator">Separatore\ncampo</string>
-  <string name="include_header">Includi\nheader</string>
+  <string name="include_header">Includi l’intestazione</string>
   <string name="delete_account_confirm">Eliminare conto?</string>
   <string name="delete_transaction_confirm">Eliminare questo movimento?</string>
   <string name="delete_goes_to_trash">Viene spostato nel cestino, da cui può essere ripristinato.</string>
@@ -684,7 +684,7 @@
   <string name="home_currency_total">Totale nella valuta principale</string>
   <string name="total_rate">Tasso: %0.5f</string>
   <string name="home_currency">Valuta principale</string>
-  <string name="upload_to_dropbox">Carica su\nDropbox</string>
+  <string name="upload_to_dropbox">Carica su Dropbox</string>
   <string name="not_available">Non disponibile</string>
   <string name="rate_not_available_on_date_error" formatted="false">Nessuna rata di cambio su %s per calcolare tra %s e %s</string>
   <string name="rate_not_available_error" formatted="false">Nessuna rata di cambio specificata tra %s and %s</string>
@@ -1054,7 +1054,7 @@
   <string name="import_export_summary">Importazione ed esportazione in CSV e QIF</string>
   <string name="import_file_not_found_2">File da importare non trovato. Prova senza il prefisso\n\'<xliff:g id="path">%1$s</xliff:g>\'</string>
   <string name="import_wrong_currency_2">Valuta errata nel file da importare: <xliff:g id="currency">%1$s</xliff:g> (deve coincidere con la valuta del conto, che è <xliff:g id="currency">%2$s</xliff:g>)</string>
-  <string name="include_tx_status">Includi\nlo stato</string>
+  <string name="include_tx_status">Includi lo stato del movimento</string>
   <string name="installed_on_sd_card_warning">Le transazioni programmate potrebbero non funzionare se l\'app è installata sulla scheda SD. Spostala nella memoria del telefono.</string>
   <string name="integrity_error_message">%s%n(Tocca per chiudere questo messaggio)</string>
   <string name="integrity_fix_summary">Ricalcola saldi e totali dai movimenti. Nessun movimento viene modificato</string>
@@ -1172,7 +1172,7 @@
   <string name="ui_theme">Tema</string>
   <string name="ui_theme_summary">Imposta il tema dell\'interfaccia (richiede il riavvio)</string>
   <string name="update_exchange_rate">Includi nell\'aggiornamento dei cambi</string>
-  <string name="upload_to_gdrive">Carica su\nGoogle Drive</string>
+  <string name="upload_to_gdrive">Carica su Google Drive</string>
   <string name="use_exchange_rate_service_with_historical">Scegli un servizio di cambi che fornisca anche gli storici, come OpenExchangeRates.org</string>
   <string name="use_pin">Usa il codice</string>
   <string name="bank_bbva">BBVA</string>

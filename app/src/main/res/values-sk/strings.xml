@@ -172,7 +172,7 @@
   <string name="decimal_separator">Oddeľovač\ndesatín</string>
   <string name="group_separator">Oddeľovač\ntisícov</string>
   <string name="field_separator">Oddeľovač\npolí</string>
-  <string name="include_header">Vrátane\nhlavičky</string>
+  <string name="include_header">Vrátane hlavičky</string>
   <string name="delete_account_confirm">Odstrániť účet?</string>
   <string name="delete_transaction_confirm">Odstrániť transakciu?</string>
   <string name="delete_budget_confirm">Odstrániť rozpočet?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">Súčet v domácej mene</string>
   <string name="total_rate">Kurz: %0.5f</string>
   <string name="home_currency">Domáca mena</string>
-  <string name="upload_to_dropbox">Nahrať na\nDropbox</string>
+  <string name="upload_to_dropbox">Nahrať na Dropbox</string>
   <string name="not_available">Nedostupné</string>
   <string name="rate_not_available_on_date_error" formatted="false">Na %s nie je uvedený žiadny výmenný kurz pre prepočet z %s na %s</string>
   <string name="rate_not_available_error" formatted="false">Nie je uvedený žiadny výmenný kurz pre prepočet z %s na %s</string>

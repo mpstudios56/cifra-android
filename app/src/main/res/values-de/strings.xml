@@ -172,7 +172,7 @@
   <string name="decimal_separator">Dezimal-\ntrenner</string>
   <string name="group_separator">Gruppen-\ntrenner</string>
   <string name="field_separator">Feld-\ntrenner</string>
-  <string name="include_header">Spalten-\nüberschriften</string>
+  <string name="include_header">Spalten- überschriften</string>
   <string name="delete_account_confirm">Konto löschen?</string>
   <string name="delete_transaction_confirm">Diese Buchung löschen?</string>
   <string name="delete_goes_to_trash">Sie wird in den Papierkorb verschoben und kann von dort wiederhergestellt werden.</string>
@@ -650,7 +650,7 @@
   <string name="home_currency_total">Gesamt in Heimatwährung</string>
   <string name="total_rate">Rate: %0.5f</string>
   <string name="home_currency">Heimatwährung</string>
-  <string name="upload_to_dropbox">Hochladen zu\nDropbox</string>
+  <string name="upload_to_dropbox">Hochladen zu Dropbox</string>
   <string name="not_available">nicht verfügbar</string>
   <string name="rate_not_available_on_date_error" formatted="false">Keinen Wechselkurs für %s angegeben, um von %s zu %s umzurechnen</string>
   <string name="rate_not_available_error" formatted="false">Keinen Wechselkurs zwischen %s und %s angegeben</string>
@@ -1048,7 +1048,7 @@
   <string name="import_settings_success">%1$d Einstellungen wurden übernommen.</string>
   <string name="import_settings_summary">Übernimmt die Einstellungen aus einer zuvor exportierten Datei</string>
   <string name="import_wrong_currency_2">Falsche Währung in der Importdatei: <xliff:g id="currency">%1$s</xliff:g> (muss der Währung des Kontos entsprechen, also <xliff:g id="currency">%2$s</xliff:g>)</string>
-  <string name="include_tx_status">Status\neinschließen</string>
+  <string name="include_tx_status">Status einschließen</string>
   <string name="installed_on_sd_card_warning">Geplante Transaktionen funktionieren möglicherweise nicht, wenn die App auf der SD-Karte installiert ist. Verschiebe sie in den Gerätespeicher.</string>
   <string name="integrity_error_message">%s%n(Zum Schließen tippen)</string>
   <string name="integrity_fix_summary">Baut die Kontosalden und die laufenden Summen aus den Buchungen selbst neu auf. Zu verwenden, wenn ein Saldo nicht zur Summe seiner Buchungen passt, meist nach einer Wiederherstellung oder einem Import. Es wird keine Buchung gelöscht oder geändert.</string>
@@ -1169,7 +1169,7 @@
   <string name="ui_theme">Design</string>
   <string name="ui_theme_summary">Legt das Design der Oberfläche fest (Neustart erforderlich)</string>
   <string name="update_exchange_rate">In die Kursaktualisierung einbeziehen</string>
-  <string name="upload_to_gdrive">Hochladen zu\nGoogle Drive</string>
+  <string name="upload_to_gdrive">Hochladen zu Google Drive</string>
   <string name="use_exchange_rate_service_with_historical">Wähle einen Kursdienst, der auch historische Kurse liefert, etwa OpenExchangeRates.org</string>
   <string name="use_pin">PIN verwenden</string>
   <string name="bank_bbva">BBVA</string>

@@ -184,8 +184,8 @@
   <string name="decimal_separator">Oddělovač\ndesetin</string>
   <string name="group_separator">Oddělovač\nskupin</string>
   <string name="field_separator">Oddělovač\npolí</string>
-  <string name="include_header">Včetně\nhlavičky</string>
-  <string name="include_tx_status">Zahrnout\nstav Tx</string>
+  <string name="include_header">Včetně hlavičky</string>
+  <string name="include_tx_status">Zahrnout stav Tx</string>
   <string name="delete_account_confirm">Smazat účet?</string>
   <string name="delete_transaction_confirm">Smazat transakci?</string>
   <string name="delete_budget_confirm">Smazat rozpočet?</string>
@@ -742,8 +742,8 @@
   <string name="home_currency_total">Celkem v domácí měně</string>
   <string name="total_rate">Kurz: %0.5f</string>
   <string name="home_currency">Domácí měna</string>
-  <string name="upload_to_dropbox">Nahrát na\nDropbox</string>
-  <string name="upload_to_gdrive">Nahrát na\nDisk Google</string>
+  <string name="upload_to_dropbox">Nahrát na Dropbox</string>
+  <string name="upload_to_gdrive">Nahrát na Disk Google</string>
   <string name="not_available">N/A</string>
   <string name="rate_not_available_on_date_error" formatted="false">Na %s není uveden žádný převodní kurz pro výpočet mezi %s a %s</string>
   <string name="rate_not_available_error" formatted="false">Není zadán žádný směnný kurz mezi %s a %s</string>

@@ -188,8 +188,8 @@
     <string name="decimal_separator">Разделитель\nдробных</string>
     <string name="group_separator">Разделитель\nгрупп</string>
     <string name="field_separator">Разделитель\nполей</string>
-    <string name="include_header">Включать\nзаголовок</string>
-    <string name="include_tx_status">Включить\nTx статус</string>
+    <string name="include_header">Включать заголовок</string>
+    <string name="include_tx_status">Включить Tx статус</string>
     <string name="delete_account_confirm">Удалить счёт?</string>
     <string name="delete_transaction_confirm">Удалить транзакцию?</string>
     <string name="delete_budget_confirm">Удалить бюджет?</string>
@@ -794,8 +794,8 @@
     <string name="home_currency_total">Итог в домашней валюте</string>
     <string name="total_rate">Курс: %0.5f</string>
     <string name="home_currency">Домашняя валюта</string>
-    <string name="upload_to_dropbox">Загрузить на\nDropbox</string>
-    <string name="upload_to_gdrive">Загрузить на\nGoogle Диск</string>
+    <string name="upload_to_dropbox">Загрузить на Dropbox</string>
+    <string name="upload_to_gdrive">Загрузить на Google Диск</string>
     <string name="not_available">Н/Д</string>
     <string name="rate_not_available_on_date_error" formatted="false">Не указан обменный курс на %s, чтобы вычислить сумму между %s и %s</string>
     <string name="rate_not_available_error" formatted="false">Не указан обменный курс между %s и %s</string>

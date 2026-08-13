@@ -172,7 +172,7 @@
   <string name="decimal_separator">Separator\nzecimal</string>
   <string name="group_separator">Separator\nde grup</string>
   <string name="field_separator">Separator\ncâmp</string>
-  <string name="include_header">Include\nantet</string>
+  <string name="include_header">Include antet</string>
   <string name="delete_account_confirm">Ştergeţi contul?</string>
   <string name="delete_transaction_confirm">Ştergeţi tranzacţia?</string>
   <string name="delete_budget_confirm">Ştergeţi bugetul?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">Total în moneda locală</string>
   <string name="total_rate">Rată: %0.5f</string>
   <string name="home_currency">Moneda locală</string>
-  <string name="upload_to_dropbox">Încărcaţi în\nDropbox</string>
+  <string name="upload_to_dropbox">Încărcaţi în Dropbox</string>
   <string name="not_available">N/A</string>
   <string name="rate_not_available_on_date_error" formatted="false">No exchange rate specified on %s to calculate between %s and %s</string>
   <string name="rate_not_available_error" formatted="false">No exchange rate specified between %s and %s</string>

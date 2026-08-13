@@ -172,7 +172,7 @@
   <string name="decimal_separator">Separador\ndecimal</string>
   <string name="group_separator">Separador\nmilers</string>
   <string name="field_separator">Separador\nde camp</string>
-  <string name="include_header">Incloure\ncapçalera</string>
+  <string name="include_header">Incloure capçalera</string>
   <string name="delete_account_confirm">Eliminar el compte?</string>
   <string name="delete_transaction_confirm">Eliminar la transacció?</string>
   <string name="delete_budget_confirm">Eliminar dotació pressupostària?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">Total en moneda local</string>
   <string name="total_rate">Ràtio: %0.5f</string>
   <string name="home_currency">Moneda local</string>
-  <string name="upload_to_dropbox">Pujar a \nDropbox</string>
+  <string name="upload_to_dropbox">Pujar a Dropbox</string>
   <string name="not_available">No disponible</string>
   <string name="rate_not_available_on_date_error" formatted="false">No hi ha ràtio de canvi especificat a %s per calcular entre %s i %s</string>
   <string name="rate_not_available_error" formatted="false">Cap tipus específic de ràtio de canvi entre %s i %s</string>

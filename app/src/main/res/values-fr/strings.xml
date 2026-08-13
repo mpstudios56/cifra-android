@@ -171,7 +171,7 @@
   <string name="decimal_separator">Séparateur\ndécimal</string>
   <string name="group_separator">Séparateur\nde groupe</string>
   <string name="field_separator">Champ\nséparateur</string>
-  <string name="include_header">Inclure\ntête</string>
+  <string name="include_header">Inclure tête</string>
   <string name="delete_account_confirm">Supprimer le compte ?</string>
   <string name="delete_transaction_confirm">Supprimer cette opération ?</string>
   <string name="delete_goes_to_trash">Elle est déplacée dans la corbeille, d’où elle peut être restaurée.</string>
@@ -649,7 +649,7 @@
   <string name="home_currency_total">Total dans la monnaie par défaut</string>
   <string name="total_rate">Taux: %0.5f</string>
   <string name="home_currency">Monnaie par défaut</string>
-  <string name="upload_to_dropbox">Envoyer sur\nDropbox</string>
+  <string name="upload_to_dropbox">Envoyer sur Dropbox</string>
   <string name="not_available">Indisp.</string>
   <string name="rate_not_available_on_date_error" formatted="false">Pas de taux de change specifié pour le %s afin de calculer %s et %s</string>
   <string name="rate_not_available_error" formatted="false">Pas de taux de change connus entre %s et %s</string>
@@ -1020,7 +1020,7 @@
   <string name="import_settings_success">%1$d réglages ont été appliqués.</string>
   <string name="import_settings_summary">Applique les réglages depuis un fichier exporté auparavant</string>
   <string name="import_wrong_currency_2">Devise incorrecte dans le fichier : <xliff:g id="currency">%1$s</xliff:g> (elle doit correspondre à celle du compte, soit <xliff:g id="currency">%2$s</xliff:g>)</string>
-  <string name="include_tx_status">Inclure\nl\'état</string>
+  <string name="include_tx_status">Inclure l\'état</string>
   <string name="installed_on_sd_card_warning">Les opérations planifiées peuvent ne pas fonctionner si l\'application est installée sur la carte SD. Déplacez-la dans la mémoire de l\'appareil.</string>
   <string name="integrity_error">Les soldes ne concordent pas avec les opérations. Menu → Recalculer les soldes et les totaux les remettra d\'aplomb.</string>
   <string name="integrity_error_message">%s%n(Touchez pour fermer ce message)</string>
@@ -1162,7 +1162,7 @@
   <string name="ui_theme">Thème</string>
   <string name="ui_theme_summary">Définit le thème de l\'interface (redémarrage nécessaire)</string>
   <string name="update_exchange_rate">Inclure dans la mise à jour des taux</string>
-  <string name="upload_to_gdrive">Envoyer vers\nGoogle Drive</string>
+  <string name="upload_to_gdrive">Envoyer vers Google Drive</string>
   <string name="use_exchange_rate_service_with_historical">Choisissez un service de taux fournissant aussi les historiques, comme OpenExchangeRates.org</string>
   <string name="use_pin">Utiliser le code</string>
   <string name="bank_bbva">BBVA</string>

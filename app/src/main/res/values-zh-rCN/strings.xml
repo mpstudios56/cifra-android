@@ -172,7 +172,7 @@
   <string name="decimal_separator">\n小数点</string>
   <string name="group_separator">\n分位点</string>
   <string name="field_separator">\n字段分隔符</string>
-  <string name="include_header">\n包含表头</string>
+  <string name="include_header">包含表头</string>
   <string name="delete_account_confirm">确定删除账户?</string>
   <string name="delete_transaction_confirm">确定删掉交易?</string>
   <string name="delete_budget_confirm">确定删除预算?</string>
@@ -646,7 +646,7 @@
   <string name="home_currency_total">总计(按本国货币)</string>
   <string name="total_rate">汇率： %0.5f</string>
   <string name="home_currency">本国货币</string>
-  <string name="upload_to_dropbox">上传到\nDropbox</string>
+  <string name="upload_to_dropbox">上传到 Dropbox</string>
   <string name="not_available">不适用</string>
   <string name="rate_not_available_on_date_error" formatted="false">没有指定 %s 上的汇率来转换 %s 和 %s</string>
   <string name="rate_not_available_error" formatted="false">没有指定 %s 和 %s 之间的汇率</string>
