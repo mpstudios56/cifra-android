@@ -73,6 +73,7 @@ public class SyncEngine {
         // Anything written before sharing existed still needs a name before it
         // can be spoken about.
         Uuids.fillBlanks(database);
+        resignOldArrivals(database);
 
         // One round per person: their own file, holding only what is theirs.
         // The pairs are kept apart by which file each can read rather than by a
@@ -104,6 +105,31 @@ public class SyncEngine {
         }
         MyPreferences.setSyncLastRun(System.currentTimeMillis());
         return result;
+    }
+
+    /**
+     * Puts the pair code on movements that arrived before signatures used one.
+     * <p>
+     * They carry whatever the sender's phone was called at the time, which
+     * matches nobody here, so they showed in the spare colour instead of the
+     * colour chosen for the person who wrote them. Each one is re-signed with
+     * the code of the person its account is held with - which is who sent it.
+     */
+    private static void resignOldArrivals(SQLiteDatabase db) {
+        String sql = "update transactions set created_by = ("
+                + " select s.mark from shared_with s"
+                + " inner join account a on a.uuid = s.uuid"
+                + " where a._id = transactions.from_account_id limit 1)"
+                + " where created_by <> '' and created_by <> ?"
+                + " and created_by not in (select mark from person)"
+                + " and exists (select 1 from shared_with s2"
+                + "   inner join account a2 on a2.uuid = s2.uuid"
+                + "   where a2._id = transactions.from_account_id)";
+        try {
+            db.execSQL(sql, new Object[]{MyPreferences.getSyncDeviceId()});
+        } catch (Exception e) {
+            Log.e(TAG, "could not re-sign what arrived before codes", e);
+        }
     }
 
     // -------------------------------------------------------------- putting out
