@@ -60,17 +60,20 @@ public class SharePickerActivity extends AppCompatActivity {
                 getString(R.string.share_past_balance),
                 getString(R.string.share_past_nothing),
         };
+        final int[] picked = {0};
         new android.app.AlertDialog.Builder(this)
                 .setTitle(R.string.share_past_title)
-                .setItems(choices, (dialog, which) -> {
+                .setSingleChoiceItems(choices, 0, (d, which) -> picked[0] = which)
+                .setPositiveButton(R.string.save, (d, w) -> {
                     int queued = tw.tib.financisto.sync.SharingStart.apply(
-                            db.db(), thing.id, thing.uuid, thing.name, which);
+                            db.db(), thing.id, thing.uuid, thing.name, picked[0]);
                     if (queued > 0) {
                         android.widget.Toast.makeText(this,
                                 getString(R.string.share_past_queued, queued),
-                                android.widget.Toast.LENGTH_LONG).show();
+                                android.widget.Toast.LENGTH_SHORT).show();
                     }
                 })
+                .setNegativeButton(R.string.cancel, null)
                 .setCancelable(false)
                 .show();
     }

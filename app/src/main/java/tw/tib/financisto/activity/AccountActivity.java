@@ -460,11 +460,13 @@ public class AccountActivity extends AbstractActivity {
 				getString(R.string.share_past_balance),
 				getString(R.string.share_past_nothing),
 		};
+		final int[] picked = {0};
 		new AlertDialog.Builder(this)
 				.setTitle(R.string.share_past_title)
-				.setItems(choices, (dialog, which) -> {
+				.setSingleChoiceItems(choices, 0, (d, which) -> picked[0] = which)
+				.setPositiveButton(R.string.save, (d, w) -> {
 					int queued = tw.tib.financisto.sync.SharingStart.apply(
-							db.db(), accountId, accountUuid, title, which);
+							db.db(), accountId, accountUuid, title, picked[0]);
 					if (queued > 0) {
 						Toast.makeText(this,
 								getString(R.string.share_past_queued, queued),
@@ -472,6 +474,10 @@ public class AccountActivity extends AbstractActivity {
 					}
 					finish();
 				})
+				// Cancel leaves the account shared, because that was saved on
+				// the screen behind: what is being answered here is only which
+				// movements go, and not answering means the new ones.
+				.setNegativeButton(R.string.cancel, (d, w) -> finish())
 				.setCancelable(false)
 				.show();
 	}
