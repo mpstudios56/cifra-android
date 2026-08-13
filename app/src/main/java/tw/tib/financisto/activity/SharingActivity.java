@@ -176,7 +176,7 @@ public class SharingActivity extends AppCompatActivity {
 
     private void show() {
         show(Identity.mine(this), R.id.sharing_me_name, R.id.sharing_me_dot,
-                R.id.sharing_me_icon, R.string.sharing_me_empty);
+                0, R.string.sharing_me_empty);
 
         String folder = MyPreferences.getSyncFolder();
         ((TextView) findViewById(R.id.sharing_folder_value)).setText(folder.isEmpty()
@@ -425,7 +425,10 @@ public class SharingActivity extends AppCompatActivity {
 
         findViewById(dotId).getBackground().setTint(identity.colour);
 
-        ImageView icon = findViewById(iconId);
+        ImageView icon = iconId == 0 ? null : findViewById(iconId);
+        if (icon == null) {
+            return;
+        }
         CategoryIcon chosen = CategoryIcon.parse(identity.icon);
         icon.setVisibility(chosen == null ? View.GONE : View.VISIBLE);
         if (chosen != null) {

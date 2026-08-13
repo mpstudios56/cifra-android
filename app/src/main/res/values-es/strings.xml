@@ -1501,5 +1501,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_section_manage">Gestión</string>
   <string name="account_shared_with_nobody">Nadie — esta cuenta es solo tuya</string>
   <string name="sharing_person_code_is">codigo %1$s</string>
-  <string name="sharing_person_look">Color y simbolo</string>
+  <string name="sharing_person_look">Color</string>
 </resources>

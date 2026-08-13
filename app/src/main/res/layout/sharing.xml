@@ -103,11 +103,6 @@
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/dot" />
 
-                <ImageView
-                    android:id="@+id/sharing_me_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"

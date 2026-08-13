@@ -1607,7 +1607,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sharing_section_manage">Managing the sharing</string>
     <string name="account_shared_with_nobody">Nobody — this account is only yours</string>
     <string name="sharing_person_code_is">code %1$s</string>
-    <string name="sharing_person_look">Colour and symbol</string>
+    <string name="sharing_person_look">Colour</string>
     <plurals name="sharing_people_count">
         <item quantity="one">%d person</item>
         <item quantity="other">%d people</item>
