@@ -91,6 +91,13 @@ public class SyncEntities {
      * @return true when something was created or renamed
      */
     public static boolean take(SQLiteDatabase db, JSONObject o) {
+        return take(db, o, null);
+    }
+
+    /**
+     * @param from the code of the person whose file this line came out of
+     */
+    public static boolean take(SQLiteDatabase db, JSONObject o, String from) {
         String kind = o.optString("thing", "");
         String uuid = o.optString("uuid", "");
         String name = o.optString("name", "");
@@ -98,9 +105,13 @@ public class SyncEntities {
             return false;
         }
 
-        // Already known by that identifier: nothing to do but keep sharing it.
+        // Already known by that identifier: nothing to do but keep sharing it,
+        // and note who it is held with so the dot beside it has a colour.
         if (idByUuid(db, kind, uuid) > 0) {
             SharedThings.adopt(db, kind, uuid);
+            if (SharedThings.ACCOUNT.equals(kind)) {
+                SharedWith.add(db, uuid, from);
+            }
             return false;
         }
 
@@ -112,6 +123,11 @@ public class SyncEntities {
         boolean made = create(db, kind, uuid, name, o);
         if (made) {
             SharedThings.adopt(db, kind, uuid);
+            if (SharedThings.ACCOUNT.equals(kind)) {
+                // It came from somebody, and that somebody is who it is held
+                // with here as well - which is where its dot takes its colour.
+                SharedWith.add(db, uuid, from);
+            }
         }
         return made;
     }

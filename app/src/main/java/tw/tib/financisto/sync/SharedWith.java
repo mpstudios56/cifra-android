@@ -111,6 +111,28 @@ public class SharedWith {
         return sb.toString();
     }
 
+    /**
+     * Notes that this account is held with this person, leaving whoever else it
+     * is held with alone.
+     * <p>
+     * For an account that arrives: it comes from somebody, and that somebody is
+     * who it is shared with here too. Without this the account is shared with
+     * nobody in particular, and the dot beside it has no colour to take.
+     */
+    public static void add(SQLiteDatabase db, String accountUuid, String mark) {
+        if (accountUuid == null || accountUuid.isEmpty() || mark == null || mark.isEmpty()) {
+            return;
+        }
+        try {
+            ContentValues v = new ContentValues();
+            v.put("uuid", accountUuid);
+            v.put("mark", mark);
+            db.insertWithOnConflict(TABLE, null, v, SQLiteDatabase.CONFLICT_IGNORE);
+        } catch (Exception e) {
+            Log.e(TAG, "could not note " + accountUuid + " as held with " + mark, e);
+        }
+    }
+
     /** The people this account goes to, or empty for everybody. */
     public static Set<String> of(SQLiteDatabase db, String accountUuid) {
         Set<String> marks = new HashSet<>();

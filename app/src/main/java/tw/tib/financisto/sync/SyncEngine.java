@@ -87,7 +87,7 @@ public class SyncEngine {
         for (People.Person person : people) {
             List<String> theirs = folder.readPair(myName, person.mark, me);
             Log.i(TAG, "round with " + person.label() + ": " + theirs.size() + " lines");
-            result.received += takeIn(database, theirs, result);
+            result.received += takeIn(database, theirs, result, person.mark);
             result.sent += putOut(database, folder, me, myName, person);
         }
         result.ran = true;
@@ -180,7 +180,7 @@ public class SyncEngine {
 
     // --------------------------------------------------------------- taking in
 
-    private static int takeIn(SQLiteDatabase db, List<String> lines, Result result) {
+    private static int takeIn(SQLiteDatabase db, List<String> lines, Result result, String from) {
         int applied = 0;
 
         // Two passes over the same file. The things a movement refers to have to
@@ -194,7 +194,7 @@ public class SyncEngine {
                 }
                 db.beginTransaction();
                 try {
-                    if (SyncEntities.take(db, o)) {
+                    if (SyncEntities.take(db, o, from)) {
                         things++;
                     }
                     db.setTransactionSuccessful();
