@@ -229,7 +229,7 @@ public class SyncEngine {
                 try {
                     String why = SyncPayload.apply(db, o.optString("operation", ""),
                             o.optString("payload", "{}"),
-                            o.optString("author", ""), o.optString("title", ""));
+                            o.optString("author", ""), o.optString("title", ""), from);
                     if (why != null) {
                         // In the log as well as on screen: five reasons in a
                         // toast is what somebody sees, and the sixth is the one

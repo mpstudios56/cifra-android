@@ -122,6 +122,19 @@ public class SyncPayload {
      *               it was rather than a movement vanishing overnight
      */
     public static String apply(SQLiteDatabase db, String operation, String payload,
+                               String author, String title, String code) {
+        signWith = code;
+        try {
+            return apply(db, operation, payload, author, title);
+        } finally {
+            signWith = null;
+        }
+    }
+
+    /** The code of the pair a line is being taken in from, while it is applied. */
+    private static String signWith;
+
+    public static String apply(SQLiteDatabase db, String operation, String payload,
                                String author, String title) {
         try {
             JSONObject o = new JSONObject(payload);
@@ -163,7 +176,13 @@ public class SyncPayload {
             }
             // Whoever wrote it keeps it: an entry that came from over there is
             // theirs, and the list marks it as theirs.
-            v.put("created_by", o.optString("created_by", ""));
+            // Signed with the code shared with whoever sent it, not with the
+            // identifier of the phone that wrote it. A phone can be replaced -
+            // and then everything it had written stopped counting as theirs and
+            // took the other person's colour. The code is the thing two people
+            // agreed on, and it outlives the hardware.
+            v.put("created_by", signWith != null && !signWith.isEmpty()
+                    ? signWith : o.optString("created_by", ""));
 
             if (existing > 0) {
                 db.update(DatabaseHelper.TRANSACTION_TABLE, v, "_id=?",

@@ -83,6 +83,24 @@ public class Identity {
                 || createdBy.equals(MyPreferences.getSyncDeviceId());
     }
 
+    /**
+     * The colour of whoever wrote a movement that came from somewhere else.
+     * <p>
+     * Movements arriving are signed with the code shared with the person who
+     * sent them, so their colour is the one chosen here for that person - and
+     * it stays right even if they change phone.
+     */
+    public static int colourOf(android.database.sqlite.SQLiteDatabase db, String createdBy) {
+        if (createdBy != null && !createdBy.isEmpty()) {
+            for (tw.tib.financisto.sync.People.Person p : tw.tib.financisto.sync.People.all(db)) {
+                if (createdBy.equals(p.mark) && p.colour != 0) {
+                    return p.colour;
+                }
+            }
+        }
+        return COLOURS[1];
+    }
+
     private static SharedPreferences prefs(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(
                 context == null ? Application.getInstance() : context);
