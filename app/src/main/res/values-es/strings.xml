@@ -1492,4 +1492,9 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_people_none">Todavía nadie — aparecen tras el primer intercambio</string>
   <string name="sharing_people_how">No se añade a nadie a mano. Cada teléfono escribe en la carpeta compartida un archivo con el nombre de su propietario. Lo que deben compartir es la carpeta y el código del grupo.</string>
   <string name="sharing_people_me">Este teléfono: %1$s (%2$s)</string>
+  <string name="sharing_person_add">Añadir una persona</string>
+  <string name="sharing_person_name">Cómo se llama</string>
+  <string name="sharing_person_code">Código compartido con ella</string>
+  <string name="sharing_person_why">El mismo código debe escribirse en su teléfono junto a tu nombre. Esas dos entradas forman la pareja.</string>
+  <string name="sharing_people_none_yet">Todavía nadie — toca para añadir</string>
 </resources>

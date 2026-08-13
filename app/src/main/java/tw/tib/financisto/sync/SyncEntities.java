@@ -43,10 +43,25 @@ public class SyncEntities {
 
     /** A line for everything this phone has agreed to share. */
     public static List<String> lines(SQLiteDatabase db) {
+        return lines(db, null);
+    }
+
+    /**
+     * @param code the pair this file is for, or null for everything shared
+     */
+    public static List<String> lines(SQLiteDatabase db, String code) {
         List<String> lines = new ArrayList<>();
         for (String kind : SharedThings.KINDS) {
             for (SharedThings.Thing thing : SharedThings.list(db, kind)) {
                 if (!thing.shared || thing.uuid == null || thing.uuid.isEmpty()) {
+                    continue;
+                }
+                // An account goes only into the file of the people it is held
+                // with. The labels go into every file: they are names, they
+                // arrive with the movements that use them, and an account
+                // nobody in this pair can see never sends a movement anyway.
+                if (code != null && SharedThings.ACCOUNT.equals(kind)
+                        && !SharedWith.reaches(db, thing.uuid, code)) {
                     continue;
                 }
                 try {

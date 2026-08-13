@@ -1467,4 +1467,9 @@
     <string name="sharing_people_none">Поки нікого — з’являться після першого обміну</string>
     <string name="sharing_people_how">Нікого не додають вручну. Кожен телефон пише у спільній теці файл з іменем власника. Спільними мають бути тека і код групи.</string>
     <string name="sharing_people_me">Цей телефон: %1$s (%2$s)</string>
+    <string name="sharing_person_add">Додати людину</string>
+    <string name="sharing_person_name">Ім’я</string>
+    <string name="sharing_person_code">Спільний код</string>
+    <string name="sharing_person_why">Той самий код має бути записаний на її телефоні поруч із вашим ім’ям.</string>
+    <string name="sharing_people_none_yet">Поки нікого — торкніться, щоб додати</string>
 </resources>

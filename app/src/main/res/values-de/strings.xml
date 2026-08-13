@@ -1492,4 +1492,9 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_people_none">Noch niemand — sie erscheinen nach dem ersten Austausch</string>
   <string name="sharing_people_how">Niemand wird von Hand hinzugefügt. Jedes Telefon schreibt im gemeinsamen Ordner eine Datei mit dem Namen seines Besitzers. Gemeinsam haben müssen alle den Ordner und den Gruppencode.</string>
   <string name="sharing_people_me">Dieses Telefon: %1$s (%2$s)</string>
+  <string name="sharing_person_add">Person hinzufügen</string>
+  <string name="sharing_person_name">Name</string>
+  <string name="sharing_person_code">Gemeinsamer Code</string>
+  <string name="sharing_person_why">Derselbe Code muss auf ihrem Telefon neben Ihrem Namen stehen. Diese beiden Einträge bilden das Paar.</string>
+  <string name="sharing_people_none_yet">Noch niemand — zum Hinzufügen tippen</string>
 </resources>

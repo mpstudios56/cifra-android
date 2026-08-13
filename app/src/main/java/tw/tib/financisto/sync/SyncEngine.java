@@ -74,15 +74,22 @@ public class SyncEngine {
         // can be spoken about.
         Uuids.fillBlanks(database);
 
-        List<String> theirs = folder.readOthers(myName, me);
-        Log.i(TAG, "round: " + theirs.size() + " lines from the other phone");
-        // Who else is in the folder, learned from the names of the files rather
-        // than typed in by anybody.
-        for (String[] who : folder.whoWasThere()) {
-            People.seen(database, who[1], who[0]);
+        // One round per person: their own file, holding only what is theirs.
+        // The pairs are kept apart by which file each can read rather than by a
+        // list of names inside the lines - what somebody is not meant to see is
+        // then not written where they can reach it at all.
+        List<People.Person> people = People.all(database);
+        if (people.isEmpty()) {
+            result.problem = "nobody";
+            MyPreferences.setSyncLastRun(System.currentTimeMillis());
+            return result;
         }
-        result.received = takeIn(database, theirs, result);
-        result.sent = putOut(database, folder, me, myName);
+        for (People.Person person : people) {
+            List<String> theirs = folder.readPair(myName, person.mark, me);
+            Log.i(TAG, "round with " + person.label() + ": " + theirs.size() + " lines");
+            result.received += takeIn(database, theirs, result);
+            result.sent += putOut(database, folder, me, myName, person);
+        }
         result.ran = true;
         Log.i(TAG, "round done: " + result.received + " taken in, "
                 + result.sent + " written out, " + result.skipped.size() + " skipped");
@@ -102,7 +109,8 @@ public class SyncEngine {
     // -------------------------------------------------------------- putting out
 
     /** Writes out every change made here that carries something to say. */
-    private static int putOut(SQLiteDatabase db, SyncFolder folder, String me, String myName) {
+    private static int putOut(SQLiteDatabase db, SyncFolder folder, String me, String myName,
+                              People.Person person) {
         List<String> lines = new ArrayList<>();
         // The accounts, categories, payees and places being shared go out first,
         // in the same file and ahead of the movements that refer to them. Without
@@ -116,9 +124,9 @@ public class SyncEngine {
         // received movements with no category, no payee and no place on them:
         // the labels were never sent, so the references pointed at nothing.
         adoptWhatTheMovementsMention(db);
-        List<String> things = SyncEntities.lines(db);
+        List<String> things = SyncEntities.lines(db, person.mark);
         lines.addAll(things);
-        Log.i(TAG, "sending " + things.size() + " shared things");
+        Log.i(TAG, "sending " + things.size() + " shared things to " + person.label());
         try (Cursor c = db.query(ChangeLog.TABLE, null, "device=? and payload<>''",
                 new String[]{me}, null, null, "made_on asc")) {
             while (c.moveToNext()) {
@@ -132,14 +140,18 @@ public class SyncEngine {
                     o.put("operation", c.getString(c.getColumnIndexOrThrow("operation")));
                     o.put("title", c.getString(c.getColumnIndexOrThrow("title")));
                     o.put("subtitle", c.getString(c.getColumnIndexOrThrow("subtitle")));
-                    o.put("payload", c.getString(c.getColumnIndexOrThrow("payload")));
+                    String payload = c.getString(c.getColumnIndexOrThrow("payload"));
+                    if (!SyncPayload.isFor(db, payload, person.mark)) {
+                        continue;
+                    }
+                    o.put("payload", payload);
                     lines.add(o.toString());
                 } catch (Exception e) {
                     Log.e(TAG, "could not write out a change", e);
                 }
             }
         }
-        boolean written = folder.write(myName, me, lines);
+        boolean written = folder.write(myName, person.mark, me, lines);
         Log.i(TAG, "wrote " + lines.size() + " lines: " + (written ? "yes" : "FAILED"));
         return written ? lines.size() : 0;
     }

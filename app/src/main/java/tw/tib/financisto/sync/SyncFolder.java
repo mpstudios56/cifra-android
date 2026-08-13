@@ -83,6 +83,27 @@ public class SyncFolder {
         return nameFor(author, tw.tib.financisto.utils.MyPreferences.getSyncGroupCode(), deviceId);
     }
 
+    /** Reads every file carrying this pair's code that is not this phone's own. */
+    public List<String> readPair(String author, String code, String deviceId) {
+        List<String> lines = new ArrayList<>();
+        String mine = nameFor(author, code, deviceId);
+        String tag = "-" + tidy(code) + "-";
+        try {
+            for (DocumentFile file : folder.listFiles()) {
+                String name = file.getName();
+                if (name == null || !name.startsWith(PREFIX) || name.equals(mine)
+                        || !name.contains(tag)) {
+                    continue;
+                }
+                Log.i(TAG, "reading " + name);
+                read(file, lines);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "could not read the files of " + code, e);
+        }
+        return lines;
+    }
+
     /**
      * cifra - name - group code - phone.
      * <p>
@@ -146,9 +167,9 @@ public class SyncFolder {
      * provider is not reliably supported, and rewriting a file of a few hundred
      * lines costs nothing - while a half-appended line costs an afternoon.
      */
-    public boolean write(String author, String deviceId, List<String> lines) {
+    public boolean write(String author, String code, String deviceId, List<String> lines) {
         try {
-            String name = nameFor(author, deviceId);
+            String name = nameFor(author, code, deviceId);
             Log.i(TAG, "writing " + lines.size() + " lines to " + name);
             DocumentFile file = folder.findFile(name);
             if (file == null) {

@@ -1594,4 +1594,13 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sharing_people_none">Nobody yet — they appear after the first exchange</string>
     <string name="sharing_people_how">Nobody is added by hand. Every phone writes a file in the shared folder called after its owner, so one round of exchange is enough for each to learn who the others are. What they need to have in common is the folder and the group code.</string>
     <string name="sharing_people_me">This phone: %1$s (%2$s)</string>
+    <string name="sharing_person_add">Add a person</string>
+    <string name="sharing_person_name">Their name</string>
+    <string name="sharing_person_code">Code shared with them</string>
+    <string name="sharing_person_why">The same code has to be written on their phone against your name. That pair of entries is what makes the two of you a pair - and it is what keeps this sharing apart from any other you have.</string>
+    <plurals name="sharing_person_accounts">
+        <item quantity="one">%d account held with them</item>
+        <item quantity="other">%d accounts held with them</item>
+    </plurals>
+    <string name="sharing_people_none_yet">Nobody yet — tap to add somebody and the code you share with them</string>
 </resources>

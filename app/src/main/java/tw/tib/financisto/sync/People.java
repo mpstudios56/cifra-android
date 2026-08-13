@@ -11,16 +11,18 @@ import java.util.List;
 import tw.tib.financisto.utils.MyPreferences;
 
 /**
- * The people this phone shares with.
+ * The people this phone shares with, and the code it shares with each.
  * <p>
- * Nobody types them in. Each phone writes a file called after its owner -
- * cifra-Marcello-CASA24-531439ae.txt - so the folder already says who is in the
- * group and what to call them. Reading a round is enough to learn a new person,
- * and they are kept here so the list is there when the folder is not.
+ * One code per pair, written by hand on both phones: I put in Antonio with
+ * xfg456, he puts in me with the same, and that pair exists. I put in Debora
+ * with ddf567 and she does the same, and that is a different pair - the
+ * accounts I hold with her are not the ones I hold with him, and neither knows
+ * about the other.
  * <p>
- * A person is addressed by the eight characters at the end of their file name.
- * The name is only for reading: two people can call themselves the same thing
- * and change it whenever they like.
+ * Typed in rather than discovered, because a code that has to match on both
+ * sides is only brought into being by somebody writing it. And it is the code,
+ * not a name, that pairs two phones: names get changed and two people can
+ * choose the same one.
  */
 public class People {
 
@@ -28,11 +30,12 @@ public class People {
     private static final String TABLE = "person";
 
     public static class Person {
+        /** The code shared with this person, and what their file is found by. */
         public final String mark;
         public final String name;
         public final long seenOn;
 
-        Person(String mark, String name, long seenOn) {
+        public Person(String mark, String name, long seenOn) {
             this.mark = mark;
             this.name = name;
             this.seenOn = seenOn;
@@ -47,11 +50,11 @@ public class People {
     private People() {
     }
 
-    /** Everybody seen in the folder, most recently seen first. This phone is not in it. */
+    /** Everybody written down here, in the order they were added. */
     public static List<Person> all(SQLiteDatabase db) {
         List<Person> people = new ArrayList<>();
         try (Cursor c = db.query(TABLE, new String[]{"mark", "name", "seen_on"},
-                null, null, null, null, "seen_on desc")) {
+                null, null, null, null, "seen_on asc")) {
             while (c.moveToNext()) {
                 people.add(new Person(c.getString(0), c.getString(1), c.getLong(2)));
             }
@@ -62,14 +65,15 @@ public class People {
     }
 
     /**
-     * Remembers somebody seen in the folder.
+     * Writes down a person and the code shared with them.
      *
-     * @param mark the eight characters that address them
+     * @param mark the code, which must be the same on their phone
      */
     public static void seen(SQLiteDatabase db, String mark, String name) {
-        if (mark == null || mark.isEmpty() || mark.equals(myMark())) {
+        if (mark == null || mark.trim().isEmpty()) {
             return;
         }
+        mark = mark.trim();
         try {
             ContentValues v = new ContentValues();
             v.put("mark", mark);
@@ -78,6 +82,26 @@ public class People {
             db.insertWithOnConflict(TABLE, null, v, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Exception e) {
             Log.e(TAG, "could not remember " + mark, e);
+        }
+    }
+
+    /** Forgets a person: their file is left alone from then on. */
+    public static void forget(SQLiteDatabase db, String mark) {
+        try {
+            db.delete(TABLE, "mark=?", new String[]{mark});
+            db.delete("shared_with", "mark=?", new String[]{mark});
+        } catch (Exception e) {
+            Log.e(TAG, "could not forget " + mark, e);
+        }
+    }
+
+    /** How many accounts are held with this person alone. */
+    public static int accountsWith(SQLiteDatabase db, String mark) {
+        try (Cursor c = db.rawQuery("select count(*) from shared_with where mark=?",
+                new String[]{mark})) {
+            return c.moveToFirst() ? c.getInt(0) : 0;
+        } catch (Exception e) {
+            return 0;
         }
     }
 

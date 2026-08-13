@@ -95,14 +95,6 @@ public class SyncPayload {
             // Travels with it, so the other phone shows it in the writer's
             // colour rather than claiming it as its own.
             o.put("created_by", string(c, "created_by"));
-            // And who it is for. Absent means everybody in the group, which is
-            // what sharing meant when it was a tick box - and what it goes on
-            // meaning for anybody who never names anybody.
-            String account = o.optString("from_account", "");
-            java.util.Set<String> to = SharedWith.recipientsOf(db, account);
-            if (!to.isEmpty()) {
-                o.put("to", new org.json.JSONArray(to));
-            }
             return o.toString();
         } catch (Exception e) {
             return null;
@@ -186,6 +178,28 @@ public class SyncPayload {
     }
 
     // ------------------------------------------------------------------ lookups
+
+    /**
+     * Whether a written-out movement belongs in this person's file.
+     * <p>
+     * Read from the payload rather than from the movement, because by the time
+     * a deletion is being sent the movement is already gone.
+     */
+    public static boolean isFor(SQLiteDatabase db, String payload, String code) {
+        if (payload == null || payload.isEmpty()) {
+            return false;
+        }
+        try {
+            org.json.JSONObject o = new org.json.JSONObject(payload);
+            String account = o.optString("from_account", "");
+            if (account.isEmpty()) {
+                return true;
+            }
+            return SharedWith.reaches(db, account, code);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * The identifier the other phone will know this row by, made now if it has

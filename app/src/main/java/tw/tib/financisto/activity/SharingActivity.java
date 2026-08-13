@@ -213,7 +213,7 @@ public class SharingActivity extends AppCompatActivity {
             who.append(p.label());
         }
         ((TextView) findViewById(R.id.sharing_people_value)).setText(people.isEmpty()
-                ? getString(R.string.sharing_people_none)
+                ? getString(R.string.sharing_people_none_yet)
                 : who.toString());
 
         String group = MyPreferences.getSyncGroupCode();
@@ -241,27 +241,75 @@ public class SharingActivity extends AppCompatActivity {
     private void showPeople() {
         java.util.List<tw.tib.financisto.sync.People.Person> people =
                 tw.tib.financisto.sync.People.all(db.db());
-        StringBuilder text = new StringBuilder();
-        text.append(getString(R.string.sharing_people_how)).append("\n");
-        if (people.isEmpty()) {
-            text.append("\n").append(getString(R.string.sharing_people_none));
-        } else {
-            for (tw.tib.financisto.sync.People.Person p : people) {
-                text.append("\n").append("• ").append(p.label())
-                        .append("  (").append(p.mark).append(")");
-            }
+        String[] rows = new String[people.size() + 1];
+        for (int k = 0; k < people.size(); k++) {
+            tw.tib.financisto.sync.People.Person p = people.get(k);
+            int held = tw.tib.financisto.sync.People.accountsWith(db.db(), p.mark);
+            rows[k] = p.label() + "  (" + p.mark + ")"
+                    + System.lineSeparator()
+                    + getResources().getQuantityString(R.plurals.sharing_person_accounts, held, held);
         }
-        text.append("\n\n").append(getString(R.string.sharing_people_me,
-                MyPreferences.getSyncAuthor().isEmpty()
-                        ? getString(R.string.sharing_me_empty)
-                        : MyPreferences.getSyncAuthor(),
-                tw.tib.financisto.sync.People.myMark()));
+        rows[people.size()] = getString(R.string.sharing_person_add);
 
         new android.app.AlertDialog.Builder(this)
                 .setTitle(R.string.sharing_people)
-                .setMessage(text.toString())
-                .setPositiveButton(R.string.ok, null)
+                .setItems(rows, (d, which) -> {
+                    if (which == people.size()) {
+                        askPerson(null);
+                    } else {
+                        askPerson(people.get(which));
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
                 .show();
+    }
+
+    /**
+     * A person and the code shared with them.
+     * <p>
+     * The same code has to be written on their phone against this phone's
+     * owner: that pair of entries is what makes the pair. Nothing checks it -
+     * there is nothing to check it against - so if the exchange stays empty the
+     * first thing to compare is the two codes.
+     */
+    private void askPerson(tw.tib.financisto.sync.People.Person existing) {
+        final android.widget.EditText name = new android.widget.EditText(this);
+        name.setSingleLine(true);
+        name.setHint(R.string.sharing_person_name);
+        final android.widget.EditText code = new android.widget.EditText(this);
+        code.setSingleLine(true);
+        code.setHint(R.string.sharing_person_code);
+        if (existing != null) {
+            name.setText(existing.name);
+            code.setText(existing.mark);
+        }
+        android.widget.LinearLayout box = new android.widget.LinearLayout(this);
+        box.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int pad = Math.round(16 * getResources().getDisplayMetrics().density);
+        box.setPadding(pad, pad / 2, pad, 0);
+        box.addView(name);
+        box.addView(code);
+
+        android.app.AlertDialog.Builder b = new android.app.AlertDialog.Builder(this)
+                .setTitle(existing == null ? R.string.sharing_person_add : R.string.sharing_people)
+                .setMessage(R.string.sharing_person_why)
+                .setView(box)
+                .setPositiveButton(R.string.ok, (d, w) -> {
+                    if (existing != null) {
+                        tw.tib.financisto.sync.People.forget(db.db(), existing.mark);
+                    }
+                    tw.tib.financisto.sync.People.seen(db.db(),
+                            code.getText().toString(), name.getText().toString());
+                    show();
+                })
+                .setNegativeButton(R.string.cancel, null);
+        if (existing != null) {
+            b.setNeutralButton(R.string.delete, (d, w) -> {
+                tw.tib.financisto.sync.People.forget(db.db(), existing.mark);
+                show();
+            });
+        }
+        b.show();
     }
 
     /**
