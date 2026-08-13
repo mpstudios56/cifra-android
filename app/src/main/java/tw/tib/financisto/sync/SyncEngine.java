@@ -76,6 +76,11 @@ public class SyncEngine {
 
         List<String> theirs = folder.readOthers(myName, me);
         Log.i(TAG, "round: " + theirs.size() + " lines from the other phone");
+        // Who else is in the folder, learned from the names of the files rather
+        // than typed in by anybody.
+        for (String[] who : folder.whoWasThere()) {
+            People.seen(database, who[1], who[0]);
+        }
         result.received = takeIn(database, theirs, result);
         result.sent = putOut(database, folder, me, myName);
         result.ran = true;
@@ -172,7 +177,7 @@ public class SyncEngine {
         for (String line : lines) {
             try {
                 JSONObject o = new JSONObject(line);
-                if (o.optString("thing", "").isEmpty()) {
+                if (o.optString("thing", "").isEmpty() || !addressedToUs(o)) {
                     continue;
                 }
                 db.beginTransaction();
@@ -195,6 +200,9 @@ public class SyncEngine {
                 JSONObject o = new JSONObject(line);
                 String change = o.optString("change", "");
                 if (change.isEmpty() || seen(db, change)) {
+                    continue;
+                }
+                if (!addressedToUs(o)) {
                     continue;
                 }
                 String entity = o.optString("entity", "");
@@ -230,6 +238,28 @@ public class SyncEngine {
             }
         }
         return applied;
+    }
+
+    /**
+     * Whether a line is for this phone.
+     * <p>
+     * A line with no list of recipients is for everybody in the group: that is
+     * what sharing meant before anybody could be named, and it keeps a phone
+     * that joins later from being cut out of what was written before it
+     * arrived.
+     */
+    private static boolean addressedToUs(JSONObject o) {
+        org.json.JSONArray to = o.optJSONArray("to");
+        if (to == null || to.length() == 0) {
+            return true;
+        }
+        String me = People.myMark();
+        for (int i = 0; i < to.length(); i++) {
+            if (me.equals(to.optString(i, ""))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean seen(SQLiteDatabase db, String changeUuid) {

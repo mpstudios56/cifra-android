@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS person (
+    mark   TEXT NOT NULL DEFAULT '',
+    name   TEXT NOT NULL DEFAULT '',
+    seen_on INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (mark)
+);

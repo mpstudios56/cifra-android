@@ -1459,4 +1459,7 @@
     <string name="sharing_group_empty">Немає — читаються всі файли теки</string>
     <string name="sharing_group_why">Усі, хто ділиться між собою, пишуть той самий код. Читаються лише файли з ним.</string>
     <string name="sharing_group_hint">наприклад ДІМ24</string>
+    <string name="account_shared_with">Спільно з</string>
+    <string name="account_shared_with_all">Усіма в групі</string>
+    <string name="account_shared_with_nobody_yet">У спільній теці ще нікого не з’явилося. Після обміну тут можна буде вибрати людей.</string>
 </resources>

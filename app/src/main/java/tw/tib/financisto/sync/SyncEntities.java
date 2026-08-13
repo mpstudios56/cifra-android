@@ -57,6 +57,16 @@ public class SyncEntities {
                     if (SharedThings.ACCOUNT.equals(kind)) {
                         o.put("currency", currencyOf(db, thing.id));
                         o.put("type", stringOf(db, kind, thing.id, "type"));
+                        // Who this account is for. Absent means everybody in
+                        // the group. The labels below carry no list: they are
+                        // names, they arrive with the movements that use them,
+                        // and working out the union of the recipients of every
+                        // account that mentions a category would be a query per
+                        // label on every round.
+                        java.util.Set<String> to = SharedWith.recipientsOf(db, thing.uuid);
+                        if (!to.isEmpty()) {
+                            o.put("to", new org.json.JSONArray(to));
+                        }
                     }
                     lines.add(o.toString());
                 } catch (Exception e) {

@@ -1487,4 +1487,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sharing_group_empty">Nessuno — vengono letti tutti i file della cartella</string>
   <string name="sharing_group_why">Tutte le persone che condividono fra loro scrivono lo stesso codice. Vengono letti solo i file che lo portano, così una cartella può contenere più gruppi — e un gruppo può essere di più di due persone.</string>
   <string name="sharing_group_hint">per esempio CASA24</string>
+  <string name="account_shared_with">Condiviso con</string>
+  <string name="account_shared_with_all">Tutte le persone del gruppo</string>
+  <string name="account_shared_with_nobody_yet">Nella cartella condivisa non è ancora comparso nessuno. Dopo un giro di scambio potrai scegliere qui le persone del gruppo.</string>
 </resources>

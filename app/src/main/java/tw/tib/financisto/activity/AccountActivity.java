@@ -74,6 +74,9 @@ public class AccountActivity extends AbstractActivity {
 	private EditText accountTitle;
 	private EditText iconText;
 	private CheckBox isShared;
+	private TextView sharedWith;
+	/** Empty means everybody in the group. */
+	private final java.util.List<String> sharedWithMarks = new java.util.ArrayList<>();
 	private EditText accentColor;
 
 	private List<Currency> currencies;
@@ -240,6 +243,12 @@ public class AccountActivity extends AbstractActivity {
 		isShared = x.addCheckboxNode(layout,
 				R.id.is_shared, R.string.account_shared,
 				R.string.account_shared_summary, false);
+		// And with whom, once there is more than one person in the folder. With
+		// two people the question does not arise; with three the joint account
+		// is everybody's and the one for the flat is two of the three, which a
+		// tick cannot say.
+		sharedWith = x.addInfoNode(layout, R.id.shared_with,
+				R.string.account_shared_with, getString(R.string.account_shared_with_all));
 
 		if (account.id > 0) {
 			editAccount();
@@ -341,6 +350,9 @@ public class AccountActivity extends AbstractActivity {
 			case R.id.is_shared:
 				isShared.performClick();
 				break;
+			case R.id.shared_with:
+				chooseWhoWith();
+				break;
 			case R.id.account_icon:
 				showIconPicker();
 				break;
@@ -369,6 +381,68 @@ public class AccountActivity extends AbstractActivity {
 				addNewCurrency();
 				break;
 		}
+	}
+
+	/**
+	 * Who this account is held with.
+	 * <p>
+	 * The people are the ones seen in the shared folder - nobody types them in,
+	 * because each phone already writes a file called after its owner. Choosing
+	 * nobody means everybody, which is what the tick meant on its own.
+	 */
+	private void chooseWhoWith() {
+		java.util.List<tw.tib.financisto.sync.People.Person> people =
+				tw.tib.financisto.sync.People.all(db.db());
+		if (people.isEmpty()) {
+			Toast.makeText(this, R.string.account_shared_with_nobody_yet, Toast.LENGTH_LONG).show();
+			return;
+		}
+		String[] labels = new String[people.size()];
+		boolean[] chosen = new boolean[people.size()];
+		for (int i = 0; i < people.size(); i++) {
+			labels[i] = people.get(i).label();
+			chosen[i] = sharedWithMarks.isEmpty() || sharedWithMarks.contains(people.get(i).mark);
+		}
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.account_shared_with)
+				.setMultiChoiceItems(labels, chosen, (d, which, isChecked) -> chosen[which] = isChecked)
+				.setPositiveButton(R.string.ok, (d, w) -> {
+					sharedWithMarks.clear();
+					boolean all = true;
+					for (int i = 0; i < people.size(); i++) {
+						if (chosen[i]) {
+							sharedWithMarks.add(people.get(i).mark);
+						} else {
+							all = false;
+						}
+					}
+					// Everybody chosen is written as nobody chosen, so somebody
+					// who joins the group later is included too.
+					if (all) {
+						sharedWithMarks.clear();
+					}
+					showWhoWith(people);
+				})
+				.setNegativeButton(R.string.cancel, null)
+				.show();
+	}
+
+	private void showWhoWith(java.util.List<tw.tib.financisto.sync.People.Person> people) {
+		if (sharedWith == null) {
+			return;
+		}
+		if (sharedWithMarks.isEmpty()) {
+			sharedWith.setText(R.string.account_shared_with_all);
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (tw.tib.financisto.sync.People.Person p : people) {
+			if (sharedWithMarks.contains(p.mark)) {
+				if (sb.length() > 0) sb.append(", ");
+				sb.append(p.label());
+			}
+		}
+		sharedWith.setText(sb.toString());
 	}
 
 	/**
@@ -698,10 +772,13 @@ public class AccountActivity extends AbstractActivity {
 
 		isIncludedIntoTotals.setChecked(account.isIncludeIntoTotals);
 		isIncludedIntoReports.setChecked(account.isIncludeIntoReports);
+		String uuid = tw.tib.financisto.db.Uuids.of(db.db(),
+				tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, account.id);
 		isShared.setChecked(tw.tib.financisto.sync.SharedThings.isShared(db.db(),
-				tw.tib.financisto.sync.SharedThings.ACCOUNT,
-				tw.tib.financisto.db.Uuids.of(db.db(),
-						tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, account.id)));
+				tw.tib.financisto.sync.SharedThings.ACCOUNT, uuid));
+		sharedWithMarks.clear();
+		sharedWithMarks.addAll(tw.tib.financisto.sync.SharedWith.of(db.db(), uuid));
+		showWhoWith(tw.tib.financisto.sync.People.all(db.db()));
 		if (account.limitAmount != 0) {
 			limitInput.setAmount(-Math.abs(account.limitAmount));
 		}

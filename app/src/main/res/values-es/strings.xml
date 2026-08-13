@@ -1484,4 +1484,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_group_empty">Ninguno — se leen todos los archivos de la carpeta</string>
   <string name="sharing_group_why">Todas las personas que comparten entre sí escriben el mismo código. Solo se leen los archivos que lo llevan.</string>
   <string name="sharing_group_hint">por ejemplo CASA24</string>
+  <string name="account_shared_with">Compartida con</string>
+  <string name="account_shared_with_all">Todas las personas del grupo</string>
+  <string name="account_shared_with_nobody_yet">Todavía no ha aparecido nadie en la carpeta compartida. Tras un intercambio podrás elegir aquí.</string>
 </resources>

@@ -1484,4 +1484,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sharing_group_empty">Aucun — tous les fichiers du dossier sont lus</string>
   <string name="sharing_group_why">Toutes les personnes qui partagent entre elles écrivent le même code. Seuls les fichiers qui le portent sont lus.</string>
   <string name="sharing_group_hint">par exemple MAISON24</string>
+  <string name="account_shared_with">Partagé avec</string>
+  <string name="account_shared_with_all">Tout le groupe</string>
+  <string name="account_shared_with_nobody_yet">Personne n’est encore apparu dans le dossier partagé. Après un échange, vous pourrez choisir ici.</string>
 </resources>

@@ -95,6 +95,14 @@ public class SyncPayload {
             // Travels with it, so the other phone shows it in the writer's
             // colour rather than claiming it as its own.
             o.put("created_by", string(c, "created_by"));
+            // And who it is for. Absent means everybody in the group, which is
+            // what sharing meant when it was a tick box - and what it goes on
+            // meaning for anybody who never names anybody.
+            String account = o.optString("from_account", "");
+            java.util.Set<String> to = SharedWith.recipientsOf(db, account);
+            if (!to.isEmpty()) {
+                o.put("to", new org.json.JSONArray(to));
+            }
             return o.toString();
         } catch (Exception e) {
             return null;

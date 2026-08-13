@@ -1586,4 +1586,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sharing_group_empty">None — every file in the folder is read</string>
     <string name="sharing_group_why">Everybody sharing with each other writes the same code. Only files carrying it are read, so one folder can hold more than one group - and a group can be more than two people.</string>
     <string name="sharing_group_hint">for example HOUSE24</string>
+    <string name="account_shared_with">Held with</string>
+    <string name="account_shared_with_all">Everybody in the group</string>
+    <string name="account_shared_with_nobody_yet">Nobody has appeared in the shared folder yet. After one round of exchange the people in the group can be chosen here.</string>
 </resources>

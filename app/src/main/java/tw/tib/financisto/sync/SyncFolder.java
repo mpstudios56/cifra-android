@@ -184,8 +184,16 @@ public class SyncFolder {
      * the exchange, and old files from before the naming changed are still
      * perfectly good text.
      */
+    /** Whoever was seen in the folder on the last read: {name, mark} each. */
+    private final List<String[]> seen = new ArrayList<>();
+
+    public List<String[]> whoWasThere() {
+        return seen;
+    }
+
     public List<String> readOthers(String author, String deviceId) {
         List<String> lines = new ArrayList<>();
+        seen.clear();
         String mine = nameFor(author, deviceId);
         try {
             String group = groupPart();
@@ -202,6 +210,10 @@ public class SyncFolder {
                     continue;
                 }
                 Log.i(TAG, "reading " + name);
+                String[] who = tw.tib.financisto.sync.People.fromFileName(name);
+                if (who != null) {
+                    seen.add(who);
+                }
                 read(file, lines);
             }
         } catch (Exception e) {

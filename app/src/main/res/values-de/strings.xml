@@ -1484,4 +1484,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_group_empty">Keiner — jede Datei im Ordner wird gelesen</string>
   <string name="sharing_group_why">Alle, die miteinander teilen, schreiben denselben Code. Nur Dateien mit diesem Code werden gelesen.</string>
   <string name="sharing_group_hint">zum Beispiel HAUS24</string>
+  <string name="account_shared_with">Geteilt mit</string>
+  <string name="account_shared_with_all">Allen in der Gruppe</string>
+  <string name="account_shared_with_nobody_yet">Im gemeinsamen Ordner ist noch niemand aufgetaucht. Nach einem Austausch kann hier gewählt werden.</string>
 </resources>
