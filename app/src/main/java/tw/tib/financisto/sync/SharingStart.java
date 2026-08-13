@@ -138,7 +138,14 @@ public class SharingStart {
             o.put("datetime", String.valueOf(System.currentTimeMillis()));
             o.put("from_amount", String.valueOf(balance));
             o.put("to_amount", "0");
-            o.put("note", accountTitle);
+            // Worded exactly as the app words it when somebody types an
+            // opening balance into a new account, because it is the same thing:
+            // "Saldo iniziale (Contanti)". A balance in this app is the sum of
+            // its movements, so the figure travels as the movement that makes
+            // it - which is what the account screen has always done.
+            o.put("note", tw.tib.financisto.Application.getInstance()
+                    .getString(tw.tib.financisto.R.string.opening_amount)
+                    + " (" + accountTitle + ")");
             o.put("status", "UR");
             o.put("is_ccard_payment", "0");
             o.put("original_currency_id", "0");
