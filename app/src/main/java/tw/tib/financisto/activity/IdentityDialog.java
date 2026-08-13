@@ -63,35 +63,10 @@ public class IdentityDialog {
             colours.addView(swatch);
         }
 
-        FlowLayout symbols = view.findViewById(R.id.identity_symbols);
-        // "None" first: a person without a symbol is the ordinary case, and it
-        // has to be as easy to choose as any of the others.
-        ImageView[] all = new ImageView[CategoryIcon.values().length];
-        View none = swatch(activity, 0x33FFFFFF, current.icon == null || current.icon.isEmpty());
-        none.setOnClickListener(v -> {
-            chosenIcon[0] = "";
-            for (ImageView s : all) {
-                s.setAlpha(0.45f);
-            }
-            mark(none, 0x33FFFFFF, true);
-        });
-        symbols.addView(none);
+        // No symbols here any more. What tells one person from another is the
+        // colour, and a wall of forty-four pictures under a name was a shop
+        // window rather than a choice.
 
-        CategoryIcon[] icons = CategoryIcon.values();
-        for (int i = 0; i < icons.length; i++) {
-            final CategoryIcon icon = icons[i];
-            ImageView symbol = symbol(activity, icon, icon.tag.equals(current.icon));
-            all[i] = symbol;
-            symbol.setOnClickListener(v -> {
-                chosenIcon[0] = icon.tag;
-                for (ImageView s : all) {
-                    s.setAlpha(0.45f);
-                }
-                symbol.setAlpha(1f);
-                mark(none, 0x33FFFFFF, false);
-            });
-            symbols.addView(symbol);
-        }
 
         new AlertDialog.Builder(activity)
                 .setTitle(which == Identity.MINE ? R.string.sync_author : R.string.sync_partner)
