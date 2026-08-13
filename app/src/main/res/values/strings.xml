@@ -1603,4 +1603,6 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
         <item quantity="other">%d accounts held with them</item>
     </plurals>
     <string name="sharing_people_none_yet">Nobody yet — tap to add somebody and the code you share with them</string>
+    <string name="sharing_section_setup">Setting up</string>
+    <string name="sharing_section_manage">Managing the sharing</string>
 </resources>

@@ -1497,4 +1497,6 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_person_code">Gemeinsamer Code</string>
   <string name="sharing_person_why">Derselbe Code muss auf ihrem Telefon neben Ihrem Namen stehen. Diese beiden Einträge bilden das Paar.</string>
   <string name="sharing_people_none_yet">Noch niemand — zum Hinzufügen tippen</string>
+  <string name="sharing_section_setup">Einrichtung</string>
+  <string name="sharing_section_manage">Verwaltung</string>
 </resources>

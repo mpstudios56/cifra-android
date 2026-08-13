@@ -1472,4 +1472,6 @@
     <string name="sharing_person_code">Спільний код</string>
     <string name="sharing_person_why">Той самий код має бути записаний на її телефоні поруч із вашим ім’ям.</string>
     <string name="sharing_people_none_yet">Поки нікого — торкніться, щоб додати</string>
+    <string name="sharing_section_setup">Налаштування</string>
+    <string name="sharing_section_manage">Керування</string>
 </resources>

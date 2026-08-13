@@ -212,36 +212,6 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
-            <!--
-              The code that says who belongs together. Everybody in a group
-              writes the same one; a phone reads only the files carrying it. It
-              is what allows one folder to hold two households, and a group to
-              be three people rather than two.
-            -->
-            <LinearLayout
-                android:id="@+id/sharing_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="14dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sharing_group"
-                    android:textAppearance="@style/ListPrimary" />
-
-                <TextView
-                    android:id="@+id/sharing_group_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
 
             <!--
               The round happens on its own when the screen opens; the button is

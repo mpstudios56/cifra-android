@@ -1497,4 +1497,6 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_person_code">Código compartido con ella</string>
   <string name="sharing_person_why">El mismo código debe escribirse en su teléfono junto a tu nombre. Esas dos entradas forman la pareja.</string>
   <string name="sharing_people_none_yet">Todavía nadie — toca para añadir</string>
+  <string name="sharing_section_setup">Configuración</string>
+  <string name="sharing_section_manage">Gestión</string>
 </resources>

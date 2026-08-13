@@ -69,12 +69,9 @@ public class SharingActivity extends AppCompatActivity {
 
         findViewById(R.id.sharing_me).setOnClickListener(v ->
                 IdentityDialog.show(this, Identity.MINE, this::show));
-        findViewById(R.id.sharing_them).setOnClickListener(v ->
-                IdentityDialog.show(this, Identity.THEIRS, this::show));
         findViewById(R.id.sharing_log).setOnClickListener(v ->
                 startActivity(new Intent(this, ChangeLogActivity.class)));
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
-        findViewById(R.id.sharing_group).setOnClickListener(v -> askGroupCode());
         findViewById(R.id.sharing_people).setOnClickListener(v -> showPeople());
         findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
         findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
@@ -179,8 +176,6 @@ public class SharingActivity extends AppCompatActivity {
     private void show() {
         show(Identity.mine(this), R.id.sharing_me_name, R.id.sharing_me_dot,
                 R.id.sharing_me_icon, R.string.sharing_me_empty);
-        show(Identity.theirs(this), R.id.sharing_them_name, R.id.sharing_them_dot,
-                R.id.sharing_them_icon, R.string.sharing_them_empty);
 
         String folder = MyPreferences.getSyncFolder();
         ((TextView) findViewById(R.id.sharing_folder_value)).setText(folder.isEmpty()
@@ -215,11 +210,6 @@ public class SharingActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.sharing_people_value)).setText(people.isEmpty()
                 ? getString(R.string.sharing_people_none_yet)
                 : who.toString());
-
-        String group = MyPreferences.getSyncGroupCode();
-        ((TextView) findViewById(R.id.sharing_group_value)).setText(group.isEmpty()
-                ? getString(R.string.sharing_group_empty)
-                : group);
 
         TextView file = findViewById(R.id.sharing_file);
         file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
@@ -310,36 +300,6 @@ public class SharingActivity extends AppCompatActivity {
             });
         }
         b.show();
-    }
-
-    /**
-     * The code everybody in the group writes, the same on every phone.
-     * <p>
-     * Free text on purpose: it is not a password and it is not checked against
-     * anything - it only has to be typed the same way by the people who mean to
-     * be together. Changing it changes the name of the file this phone writes,
-     * so the old one is left behind in the folder and should be deleted.
-     */
-    private void askGroupCode() {
-        final android.widget.EditText field = new android.widget.EditText(this);
-        field.setSingleLine(true);
-        field.setText(MyPreferences.getSyncGroupCode());
-        field.setHint(R.string.sharing_group_hint);
-        int pad = Math.round(16 * getResources().getDisplayMetrics().density);
-        android.widget.FrameLayout box = new android.widget.FrameLayout(this);
-        box.setPadding(pad, pad / 2, pad, 0);
-        box.addView(field);
-
-        new android.app.AlertDialog.Builder(this)
-                .setTitle(R.string.sharing_group)
-                .setMessage(R.string.sharing_group_why)
-                .setView(box)
-                .setPositiveButton(R.string.ok, (d, w) -> {
-                    MyPreferences.setSyncGroupCode(field.getText().toString());
-                    show();
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
     }
 
     private void show(Identity identity, int nameId, int dotId, int iconId, int emptyId) {

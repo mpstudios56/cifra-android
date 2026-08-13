@@ -1504,4 +1504,6 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
     <item quantity="other">%d conti condivisi con lei</item>
   </plurals>
   <string name="sharing_people_none_yet">Ancora nessuno — tocca per aggiungere una persona e il codice che avete in comune</string>
+  <string name="sharing_section_setup">Impostazione</string>
+  <string name="sharing_section_manage">Gestione della condivisione</string>
 </resources>

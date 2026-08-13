@@ -1497,4 +1497,6 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sharing_person_code">Code partagé avec elle</string>
   <string name="sharing_person_why">Le même code doit être écrit sur son téléphone en face de votre nom. Ces deux entrées font la paire.</string>
   <string name="sharing_people_none_yet">Personne encore — touchez pour ajouter</string>
+  <string name="sharing_section_setup">Configuration</string>
+  <string name="sharing_section_manage">Gestion</string>
 </resources>
