@@ -157,8 +157,11 @@ public class SyncEntities {
                 v.put("right", right + 2);
                 v.put("type", 0);
             } else if (SharedThings.LOCATION.equals(kind)) {
+                // is_payee went with the 2024 rebuild of this table. Writing it
+                // failed every insert, so no place from the other phone was
+                // ever created - and the movements that named one arrived with
+                // nowhere to point.
                 v.put("datetime", System.currentTimeMillis());
-                v.put("is_payee", 0);
             }
             return db.insert(kind, null, v) > 0;
         } catch (Exception e) {

@@ -237,10 +237,16 @@ public class SyncEngine {
                     } else {
                         applied++;
                     }
-                    // Written down either way: a change we could not apply is
-                    // still a change we have seen, and trying it again on every
-                    // round would report the same problem for ever.
-                    remember(db, o);
+                    // Only what actually landed is written down as seen. It
+                    // used to be written either way, on the grounds that a
+                    // change we cannot apply is still one we have seen - but
+                    // that made every failure permanent: the account it needed
+                    // arrived a minute later and the movement never came back
+                    // to be tried again. The file is rewritten whole at every
+                    // round, so a line that failed is still there next time.
+                    if (why == null) {
+                        remember(db, o);
+                    }
                     db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
