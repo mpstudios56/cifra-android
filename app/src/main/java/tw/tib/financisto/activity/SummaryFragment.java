@@ -323,21 +323,24 @@ public class SummaryFragment extends Fragment {
         String sql = "select a.title, a.total_amount, a.currency_id,"
                 + " (select count(*) from shared_thing s"
                 + " where s.kind = ? and s.uuid = a.uuid) as is_shared"
+                + ", a._id"
                 + " from account a where a.is_active = 1 and a.is_include_into_totals = 1"
                 + " order by a.total_amount desc";
+        sharedColours = tw.tib.financisto.sync.SharedWith.coloursByAccount(db.db());
         try (Cursor c = db.db().rawQuery(sql, new String[]{"account"})) {
             while (c.moveToNext()) {
                 String title = c.getString(0);
                 long amount = c.getLong(1);
                 Currency currency = CurrencyCache.getCurrency(c.getLong(2));
                 boolean isShared = c.getInt(3) > 0;
+                long accountId = c.getLong(4);
                 anyShared |= isShared;
                 if (isShared) {
                     shared += amount;
                 } else {
                     mine += amount;
                 }
-                into.addView(accountRow(title, amount, currency, isShared));
+                into.addView(accountRow(title, amount, currency, isShared, accountId));
             }
         } catch (Exception e) {
             return;
@@ -349,7 +352,8 @@ public class SummaryFragment extends Fragment {
     }
 
     /** One account: its name, and what is on it. */
-    private View accountRow(String title, long amount, Currency currency, boolean isShared) {
+    private View accountRow(String title, long amount, Currency currency, boolean isShared,
+                            long accountId) {
         LinearLayout row = new LinearLayout(getContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setPadding(0, dp(6), 0, dp(6));
@@ -373,7 +377,13 @@ public class SummaryFragment extends Fragment {
             android.graphics.drawable.GradientDrawable shape =
                     new android.graphics.drawable.GradientDrawable();
             shape.setShape(android.graphics.drawable.GradientDrawable.OVAL);
-            shape.setColor(Identity.theirs(getContext()).colour);
+            // The colour of the person the account is actually held with. It
+            // used to be the colour of "the other person", a single identity
+            // from when sharing was between two people: every dot came out the
+            // same amber whatever anybody had chosen.
+            java.util.List<Integer> theirs = sharedColours.get(accountId);
+            shape.setColor(theirs == null || theirs.isEmpty()
+                    ? Identity.COLOURS[1] : theirs.get(0));
             dot.setBackground(shape);
             row.addView(dot);
         }
@@ -405,6 +415,10 @@ public class SummaryFragment extends Fragment {
     }
 
     /** The name and figure on one line, and under them a bar of that width. */
+    /** The colour of whoever each shared account is held with, read once. */
+    private java.util.Map<Long, java.util.List<Integer>> sharedColours =
+            java.util.Collections.emptyMap();
+
     private View categoryRow(String title, long amount, long share, Currency home, int colour) {
         LinearLayout block = new LinearLayout(getContext());
         block.setOrientation(LinearLayout.VERTICAL);
