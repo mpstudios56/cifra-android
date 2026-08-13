@@ -82,6 +82,12 @@ public class SharingStart {
         String device = MyPreferences.getSyncDeviceId();
         String author = MyPreferences.getSyncAuthor();
         for (Long id : ids) {
+            if (alreadyQueued(db, id)) {
+                // Already waiting to go: queueing it again would write the same
+                // movement into the file twice, which costs the other phone a
+                // second read of something it has and gains nobody anything.
+                continue;
+            }
             String payload = SyncPayload.of(db, id);
             if (payload == null) {
                 continue;
@@ -145,6 +151,18 @@ public class SharingStart {
             return true;
         } catch (Exception e) {
             Log.e(TAG, "could not make the opening line", e);
+            return false;
+        }
+    }
+
+    /** Whether this movement is already sitting in the queue with something to say. */
+    private static boolean alreadyQueued(SQLiteDatabase db, long transactionId) {
+        try (Cursor c = db.query(ChangeLog.TABLE, new String[]{"_id"},
+                "entity=? and entity_id=? and payload<>''",
+                new String[]{DatabaseHelper.TRANSACTION_TABLE, String.valueOf(transactionId)},
+                null, null, null, "1")) {
+            return c.moveToFirst();
+        } catch (Exception e) {
             return false;
         }
     }

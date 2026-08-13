@@ -336,17 +336,11 @@ public class AccountActivity extends AbstractActivity {
 			// answer is given. It used to be asked and closed in the same
 			// breath, so the question was on screen for as long as it took the
 			// screen to go away.
-			// Asked whenever somebody new is added, not only the first time the
-			// account is shared: a person added to an account already held with
-			// others would otherwise receive nothing of what came before them.
-			boolean somebodyNew = false;
-			for (String mark : sharedWithMarks) {
-				if (!sharedWithBefore.contains(mark)) {
-					somebodyNew = true;
-					break;
-				}
-			}
-			if (somebodyNew) {
+			// Asked every time the account is saved while it is shared, not only
+			// when somebody new appears: an account detached and put back is the
+			// same decision to take again, and there is no way to take it if the
+			// question does not come.
+			if (nowShared) {
 				askWhatToShareOfThePast(accountId, accountUuid, account.title);
 			} else {
 				finish();
