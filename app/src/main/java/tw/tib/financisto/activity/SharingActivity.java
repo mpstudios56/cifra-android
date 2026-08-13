@@ -210,7 +210,9 @@ public class SharingActivity extends AppCompatActivity {
         }
         ((TextView) findViewById(R.id.sharing_people_value)).setText(people.isEmpty()
                 ? getString(R.string.sharing_people_none_yet)
-                : who.toString());
+                : getResources().getQuantityString(
+                        R.plurals.sharing_people_count, people.size(), people.size()));
+        drawPeople(people);
 
         TextView file = findViewById(R.id.sharing_file);
         file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
@@ -229,6 +231,95 @@ public class SharingActivity extends AppCompatActivity {
      * what to call them. This screen only shows the result - and says so, since
      * otherwise the obvious question is where the button to add somebody is.
      */
+    /**
+     * A row for each person: their colour, their symbol, their name, the code
+     * shared with them, and on the right how many accounts are held with them.
+     * Tapping one opens the bubble - colour and symbol, or remove.
+     * <p>
+     * The code is shown and never edited. It is what pairs two phones, and
+     * changing it here would quietly cut the pair without the other side
+     * knowing: whoever wants a different code removes the person and adds them
+     * again, which is the same work and says what it does.
+     */
+    private void drawPeople(java.util.List<tw.tib.financisto.sync.People.Person> people) {
+        android.widget.LinearLayout list = findViewById(R.id.sharing_people_list);
+        list.removeAllViews();
+        float density = getResources().getDisplayMetrics().density;
+        int pad = Math.round(16 * density);
+        for (tw.tib.financisto.sync.People.Person person : people) {
+            android.widget.LinearLayout row = new android.widget.LinearLayout(this);
+            row.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            row.setPadding(pad, pad / 2, pad, pad / 2);
+
+            View dot = new View(this);
+            int size = Math.round(14 * density);
+            android.widget.LinearLayout.LayoutParams dotLp =
+                    new android.widget.LinearLayout.LayoutParams(size, size);
+            dotLp.rightMargin = pad / 2;
+            dot.setLayoutParams(dotLp);
+            dot.setBackgroundResource(R.drawable.circle);
+            dot.getBackground().setTint(person.colour == 0 ? Identity.COLOURS[1] : person.colour);
+            row.addView(dot);
+
+            tw.tib.financisto.utils.CategoryIcon face =
+                    tw.tib.financisto.utils.CategoryIcon.parse(person.icon);
+            if (face != null) {
+                android.widget.ImageView pic = new android.widget.ImageView(this);
+                int picSize = Math.round(22 * density);
+                android.widget.LinearLayout.LayoutParams picLp =
+                        new android.widget.LinearLayout.LayoutParams(picSize, picSize);
+                picLp.rightMargin = pad / 2;
+                pic.setLayoutParams(picLp);
+                pic.setImageResource(face.iconId);
+                row.addView(pic);
+            }
+
+            android.widget.LinearLayout words = new android.widget.LinearLayout(this);
+            words.setOrientation(android.widget.LinearLayout.VERTICAL);
+            words.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
+                    0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            TextView name = new TextView(this);
+            name.setText(person.label());
+            name.setTextAppearance(R.style.ListPrimary);
+            TextView code = new TextView(this);
+            code.setText(getString(R.string.sharing_person_code_is, person.mark));
+            code.setAlpha(0.7f);
+            code.setTextSize(12.5f);
+            words.addView(name);
+            words.addView(code);
+            row.addView(words);
+
+            // On the right, how many accounts are held with this person.
+            TextView held = new TextView(this);
+            held.setText(String.valueOf(
+                    tw.tib.financisto.sync.People.accountsWith(db.db(), person.mark)));
+            held.setAlpha(0.6f);
+            held.setTextSize(17f);
+            row.addView(held);
+
+            row.setOnClickListener(v -> bubbleFor(person, v));
+            list.addView(row);
+        }
+    }
+
+    /** Colour and symbol, or remove. Not the code: that pairs the two phones. */
+    private void bubbleFor(tw.tib.financisto.sync.People.Person person, View anchor) {
+        java.util.List<tw.tib.financisto.utils.MenuItemInfo> items = new java.util.ArrayList<>();
+        items.add(new tw.tib.financisto.utils.MenuItemInfo(1, R.string.sharing_person_look,
+                R.drawable.palette));
+        items.add(new tw.tib.financisto.utils.MenuItemInfo(2, R.string.delete,
+                R.drawable.ic_row_delete));
+        RowMenu.show(this, anchor, items, which -> {
+            if (which == 1) {
+                askPerson(person);
+            } else {
+                tw.tib.financisto.sync.People.forget(db.db(), person.mark);
+                show();
+            }
+        });
+    }
+
     private void showPeople() {
         java.util.List<tw.tib.financisto.sync.People.Person> people =
                 tw.tib.financisto.sync.People.all(db.db());
@@ -273,6 +364,10 @@ public class SharingActivity extends AppCompatActivity {
         if (existing != null) {
             name.setText(existing.name);
             code.setText(existing.mark);
+            // What pairs the two phones. Changing it here would cut the pair
+            // without the other side knowing.
+            code.setEnabled(false);
+            code.setAlpha(0.5f);
         }
         android.widget.LinearLayout box = new android.widget.LinearLayout(this);
         box.setOrientation(android.widget.LinearLayout.VERTICAL);

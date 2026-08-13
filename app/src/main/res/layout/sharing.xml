@@ -179,6 +179,17 @@
             </LinearLayout>
 
             <!--
+              One row per person: their dot, their name, the code shared with
+              them. Held here rather than in a dialog because this is the list
+              somebody looks at to see whether the sharing is set up at all.
+            -->
+            <LinearLayout
+                android:id="@+id/sharing_people_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!--
               The exchange, with room around it. It used to have rows pressed
               against it on both sides, which is how somebody presses the wrong
               one.

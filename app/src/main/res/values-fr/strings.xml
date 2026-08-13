@@ -1500,4 +1500,6 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sharing_section_setup">Configuration</string>
   <string name="sharing_section_manage">Gestion</string>
   <string name="account_shared_with_nobody">Personne — ce compte n’est qu’à vous</string>
+  <string name="sharing_person_code_is">code %1$s</string>
+  <string name="sharing_person_look">Couleur et symbole</string>
 </resources>

@@ -1507,4 +1507,10 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sharing_section_setup">Impostazione</string>
   <string name="sharing_section_manage">Gestione della condivisione</string>
   <string name="account_shared_with_nobody">Nessuno — questo conto è solo tuo</string>
+  <string name="sharing_person_code_is">codice %1$s</string>
+  <string name="sharing_person_look">Colore e icona</string>
+  <plurals name="sharing_people_count">
+      <item quantity="one">%d persona</item>
+    <item quantity="other">%d persone</item>
+  </plurals>
 </resources>

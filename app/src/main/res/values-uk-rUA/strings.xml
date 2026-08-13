@@ -1475,4 +1475,6 @@
     <string name="sharing_section_setup">Налаштування</string>
     <string name="sharing_section_manage">Керування</string>
     <string name="account_shared_with_nobody">Ніхто — цей рахунок лише ваш</string>
+    <string name="sharing_person_code_is">kod %1$s</string>
+    <string name="sharing_person_look">Kolir i symvol</string>
 </resources>
