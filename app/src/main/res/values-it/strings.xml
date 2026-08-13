@@ -628,7 +628,7 @@
   <string name="currency_symbol_format">Formato del simbolo</string>
   <string name="use_header_from_file">La prima riga è l’intestazione</string>
   <string name="info">Informazioni</string>
-  <string name="balance">Bilancio</string>
+  <string name="balance">Rettifica il saldo</string>
   <string name="show_category_in_transfer">Categoria del trasferimento</string>
   <string name="show_category_in_transfer_summary">Mostra la categoria selezionata nella schermata di Nuovo Trasferimento</string>
   <string name="auto_backup">Backup automatico</string>
@@ -697,7 +697,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="report_income_expense_expense">Uscite</string>
   <string name="report_income_expense_summary">Sommario</string>
   <string name="csv_import_inprogress_update">Importazione dati da file CSV: %s%%...</string>
-  <string name="delete_old_transactions">Cancella vecchie transazioni</string>
+  <string name="delete_old_transactions">Elimina i movimenti vecchi</string>
   <string name="purge_account_backup_database">Fai un backup del database prima di eliminare le transazioni</string>
   <string name="purge_account_date_summary">Eliminare le transazioni precedenti alla data specificata INCLUSA. Il saldo del conto non sarà interessato.</string>
   <string name="purge_account_confirm_title">Conferma</string>
