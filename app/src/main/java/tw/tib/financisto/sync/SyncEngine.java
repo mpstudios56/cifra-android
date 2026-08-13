@@ -104,6 +104,13 @@ public class SyncEngine {
         // them the other phone receives a payment pointing at an account it has
         // never heard of, and can do nothing but skip it - which is exactly what
         // it did, silently, for as long as this was left unconnected.
+        // What the movements on shared accounts actually mention - the
+        // categories, the payees, the places - is worked out here and marked as
+        // shared before anything is written. The working out was in the program
+        // from the start and was never called, which is why the other phone
+        // received movements with no category, no payee and no place on them:
+        // the labels were never sent, so the references pointed at nothing.
+        adoptWhatTheMovementsMention(db);
         List<String> things = SyncEntities.lines(db);
         lines.addAll(things);
         Log.i(TAG, "sending " + things.size() + " shared things");
@@ -130,6 +137,28 @@ public class SyncEngine {
         boolean written = folder.write(myName, me, lines);
         Log.i(TAG, "wrote " + lines.size() + " lines: " + (written ? "yes" : "FAILED"));
         return written ? lines.size() : 0;
+    }
+
+    /**
+     * Marks as shared everything the movements on shared accounts refer to.
+     * <p>
+     * Done at every round rather than once: using a category for the first time
+     * on a shared account is enough to send it, with nobody having to remember
+     * to tick anything.
+     */
+    private static void adoptWhatTheMovementsMention(SQLiteDatabase db) {
+        int adopted = 0;
+        for (String kind : SharedThings.KINDS) {
+            if (SharedThings.ACCOUNT.equals(kind)) {
+                // Accounts are shared by hand, on purpose: they are the choice.
+                continue;
+            }
+            for (String uuid : SharedThings.dependents(db, kind)) {
+                SharedThings.adopt(db, kind, uuid);
+                adopted++;
+            }
+        }
+        Log.i(TAG, "labels the shared accounts depend on: " + adopted);
     }
 
     // --------------------------------------------------------------- taking in

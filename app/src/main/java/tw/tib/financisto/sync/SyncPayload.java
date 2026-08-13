@@ -7,6 +7,7 @@ package tw.tib.financisto.sync;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 import android.database.sqlite.SQLiteDatabase;
 
 import org.json.JSONObject;
@@ -26,6 +27,8 @@ import tw.tib.financisto.db.DatabaseHelper;
  * inventing, and inventing in somebody's accounts is worse than skipping.
  */
 public class SyncPayload {
+
+    private static final String TAG = "SyncPayload";
 
     private SyncPayload() {
     }
@@ -176,14 +179,41 @@ public class SyncPayload {
 
     // ------------------------------------------------------------------ lookups
 
+    /**
+     * The identifier the other phone will know this row by, made now if it has
+     * not got one.
+     * <p>
+     * Rows are named in bulk at the start of a round of exchange, which is too
+     * late for anything written between rounds: an account created and used
+     * straight away had no name yet, so its movements went out saying they
+     * belonged to "", and the other phone - quite rightly - could not place
+     * them and dropped them. That is why the first movements after making an
+     * account never arrived and later ones did.
+     */
     private static String uuidOf(SQLiteDatabase db, String table, long id) {
         if (id <= 0) {
             return "";
         }
         try (Cursor c = db.query(table, new String[]{"uuid"}, "_id=?",
                 new String[]{String.valueOf(id)}, null, null, null)) {
-            return c.moveToFirst() && c.getString(0) != null ? c.getString(0) : "";
+            if (!c.moveToFirst()) {
+                return "";
+            }
+            String uuid = c.getString(0);
+            if (uuid != null && !uuid.isEmpty()) {
+                return uuid;
+            }
         } catch (Exception e) {
+            return "";
+        }
+        try {
+            String made = java.util.UUID.randomUUID().toString();
+            android.content.ContentValues v = new android.content.ContentValues();
+            v.put("uuid", made);
+            db.update(table, v, "_id=?", new String[]{String.valueOf(id)});
+            return made;
+        } catch (Exception e) {
+            Log.e(TAG, "could not name " + table + " " + id, e);
             return "";
         }
     }
