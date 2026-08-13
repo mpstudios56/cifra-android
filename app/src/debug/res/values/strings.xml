@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The first test copy names itself so it is never mistaken for the one from the
+  store, which is the one somebody's real money is written in.
+-->
+<resources>
+    <string name="app_name">Cifra dev 1</string>
+</resources>
