@@ -1474,4 +1474,5 @@
     <string name="sharing_people_none_yet">Поки нікого — торкніться, щоб додати</string>
     <string name="sharing_section_setup">Налаштування</string>
     <string name="sharing_section_manage">Керування</string>
+    <string name="account_shared_with_nobody">Ніхто — цей рахунок лише ваш</string>
 </resources>

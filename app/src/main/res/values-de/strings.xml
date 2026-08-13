@@ -1499,4 +1499,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_people_none_yet">Noch niemand — zum Hinzufügen tippen</string>
   <string name="sharing_section_setup">Einrichtung</string>
   <string name="sharing_section_manage">Verwaltung</string>
+  <string name="account_shared_with_nobody">Niemand — dieses Konto gehört nur Ihnen</string>
 </resources>

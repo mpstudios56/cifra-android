@@ -1499,4 +1499,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_people_none_yet">Todavía nadie — toca para añadir</string>
   <string name="sharing_section_setup">Configuración</string>
   <string name="sharing_section_manage">Gestión</string>
+  <string name="account_shared_with_nobody">Nadie — esta cuenta es solo tuya</string>
 </resources>

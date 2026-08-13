@@ -1499,4 +1499,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sharing_people_none_yet">Personne encore — touchez pour ajouter</string>
   <string name="sharing_section_setup">Configuration</string>
   <string name="sharing_section_manage">Gestion</string>
+  <string name="account_shared_with_nobody">Personne — ce compte n’est qu’à vous</string>
 </resources>

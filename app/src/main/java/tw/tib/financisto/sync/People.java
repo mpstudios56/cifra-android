@@ -36,12 +36,15 @@ public class People {
         public final long seenOn;
         /** Their colour, so their entries are told apart at a glance. */
         public final int colour;
+        /** Their symbol, in the same set the categories use. */
+        public final String icon;
 
-        public Person(String mark, String name, long seenOn, int colour) {
+        public Person(String mark, String name, long seenOn, int colour, String icon) {
             this.mark = mark;
             this.name = name;
             this.seenOn = seenOn;
             this.colour = colour;
+            this.icon = icon == null ? "" : icon;
         }
 
         /** What to show: the name if they gave one, otherwise their mark. */
@@ -56,10 +59,11 @@ public class People {
     /** Everybody written down here, in the order they were added. */
     public static List<Person> all(SQLiteDatabase db) {
         List<Person> people = new ArrayList<>();
-        try (Cursor c = db.query(TABLE, new String[]{"mark", "name", "seen_on", "colour"},
+        try (Cursor c = db.query(TABLE, new String[]{"mark", "name", "seen_on", "colour", "icon"},
                 null, null, null, null, "seen_on asc")) {
             while (c.moveToNext()) {
-                people.add(new Person(c.getString(0), c.getString(1), c.getLong(2), c.getInt(3)));
+                people.add(new Person(c.getString(0), c.getString(1), c.getLong(2),
+                        c.getInt(3), c.getString(4)));
             }
         } catch (Exception e) {
             Log.e(TAG, "could not read the people", e);
@@ -77,6 +81,10 @@ public class People {
     }
 
     public static void seen(SQLiteDatabase db, String mark, String name, int colour) {
+        seen(db, mark, name, colour, "");
+    }
+
+    public static void seen(SQLiteDatabase db, String mark, String name, int colour, String icon) {
         if (mark == null || mark.trim().isEmpty()) {
             return;
         }
@@ -87,6 +95,7 @@ public class People {
             v.put("name", name == null ? "" : name);
             v.put("seen_on", System.currentTimeMillis());
             v.put("colour", colour);
+            v.put("icon", icon == null ? "" : icon);
             db.insertWithOnConflict(TABLE, null, v, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Exception e) {
             Log.e(TAG, "could not remember " + mark, e);
