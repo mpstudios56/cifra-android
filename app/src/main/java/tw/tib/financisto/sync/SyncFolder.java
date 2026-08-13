@@ -80,13 +80,20 @@ public class SyncFolder {
      * still inside every line, which is what the reading actually goes by.
      */
     public static String nameFor(String author, String deviceId) {
+        String mark = deviceId == null ? "" : deviceId.replace("-", "");
+        if (mark.length() > 8) {
+            mark = mark.substring(0, 8);
+        }
         String name = tidy(author);
         if (name.isEmpty()) {
-            // No name given yet: fall back to something unique rather than to
-            // "cifra-.txt", which both phones would then fight over.
-            name = deviceId.length() > 8 ? deviceId.substring(0, 8) : deviceId;
+            // Nobody has given themselves a name yet: the mark alone still
+            // keeps the two phones from writing over each other.
+            return PREFIX + mark + SUFFIX;
         }
-        return PREFIX + name + SUFFIX;
+        // Name and mark both: the name is for the person looking in the folder,
+        // the mark is what keeps two people called the same thing apart. Without
+        // it they would share one file and each would wipe the other's changes.
+        return PREFIX + name + "-" + mark + SUFFIX;
     }
 
     /** A name a file system will accept, with the spaces and slashes taken out. */
