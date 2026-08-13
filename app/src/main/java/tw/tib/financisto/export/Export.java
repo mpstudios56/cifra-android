@@ -47,7 +47,17 @@ public abstract class Export {
     }
 
     public Uri export() throws Exception {
-        Uri backupFolderUri = Uri.parse(getBackupFolder(context));
+        String folder = getBackupFolder(context);
+        // Until somebody picks a folder, the setting holds a plain path to the
+        // app's own directory - and every call built on DocumentsContract
+        // throws on it. That used to stop the safety backup, and with it the
+        // import it was protecting: the app refused to import anything until a
+        // backup folder had been chosen, which is not a thing anybody was told
+        // to do first.
+        if (folder == null || !folder.startsWith("content://")) {
+            return exportToPlainFolder(folder);
+        }
+        Uri backupFolderUri = Uri.parse(folder);
         String backupFolderId = DocumentsContract.getTreeDocumentId(backupFolderUri);
         Uri dirUri = DocumentsContract.buildDocumentUriUsingTree(backupFolderUri, backupFolderId);
         Uri backupFileUri = DocumentsContract.createDocument(context.getContentResolver(),
@@ -64,6 +74,40 @@ public abstract class Export {
             outputStream.close();
         }
         return backupFileUri;
+    }
+
+    /**
+     * Writing into an ordinary directory rather than a picked document tree.
+     * <p>
+     * The default is the app's own external directory, which needs no
+     * permission and is emptied when the app is uninstalled - fine for the copy
+     * taken automatically before an import, and the reason to keep offering the
+     * cloud folders for the copies meant to outlive the phone.
+     */
+    private Uri exportToPlainFolder(String path) throws Exception {
+        java.io.File dir = (path == null || path.isEmpty())
+                ? context.getExternalFilesDir(BACKUP_DIRECTORY_NAME)
+                : new java.io.File(path);
+        if (dir == null) {
+            throw new IOException("no place to write the backup to");
+        }
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IOException("could not make the backup folder: " + dir);
+        }
+        java.io.File file = new java.io.File(dir, generateFilename());
+        OutputStream outputStream = new java.io.FileOutputStream(file);
+        try {
+            if (useGzip) {
+                export(new GZIPOutputStream(outputStream));
+            } else {
+                export(outputStream);
+            }
+        } finally {
+            outputStream.flush();
+            outputStream.close();
+        }
+        Log.i("Financisto", "backup written to " + file);
+        return Uri.fromFile(file);
     }
 
     protected void export(OutputStream outputStream) throws Exception {
