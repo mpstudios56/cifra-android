@@ -17,9 +17,32 @@
 </style>
 <body>
 
-<h2>Cifra 1.9.0</h2>
+<h2>Cifra 1.8.1</h2>
 
 <ul>
+    <li><b>Sharing works now.</b> The part that sends the shared accounts,
+        categories, payees and places was written and never called: movements
+        went out, reached the other phone pointing at an account it had never
+        heard of, and were skipped in silence. The shared things now travel in
+        the same file, ahead of the movements that refer to them</li>
+    <li><b>And it runs by itself:</b> a round when you come back to the app,
+        every couple of minutes while it stays open, and straight after a
+        movement is saved. It used to run only from the button on the Sharing
+        screen. Nothing runs while the app is closed</li>
+    <li><b>The file in the shared folder</b> is now named after you -
+        <i>cifra-Marcello-531439ae.txt</i> - instead of a string of hex, and
+        the Sharing screen says which one it is, so you can check the cloud</li>
+    <li><b>Import and Delete old movements were blocked.</b> Both take a backup
+        before touching anything and stop if it fails - and it always failed
+        for anybody who had not picked a backup folder by hand, which is nearly
+        everybody. It works with the default folder now</li>
+    <li><b>Importing next month's statement</b> no longer brings the
+        overlapping days in twice: lines already in the account are left out
+        and the summary says how many. Two genuine payments of the same amount
+        on the same day still both come in</li>
+    <li><b>If the app closes on its own</b>, it asks on the next start whether
+        to send the reason: version, phone and the place in the code, no data
+        of yours, and only if you press the button</li>
     <li><b>The import and export screens have been redrawn.</b> CSV and QIF
         still looked like 2011: tiny labels, spinners drawn as underlined
         lines, hairline dividers, and the export options crammed into a
@@ -40,11 +63,6 @@
     <li>In the CSV import the account you pick is now called the <b>default
         account</b>, with a line saying what it actually does: it applies only
         to rows that do not name an account of their own</li>
-</ul>
-
-<h2>Cifra 1.8.0</h2>
-
-<ul>
     <li><b>Hide the figures.</b> One tap on the eye at the bottom right and
         every amount in the app turns into dots: balances, movements, totals,
         summary, reports and the widget. The red and green go too, or money in
