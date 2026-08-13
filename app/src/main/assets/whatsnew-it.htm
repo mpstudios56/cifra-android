@@ -20,44 +20,86 @@
 <h2>Cifra 1.9.1</h2>
 
 <ul>
-    <li><b>La condivisione consegna.</b> Prima partivano i conti e le categorie
-        e non arrivava un movimento: chi riceveva rifiutava ogni riga
-        indirizzata, e i movimenti scritti fra uno scambio e l’altro
-        uscivano senza il proprio identificativo. Corretto, e provato fra due
-        telefoni</li>
-    <li><b>Si condivide con le persone.</b> In Condivisione il più aggiunge
-        una persona: nome, colore e un codice, che va scritto uguale anche sul
-        suo telefono accanto al tuo nome. Le persone possono essere più di
-        una, e ogni conto sceglie con chi è condiviso</li>
-    <li><b>Ogni movimento arrivato porta il nome di chi l’ha scritto</b> e
-        il suo colore, legati al codice della coppia e non al telefono: chi
-        cambia telefono resta sé stesso</li>
-    <li><b>Quando condividi un conto</b> l’app chiede quali movimenti
-        condividere: tutti, un saldo iniziale, oppure solo i nuovi da oggi</li>
+    <li><b>I movimenti arrivano davvero.</b> Nella 1.9 partivano conti,
+        categorie e luoghi ma non un movimento: chi riceveva rifiutava ogni
+        riga indirizzata a lui, e i movimenti scritti fra uno scambio e l’altro
+        uscivano senza il proprio identificativo</li>
+    <li><b>La firma è il codice della coppia, non il telefono.</b> Chi cambia
+        telefono resta sé stesso, e i movimenti arrivati prima sono stati
+        rifirmati</li>
+    <li><b>Ogni movimento arrivato dice chi l’ha scritto:</b> aprendolo, la riga
+        “Generato da”</li>
+    <li><b>Il pallino prende il colore che hai dato a quella persona</b>, sui
+        movimenti e sui conti che arrivano, invece di essere sempre ambra</li>
+    <li><b>La domanda è “Quali movimenti condividere?”</b> — Tutti, Genera
+        saldo, Nuovi da oggi — con Annulla e Salva, e compare a ogni
+        salvataggio, sia dentro il conto sia in Conti condivisi</li>
+    <li><b>Il saldo generato</b> entra come riga di apertura, scritta come le
+        scrive l’app quando apri un conto</li>
     <li><b>Tutte le schermate stanno dentro le barre di sistema.</b> Alcune
         finivano sotto i tasti di navigazione, e il primo movimento di un conto
-        era invisibile: c’era, era pagato, non si vedeva</li>
-    <li><b>L’aggiunta rapida aperta da un conto parte da quel conto</b>,
-        invece che dall’ultimo usato</li>
-    <li>Lo scambio parte da solo: al ritorno sull’app, ogni due minuti
-        mentre è aperta, e dopo ogni movimento salvato</li>
-    <li>Il registro delle modifiche si azzera, con doppia conferma, e il backup
-        si porta dietro anche la condivisione</li>
+        era invisibile: c’era, contava nel saldo, non si vedeva</li>
+    <li><b>Cancellando un movimento il saldo si aggiorna subito:</b> lo scambio
+        automatico apriva una seconda connessione al database e la schermata
+        continuava a leggere il totale di prima</li>
+    <li><b>L’aggiunta rapida aperta da un conto parte da quel conto</b>, invece
+        che dall’ultimo usato</li>
+    <li>In Conti condivisi ogni conto mostra sotto di sé le persone con cui
+        è condiviso, e il contatore conta i conti</li>
+    <li>Il backup si porta dietro anche le persone e le condivisioni</li>
+</ul>
+
+<h2>Cifra 1.9.0</h2>
+
+<ul>
+    <li><b>La condivisione funziona.</b> Prima non arrivava niente: il pezzo che
+        manda conti, categorie, beneficiari e luoghi era scritto ma non
+        collegato, e gli identificativi venivano assegnati troppo tardi, così i
+        movimenti partivano senza dire a quale conto appartenessero</li>
+    <li><b>Si condivide con persone, non con "l'altro telefono".</b> In
+        Condivisione aggiungi una persona con il <b>+</b>: nome, colore e un
+        <b>codice</b> che va scritto uguale anche sul suo telefono accanto al
+        tuo nome. Quel codice è la coppia. Puoi averne più di una, e i conti
+        che condividi con Debora non sono quelli che condividi con Antonio</li>
+    <li><b>Nel conto una domanda sola:</b> con chi è condiviso. Spuntare
+        qualcuno è condividere, non spuntare nessuno è non condividere</li>
+    <li><b>Si vede a colpo d'occhio:</b> ogni persona ha il suo colore, e su
+        ogni conto condiviso compare un pallino per persona — uno, quattro due
+        per due, nove tre per tre. Anche nel riepilogo</li>
+    <li><b>Quando accendi la condivisione di un conto</b> ti chiede cosa passa
+        del passato: tutto lo storico, il saldo di oggi come riga di apertura,
+        oppure niente</li>
+    <li><b>Lo scambio parte da solo:</b> quando torni sull'app, ogni due minuti
+        finché resta aperta, e subito dopo aver salvato un movimento</li>
+    <li>Il file nella cartella condivisa si chiama con il tuo nome e il codice,
+        così controlli nel cloud che ci sia</li>
+    <li>Il registro delle modifiche si può azzerare, con doppia conferma</li>
 </ul>
 
 <h3>Il resto</h3>
 
 <ul>
-    <li>Un difetto bloccava importazione e cancellazione dei movimenti vecchi
-        per chi non aveva scelto a mano una cartella di backup</li>
-    <li>Reimportando l’estratto conto del mese dopo, i giorni che si
+    <li><b>Le schermate di importazione ed esportazione</b> CSV e QIF sono state
+        rifatte, e in fondo alle schede il tasto che salva è verde e pieno
+        mentre quello che annulla è a contorno</li>
+    <li><b>Un difetto bloccava importazione e cancellazione dei movimenti
+        vecchi</b> per chiunque non avesse scelto a mano una cartella di
+        backup, cioè quasi tutti</li>
+    <li>Reimportando l'estratto conto del mese dopo, i giorni che si
         sovrappongono non entrano due volte</li>
-    <li>Calcolatrice, rotelle dell’importo, schermate di importazione ed
-        esportazione, valute, categorie e menu del tocco lungo rifatti</li>
-    <li>Un tocco sull’occhio in basso a destra nasconde tutti gli importi</li>
-    <li>Se l’app si chiude da sola, alla riapertura offre di mandarne il
+    <li><b>La calcolatrice</b> è nei colori dell'app e ha una memoria sola,
+        STO e M, al posto dei quattro registri X Y Z T; le rotelle
+        dell'importo sono state ridisegnate</li>
+    <li><b>Nascondi gli importi:</b> un tocco sull'occhio e ogni cifra diventa
+        una fila di puntini</li>
+    <li>Grafici dei report, schermata delle valute, menu del tocco lungo e
+        gestione delle categorie rifatti</li>
+    <li>Se l'app si chiude da sola, alla riapertura chiede se mandarne il
         motivo</li>
 </ul>
+
+<p>Un ringraziamento particolare a <b>Roberto Pandolfo</b> per i feedback e le
+    idee.</p>
 
 <h2>Cifra 1.7.1</h2>
 
