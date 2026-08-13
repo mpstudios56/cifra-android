@@ -16,6 +16,19 @@
 	<style name="AppTheme" parent="android:Theme.Material">
 		<item name="android:popupMenuStyle">@style/AppPopupMenu</item>
 		<item name="android:alertDialogTheme">@style/AlertDialog</item>
+		<!--
+		  The screens that still use the platform's own title bar - the budget,
+		  the category, the account - were showing the app's icon beside the
+		  title, which is the shape of an Android screen from 2013 and appears
+		  nowhere else in the app. The title on its own, like the screens with
+		  a toolbar of their own.
+		-->
+		<item name="android:actionBarStyle">@style/AppActionBar</item>
+	</style>
+	<style name="AppActionBar" parent="android:Widget.Material.ActionBar">
+		<item name="android:displayOptions">showTitle</item>
+		<item name="android:background">#FF1A1A1A</item>
+		<item name="android:elevation">0dp</item>
 	</style>
 	<style name="AppPopupMenu" parent="android:Widget.Material.PopupMenu">
 		<item name="android:popupBackground">@drawable/popup_menu_background</item>
