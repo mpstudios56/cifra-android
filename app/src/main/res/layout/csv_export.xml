@@ -1,210 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (c) 2010 Denis Solonenko.
+  Writing a CSV.
+
+  The choices were in a three-column grid with invisible spinners padding out
+  the empty cells, so the tick boxes landed in two ragged columns and half of
+  them were cut off on a narrow screen. They are questions, and questions go
+  one under another.
+
+  Copyright (c) 2011 Denis Solonenko.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
-  Contributors:
-      Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:orientation="vertical" android:padding="3dp">
+    android:id="@+id/csv_export_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                style="@style/FormSection"
+                android:layout_marginTop="0dp"
                 android:text="@string/period" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_period_note" />
 
             <Button
                 android:id="@+id/bPeriod"
-                style="@style/DarkButton"
-                android:layout_width="fill_parent"
+                style="@style/FormButtonGhost"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <include layout="@layout/list_divider" />
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_import_shape" />
 
-            <GridLayout
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_shape_note" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:useDefaultMargins="true">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_columnWeight="1"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:text="@string/decimals" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_columnWeight="1"
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimals" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimals"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimals"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:text="@string/decimal_separator" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_columnWeight="1"
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimal_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimalSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimal_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:text="@string/group_separator" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerDecimals"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:entries="@array/decimals"
-                    android:theme="@style/Monospaced" />
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/group_separator" />
 
-                <Spinner
-                    android:id="@+id/spinnerDecimalSeparators"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:entries="@array/decimal_separators"
-                    android:theme="@style/Monospaced" />
+                    <Spinner
+                        android:id="@+id/spinnerGroupSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/group_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+            </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/spinnerGroupSeparators"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:entries="@array/group_separators"
-                    android:theme="@style/Monospaced" />
+            <TextView
+                style="@style/FormFieldLabel"
+                android:text="@string/field_separator" />
 
-                <View android:layout_height="1dp"
-                    android:background="@drawable/divider_horizontal_dark"
-                    android:layout_columnSpan="3" />
+            <Spinner
+                android:id="@+id/spinnerFieldSeparator"
+                style="@style/FormSpinner"
+                android:entries="@array/field_separators"
+                android:theme="@style/Monospaced" />
 
-                <TextView
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:text="@string/field_separator" />
+            <CheckBox
+                android:id="@+id/checkboxUseCurrencyDecimals"
+                style="@style/FormCheckBox"
+                android:text="@string/export_use_currency_specific_decimals" />
 
-                <CheckBox
-                    android:id="@+id/checkboxIncludeHeader"
-                    android:layout_rowSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="true"
-                    android:text="@string/include_header" />
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_export_contents" />
 
-                <CheckBox
-                    android:id="@+id/checkboxUploadToDropbox"
-                    android:layout_rowSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/upload_to_dropbox" />
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_contents_note" />
 
-                <Spinner
-                    android:id="@+id/spinnerFieldSeparator"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:entries="@array/field_separators"
-                    android:theme="@style/Monospaced" />
+            <CheckBox
+                android:id="@+id/checkboxIncludeHeader"
+                style="@style/FormCheckBox"
+                android:checked="true"
+                android:text="@string/include_header" />
 
-                <View android:layout_height="1dp"
-                    android:background="@drawable/divider_horizontal_dark"
-                    android:layout_columnSpan="3" />
+            <CheckBox
+                android:id="@+id/checkboxIncludeTxStatus"
+                style="@style/FormCheckBox"
+                android:text="@string/include_tx_status" />
 
-                <Spinner
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:visibility="invisible" />
+            <CheckBox
+                android:id="@+id/checkboxExportSplits"
+                style="@style/FormCheckBox"
+                android:text="@string/export_splits" />
 
-                <CheckBox
-                    android:id="@+id/checkboxIncludeTxStatus"
-                    android:layout_rowSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/include_tx_status" />
+            <CheckBox
+                android:id="@+id/checkboxExportSplitParents"
+                style="@style/FormCheckBox"
+                android:text="@string/export_split_parents" />
 
-                <CheckBox
-                    android:id="@+id/checkboxUploadToGDrive"
-                    android:layout_rowSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/upload_to_gdrive" />
+            <CheckBox
+                android:id="@+id/checkboxExportTxIDs"
+                style="@style/FormCheckBox"
+                android:text="@string/export_tx_ids" />
 
-                <Spinner
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:visibility="invisible" />
+            <CheckBox
+                android:id="@+id/checkboxExportAttributes"
+                style="@style/FormCheckBox"
+                android:text="@string/export_attributes" />
 
+            <CheckBox
+                android:id="@+id/checkboxExportRunningBalance"
+                style="@style/FormCheckBox"
+                android:text="@string/export_running_balance" />
 
-                <CheckBox
-                    android:id="@+id/checkboxExportSplits"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_splits" />
+            <CheckBox
+                android:id="@+id/checkboxExportTransferInSingleLine"
+                style="@style/FormCheckBox"
+                android:text="@string/export_transfer_as_single_line" />
 
-                <CheckBox
-                    android:id="@+id/checkboxExportSplitParents"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_split_parents" />
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_export_where" />
 
-                <CheckBox
-                    android:id="@+id/checkboxExportTxIDs"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_tx_ids" />
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_where_note" />
 
-                <CheckBox
-                    android:id="@+id/checkboxExportAttributes"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_attributes" />
+            <CheckBox
+                android:id="@+id/checkboxUploadToDropbox"
+                style="@style/FormCheckBox"
+                android:text="@string/upload_to_dropbox" />
 
-                <CheckBox
-                    android:id="@+id/checkboxExportRunningBalance"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_running_balance" />
-
-                <CheckBox
-                    android:id="@+id/checkboxExportTransferInSingleLine"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_transfer_as_single_line" />
-
-                <CheckBox
-                    android:id="@+id/checkboxUseCurrencyDecimals"
-                    android:layout_columnWeight="1"
-                    android:layout_width="0dp"
-                    android:layout_gravity="fill"
-                    android:checked="false"
-                    android:text="@string/export_use_currency_specific_decimals" />
-
-            </GridLayout>
-
+            <CheckBox
+                android:id="@+id/checkboxUploadToGDrive"
+                style="@style/FormCheckBox"
+                android:text="@string/upload_to_gdrive" />
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/ok_cancel_buttons"/>
+    <include layout="@layout/ok_cancel_buttons" />
 </LinearLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The action a screen exists for - Salva, OK, Importa - filled in the app's own
+  green. The two buttons at the foot of every form used to be identical grey
+  slabs, so the one that commits the work and the one that throws it away
+  looked exactly alike.
+-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33000000">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="24dp" />
+            <solid android:color="#FFFFFFFF" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="24dp" />
+            <solid android:color="#FF2F8F63" />
+        </shape>
+    </item>
+</ripple>

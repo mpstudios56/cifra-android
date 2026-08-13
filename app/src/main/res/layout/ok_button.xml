@@ -1,15 +1,20 @@
-<!--
-  ~ Copyright (c) 2012 Denis Solonenko.
-  ~ All rights reserved. This program and the accompanying materials
-  ~ are made available under the terms of the GNU Public License v2.0
-  ~ which accompanies this distribution, and is available at
-  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A screen with nothing to discard: one button, the width of the screen. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	style="@style/BottomBar">
-	<Button android:layout_weight="1" android:id="@+id/bOK" android:text="@string/ok"
-		android:layout_height="@dimen/action_button_size"
-		android:layout_width="0dp"
-		style="@style/TransactionDateTimeButton"
-		android:layout_marginRight="@dimen/action_button_margin" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FF1A1A1A"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="10dp">
+
+    <Button
+        android:id="@+id/bOK"
+        style="@style/FormButtonPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/ok" />
 </LinearLayout>

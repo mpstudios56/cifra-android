@@ -1,28 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
-  ~ Copyright (c) 2011 Denis Solonenko.
-  ~ All rights reserved. This program and the accompanying materials
-  ~ are made available under the terms of the GNU Public License v2.0
-  ~ which accompanies this distribution, and is available at
-  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  -->
+  Choosing the file to read.
+
+  It was a label, a text box nobody can type in, and a small yellow folder
+  beside it - a form field for something that is not typed but picked. It is
+  now one row that says what it is for and shows what was chosen, and the whole
+  row is the button.
+
+  The ids are the ones the import activities look for: edFilename holds the
+  chosen name, btn_browse opens the picker. Both still do exactly that.
+
+  Copyright (c) 2011 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+-->
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-              android:text="@string/file_name"/>
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-                  android:layout_height="wrap_content">
-        <EditText android:layout_weight="1" android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/edFilename" android:singleLine="true" android:focusable="false"
-                  android:hint="Please select file to import">
-        </EditText>
-        <ImageButton android:layout_width="wrap_content" android:layout_gravity="center_vertical"
-                     android:src="@drawable/ic_launcher_folder_small" android:id="@+id/btn_browse"
-                     android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/btn_browse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/form_button_ghost"
+        android:gravity="center_vertical"
+        android:minHeight="60dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_row_folder" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/file_name"
+                android:textColor="#FFF4EFE4"
+                android:textSize="15sp" />
+
+            <!-- Not a field to type in: it shows what was picked. -->
+            <EditText
+                android:id="@+id/edFilename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:ellipsize="middle"
+                android:focusable="false"
+                android:hint="@string/file_choose_hint"
+                android:paddingTop="1dp"
+                android:paddingBottom="0dp"
+                android:singleLine="true"
+                android:textSize="12.5sp" />
+        </LinearLayout>
     </LinearLayout>
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-              android:text="@string/file_import_utf8_warning" android:textColor="@color/negative_amount"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.55"
+        android:text="@string/file_import_utf8_warning"
+        android:textSize="12sp" />
 </merge>

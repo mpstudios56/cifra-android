@@ -1,63 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2011 Denis Solonenko.
-  ~ All rights reserved. This program and the accompanying materials
-  ~ are made available under the terms of the GNU Public License v2.0
-  ~ which accompanies this distribution, and is available at
-  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  -->
+  Reading a CSV written by another program.
+
+  Laid out like the settings screens: a heading, a line of small type saying
+  what the section is for, then the controls. It used to be labels and bare
+  spinners at 3dp of padding, separated by hairlines, with the three number
+  settings squeezed into a table.
+
+  Copyright (c) 2011 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="3dp">
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                      android:orientation="vertical">
-            <include layout="@layout/filename"/>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/csv_import_account_selector"/>
-            <Spinner android:layout_height="wrap_content" android:layout_width="fill_parent"
-                     android:id="@+id/spinnerAccount" android:prompt="@string/account" />
-            <include layout="@layout/list_divider"/>
-            <TableLayout android:layout_height="wrap_content"
-                         android:layout_width="fill_parent"
-                         android:stretchColumns="*">
-                <TableRow>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/decimals"/>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/decimal_separator"/>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/group_separator"/>
-                </TableRow>
-                <TableRow>
-                    <Spinner android:id="@+id/spinnerDecimals"
-                        android:theme="@style/Monospaced"
-                        android:entries="@array/decimals" />
-                    <Spinner android:id="@+id/spinnerDecimalSeparators"
-                        android:theme="@style/Monospaced"
-                        android:entries="@array/decimal_separators" />
-                    <Spinner android:id="@+id/spinnerGroupSeparators"
-                        android:theme="@style/Monospaced"
-                        android:entries="@array/group_separators"/>
-                </TableRow>
-                <TableRow>
-                    <TextView android:layout_marginLeft="3dp" android:text="@string/field_separator"/>
-                </TableRow>
-                <TableRow>
-                    <Spinner android:entries="@array/field_separators" android:theme="@style/Monospaced" android:id="@+id/spinnerFieldSeparator"/>
-                    <CheckBox android:layout_span="2" android:id="@+id/cbUseHeaderFromFile" android:text="@string/use_header_from_file"/>
-                </TableRow>
-            </TableLayout>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/date_format"/>
-            <Spinner android:layout_height="wrap_content" android:layout_width="fill_parent"
-                     android:id="@+id/spinnerDateFormats" android:theme="@style/Monospaced" android:entries="@array/date_format_values"/>
+    android:id="@+id/csv_import_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <include layout="@layout/filename" />
+
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_import_account_selector" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_import_account_note" />
+
+            <Spinner
+                android:id="@+id/spinnerAccount"
+                style="@style/FormSpinner"
+                android:prompt="@string/account" />
+
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_import_shape" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_import_shape_note" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimals" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimals"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimals"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimal_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimalSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimal_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/group_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerGroupSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/group_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/field_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerFieldSeparator"
+                        style="@style/FormSpinner"
+                        android:entries="@array/field_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/date_format" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDateFormats"
+                        style="@style/FormSpinner"
+                        android:entries="@array/date_format_values"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbUseHeaderFromFile"
+                style="@style/FormCheckBox"
+                android:text="@string/use_header_from_file" />
         </LinearLayout>
     </ScrollView>
-    <include layout="@layout/ok_cancel_buttons"/>
+
+    <include layout="@layout/ok_cancel_buttons" />
 </LinearLayout>

@@ -1,85 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (c) 2010 Denis Solonenko.
+  Writing a QIF.
+
+  Same shape as the CSV export beside it: period, accounts, how the numbers and
+  dates are written, and where the file goes.
+
+  Copyright (c) 2011 Denis Solonenko.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
-  Contributors:
-      Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:orientation="vertical" android:padding="3dp">
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
+    android:id="@+id/qif_export_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
-                android:layout_width="fill_parent" android:layout_height="fill_parent"
-                android:orientation="vertical">
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/period"/>
-            <Button android:layout_height="wrap_content" android:id="@+id/bPeriod"
-                    android:layout_width="fill_parent"
-                    style="@style/DarkButton" />
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/accounts"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/FormSection"
+                android:layout_marginTop="0dp"
+                android:text="@string/period" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_period_note" />
+
+            <Button
+                android:id="@+id/bPeriod"
+                style="@style/FormButtonGhost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/accounts" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/qif_export_accounts_note" />
 
             <Button
                 android:id="@+id/bAccounts"
-                style="@style/DarkButton"
-                android:layout_width="fill_parent"
+                style="@style/FormButtonGhost"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/all_accounts" />
-            <include layout="@layout/list_divider"/>
-            <TableLayout android:layout_height="wrap_content"
-                         android:layout_width="fill_parent"
-                         android:stretchColumns="*">
-                <TableRow>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/decimals"/>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/decimal_separator"/>
-                    <TextView android:layout_marginLeft="3dp"
-                              android:text="@string/group_separator"/>
-                </TableRow>
-                <TableRow>
-                    <Spinner android:id="@+id/spinnerDecimals"
-                             android:entries="@array/decimals"/>
-                    <Spinner android:id="@+id/spinnerDecimalSeparators"
-                             android:entries="@array/decimal_separators"/>
-                    <Spinner android:id="@+id/spinnerGroupSeparators"
-                             android:entries="@array/group_separators"/>
-                </TableRow>
-            </TableLayout>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/date_format"/>
-            <Spinner android:layout_height="wrap_content" android:layout_width="fill_parent"
-                     android:id="@+id/spinnerDateFormats" android:entries="@array/date_format_values"/>
-            <TableLayout android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:stretchColumns="*">
-                <TableRow>
-                    <CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent"
-                        android:id="@+id/checkboxUploadToDropbox" android:text="@string/upload_to_dropbox"/>
-                    <CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent"
-                        android:id="@+id/checkboxUploadToGDrive" android:text="@string/upload_to_gdrive"/>
-                </TableRow>
-            </TableLayout>
+
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_import_shape" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_shape_note" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimals" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimals"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimals"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/decimal_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDecimalSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/decimal_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormFieldLabel"
+                        android:text="@string/group_separator" />
+
+                    <Spinner
+                        android:id="@+id/spinnerGroupSeparators"
+                        style="@style/FormSpinner"
+                        android:entries="@array/group_separators"
+                        android:theme="@style/Monospaced" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/FormFieldLabel"
+                android:text="@string/date_format" />
+
+            <Spinner
+                android:id="@+id/spinnerDateFormats"
+                style="@style/FormSpinner"
+                android:entries="@array/date_format_values"
+                android:theme="@style/Monospaced" />
 
             <CheckBox
                 android:id="@+id/checkboxUseCurrencyDecimals"
-                android:layout_columnWeight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="fill"
-                android:checked="false"
+                style="@style/FormCheckBox"
                 android:text="@string/export_use_currency_specific_decimals" />
 
+            <TextView
+                style="@style/FormSection"
+                android:text="@string/csv_export_where" />
+
+            <TextView
+                style="@style/FormSectionNote"
+                android:text="@string/csv_export_where_note" />
+
+            <CheckBox
+                android:id="@+id/checkboxUploadToDropbox"
+                style="@style/FormCheckBox"
+                android:text="@string/upload_to_dropbox" />
+
+            <CheckBox
+                android:id="@+id/checkboxUploadToGDrive"
+                style="@style/FormCheckBox"
+                android:text="@string/upload_to_gdrive" />
         </LinearLayout>
     </ScrollView>
-    <include layout="@layout/ok_cancel_buttons"/>
+
+    <include layout="@layout/ok_cancel_buttons" />
 </LinearLayout>

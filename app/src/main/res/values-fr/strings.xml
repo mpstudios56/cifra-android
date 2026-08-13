@@ -1444,4 +1444,17 @@
   <string name="privacy_hidden">Montants masqués</string>
   <string name="privacy_shown">Montants de nouveau visibles</string>
   <string name="backup_settings">Réglages de sauvegarde</string>
+  <string name="csv_import_account_note">Utilisé seulement pour les lignes qui n’indiquent pas de compte. Celles qui en indiquent un vont sur ce compte, retrouvé par son nom.</string>
+  <string name="csv_import_shape">Comment le fichier est écrit</string>
+  <string name="csv_import_shape_note">Nombres, séparateurs et dates tels que les écrit le programme d’origine.</string>
+  <string name="qif_import_shape">Comment le fichier est écrit</string>
+  <string name="qif_import_shape_note">Les dates telles que les écrit le programme d’origine, et la devise des montants.</string>
+  <string name="file_choose_hint">Touchez pour choisir</string>
+  <string name="csv_export_period_note">Seules les opérations datées dans cette période sont écrites.</string>
+  <string name="csv_export_shape_note">Comment les nombres et les séparateurs sont écrits dans le fichier.</string>
+  <string name="csv_export_contents">Ce qui va dans le fichier</string>
+  <string name="csv_export_contents_note">Les colonnes supplémentaires. Les colonnes normales y sont toujours.</string>
+  <string name="csv_export_where">Où il va</string>
+  <string name="csv_export_where_note">Le fichier est de toute façon enregistré sur le téléphone. Ceci en envoie une copie en plus.</string>
+  <string name="qif_export_accounts_note">Quels comptes sont exportés.</string>
 </resources>

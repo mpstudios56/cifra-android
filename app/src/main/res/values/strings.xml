@@ -829,7 +829,7 @@
     <string name="csv_txid_not_found">txid %1$s is not an existing transaction</string>
     <string name="csv_currency_not_found">currency %1$s is invalid</string>
     <string name="csv_account_not_found">account %1$s is invalid</string>
-    <string name="csv_import_account_selector">Default Account\n(will use account specified in rows if non-empty)</string>
+    <string name="csv_import_account_selector">Default account</string>
 
     <string name="qif_import">QIF Import</string>
     <string name="qif_import_inprogress">Importing data from QIF…</string>
@@ -1546,4 +1546,17 @@
     <string name="privacy_hidden">Figures hidden</string>
     <string name="privacy_shown">Figures shown</string>
     <string name="backup_settings">Backup settings</string>
+    <string name="csv_import_account_note">Used only for rows that do not name an account of their own. Rows that do go to the account named there, matched by name.</string>
+    <string name="csv_import_shape">How the file is written</string>
+    <string name="csv_import_shape_note">Numbers, separators and dates as the program that wrote the file writes them.</string>
+    <string name="qif_import_shape">How the file is written</string>
+    <string name="qif_import_shape_note">Dates as the program that wrote the file writes them, and the currency the amounts are in.</string>
+    <string name="file_choose_hint">Tap to choose</string>
+    <string name="csv_export_period_note">Only the movements dated inside this period are written out.</string>
+    <string name="csv_export_shape_note">How the numbers and the separators are written in the file.</string>
+    <string name="csv_export_contents">What goes in the file</string>
+    <string name="csv_export_contents_note">The extra columns. The plain ones - date, account, amount, category - are always written.</string>
+    <string name="csv_export_where">Where it goes</string>
+    <string name="csv_export_where_note">The file is saved on the phone in any case. These send a copy on as well.</string>
+    <string name="qif_export_accounts_note">Which accounts are written out.</string>
 </resources>

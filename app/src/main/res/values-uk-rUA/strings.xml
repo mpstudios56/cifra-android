@@ -1420,4 +1420,17 @@
     <string name="privacy_hidden">Суми приховано</string>
     <string name="privacy_shown">Суми знову видно</string>
     <string name="backup_settings">Налаштування резервних копій</string>
+    <string name="csv_import_account_note">Використовується лише для рядків без власного рахунку.</string>
+    <string name="csv_import_shape">Як записано файл</string>
+    <string name="csv_import_shape_note">Числа, роздільники й дати так, як їх пише програма-джерело.</string>
+    <string name="qif_import_shape">Як записано файл</string>
+    <string name="qif_import_shape_note">Дати так, як їх пише програма-джерело, і валюта сум.</string>
+    <string name="file_choose_hint">Торкніться, щоб вибрати</string>
+    <string name="csv_export_period_note">Записуються лише операції з датою в цьому періоді.</string>
+    <string name="csv_export_shape_note">Як у файлі записуються числа й роздільники.</string>
+    <string name="csv_export_contents">Що потрапляє у файл</string>
+    <string name="csv_export_contents_note">Додаткові стовпці. Звичайні записуються завжди.</string>
+    <string name="csv_export_where">Куди він потрапляє</string>
+    <string name="csv_export_where_note">Файл у будь-якому разі зберігається на телефоні. Це надсилає ще й копію.</string>
+    <string name="qif_export_accounts_note">Які рахунки експортуються.</string>
 </resources>

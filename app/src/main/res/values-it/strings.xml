@@ -965,7 +965,7 @@
   <string name="csv_currency_not_found">la valuta %1$s non è valida</string>
   <string name="csv_date_format_error">la data non è nel formato indicato: %1$s</string>
   <string name="csv_date_required">la data è obbligatoria</string>
-  <string name="csv_import_account_selector">Conto predefinito\n(userà il conto indicato nelle righe, se presente)</string>
+  <string name="csv_import_account_selector">Conto predefinito</string>
   <string name="csv_time_format_error">l\'ora deve essere nel formato HH:MM:SS: %1$s</string>
   <string name="csv_time_required">l\'ora è obbligatoria</string>
   <string name="csv_to_amount_required">l\'importo di destinazione è obbligatorio per creare un trasferimento</string>
@@ -1447,4 +1447,17 @@
   <string name="privacy_hidden">Importi nascosti</string>
   <string name="privacy_shown">Importi di nuovo visibili</string>
   <string name="backup_settings">Impostazioni di backup</string>
+  <string name="csv_import_account_note">Usato solo per le righe che non indicano un conto proprio. Quelle che lo indicano finiscono nel conto scritto lì, cercato per nome.</string>
+  <string name="csv_import_shape">Com’è scritto il file</string>
+  <string name="csv_import_shape_note">Numeri, separatori e date come li scrive il programma che ha prodotto il file.</string>
+  <string name="qif_import_shape">Com’è scritto il file</string>
+  <string name="qif_import_shape_note">Le date come le scrive il programma che ha prodotto il file, e la valuta in cui sono gli importi.</string>
+  <string name="file_choose_hint">Tocca per scegliere</string>
+  <string name="csv_export_period_note">Vengono scritti solo i movimenti con data dentro questo periodo.</string>
+  <string name="csv_export_shape_note">Come vengono scritti i numeri e i separatori nel file.</string>
+  <string name="csv_export_contents">Cosa finisce nel file</string>
+  <string name="csv_export_contents_note">Le colonne in più. Quelle normali — data, conto, importo, categoria — ci sono sempre.</string>
+  <string name="csv_export_where">Dove finisce</string>
+  <string name="csv_export_where_note">Il file viene comunque salvato sul telefono. Questi ne mandano anche una copia.</string>
+  <string name="qif_export_accounts_note">Quali conti vengono esportati.</string>
 </resources>

@@ -1444,4 +1444,17 @@
   <string name="privacy_hidden">Beträge verborgen</string>
   <string name="privacy_shown">Beträge wieder sichtbar</string>
   <string name="backup_settings">Backup-Einstellungen</string>
+  <string name="csv_import_account_note">Nur für Zeilen ohne eigenes Konto. Zeilen mit Kontoangabe gehen auf das dort genannte Konto.</string>
+  <string name="csv_import_shape">Wie die Datei geschrieben ist</string>
+  <string name="csv_import_shape_note">Zahlen, Trennzeichen und Datumsangaben so, wie das erzeugende Programm sie schreibt.</string>
+  <string name="qif_import_shape">Wie die Datei geschrieben ist</string>
+  <string name="qif_import_shape_note">Datumsformat des erzeugenden Programms und die Währung der Beträge.</string>
+  <string name="file_choose_hint">Zum Auswählen tippen</string>
+  <string name="csv_export_period_note">Es werden nur Buchungen mit Datum in diesem Zeitraum geschrieben.</string>
+  <string name="csv_export_shape_note">Wie Zahlen und Trennzeichen in der Datei geschrieben werden.</string>
+  <string name="csv_export_contents">Was in die Datei kommt</string>
+  <string name="csv_export_contents_note">Die zusätzlichen Spalten. Die normalen stehen immer darin.</string>
+  <string name="csv_export_where">Wohin sie geht</string>
+  <string name="csv_export_where_note">Die Datei wird ohnehin auf dem Telefon gespeichert. Dies sendet zusätzlich eine Kopie.</string>
+  <string name="qif_export_accounts_note">Welche Konten ausgegeben werden.</string>
 </resources>

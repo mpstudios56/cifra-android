@@ -1444,4 +1444,17 @@
   <string name="privacy_hidden">Importes ocultos</string>
   <string name="privacy_shown">Importes visibles de nuevo</string>
   <string name="backup_settings">Ajustes de copia de seguridad</string>
+  <string name="csv_import_account_note">Se usa solo en las filas que no indican una cuenta propia. Las que la indican van a esa cuenta, buscada por nombre.</string>
+  <string name="csv_import_shape">Cómo está escrito el archivo</string>
+  <string name="csv_import_shape_note">Números, separadores y fechas tal como los escribe el programa que generó el archivo.</string>
+  <string name="qif_import_shape">Cómo está escrito el archivo</string>
+  <string name="qif_import_shape_note">Las fechas como las escribe el programa de origen, y la divisa de los importes.</string>
+  <string name="file_choose_hint">Toca para elegir</string>
+  <string name="csv_export_period_note">Solo se escriben los movimientos con fecha dentro de este periodo.</string>
+  <string name="csv_export_shape_note">Cómo se escriben los números y los separadores en el archivo.</string>
+  <string name="csv_export_contents">Qué va en el archivo</string>
+  <string name="csv_export_contents_note">Las columnas adicionales. Las normales siempre se escriben.</string>
+  <string name="csv_export_where">Dónde va</string>
+  <string name="csv_export_where_note">El archivo se guarda igualmente en el teléfono. Esto envía además una copia.</string>
+  <string name="qif_export_accounts_note">Qué cuentas se exportan.</string>
 </resources>

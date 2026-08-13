@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.view.ViewGroup;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -31,7 +32,8 @@ public abstract class AbstractImportActivity extends AppCompatActivity {
     public static final int IMPORT_FILENAME_REQUESTCODE = 0xff;
 
     private final int layoutId;
-    protected ImageButton bBrowse;
+    /** The whole row is the button now, not a small icon at the end of it. */
+    protected View bBrowse;
     protected EditText edFilename;
     protected Uri importFileUri;
 
