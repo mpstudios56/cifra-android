@@ -357,6 +357,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     @Override
     protected AccountRecyclerAdapter createAdapter(Context context, Cursor cursor) {
         long t1 = System.nanoTime();
+        var shared = tw.tib.financisto.sync.SharedThings.sharedAccountIds(db.db());
         var a = new AccountRecyclerAdapter(context, cursor, showSortOrder, clickedView -> {
             selectedId = (long) clickedView.getTag(R.id.account);
             if (MyPreferences.isQuickMenuEnabledForAccount()) {
@@ -381,6 +382,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
 //        mItemTouchHelper.attachToRecyclerView(recyclerView);
 
         Log.d(TAG, "createAdapter: " + (System.nanoTime() - t1) / 1000 + " us");
+        a.setSharedAccounts(shared);
         return a;
     }
 

@@ -132,6 +132,26 @@ public class SharedThings {
         return uuids;
     }
 
+    /**
+     * The identifiers of the accounts being shared, in one query.
+     * <p>
+     * For drawing a list: asking row by row would be one query per row on every
+     * scroll.
+     */
+    public static java.util.Set<Long> sharedAccountIds(SQLiteDatabase db) {
+        java.util.Set<Long> ids = new HashSet<>();
+        String sql = "select a._id from account a"
+                + " inner join " + TABLE + " s on s.uuid = a.uuid and s.kind = ?";
+        try (Cursor c = db.rawQuery(sql, new String[]{ACCOUNT})) {
+            while (c.moveToNext()) {
+                ids.add(c.getLong(0));
+            }
+        } catch (Exception e) {
+            // No table yet, or nothing shared: an empty answer is the right one.
+        }
+        return ids;
+    }
+
     /** Whether movements on this account travel. */
     public static boolean isAccountShared(SQLiteDatabase db, long accountId) {
         try (Cursor c = db.rawQuery(

@@ -48,6 +48,12 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
     private boolean showSortOrder;
     private View.OnClickListener onClickListener = null;
     private View.OnLongClickListener onLongClickListener = null;
+    /** Which accounts are held together with somebody, worked out once. */
+    private java.util.Set<Long> sharedAccounts = java.util.Collections.emptySet();
+
+    public void setSharedAccounts(java.util.Set<Long> ids) {
+        this.sharedAccounts = ids == null ? java.util.Collections.emptySet() : ids;
+    }
 
     public AccountRecyclerAdapter(Context context, Cursor c, boolean showSortOrder, View.OnClickListener onClickListener,
                                   View.OnLongClickListener onLongClickListener) {
@@ -98,6 +104,17 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         v.balanceTouch.setTag(R.id.account, a.getId());
 
         v.center.setText(a.title);
+
+        // Held together with somebody: a dot in their colour. Without it a
+        // shared account looks exactly like a private one, and the difference
+        // matters most when somebody is about to write something in it.
+        if (sharedAccounts.contains(a.getId())) {
+            v.sharedDot.setVisibility(View.VISIBLE);
+            v.sharedDot.getBackground().setTint(
+                    tw.tib.financisto.utils.Identity.theirs(context).colour);
+        } else {
+            v.sharedDot.setVisibility(View.GONE);
+        }
 
         AccountType type = AccountType.valueOf(a.type);
 
@@ -272,6 +289,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         public final View accent;
         public final ImageView activeIcon;
         public final TextView sortOrder;
+        public final View sharedDot;
         public final TextView top;
         public final TextView bottom;
         public final View balanceTouch;
@@ -291,6 +309,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             centerTouch = v.findViewById(R.id.center_touch);
             activeIcon = v.findViewById(R.id.active_icon);
             sortOrder = v.findViewById(R.id.sort_order);
+            sharedDot = v.findViewById(R.id.shared_dot);
             top = v.findViewById(R.id.top);
             bottom = v.findViewById(R.id.bottom);
             balanceTouch = v.findViewById(R.id.balance_touch);
