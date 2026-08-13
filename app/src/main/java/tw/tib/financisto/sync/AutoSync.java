@@ -81,6 +81,17 @@ public class AutoSync {
         }
     }
 
+    /** The one connection this class uses, for as long as the app is alive. */
+    private static DatabaseAdapter shared;
+
+    private static synchronized DatabaseAdapter shared(Context app) {
+        if (shared == null) {
+            shared = new DatabaseAdapter(app);
+            shared.open();
+        }
+        return shared;
+    }
+
     private static void now(Context context) {
         if (!configured() || running) {
             return;
@@ -88,9 +99,13 @@ public class AutoSync {
         Context app = context.getApplicationContext();
         running = true;
         new Thread(() -> {
-            DatabaseAdapter db = new DatabaseAdapter(app);
+            // One connection, opened once and kept. A round used to open its
+            // own and close it again: two connections onto the same file, and
+            // the screen reading through one while the round wrote through the
+            // other is how a balance stays on screen after the movement behind
+            // it has gone.
+            DatabaseAdapter db = shared(app);
             try {
-                db.open();
                 SyncEngine.Result result = SyncEngine.run(app, db);
                 Log.i(TAG, "round: " + result.received + " in, " + result.sent + " out");
             } catch (Exception e) {
@@ -99,10 +114,6 @@ public class AutoSync {
                 // Sharing screen says what happened for whoever goes to look.
                 Log.e(TAG, "a round did not finish", e);
             } finally {
-                try {
-                    db.close();
-                } catch (Exception ignored) {
-                }
                 running = false;
             }
         }).start();
