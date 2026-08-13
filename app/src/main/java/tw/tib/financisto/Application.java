@@ -68,7 +68,15 @@ public class Application extends MultiDexApplication {
                 if (activity instanceof PinActivity) return;
                 PrivacyButton.attachTo(activity);
             }
-            @Override public void onActivityCreated(Activity a, Bundle b) {}
+            @Override public void onActivityCreated(Activity a, Bundle b) {
+                // Every screen inside the bars, not behind them. Screens made
+                // over the years handle this each in their own way and some not
+                // at all, which is how the first movement of an account ended
+                // up underneath the navigation buttons - present, paid for,
+                // invisible. Said once here for all of them: the screens that
+                // do their own inset work simply receive nothing to add.
+                androidx.core.view.WindowCompat.setDecorFitsSystemWindows(a.getWindow(), true);
+            }
             @Override public void onActivityStarted(Activity a) {}
             @Override public void onActivityPaused(Activity a) {}
             @Override public void onActivityStopped(Activity a) {}
