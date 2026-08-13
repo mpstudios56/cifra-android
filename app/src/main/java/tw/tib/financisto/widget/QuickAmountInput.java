@@ -10,20 +10,16 @@
  ******************************************************************************/
 package tw.tib.financisto.widget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -33,7 +29,20 @@ import java.math.BigDecimal;
 import tw.tib.financisto.R;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.utils.CurrencyCache;
+import tw.tib.financisto.utils.Utils;
 
+/**
+ * Typing an amount on a movement.
+ * <p>
+ * It used to be a column of rolling wheels, one per digit, from the Android of
+ * 2010: to write 12,50 somebody had to drag four columns into place, and on a
+ * modern screen it read as a stack of numbers with no way in. Everybody types
+ * an amount the way a till does - digits from the right, the comma looking
+ * after itself - which is what the quick entry two taps away already does.
+ * <p>
+ * Same keys, same circles, same behaviour. Nothing else about the amount
+ * changes: this hands back a plain figure exactly as the wheels did.
+ */
 @EFragment
 public class QuickAmountInput extends DialogFragment {
 
@@ -42,8 +51,11 @@ public class QuickAmountInput extends DialogFragment {
     @FragmentArg
     protected long amount;
 
-    private AmountPicker picker;
     private AmountListener listener;
+    private Currency currency;
+    /** What has been typed, in the currency's smallest unit. */
+    private long cents;
+    private TextView display;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -53,54 +65,64 @@ public class QuickAmountInput extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        LinearLayout layout = new LinearLayout(activity);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setBackgroundColor(ContextCompat.getColor(activity, R.color.calculator_background));
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             Bundle savedInstanceState) {
+        currency = CurrencyCache.getCurrency(currencyId);
+        cents = Math.abs(amount);
 
-        LinearLayout.LayoutParams lpWrapWrap = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpWrapWrap.weight = 1;
+        View view = inflater.inflate(R.layout.amount_keypad, container, false);
+        display = view.findViewById(R.id.keypad_amount);
 
-        // picker
-        Currency currency = CurrencyCache.getCurrency(currencyId);
-        picker = new AmountPicker(activity, currency.decimals);
-        layout.addView(picker, lpWrapWrap);
-        picker.setCurrent(new BigDecimal(amount));
-        picker.setOnChangeListener((picker, oldVal, newVal) -> setTitle());
-
-        // buttons
-        LinearLayout buttonsLayout = new LinearLayout(new ContextThemeWrapper(activity, R.style.ButtonBar), null, R.style.ButtonBar);
-        buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-        Button bOK = new Button(activity);
-        bOK.setText(R.string.ok);
-        bOK.setOnClickListener(arg0 -> {
-            listener.onAmountChanged(picker.getCurrent().toPlainString());
+        int[] keys = {R.id.k0, R.id.k1, R.id.k2, R.id.k3, R.id.k4,
+                R.id.k5, R.id.k6, R.id.k7, R.id.k8, R.id.k9};
+        for (int digit = 0; digit < keys.length; digit++) {
+            final int value = digit;
+            view.findViewById(keys[digit]).setOnClickListener(v -> type(value));
+        }
+        view.findViewById(R.id.kClear).setOnClickListener(v -> {
+            cents = 0;
+            show();
+        });
+        view.findViewById(R.id.kBack).setOnClickListener(v -> {
+            cents = cents / 10;
+            show();
+        });
+        view.findViewById(R.id.kCancel).setOnClickListener(v -> dismiss());
+        view.findViewById(R.id.kOk).setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onAmountChanged(figure().toPlainString());
+            }
             dismiss();
         });
-        buttonsLayout.addView(bOK, lpWrapWrap);
 
-        Button bClear = new Button(activity);
-        bClear.setText(R.string.reset);
-        bClear.setOnClickListener(arg0 -> picker.setCurrent(BigDecimal.ZERO));
-        buttonsLayout.addView(bClear, lpWrapWrap);
-
-        Button bCancel = new Button(activity);
-        bCancel.setText(R.string.cancel);
-        bCancel.setOnClickListener(arg0 -> dismiss());
-
-        buttonsLayout.addView(bCancel, lpWrapWrap);
-        layout.addView(buttonsLayout, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        return layout;
+        show();
+        return view;
     }
 
-    private void setTitle() {
-        //setTitle(Utils.amountToString(currency, picker.getCurrent().multiply(Utils.HUNDRED)));
+    /**
+     * A digit typed at the right, the rest shifting up.
+     * <p>
+     * Stopped before the figure grows past what the column can hold: a
+     * thirteen-digit amount is a finger held down, not an amount.
+     */
+    private void type(int digit) {
+        if (cents > 99999999999L) {
+            return;
+        }
+        cents = cents * 10 + digit;
+        show();
+    }
+
+    private BigDecimal figure() {
+        int scale = currency == null ? 2 : currency.getScale();
+        return new BigDecimal(cents).movePointLeft(scale);
+    }
+
+    private void show() {
+        display.setText(Utils.amountToStringPlain(currency, cents));
     }
 
     public void setListener(AmountListener listener) {
         this.listener = listener;
     }
-
 }
