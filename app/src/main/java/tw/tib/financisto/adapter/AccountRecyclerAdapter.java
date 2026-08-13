@@ -50,9 +50,15 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
     private View.OnLongClickListener onLongClickListener = null;
     /** Which accounts are held together with somebody, worked out once. */
     private java.util.Set<Long> sharedAccounts = java.util.Collections.emptySet();
+    /** And in whose colour, by account. */
+    private java.util.Map<Long, Integer> sharedColours = java.util.Collections.emptyMap();
 
     public void setSharedAccounts(java.util.Set<Long> ids) {
         this.sharedAccounts = ids == null ? java.util.Collections.emptySet() : ids;
+    }
+
+    public void setSharedColours(java.util.Map<Long, Integer> colours) {
+        this.sharedColours = colours == null ? java.util.Collections.emptyMap() : colours;
     }
 
     public AccountRecyclerAdapter(Context context, Cursor c, boolean showSortOrder, View.OnClickListener onClickListener,
@@ -110,8 +116,11 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         // matters most when somebody is about to write something in it.
         if (sharedAccounts.contains(a.getId())) {
             v.sharedDot.setVisibility(View.VISIBLE);
-            v.sharedDot.getBackground().setTint(
-                    tw.tib.financisto.utils.Identity.theirs(context).colour);
+            // The colour of the person it is held with, so the dot on the
+            // account and the dot beside their name are the same colour.
+            Integer colour = sharedColours.get(a.getId());
+            v.sharedDot.getBackground().setTint(colour == null
+                    ? tw.tib.financisto.utils.Identity.COLOURS[1] : colour);
         } else {
             v.sharedDot.setVisibility(View.GONE);
         }

@@ -259,21 +259,10 @@ public class SharingActivity extends AppCompatActivity {
             dotLp.rightMargin = pad / 2;
             dot.setLayoutParams(dotLp);
             dot.setBackgroundResource(R.drawable.circle);
-            dot.getBackground().setTint(person.colour == 0 ? Identity.COLOURS[1] : person.colour);
+            dot.getBackground().setTint(person.colour == 0
+                    ? Identity.COLOURS[(list.getChildCount() + 1) % Identity.COLOURS.length]
+                    : person.colour);
             row.addView(dot);
-
-            tw.tib.financisto.utils.CategoryIcon face =
-                    tw.tib.financisto.utils.CategoryIcon.parse(person.icon);
-            if (face != null) {
-                android.widget.ImageView pic = new android.widget.ImageView(this);
-                int picSize = Math.round(22 * density);
-                android.widget.LinearLayout.LayoutParams picLp =
-                        new android.widget.LinearLayout.LayoutParams(picSize, picSize);
-                picLp.rightMargin = pad / 2;
-                pic.setLayoutParams(picLp);
-                pic.setImageResource(face.iconId);
-                row.addView(pic);
-            }
 
             android.widget.LinearLayout words = new android.widget.LinearLayout(this);
             words.setOrientation(android.widget.LinearLayout.VERTICAL);
@@ -405,42 +394,6 @@ public class SharingActivity extends AppCompatActivity {
         }
         box.addView(swatches);
 
-        // And a symbol, from the same set the categories use. Six of them: a
-        // person is told apart by the colour first, and a row of forty-four
-        // pictures in a dialog is a shop window, not a choice.
-        final tw.tib.financisto.utils.CategoryIcon[] faces = {
-                tw.tib.financisto.utils.CategoryIcon.FAMILY,
-                tw.tib.financisto.utils.CategoryIcon.HOME,
-                tw.tib.financisto.utils.CategoryIcon.COFFEE,
-                tw.tib.financisto.utils.CategoryIcon.GIFT,
-                tw.tib.financisto.utils.CategoryIcon.PET,
-                tw.tib.financisto.utils.CategoryIcon.TRAVEL,
-        };
-        final String[] chosenIcon = {existing == null ? "" : existing.icon};
-        android.widget.LinearLayout symbols = new android.widget.LinearLayout(this);
-        symbols.setOrientation(android.widget.LinearLayout.HORIZONTAL);
-        symbols.setPadding(0, pad / 2, 0, 0);
-        for (tw.tib.financisto.utils.CategoryIcon face : faces) {
-            android.widget.ImageView pic = new android.widget.ImageView(this);
-            android.widget.LinearLayout.LayoutParams lp =
-                    new android.widget.LinearLayout.LayoutParams(
-                            Math.round(34 * getResources().getDisplayMetrics().density),
-                            Math.round(34 * getResources().getDisplayMetrics().density));
-            lp.rightMargin = pad / 2;
-            pic.setLayoutParams(lp);
-            pic.setImageResource(face.iconId);
-            String tag = tw.tib.financisto.utils.CategoryIcon.MARKER + face.name();
-            pic.setAlpha(tag.equals(chosenIcon[0]) ? 1f : 0.35f);
-            pic.setOnClickListener(v -> {
-                chosenIcon[0] = tag;
-                for (int k = 0; k < symbols.getChildCount(); k++) {
-                    String other = tw.tib.financisto.utils.CategoryIcon.MARKER + faces[k].name();
-                    symbols.getChildAt(k).setAlpha(other.equals(tag) ? 1f : 0.35f);
-                }
-            });
-            symbols.addView(pic);
-        }
-        box.addView(symbols);
 
         android.app.AlertDialog.Builder b = new android.app.AlertDialog.Builder(this)
                 .setTitle(existing == null ? R.string.sharing_person_add : R.string.sharing_people)
@@ -452,7 +405,7 @@ public class SharingActivity extends AppCompatActivity {
                     }
                     tw.tib.financisto.sync.People.seen(db.db(),
                             code.getText().toString(), name.getText().toString(),
-                            chosenColour[0], chosenIcon[0]);
+                            chosenColour[0]);
                     show();
                 })
                 .setNegativeButton(R.string.cancel, null);

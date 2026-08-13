@@ -383,6 +383,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
 
         Log.d(TAG, "createAdapter: " + (System.nanoTime() - t1) / 1000 + " us");
         a.setSharedAccounts(shared);
+        a.setSharedColours(tw.tib.financisto.sync.SharedWith.coloursByAccount(db.db()));
         return a;
     }
 
