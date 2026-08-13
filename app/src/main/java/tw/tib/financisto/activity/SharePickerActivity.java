@@ -53,6 +53,28 @@ public class SharePickerActivity extends AppCompatActivity {
         }
     }
 
+    /** What of the account's past goes across, asked here as well as in the account. */
+    private void askWhatToShareOfThePast(SharedThings.Thing thing) {
+        String[] choices = {
+                getString(R.string.share_past_everything),
+                getString(R.string.share_past_balance),
+                getString(R.string.share_past_nothing),
+        };
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.share_past_title)
+                .setItems(choices, (dialog, which) -> {
+                    int queued = tw.tib.financisto.sync.SharingStart.apply(
+                            db.db(), thing.id, thing.uuid, thing.name, which);
+                    if (queued > 0) {
+                        android.widget.Toast.makeText(this,
+                                getString(R.string.share_past_queued, queued),
+                                android.widget.Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +139,16 @@ public class SharePickerActivity extends AppCompatActivity {
                 }
                 box.setChecked(thing.shared);
                 box.setOnCheckedChangeListener((b, checked) -> {
+                    boolean wasShared = SharedThings.isShared(db.db(), kind, thing.uuid);
                     SharedThings.set(db.db(), kind, thing.uuid, checked);
+                    if (checked && !wasShared && SharedThings.ACCOUNT.equals(kind)) {
+                        // Turned on from here, the movements already written
+                        // were never queued: the change log is written when
+                        // somebody makes a change, and these were made before
+                        // the account was shared. So the account travelled, the
+                        // categories travelled, and not one movement did.
+                        askWhatToShareOfThePast(thing);
+                    }
                     if (!checked) {
                         // Taking the tick off here stops the account for
                         // everybody, so the list of who it was held with goes

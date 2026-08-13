@@ -1503,4 +1503,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_person_code_is">Code %1$s</string>
   <string name="sharing_person_look">Farbe</string>
   <string name="sharing_account_nobody">noch niemand</string>
+  <string name="sharing_choose_folder_first">Gemeinsamen Ordner wählen</string>
 </resources>

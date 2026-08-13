@@ -1514,4 +1514,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
     <item quantity="other">%d persone</item>
   </plurals>
   <string name="sharing_account_nobody">ancora nessuno</string>
+  <string name="sharing_choose_folder_first">Scegli la cartella condivisa</string>
 </resources>

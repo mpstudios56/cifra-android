@@ -1478,4 +1478,5 @@
     <string name="sharing_person_code_is">kod %1$s</string>
     <string name="sharing_person_look">Kolir</string>
     <string name="sharing_account_nobody">poky nikoho</string>
+    <string name="sharing_choose_folder_first">Виберіть спільну теку</string>
 </resources>

@@ -1503,4 +1503,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_person_code_is">codigo %1$s</string>
   <string name="sharing_person_look">Color</string>
   <string name="sharing_account_nobody">todavia nadie</string>
+  <string name="sharing_choose_folder_first">Elige la carpeta compartida</string>
 </resources>

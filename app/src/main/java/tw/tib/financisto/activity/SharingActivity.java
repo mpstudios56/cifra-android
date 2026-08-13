@@ -74,7 +74,15 @@ public class SharingActivity extends AppCompatActivity {
         findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
         findViewById(R.id.sharing_people).setOnClickListener(v -> showPeople());
         findViewById(R.id.sharing_people_add).setOnClickListener(v -> askPerson(null));
-        findViewById(R.id.sharing_now).setOnClickListener(v -> sync(true));
+        findViewById(R.id.sharing_now).setOnClickListener(v -> {
+            // Nothing to exchange through yet: send them where the answer is
+            // rather than doing nothing and saying nothing.
+            if (MyPreferences.getSyncFolder().isEmpty()) {
+                pickFolder();
+            } else {
+                sync(true);
+            }
+        });
         findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
                 startActivity(new Intent(this, DuplicatesActivity.class)));
         findViewById(R.id.sharing_merge).setOnClickListener(v ->
@@ -183,10 +191,12 @@ public class SharingActivity extends AppCompatActivity {
                 ? getString(R.string.sharing_folder_empty)
                 : getString(R.string.sharing_folder_chosen, folderName(folder)));
 
-        int chosen = 0;
-        for (String kind : tw.tib.financisto.sync.SharedThings.KINDS) {
-            chosen += tw.tib.financisto.sync.SharedThings.shared(db.db(), kind).size();
-        }
+        // Only the accounts. Everything shared is marked in the same table -
+        // the categories, payees and places a shared account uses are adopted
+        // by themselves - so counting the lot said "14 conti condivisi" for one
+        // account with thirteen labels behind it.
+        int chosen = tw.tib.financisto.sync.SharedThings.shared(
+                db.db(), tw.tib.financisto.sync.SharedThings.ACCOUNT).size();
         ((TextView) findViewById(R.id.sharing_what_value)).setText(chosen == 0
                 ? getString(R.string.share_what_none)
                 : getString(R.string.share_what_some, chosen));
@@ -218,7 +228,13 @@ public class SharingActivity extends AppCompatActivity {
         file.setText(getString(R.string.sharing_file_is, tw.tib.financisto.sync.SyncFolder.nameFor(
                 MyPreferences.getSyncAuthor(), MyPreferences.getSyncDeviceId())));
 
-        findViewById(R.id.sharing_now).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+        // The button stays, whatever is missing. Hiding it left a screen that
+        // looked as though half the app had not been installed, when all that
+        // was wrong was a folder nobody had chosen yet - and there was nothing
+        // on screen saying so.
+        Button now = findViewById(R.id.sharing_now);
+        now.setVisibility(View.VISIBLE);
+        now.setText(folder.isEmpty() ? R.string.sharing_choose_folder_first : R.string.sharing_now);
         findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
         file.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
     }
