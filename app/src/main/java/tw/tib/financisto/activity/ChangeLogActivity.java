@@ -72,6 +72,53 @@ public class ChangeLogActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.change_log_note)).setText(note());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        menu.add(0, 1, 0, R.string.change_log_clear);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == 1) {
+            askTwice();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Emptying the record, asked twice.
+     * <p>
+     * It is not a list of past events to tidy away: it is the memory of what
+     * has already been exchanged. Emptied, the other phone's entries look new
+     * again and come back round, and this phone's own changes - the ones not
+     * yet collected - are gone for good. Two questions, because after this
+     * there is nothing to undo it with.
+     */
+    private void askTwice() {
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.change_log_clear)
+                .setMessage(R.string.change_log_clear_why)
+                .setPositiveButton(R.string.change_log_clear_go, (d, w) -> new android.app.AlertDialog.Builder(this)
+                        .setTitle(R.string.change_log_clear_sure)
+                        .setMessage(R.string.change_log_clear_sure_why)
+                        .setPositiveButton(R.string.change_log_clear_now, (d2, w2) -> clear())
+                        .setNegativeButton(R.string.cancel, null)
+                        .show())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void clear() {
+        int gone = ChangeLog.clear(db.db());
+        adapter.entries = ChangeLog.list(db.db(), MOST);
+        adapter.notifyDataSetChanged();
+        android.widget.Toast.makeText(this,
+                getString(R.string.change_log_cleared, gone),
+                android.widget.Toast.LENGTH_LONG).show();
+    }
+
     /** Says whose record this is, or that nobody has said. */
     private String note() {
         String me = MyPreferences.getSyncAuthor();

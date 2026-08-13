@@ -60,6 +60,27 @@ public class ChangeLog {
      * because it could not write its own diary would be worse than one with a
      * gap in the diary.
      */
+    /**
+     * Empties the record.
+     * <p>
+     * Everything: what this phone has done and not yet sent, and the memory of
+     * what the other phone has already sent us. The second half is why this is
+     * asked twice - once forgotten, their entries are new again and are applied
+     * a second time.
+     *
+     * @return how many lines went
+     */
+    public static int clear(SQLiteDatabase db) {
+        try {
+            int gone = db.delete(TABLE, null, null);
+            Log.i(TAG, "record emptied, " + gone + " lines gone");
+            return gone;
+        } catch (Exception e) {
+            Log.e(TAG, "could not empty the record", e);
+            return 0;
+        }
+    }
+
     public static void record(SQLiteDatabase db, String device, String author,
                               String entity, long entityId, String operation,
                               String title, String subtitle) {
@@ -128,7 +149,4 @@ public class ChangeLog {
         return db.delete(TABLE, "made_on<?", new String[]{String.valueOf(cutoff)});
     }
 
-    public static void clear(SQLiteDatabase db) {
-        db.delete(TABLE, null, null);
-    }
 }

@@ -1468,4 +1468,16 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="crash_send">Envoyer le rapport</string>
   <string name="crash_no">Non merci</string>
   <string name="crash_subject">Cifra — rapport de fermeture</string>
+  <string name="share_past_title">De ce compte, qu’est-ce qui part ?</string>
+  <string name="share_past_everything">Tout — chaque opération qu’il a eue</string>
+  <string name="share_past_balance">Le solde du jour — une ligne d’ouverture, puis la suite</string>
+  <string name="share_past_nothing">Rien du passé — seulement à partir de maintenant</string>
+  <string name="share_past_queued">%1$d opérations sont en route.</string>
+  <string name="change_log_clear">Vider le registre</string>
+  <string name="change_log_clear_why">Le registre est la mémoire de ce qui a déjà été échangé. Le vider, c’est faire revenir les entrées de l’autre téléphone comme neuves, et perdre définitivement vos changements non encore relevés.</string>
+  <string name="change_log_clear_go">J’ai compris, continuer</string>
+  <string name="change_log_clear_sure">Sûr ?</string>
+  <string name="change_log_clear_sure_why">Rien ne permet de revenir en arrière.</string>
+  <string name="change_log_clear_now">Vider</string>
+  <string name="change_log_cleared">Registre vidé : %1$d lignes supprimées.</string>
 </resources>

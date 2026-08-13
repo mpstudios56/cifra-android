@@ -1570,4 +1570,16 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="crash_send">Send the report</string>
     <string name="crash_no">No thanks</string>
     <string name="crash_subject">Cifra - crash report</string>
+    <string name="share_past_title">What of this account goes across?</string>
+    <string name="share_past_everything">Everything — every movement it has ever had</string>
+    <string name="share_past_balance">The balance today — one opening line, then what comes next</string>
+    <string name="share_past_nothing">Nothing of the past — only from now on</string>
+    <string name="share_past_queued">%1$d movements are on their way.</string>
+    <string name="change_log_clear">Empty the record</string>
+    <string name="change_log_clear_why">The record is the memory of what has already been exchanged. Emptying it means the other phone’s entries look new again and come back, and your own changes that have not been collected yet are gone for good.</string>
+    <string name="change_log_clear_go">I understand, go on</string>
+    <string name="change_log_clear_sure">Sure?</string>
+    <string name="change_log_clear_sure_why">There is nothing to undo this with.</string>
+    <string name="change_log_clear_now">Empty it</string>
+    <string name="change_log_cleared">Record emptied: %1$d lines gone.</string>
 </resources>

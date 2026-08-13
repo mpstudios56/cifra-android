@@ -1471,4 +1471,16 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="crash_send">Manda la segnalazione</string>
   <string name="crash_no">No, grazie</string>
   <string name="crash_subject">Cifra — segnalazione di chiusura</string>
+  <string name="share_past_title">Di questo conto, cosa passa all’altra persona?</string>
+  <string name="share_past_everything">Tutto — ogni movimento che ha avuto</string>
+  <string name="share_past_balance">Il saldo di oggi — una riga di apertura, poi quello che viene</string>
+  <string name="share_past_nothing">Niente del passato — solo da adesso in poi</string>
+  <string name="share_past_queued">%1$d movimenti sono in partenza.</string>
+  <string name="change_log_clear">Azzera il registro</string>
+  <string name="change_log_clear_why">Il registro è la memoria di quello che è già stato scambiato. Azzerandolo, le voci dell’altro telefono tornano a sembrare nuove e rientrano, e le tue modifiche non ancora raccolte spariscono per sempre.</string>
+  <string name="change_log_clear_go">Ho capito, vai avanti</string>
+  <string name="change_log_clear_sure">Sicuro?</string>
+  <string name="change_log_clear_sure_why">Non c’è niente con cui tornare indietro.</string>
+  <string name="change_log_clear_now">Azzera</string>
+  <string name="change_log_cleared">Registro azzerato: %1$d righe eliminate.</string>
 </resources>

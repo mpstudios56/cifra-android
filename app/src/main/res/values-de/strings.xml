@@ -1468,4 +1468,16 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="crash_send">Bericht senden</string>
   <string name="crash_no">Nein, danke</string>
   <string name="crash_subject">Cifra – Absturzbericht</string>
+  <string name="share_past_title">Was von diesem Konto geht hinüber?</string>
+  <string name="share_past_everything">Alles — jede Buchung, die es je hatte</string>
+  <string name="share_past_balance">Der heutige Saldo — eine Eröffnungszeile, dann das Weitere</string>
+  <string name="share_past_nothing">Nichts aus der Vergangenheit — erst ab jetzt</string>
+  <string name="share_past_queued">%1$d Buchungen sind unterwegs.</string>
+  <string name="change_log_clear">Aufzeichnung leeren</string>
+  <string name="change_log_clear_why">Die Aufzeichnung ist das Gedächtnis des Austauschs. Leert man sie, wirken die Einträge des anderen Telefons wieder neu und kommen erneut an; eigene noch nicht abgeholte Änderungen sind endgültig weg.</string>
+  <string name="change_log_clear_go">Verstanden, weiter</string>
+  <string name="change_log_clear_sure">Sicher?</string>
+  <string name="change_log_clear_sure_why">Es gibt nichts, womit sich das rückgängig machen lässt.</string>
+  <string name="change_log_clear_now">Leeren</string>
+  <string name="change_log_cleared">Aufzeichnung geleert: %1$d Zeilen entfernt.</string>
 </resources>

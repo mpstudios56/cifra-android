@@ -371,6 +371,34 @@ public class AccountActivity extends AbstractActivity {
 		}
 	}
 
+	/**
+	 * What of the account's past the other person gets: everything, today's
+	 * balance as one opening line, or nothing.
+	 * <p>
+	 * The exchange carries changes as they are made, so without this an account
+	 * that has been running for years arrives at the other phone empty.
+	 */
+	private void askWhatToShareOfThePast(long accountId, String accountUuid, String title) {
+		String[] choices = {
+				getString(R.string.share_past_everything),
+				getString(R.string.share_past_balance),
+				getString(R.string.share_past_nothing),
+		};
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.share_past_title)
+				.setItems(choices, (dialog, which) -> {
+					int queued = tw.tib.financisto.sync.SharingStart.apply(
+							db.db(), accountId, accountUuid, title, which);
+					if (queued > 0) {
+						Toast.makeText(this,
+								getString(R.string.share_past_queued, queued),
+								Toast.LENGTH_LONG).show();
+					}
+				})
+				.setCancelable(false)
+				.show();
+	}
+
 	private void addNewCurrency() {
 		new CurrencySelector(this, db, currencyId -> {
 			if (currencyId == 0) {
