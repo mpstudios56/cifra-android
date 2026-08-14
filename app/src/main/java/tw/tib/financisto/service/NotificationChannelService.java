@@ -11,6 +11,8 @@ public class NotificationChannelService {
     private static boolean initialized = false;
 
     public static final String TRANSACTIONS_CHANNEL = "transactions";
+    /** What a round of sharing leaves waiting on a screen. */
+    public static final String SHARING_CHANNEL = "sharing";
 
     private NotificationChannelService(Context context) {
     }
@@ -26,6 +28,10 @@ public class NotificationChannelService {
 
             NotificationManager notificationManager = c.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+
+            notificationManager.createNotificationChannel(new NotificationChannel(
+                    SHARING_CHANNEL, c.getString(R.string.sync_notice_channel),
+                    NotificationManager.IMPORTANCE_DEFAULT));
         }
     }
 }

@@ -1487,4 +1487,9 @@
     <string name="report_shared">Спільні рухи</string>
     <string name="report_shared_on">Спільні рухи враховані</string>
     <string name="report_shared_off">Спільні рухи виключені</string>
+    <string name="sync_notice_title">Спільне</string>
+    <string name="sync_notice_channel">Спільне</string>
+    <string name="sync_notice_review">Переглянути: %1$d</string>
+    <string name="sync_notice_merge">Об’єднати: %1$d</string>
+    <string name="sync_notice_both">Переглянути: %1$d · об’єднати: %2$d</string>
 </resources>

@@ -279,11 +279,14 @@ public class MainActivity extends AppCompatActivity {
             WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this);
             DonatePrompt.maybeAsk(this);
         }
-        // Sharing used to move only when somebody pressed the button on its own
-        // screen. Now a round happens on coming back to the app and every couple
-        // of minutes while it is open.
-        AutoSync.whenReturning(this);
-        AutoSync.keepGoing(this);
+        // The rounds themselves are driven from the application, so that they
+        // carry on while somebody is inside an account. What is left here is the
+        // one thing this screen owes them: if a round landed while its tabs were
+        // not being looked at, they are redrawn now rather than left showing what
+        // they had loaded before.
+        if (AutoSync.tookSomethingIn()) {
+            redrawEveryTab();
+        }
         offerToReportACrash();
     }
 
@@ -405,6 +408,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataArrived(tw.tib.financisto.bus.DataArrived e) {
+        redrawEveryTab();
+    }
+
+    private void redrawEveryTab() {
         for (Fragment f : getSupportFragmentManager().getFragments()) {
             if (!f.isAdded()) {
                 continue;

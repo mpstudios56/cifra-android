@@ -543,6 +543,12 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             Log.d(TAG, "onResume NOT isUnlocked, hide list");
             getView().findViewById(android.R.id.list).setVisibility(View.INVISIBLE);
         }
+
+        // Read again on every visit. The list is a handful of rows and its
+        // figures are the ones people trust most; leaving them as they were
+        // loaded meant a balance could be a round of sharing out of date, and
+        // there is no telling a stale figure from a wrong one.
+        recreateCursor();
     }
 
     @Override

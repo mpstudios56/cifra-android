@@ -1512,4 +1512,9 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="report_shared">Mouvements partagés</string>
   <string name="report_shared_on">Mouvements partagés inclus</string>
   <string name="report_shared_off">Mouvements partagés exclus</string>
+  <string name="sync_notice_title">Partage</string>
+  <string name="sync_notice_channel">Partage</string>
+  <string name="sync_notice_review">À revoir : %1$d</string>
+  <string name="sync_notice_merge">À fusionner : %1$d</string>
+  <string name="sync_notice_both">À revoir : %1$d · à fusionner : %2$d</string>
 </resources>

@@ -81,6 +81,16 @@ public class AutoSync {
         }
     }
 
+    /** Whether a round has brought something in that the screens have not shown. */
+    private static volatile boolean landed = false;
+
+    /** True once, for whoever redraws on the strength of it. */
+    public static boolean tookSomethingIn() {
+        boolean was = landed;
+        landed = false;
+        return was;
+    }
+
     /** The one connection this class uses, for as long as the app is alive. */
     private static DatabaseAdapter shared;
 
@@ -109,6 +119,10 @@ public class AutoSync {
                 SyncEngine.Result result = SyncEngine.run(app, db);
                 Log.i(TAG, "round: " + result.received + " in, " + result.sent + " out");
                 if (result.received > 0) {
+                    // Kept until the main screen has acted on it: the screens are
+                    // told at once, but the app may not be in front to hear it.
+                    landed = true;
+                    SyncNotice.tellIfAnythingNeedsLookingAt(app, db);
                     // Said out loud rather than left for each screen to notice:
                     // a round finishes on a thread of its own, and whatever is
                     // in front of somebody at that moment is showing figures

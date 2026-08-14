@@ -64,9 +64,20 @@ public class Application extends MultiDexApplication {
      */
     private void putPrivacyButtonOnEveryScreen() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            /** How many screens of this app are in front. */
+            private int inFront = 0;
+
             @Override public void onActivityResumed(Activity activity) {
                 if (activity instanceof PinActivity) return;
                 PrivacyButton.attachTo(activity);
+                // Rounds used to be started and stopped by the main screen alone,
+                // so walking into an account - which is where somebody spends
+                // most of their time - stopped the exchange until they came out
+                // again. Any screen keeps it going; the last one to leave the
+                // front stops it.
+                inFront++;
+                tw.tib.financisto.sync.AutoSync.whenReturning(activity);
+                tw.tib.financisto.sync.AutoSync.keepGoing(activity);
             }
             @Override public void onActivityCreated(Activity a, Bundle b) {
                 // Every screen inside the bars, not behind them. Screens made
@@ -78,7 +89,17 @@ public class Application extends MultiDexApplication {
                 androidx.core.view.WindowCompat.setDecorFitsSystemWindows(a.getWindow(), true);
             }
             @Override public void onActivityStarted(Activity a) {}
-            @Override public void onActivityPaused(Activity a) {}
+            @Override public void onActivityPaused(Activity a) {
+                if (a instanceof PinActivity) return;
+                // One screen handing over to another passes through here before
+                // the next one resumes, so the count decides: nothing stops while
+                // any part of the app is still in front.
+                inFront--;
+                if (inFront <= 0) {
+                    inFront = 0;
+                    tw.tib.financisto.sync.AutoSync.stop();
+                }
+            }
             @Override public void onActivityStopped(Activity a) {}
             @Override public void onActivitySaveInstanceState(Activity a, Bundle b) {}
             @Override public void onActivityDestroyed(Activity a) {}

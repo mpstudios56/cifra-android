@@ -226,20 +226,10 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             if (toolbar != null) {
                 toolbar.setVisibility(View.VISIBLE);
                 ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-                ViewCompat.setOnApplyWindowInsetsListener(getView().findViewById(R.id.toolbar), (v, windowInsets) -> {
-                    Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
-                            | WindowInsetsCompat.Type.statusBars()
-                            | WindowInsetsCompat.Type.captionBar());
-                    Log.d(TAG, format("insets.top: %s", insets.top));
-                    if (v.getPaddingTop() == 0) {
-                        var lp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-                        lp.height += insets.top;
-                        v.setPadding(0, insets.top, 0, 0);
-                        v.setLayoutParams(lp);
-                    }
-                    return WindowInsetsCompat.CONSUMED;
-                });
+                // The bar used to grow by a status bar's worth and pad itself by
+                // as much again, from the days when the screen was drawn behind
+                // the status bar. The window now sits below it on its own, so all
+                // that did was leave a band of nothing above the account name.
             }
         }
 
