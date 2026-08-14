@@ -1482,4 +1482,9 @@
     <string name="transaction_written_by">Записав</string>
     <string name="summary_no_income">Жодних надходжень за період</string>
     <string name="summary_top_categories_income">Надходження за категоріями</string>
+    <string name="include_shared">Враховувати спільні рухи</string>
+    <string name="include_shared_summary">Рахує й те, що написала інша людина</string>
+    <string name="report_shared">Спільні рухи</string>
+    <string name="report_shared_on">Спільні рухи враховані</string>
+    <string name="report_shared_off">Спільні рухи виключені</string>
 </resources>

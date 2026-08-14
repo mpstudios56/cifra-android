@@ -58,6 +58,16 @@ public class Budget {
 	@Column(name = "include_credit")
 	public boolean includeCredit = true;
 
+	/**
+	 * Whether what the other person wrote counts against this budget.
+	 * <p>
+	 * On by default: a household budget on a shared account is meant to hold
+	 * both. Off is for the budget somebody keeps on their own spending inside
+	 * an account they share, which the app had no way of expressing.
+	 */
+	@Column(name = "include_shared")
+	public boolean includeShared = true;
+
 	@Column(name = "start_date")
 	public long startDate;
 	
@@ -171,7 +181,23 @@ public class Budget {
 			filter.lt(BlotterFilter.FROM_AMOUNT, "0");
 		}
 
+		if (!b.includeShared) {
+			filter.put(onlyMine());
+		}
+
 		return filter;
+	}
+
+	/**
+	 * Movements written on this phone, and nothing that arrived from anybody.
+	 * <p>
+	 * Empty is what everything written here carries: the signature is put on
+	 * only when there is somebody to put it on for.
+	 */
+	public static Criterion onlyMine() {
+		String me = tw.tib.financisto.utils.MyPreferences.getSyncDeviceId();
+		return Criterion.raw("(created_by is null or created_by='' or created_by='"
+				+ me.replace("'", "") + "')");
 	}
 
     public Currency getBudgetCurrency() {

@@ -1507,4 +1507,9 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="transaction_written_by">Écrit par</string>
   <string name="summary_no_income">Aucun revenu sur la période</string>
   <string name="summary_top_categories_income">Revenus par catégorie</string>
+  <string name="include_shared">Inclure les mouvements partagés</string>
+  <string name="include_shared_summary">Compte aussi ce que l’autre personne a écrit</string>
+  <string name="report_shared">Mouvements partagés</string>
+  <string name="report_shared_on">Mouvements partagés inclus</string>
+  <string name="report_shared_off">Mouvements partagés exclus</string>
 </resources>

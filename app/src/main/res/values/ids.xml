@@ -80,6 +80,7 @@
 	<item name="notification_vibra" type="id" />
 	<item name="notification_led" type="id" />
 	<item name="include_credit" type="id" />
+	<item name="include_shared" type="id" />
 	<item name="status_clear" type="id" />
 	<item name="transfer" type="id" />
 	<item name="transfer_clear" type="id" />

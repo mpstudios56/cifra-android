@@ -1518,4 +1518,9 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="transaction_written_by">Generato da</string>
   <string name="summary_no_income">Nessuna entrata disponibile nel periodo</string>
   <string name="summary_top_categories_income">Entrate per categoria</string>
+  <string name="include_shared">Includi i movimenti condivisi</string>
+  <string name="include_shared_summary">Conta nel budget anche quello che ha scritto l’altra persona</string>
+  <string name="report_shared">Movimenti condivisi</string>
+  <string name="report_shared_on">Movimenti condivisi inclusi</string>
+  <string name="report_shared_off">Movimenti condivisi esclusi</string>
 </resources>

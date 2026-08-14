@@ -50,6 +50,7 @@ public class BudgetActivity extends AbstractActivity {
 	private CheckBox cbMode;
 	private CheckBox cbIncludeSubCategories;
 	private CheckBox cbIncludeCredit;
+	private CheckBox cbIncludeShared;
 	private CheckBox cbSavingBudget;
 
 	private Budget budget = new Budget();
@@ -109,6 +110,9 @@ public class BudgetActivity extends AbstractActivity {
 		cbIncludeCredit = x.addCheckboxNode(layout,
 				R.id.include_credit, R.string.include_credit,
 				R.string.include_credit_summary, true);
+		cbIncludeShared = x.addCheckboxNode(layout,
+				R.id.include_shared, R.string.include_shared,
+				R.string.include_shared_summary, true);
 		cbSavingBudget = x.addCheckboxNode(layout,
 				R.id.type, R.string.budget_type_saving,
 				R.string.budget_type_saving_summary, true);
@@ -179,6 +183,7 @@ public class BudgetActivity extends AbstractActivity {
 		amountInput.setAmount(budget.amount);
 		cbIncludeSubCategories.setChecked(budget.includeSubcategories);
 		cbIncludeCredit.setChecked(budget.includeCredit);
+		cbIncludeShared.setChecked(budget.includeShared);
 		cbMode.setChecked(budget.expanded);
 		cbSavingBudget.setChecked(budget.amount < 0);
 	}
@@ -191,6 +196,7 @@ public class BudgetActivity extends AbstractActivity {
 		}
 		budget.includeSubcategories = cbIncludeSubCategories.isChecked();
 		budget.includeCredit = cbIncludeCredit.isChecked();
+		budget.includeShared = cbIncludeShared.isChecked();
 		budget.expanded = cbMode.isChecked();
 		budget.categories = categorySelector.getCheckedIdsAsStr();
 		budget.projects = projectSelector.getCheckedIdsAsStr();
@@ -206,6 +212,9 @@ public class BudgetActivity extends AbstractActivity {
 				break;
 			case R.id.include_credit:
 				cbIncludeCredit.performClick();
+				break;
+			case R.id.include_shared:
+				cbIncludeShared.performClick();
 				break;
 			case R.id.budget_mode:
 				cbMode.performClick();

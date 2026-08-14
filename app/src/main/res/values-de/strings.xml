@@ -1507,4 +1507,9 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="transaction_written_by">Geschrieben von</string>
   <string name="summary_no_income">Keine Einnahmen in diesem Zeitraum</string>
   <string name="summary_top_categories_income">Einnahmen nach Kategorie</string>
+  <string name="include_shared">Geteilte Buchungen einbeziehen</string>
+  <string name="include_shared_summary">Zählt auch, was die andere Person geschrieben hat</string>
+  <string name="report_shared">Geteilte Buchungen</string>
+  <string name="report_shared_on">Geteilte Buchungen einbezogen</string>
+  <string name="report_shared_off">Geteilte Buchungen ausgenommen</string>
 </resources>

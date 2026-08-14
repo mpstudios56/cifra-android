@@ -35,6 +35,17 @@
         <ImageButton android:id="@+id/bPieChart"
 			android:src="@drawable/ic_tab_budgets"
 			style="@style/BottomBarButton" />
+        <!--
+          In or out go the movements the other person wrote. On the finished
+          report rather than in a setting somewhere: whether a report is meant
+          to cover the household or only oneself is a question about the report
+          being looked at, and the answer changes twice in a minute.
+          Hidden entirely until somebody is actually sharing.
+        -->
+        <ImageButton android:id="@+id/bShared"
+			android:src="@drawable/ic_action_users"
+			android:visibility="gone"
+			style="@style/BottomBarButton" />
         <include layout="@layout/total_text"/>
 	</LinearLayout>
 </LinearLayout>

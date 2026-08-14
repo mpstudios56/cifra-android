@@ -639,6 +639,15 @@ public class MyPreferences {
 		return getString("sync_partner", "");
 	}
 
+	/** Whether reports count what the other person wrote. Kept between visits. */
+	public static boolean isReportIncludeShared() {
+		return getBoolean("report_include_shared", true);
+	}
+
+	public static void setReportIncludeShared(boolean include) {
+		edit().putBoolean("report_include_shared", include).apply();
+	}
+
 	/**
 	 * This phone, told apart from the other one. Made once and kept: the names
 	 * can be changed at any time and both can be the same, so they cannot be

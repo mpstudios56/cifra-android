@@ -1507,4 +1507,9 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="transaction_written_by">Escrito por</string>
   <string name="summary_no_income">Sin ingresos en el periodo</string>
   <string name="summary_top_categories_income">Ingresos por categoría</string>
+  <string name="include_shared">Incluir movimientos compartidos</string>
+  <string name="include_shared_summary">Cuenta también lo que ha escrito la otra persona</string>
+  <string name="report_shared">Movimientos compartidos</string>
+  <string name="report_shared_on">Movimientos compartidos incluidos</string>
+  <string name="report_shared_off">Movimientos compartidos excluidos</string>
 </resources>

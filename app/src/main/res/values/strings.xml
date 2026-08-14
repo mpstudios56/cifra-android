@@ -1617,4 +1617,9 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="transaction_written_by">Written by</string>
     <string name="summary_no_income">No income in this period</string>
     <string name="summary_top_categories_income">Income by category</string>
+    <string name="include_shared">Include shared movements</string>
+    <string name="include_shared_summary">Count what the other person wrote against this budget</string>
+    <string name="report_shared">Shared movements</string>
+    <string name="report_shared_on">Shared movements counted</string>
+    <string name="report_shared_off">Shared movements left out</string>
 </resources>

@@ -20,7 +20,8 @@ select
        t.location_id as location_id,
        t.payee_id as payee_id,
        t.parent_id as parent_id,
-       t.status as status
+       t.status as status,
+       t.created_by as created_by
 from v_category_list c
 inner join v_blotter_for_account_with_splits t on t.category_left between c.left and c.right
 where c._id > 0 and from_account_is_include_into_totals=1

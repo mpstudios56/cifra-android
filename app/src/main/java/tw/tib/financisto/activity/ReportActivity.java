@@ -27,6 +27,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -63,6 +64,9 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
     private DatabaseAdapter db;
     private ImageButton bFilter;
     private ImageButton bToggle;
+    private ImageButton bShared;
+    /** Whether the report counts what the other person wrote. */
+    private boolean includeShared = true;
     private Report currentReport;
     private ReportAsyncTask reportTask;
 
@@ -111,6 +115,23 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
 
         bToggle = findViewById(R.id.bToggle);
         bToggle.setOnClickListener(v -> toggleIncomeExpense());
+
+        bShared = findViewById(R.id.bShared);
+        boolean anybody = !tw.tib.financisto.sync.People.all(db.db()).isEmpty();
+        bShared.setVisibility(anybody ? View.VISIBLE : View.GONE);
+        if (anybody) {
+            includeShared = MyPreferences.isReportIncludeShared();
+            paintSharedButton();
+            bShared.setOnClickListener(v -> {
+                includeShared = !includeShared;
+                MyPreferences.setReportIncludeShared(includeShared);
+                paintSharedButton();
+                Toast.makeText(this, includeShared
+                        ? R.string.report_shared_on : R.string.report_shared_off,
+                        Toast.LENGTH_SHORT).show();
+                selectReport();
+            });
+        }
 
         ImageButton bPieChart = findViewById(R.id.bPieChart);
         bPieChart.setOnClickListener(v -> showPieChart());
@@ -199,6 +220,23 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
             Intent intent = currentReport.createActivityIntent(this, db, WhereFilter.copyOf(filter), id);
             startActivity(intent);
         }
+    }
+
+    /** Lit when the report holds everybody, dimmed when it holds only this phone. */
+    private void paintSharedButton() {
+        bShared.setAlpha(includeShared ? 1f : 0.35f);
+    }
+
+    /**
+     * The filter the report actually runs with. The one kept on screen is what
+     * somebody set; this adds the one thing decided by the button in the bar.
+     */
+    private WhereFilter reportFilter() {
+        WhereFilter f = WhereFilter.copyOf(filter);
+        if (!includeShared) {
+            f.put(tw.tib.financisto.model.Budget.onlyMine());
+        }
+        return f;
     }
 
     private void selectReport() {
@@ -318,7 +356,7 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
         @Override
         protected ReportData doInBackground(Void...voids) {
             report.setIncomeExpense(incomeExpense);
-            return report.getReport(db, WhereFilter.copyOf(filter));
+            return report.getReport(db, reportFilter());
         }
 
         @Override
@@ -346,7 +384,7 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
         }
 
         private Intent createPieChart() {
-            ReportData report = currentReport.getReportForChart(db, WhereFilter.copyOf(filter));
+            ReportData report = currentReport.getReportForChart(db, reportFilter());
 
             // Three plain lists rather than objects turned into JSON: the chart
             // screen wants a name, a size and a written amount, and passing
