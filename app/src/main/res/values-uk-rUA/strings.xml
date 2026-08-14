@@ -1493,4 +1493,16 @@
     <string name="sync_notice_merge">Об’єднати: %1$d</string>
     <string name="sync_notice_both">Переглянути: %1$d · об’єднати: %2$d</string>
     <string name="permission_ask_in_settings">Телефон більше не запитає: увімкніть у налаштуваннях</string>
+    <string name="swipe_right">Гортання праворуч</string>
+    <string name="swipe_left">Гортання ліворуч</string>
+    <string name="swipe_nothing">Нічого</string>
+    <string name="undo">Скасувати</string>
+    <string-array name="swipe_action_entries">
+        <item>Нічого</item>
+        <item>Змінити</item>
+        <item>Дублювати</item>
+        <item>Позначити</item>
+        <item>Узгодити</item>
+        <item>Видалити</item>
+    </string-array>
 </resources>

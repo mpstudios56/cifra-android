@@ -75,6 +75,7 @@ import tw.tib.financisto.model.AccountType;
 import tw.tib.financisto.model.Budget;
 import tw.tib.financisto.model.Transaction;
 import tw.tib.financisto.model.TransactionAttribute;
+import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.rates.ExchangeRate;
 import tw.tib.financisto.utils.IntegrityCheckRunningBalance;
 import tw.tib.financisto.utils.MenuItemInfo;
@@ -215,6 +216,8 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // thumb no longer intercepts right-edge touches, enabled while scrolling.
         // MassOp / BudgetBlotter inherit this too.
         tw.tib.financisto.utils.SafeFastScroll.attach(getListView());
+
+        attachSwipe();
 
         // A toolbar belongs to a screen of its own. Inside the main screen the tab
         // says which list this is, and a title bar on top of the button bar only
@@ -1330,4 +1333,131 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
         super.onDestroy();
     }
+
+    // ------------------------------------------------------------- scorrimento
+
+    /** What dragging a row to the right and to the left does, read once. */
+    private tw.tib.financisto.utils.SwipeAction swipeRight =
+            tw.tib.financisto.utils.SwipeAction.NONE;
+    private tw.tib.financisto.utils.SwipeAction swipeLeft =
+            tw.tib.financisto.utils.SwipeAction.NONE;
+
+    /**
+     * Lets a movement be dragged sideways, if either direction has been given
+     * something to do.
+     */
+    private void attachSwipe() {
+        swipeRight = MyPreferences.getSwipeRight();
+        swipeLeft = MyPreferences.getSwipeLeft();
+        if (swipeRight == tw.tib.financisto.utils.SwipeAction.NONE
+                && swipeLeft == tw.tib.financisto.utils.SwipeAction.NONE) {
+            return;
+        }
+        tw.tib.financisto.view.SwipeOnRows.attach(getListView(),
+                new tw.tib.financisto.view.SwipeOnRows.Handler() {
+                    @Override
+                    public boolean canSwipe(int position, long id) {
+                        return id > 0;
+                    }
+
+                    @Override
+                    public int colourFor(boolean toTheRight) {
+                        tw.tib.financisto.utils.SwipeAction a = toTheRight ? swipeRight : swipeLeft;
+                        return a.colour;
+                    }
+
+                    @Override
+                    public void swiped(int position, long id, boolean toTheRight) {
+                        doSwipe(id, toTheRight ? swipeRight : swipeLeft);
+                    }
+                });
+    }
+
+    /**
+     * Carries out what the direction was set to, and offers the way back.
+     * <p>
+     * Everything except opening the editor can be undone, because a swipe is a
+     * gesture one makes by accident: without the way back it becomes something
+     * to be careful of rather than something to use.
+     */
+    private void doSwipe(long id, tw.tib.financisto.utils.SwipeAction action) {
+        switch (action) {
+            case NONE:
+                return;
+            case EDIT:
+                editTransaction(id);
+                return;
+            case DUPLICATE: {
+                long copy = new BlotterOperations(getContext(), this, db, id)
+                        .duplicateTransaction(1);
+                recreateCursor();
+                offerUndo(action, () -> {
+                    db.deleteTransaction(copy);
+                    recreateCursor();
+                });
+                return;
+            }
+            case CLEAR:
+            case RECONCILE: {
+                Transaction t = db.getTransaction(id);
+                if (t == null) {
+                    return;
+                }
+                final TransactionStatus before = t.status;
+                db.updateTransactionStatus(id, action
+                        == tw.tib.financisto.utils.SwipeAction.CLEAR
+                        ? TransactionStatus.CL : TransactionStatus.RC);
+                recreateCursor();
+                offerUndo(action, () -> {
+                    db.updateTransactionStatus(id, before);
+                    recreateCursor();
+                });
+                return;
+            }
+            case DELETE: {
+                final Transaction t = db.getTransaction(id);
+                if (t == null) {
+                    return;
+                }
+                // Everything hanging off it is read before it goes, so that the
+                // way back puts back the whole movement and not its skeleton.
+                final List<TransactionAttribute> attributes = new LinkedList<>();
+                for (Map.Entry<Long, String> e : db.getAllAttributesForTransaction(id).entrySet()) {
+                    TransactionAttribute a = new TransactionAttribute();
+                    a.attributeId = e.getKey();
+                    a.value = e.getValue();
+                    attributes.add(a);
+                }
+                final List<Transaction> splits = t.isSplitParent()
+                        ? db.getSplitsForTransaction(id) : null;
+                db.deleteTransaction(id);
+                recreateCursor();
+                offerUndo(action, () -> {
+                    t.id = -1;
+                    if (splits != null) {
+                        for (Transaction split : splits) {
+                            split.id = -1;
+                        }
+                        t.splits = splits;
+                    }
+                    db.insertOrUpdate(t, attributes);
+                    recreateCursor();
+                });
+            }
+        }
+    }
+
+    /** The line at the foot of the screen that gives a few seconds to think again. */
+    private void offerUndo(tw.tib.financisto.utils.SwipeAction action, Runnable back) {
+        View view = getView();
+        if (view == null) {
+            return;
+        }
+        com.google.android.material.snackbar.Snackbar
+                .make(view, getString(action.titleId),
+                        com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, v -> back.run())
+                .show();
+    }
+
 }

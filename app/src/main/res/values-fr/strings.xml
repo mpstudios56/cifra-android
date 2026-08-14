@@ -1518,4 +1518,16 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sync_notice_merge">À fusionner : %1$d</string>
   <string name="sync_notice_both">À revoir : %1$d · à fusionner : %2$d</string>
   <string name="permission_ask_in_settings">Le téléphone ne le demande plus : activez-le dans les réglages</string>
+  <string name="swipe_right">Glisser vers la droite</string>
+  <string name="swipe_left">Glisser vers la gauche</string>
+  <string name="swipe_nothing">Rien</string>
+  <string name="undo">Annuler</string>
+  <string-array name="swipe_action_entries">
+      <item>Rien</item>
+      <item>Modifier</item>
+      <item>Dupliquer</item>
+      <item>Marquer comme compensé</item>
+      <item>Rapprocher</item>
+      <item>Supprimer</item>
+  </string-array>
 </resources>

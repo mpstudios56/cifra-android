@@ -1628,4 +1628,24 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sync_notice_merge">To merge: %1$d</string>
     <string name="sync_notice_both">To review: %1$d · to merge: %2$d</string>
     <string name="permission_ask_in_settings">The phone will not ask again: turn it on in settings</string>
+    <string name="swipe_right">Swipe right</string>
+    <string name="swipe_left">Swipe left</string>
+    <string name="swipe_nothing">Nothing</string>
+    <string name="undo">Undo</string>
+    <string-array name="swipe_action_entries">
+        <item>Nothing</item>
+        <item>Edit</item>
+        <item>Duplicate</item>
+        <item>Mark cleared</item>
+        <item>Reconcile</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="swipe_action_values" translatable="false">
+        <item>NONE</item>
+        <item>EDIT</item>
+        <item>DUPLICATE</item>
+        <item>CLEAR</item>
+        <item>RECONCILE</item>
+        <item>DELETE</item>
+    </string-array>
 </resources>

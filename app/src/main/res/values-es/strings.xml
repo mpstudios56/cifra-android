@@ -1518,4 +1518,16 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sync_notice_merge">Por unir: %1$d</string>
   <string name="sync_notice_both">Por revisar: %1$d · por unir: %2$d</string>
   <string name="permission_ask_in_settings">El teléfono ya no lo pregunta: actívalo en los ajustes</string>
+  <string name="swipe_right">Deslizar a la derecha</string>
+  <string name="swipe_left">Deslizar a la izquierda</string>
+  <string name="swipe_nothing">Nada</string>
+  <string name="undo">Deshacer</string>
+  <string-array name="swipe_action_entries">
+      <item>Nada</item>
+      <item>Editar</item>
+      <item>Duplicar</item>
+      <item>Marcar como liquidado</item>
+      <item>Conciliar</item>
+      <item>Eliminar</item>
+  </string-array>
 </resources>

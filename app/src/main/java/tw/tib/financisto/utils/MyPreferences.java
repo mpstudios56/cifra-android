@@ -640,6 +640,21 @@ public class MyPreferences {
 	}
 
 	/**
+	 * What dragging a movement to the right, and to the left, does.
+	 * <p>
+	 * Both start out set: a gesture nobody has been told about is found by
+	 * accident, and finding it should do something worth having and undoable
+	 * rather than nothing at all.
+	 */
+	public static SwipeAction getSwipeRight() {
+		return SwipeAction.of(getString("swipe_right_action", SwipeAction.CLEAR.name()));
+	}
+
+	public static SwipeAction getSwipeLeft() {
+		return SwipeAction.of(getString("swipe_left_action", SwipeAction.DELETE.name()));
+	}
+
+	/**
 	 * What was last written into a person's file, and when.
 	 * <p>
 	 * Kept so a round can tell whether the file it is about to write would be

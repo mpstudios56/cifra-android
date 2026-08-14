@@ -1393,14 +1393,14 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sharing_them">L’altra persona</string>
   <string name="sharing_me_empty">Non impostato</string>
   <string name="sharing_them_empty">Non impostato</string>
-  <string name="sharing_not_yet">La sincronia parte all’apertura di questa schermata e sul pulsante. La velocità è quella del cloud che allinea la cartella.</string>
+  <string name="sharing_not_yet">La sincronizzazione parte da sola mentre l’app è aperta, e sul pulsante. La velocità è quella del cloud che allinea la cartella.</string>
   <string name="sharing_folder">Cartella condivisa</string>
   <string name="sharing_folder_empty">Non scelta. Dev’essere allineata dal cloud su entrambi i telefoni</string>
   <string name="sharing_folder_chosen">%1$s</string>
   <string name="sharing_folder_failed">Nessuna app su questo telefono sa scegliere una cartella</string>
   <string name="sharing_now">Sincronizza adesso</string>
   <string name="sharing_running">Sincronizzo…</string>
-  <string name="sharing_last">Ultima sincronia alle %1$s</string>
+  <string name="sharing_last">Ultima sincronizzazione alle %1$s</string>
   <string name="sharing_never">Non ancora sincronizzato</string>
   <string name="sharing_received">Arrivate %1$d modifiche</string>
   <string name="sharing_nothing_new">Niente di nuovo</string>
@@ -1529,4 +1529,16 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sync_notice_merge">Da unire: %1$d</string>
   <string name="sync_notice_both">Da rivedere: %1$d · da unire: %2$d</string>
   <string name="permission_ask_in_settings">Il telefono non lo chiede più: attivalo dalle impostazioni</string>
+  <string name="swipe_right">Scorrimento verso destra</string>
+  <string name="swipe_left">Scorrimento verso sinistra</string>
+  <string name="swipe_nothing">Niente</string>
+  <string name="undo">Annulla</string>
+  <string-array name="swipe_action_entries">
+      <item>Niente</item>
+      <item>Modifica</item>
+      <item>Duplica</item>
+      <item>Segna come conciliato</item>
+      <item>Riconcilia</item>
+      <item>Elimina</item>
+  </string-array>
 </resources>
