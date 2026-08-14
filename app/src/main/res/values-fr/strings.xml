@@ -1187,7 +1187,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="summary_income">Entrées</string>
   <string name="summary_expense">Sorties</string>
   <string name="summary_saved">Solde de la période</string>
-  <string name="summary_saved_share">%1$d%% de ce qui est entré</string>
+  <string name="summary_saved_share">%1$d%% des revenus disponible</string>
   <string name="summary_top_categories">Dépenses par catégorie</string>
   <string name="summary_net_worth">Total</string>
   <string name="summary_net_worth_note">Solde de tous les comptes comptés dans les totaux</string>
@@ -1505,4 +1505,6 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sharing_account_nobody">personne encore</string>
   <string name="sharing_choose_folder_first">Choisir le dossier partagé</string>
   <string name="transaction_written_by">Écrit par</string>
+  <string name="summary_no_income">Aucun revenu sur la période</string>
+  <string name="summary_top_categories_income">Revenus par catégorie</string>
 </resources>

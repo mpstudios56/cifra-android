@@ -1197,7 +1197,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="summary_income">Entrate</string>
   <string name="summary_expense">Uscite</string>
   <string name="summary_saved">Saldo del periodo</string>
-  <string name="summary_saved_share">%1$d%% di quanto è entrato</string>
+  <string name="summary_saved_share">%1$d%% delle entrate disponibile</string>
   <string name="summary_top_categories">Uscite per categoria</string>
   <string name="summary_net_worth">Totale</string>
   <string name="summary_net_worth_note">Saldo di tutti i conti inclusi nei totali</string>
@@ -1516,4 +1516,6 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sharing_account_nobody">ancora nessuno</string>
   <string name="sharing_choose_folder_first">Scegli la cartella condivisa</string>
   <string name="transaction_written_by">Generato da</string>
+  <string name="summary_no_income">Nessuna entrata disponibile nel periodo</string>
+  <string name="summary_top_categories_income">Entrate per categoria</string>
 </resources>

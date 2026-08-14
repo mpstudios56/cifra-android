@@ -90,11 +90,8 @@ abstract public class AbstractListFragment<D> extends ListFragment
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         loaderManager.initLoader(0, null, this);
 
-        getListView().setOnItemLongClickListener((parent, v, position, id) -> {
-            RowMenu.show(getActivity(), v, createContextMenus(id),
-                    menuId -> onPopupItemSelected(menuId, v, position, id));
-            return true;
-        });
+        getListView().setOnItemLongClickListener(
+                (parent, v, position, id) -> onItemLongClick(v, position, id));
 
         bAdd = view.findViewById(R.id.bAdd);
         if (bAdd != null) {
@@ -153,6 +150,13 @@ abstract public class AbstractListFragment<D> extends ListFragment
 
     protected void onItemClick(View v, int position, long id) {
         viewItem(v, position, id);
+    }
+
+    /** Held down: the list of words, unless a screen has something better. */
+    protected boolean onItemLongClick(View v, int position, long id) {
+        RowMenu.show(getActivity(), v, createContextMenus(id),
+                menuId -> onPopupItemSelected(menuId, v, position, id));
+        return true;
     }
 
     protected void addItem() {

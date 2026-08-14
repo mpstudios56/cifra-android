@@ -61,12 +61,20 @@ public class MenuListFragment extends ListFragment {
                     | WindowInsetsCompat.Type.captionBar());
             // Nothing stands between this and the status bar since the strip moved
             // to the bottom, so it keeps clear of it itself.
-            v.setPadding(0, insets.top, 0, 0);
+            // Only when it actually differs: setting the same padding again asks
+            // for another layout pass, and a layout pass in the middle of a touch
+            // is what makes a list forget the tap it was in the middle of.
+            if (v.getPaddingTop() != insets.top) {
+                v.setPadding(0, insets.top, 0, 0);
+            }
             ((ViewGroup) v).setClipToPadding(true);
             return WindowInsetsCompat.CONSUMED;
         });
 
-        setListAdapter(new SummaryEntityListAdapter(getContext(), MenuListItem.values()));
+        SummaryEntityListAdapter adapter =
+                new SummaryEntityListAdapter(getContext(), MenuListItem.values());
+        adapter.setOnPicked(position -> MenuListItem.values()[position].call(this));
+        setListAdapter(adapter);
     }
 
     @Override

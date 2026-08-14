@@ -108,6 +108,14 @@ public class AutoSync {
             try {
                 SyncEngine.Result result = SyncEngine.run(app, db);
                 Log.i(TAG, "round: " + result.received + " in, " + result.sent + " out");
+                if (result.received > 0) {
+                    // Said out loud rather than left for each screen to notice:
+                    // a round finishes on a thread of its own, and whatever is
+                    // in front of somebody at that moment is showing figures
+                    // that were true a second ago.
+                    tw.tib.financisto.bus.GreenRobotBus_.getInstance_(app)
+                            .post(new tw.tib.financisto.bus.DataArrived());
+                }
             } catch (Exception e) {
                 // Never in somebody's face: a round that fails because the cloud
                 // is slow or the folder is briefly gone is not news, and the

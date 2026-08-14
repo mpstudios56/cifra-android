@@ -23,8 +23,28 @@ import tw.tib.financisto.utils.SummaryEntityEnum;
 
 public class SummaryEntityListAdapter extends BaseAdapter {
 
+    /** Told which line was touched, when the screen would rather hear it here. */
+    public interface OnPicked {
+        void picked(int position);
+    }
+
     private final SummaryEntityEnum[] entities;
     private final LayoutInflater inflater;
+    private OnPicked onPicked;
+
+    /**
+     * Hands the row its own listener instead of leaving the list to work out
+     * which line a touch belongs to.
+     * <p>
+     * A list decides that after the fact, and drops the whole thing if anything
+     * lays the screen out again between the finger going down and coming up -
+     * which is why a tap on the menu did nothing now and then, and why nudging
+     * the list first made it work. A listener on the row itself does not care.
+     */
+    public void setOnPicked(OnPicked listener) {
+        this.onPicked = listener;
+        notifyDataSetChanged();
+    }
 
     public SummaryEntityListAdapter(Context context, SummaryEntityEnum[] reports) {
         this.entities = reports;
@@ -58,6 +78,10 @@ public class SummaryEntityListAdapter extends BaseAdapter {
             convertView.setTag(h);
         } else {
             h = (Holder)convertView.getTag();
+        }
+        if (onPicked != null) {
+            final int line = position;
+            convertView.setOnClickListener(v -> onPicked.picked(line));
         }
         SummaryEntityEnum r = entities[position];
         h.title.setText(r.getTitleId());

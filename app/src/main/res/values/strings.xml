@@ -1332,7 +1332,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="summary_income">In</string>
     <string name="summary_expense">Out</string>
     <string name="summary_saved">Balance for the period</string>
-    <string name="summary_saved_share">%1$d%% of what came in</string>
+    <string name="summary_saved_share">%1$d%% of income still on hand</string>
     <string name="summary_top_categories">Spending by category</string>
     <string name="summary_net_worth">Total</string>
     <string name="summary_net_worth_note">Balance of every account counted in the totals</string>
@@ -1615,4 +1615,6 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sharing_account_nobody">nobody yet</string>
     <string name="sharing_choose_folder_first">Choose the shared folder</string>
     <string name="transaction_written_by">Written by</string>
+    <string name="summary_no_income">No income in this period</string>
+    <string name="summary_top_categories_income">Income by category</string>
 </resources>

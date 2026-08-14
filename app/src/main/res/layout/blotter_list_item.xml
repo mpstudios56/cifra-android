@@ -32,20 +32,26 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <!--
-      A small mark in the other person's colour, on the movements they wrote.
-      Only on theirs: marking both would double the ink and say nothing, since
-      what one wants to see is which of these are not mine. Tucked against the
-      category symbol rather than given a column of its own, so a row is no
-      taller and no busier when nobody is sharing anything.
+      A small mark in the colour of whoever wrote the movement, on the ones that
+      did not come from here. Only on theirs: marking both would double the ink
+      and say nothing, since what one wants to see is which of these are not
+      mine.
+      <p>
+      It sat on the corner of the category symbol, where it covered a piece of
+      the drawing on every shared row. It now stands on the line of the account
+      name, in the gap between the symbol and the words, where it is read as
+      part of that line and hides nothing.
     -->
     <View
         android:id="@+id/author_mark"
-        android:layout_width="9dp"
-        android:layout_height="9dp"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:background="@drawable/pie_row_dot"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/category_icon"
-        app:layout_constraintTop_toTopOf="@id/category_icon" />
+        android:layout_marginStart="4sp"
+        app:layout_constraintStart_toEndOf="@id/category_icon"
+        app:layout_constraintTop_toTopOf="@id/top"
+        app:layout_constraintBottom_toBottomOf="@id/top" />
 
     <TextView
         android:id="@+id/category_icon_text"
@@ -69,7 +75,7 @@
         android:singleLine="true"
         android:text="top"
         android:textAppearance="@style/ListSecondary"
-        app:layout_constraintStart_toEndOf="@id/category_icon"
+        app:layout_constraintStart_toEndOf="@id/author_mark"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

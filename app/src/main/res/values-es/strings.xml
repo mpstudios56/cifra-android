@@ -1194,7 +1194,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="summary_income">Ingresos</string>
   <string name="summary_expense">Gastos</string>
   <string name="summary_saved">Saldo del periodo</string>
-  <string name="summary_saved_share">%1$d%% de lo que entró</string>
+  <string name="summary_saved_share">%1$d%% de los ingresos disponible</string>
   <string name="summary_top_categories">Gastos por categoría</string>
   <string name="summary_net_worth">Total</string>
   <string name="summary_net_worth_note">Saldo de todas las cuentas incluidas en los totales</string>
@@ -1505,4 +1505,6 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sharing_account_nobody">todavia nadie</string>
   <string name="sharing_choose_folder_first">Elige la carpeta compartida</string>
   <string name="transaction_written_by">Escrito por</string>
+  <string name="summary_no_income">Sin ingresos en el periodo</string>
+  <string name="summary_top_categories_income">Ingresos por categoría</string>
 </resources>

@@ -1301,7 +1301,7 @@
     <string name="summary_income">Надійшло</string>
     <string name="summary_expense">Витрачено</string>
     <string name="summary_saved">Баланс за період</string>
-    <string name="summary_saved_share">%1$d%% від того, що надійшло</string>
+    <string name="summary_saved_share">%1$d%% надходжень доступно</string>
     <string name="summary_top_categories">Куди пішло</string>
     <string name="summary_net_worth">Разом</string>
     <string name="summary_net_worth_note">Баланс усіх рахунків, що входять до підсумків</string>
@@ -1480,4 +1480,6 @@
     <string name="sharing_account_nobody">poky nikoho</string>
     <string name="sharing_choose_folder_first">Виберіть спільну теку</string>
     <string name="transaction_written_by">Записав</string>
+    <string name="summary_no_income">Жодних надходжень за період</string>
+    <string name="summary_top_categories_income">Надходження за категоріями</string>
 </resources>

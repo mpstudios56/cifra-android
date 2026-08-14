@@ -168,12 +168,36 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <!--
+              The heading is also the switch between what went out by category
+              and what came in by it. One card rather than two: the same five
+              rows, read the other way round, and a card that is empty half the
+              year for anybody whose money comes in once a month.
+            -->
+            <LinearLayout
+                android:id="@+id/summary_categories_side"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/summary_top_categories"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/summary_categories_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/summary_top_categories"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:alpha="0.7"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_swap_direction" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/summary_categories"

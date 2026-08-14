@@ -393,6 +393,30 @@ public class MainActivity extends AppCompatActivity {
         refreshCurrentTab();
     }
 
+    /**
+     * A round of sharing brought something in: every tab that is alive redraws,
+     * not only the one in front.
+     * <p>
+     * The pager keeps the neighbouring tabs built and does not take them through
+     * onResume when they slide into view, so refreshing the current one left the
+     * summary and the account list showing what they had loaded before the round
+     * - right until somebody went into an account and came out, which is exactly
+     * the moment a figure stops being trustworthy.
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataArrived(tw.tib.financisto.bus.DataArrived e) {
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (!f.isAdded()) {
+                continue;
+            }
+            if (f instanceof SummaryFragment) {
+                ((SummaryFragment) f).redraw();
+            } else if (f instanceof RefreshSupportedActivity) {
+                ((RefreshSupportedActivity) f).recreateCursor();
+            }
+        }
+    }
+
     private void updateFieldInTable(SQLiteDatabase db, String table, long id, String field, String value) {
         db.execSQL("update " + table + " set " + field + "=? where _id=?", new Object[]{value, id});
     }

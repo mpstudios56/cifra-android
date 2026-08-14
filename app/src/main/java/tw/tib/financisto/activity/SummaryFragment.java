@@ -56,6 +56,8 @@ public class SummaryFragment extends Fragment {
     private boolean allCategories = false;
     /** Whether the total is showing the accounts it is made of. */
     private boolean showAccounts = false;
+    /** Whether the category card is reading what came in instead of what went out. */
+    private boolean categoriesAreIncome = false;
 
     @Nullable
     @Override
@@ -102,6 +104,10 @@ public class SummaryFragment extends Fragment {
             showAccounts = !showAccounts;
             refresh();
         });
+        view.findViewById(R.id.summary_categories_side).setOnClickListener(v -> {
+            categoriesAreIncome = !categoriesAreIncome;
+            refresh();
+        });
     }
 
     @Override
@@ -126,6 +132,11 @@ public class SummaryFragment extends Fragment {
     public void onPause() {
         super.onPause();
         PinProtection.lock(getContext());
+    }
+
+    /** Redraws from outside, when a round of sharing has changed the figures. */
+    public void redraw() {
+        refresh();
     }
 
     private void refresh() {
@@ -165,17 +176,21 @@ public class SummaryFragment extends Fragment {
 
         TextView note = view.findViewById(R.id.summary_saved_note);
         LinearLayout savedBar = view.findViewById(R.id.summary_saved_bar);
-        if (income > 0 && saved > 0) {
-            long share = 100 * saved / income;
-            note.setText(getString(R.string.summary_saved_share, share));
-            fillBar(savedBar, new long[]{saved, income - saved}, new int[]{IN, TRACK});
-        } else {
-            note.setText("");
-            // Nothing kept, or nothing came in: a bar would only be an empty box.
+        if (income <= 0) {
+            note.setText(R.string.summary_no_income);
             savedBar.setVisibility(View.GONE);
+        } else {
+            long share = saved > 0 ? 100 * saved / income : 0;
+            note.setText(getString(R.string.summary_saved_share, share));
+            if (saved > 0) {
+                fillBar(savedBar, new long[]{saved, income - saved}, new int[]{IN, TRACK});
+            } else {
+                // Nothing kept: a bar would only be an empty box.
+                savedBar.setVisibility(View.GONE);
+            }
         }
 
-        showTopCategories(view, home, start, end, expense);
+        showTopCategories(view, home, start, end, categoriesAreIncome ? income : expense);
         showNetWorth(view, home);
     }
 
@@ -269,14 +284,19 @@ public class SummaryFragment extends Fragment {
     }
 
     private void showTopCategories(View view, Currency home, long start, long end, long expense) {
+        ((TextView) view.findViewById(R.id.summary_categories_title)).setText(
+                categoriesAreIncome ? R.string.summary_top_categories_income
+                        : R.string.summary_top_categories);
         LinearLayout list = view.findViewById(R.id.summary_categories);
         list.removeAllViews();
         String sql = "select c.title, sum(t.from_amount) s from transactions t"
                 + " inner join category c on c._id = t.category_id"
                 + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
-                + " and t.from_amount < 0 and t.datetime between ? and ?"
+                + (categoriesAreIncome ? " and t.from_amount > 0" : " and t.from_amount < 0")
+                + " and t.datetime between ? and ?"
                 + COUNTED_ACCOUNTS
-                + " group by c._id order by s asc"
+                + " group by c._id order by s "
+                + (categoriesAreIncome ? "desc" : "asc")
                 + (allCategories ? "" : " limit " + TOP_CATEGORIES);
         try (Cursor c = db.db().rawQuery(sql,
                 new String[]{String.valueOf(start), String.valueOf(end)})) {

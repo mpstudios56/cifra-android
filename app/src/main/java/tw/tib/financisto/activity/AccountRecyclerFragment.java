@@ -359,13 +359,12 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         long t1 = System.nanoTime();
         var shared = tw.tib.financisto.sync.SharedThings.sharedAccountIds(db.db());
         var a = new AccountRecyclerAdapter(context, cursor, showSortOrder, clickedView -> {
+            // A tap opens the account. It used to open the ring of symbols
+            // instead, which put the movements - the thing anybody opens an
+            // account for - one tap further away than everything else, and gave
+            // the short tap and the long one the same job.
             selectedId = (long) clickedView.getTag(R.id.account);
-            if (MyPreferences.isQuickMenuEnabledForAccount()) {
-                prepareAccountActionGrid();
-                accountActionGrid.show(clickedView);
-            } else {
-                showAccountTransactions(selectedId);
-            }
+            showAccountTransactions(selectedId);
         }, longClickedView -> {
             selectedId = (long) longClickedView.getTag(R.id.account);
             prepareAccountActionGrid();

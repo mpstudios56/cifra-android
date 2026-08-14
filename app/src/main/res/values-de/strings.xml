@@ -1194,7 +1194,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="summary_income">Einnahmen</string>
   <string name="summary_expense">Ausgaben</string>
   <string name="summary_saved">Saldo des Zeitraums</string>
-  <string name="summary_saved_share">%1$d%% der Einnahmen</string>
+  <string name="summary_saved_share">%1$d%% der Einnahmen verfügbar</string>
   <string name="summary_top_categories">Ausgaben nach Kategorie</string>
   <string name="summary_net_worth">Gesamt</string>
   <string name="summary_net_worth_note">Saldo aller Konten, die in die Summen zählen</string>
@@ -1505,4 +1505,6 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sharing_account_nobody">noch niemand</string>
   <string name="sharing_choose_folder_first">Gemeinsamen Ordner wählen</string>
   <string name="transaction_written_by">Geschrieben von</string>
+  <string name="summary_no_income">Keine Einnahmen in diesem Zeitraum</string>
+  <string name="summary_top_categories_income">Einnahmen nach Kategorie</string>
 </resources>

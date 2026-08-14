@@ -597,7 +597,19 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         startActivityForResult(intent, SHOW_TOTALS_REQUEST);
     }
 
+    /** Whether the row being acted on is a transfer, asked once when it opens. */
+    private boolean selectedIsTransfer = false;
+
     protected void prepareTransactionActionGrid() {
+        boolean plainMovement = !blotterFilter.isTemplate() && !blotterFilter.isSchedule();
+        selectedIsTransfer = false;
+        if (plainMovement && selectedId > 0) {
+            try {
+                Transaction t = db.getTransaction(selectedId);
+                selectedIsTransfer = t != null && t.isTransfer();
+            } catch (Exception ignored) {
+            }
+        }
         transactionActionGrid = new QuickActionGrid(getContext());
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_info, R.string.info));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_edit, R.string.edit));
@@ -615,6 +627,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
         if (isQuickMenuShowDuplicateKeepDateTime) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, getResources().getColor(R.color.holo_orange_dark), R.string.duplicate_keep_date_time));
+        }
+        if (plainMovement) {
+            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
+            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_accounts, R.string.transaction_show_in_account_blotter));
+            if (selectedIsTransfer) {
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transaction, R.string.change_to_transaction));
+            } else {
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transfer, R.string.change_to_transfer));
+            }
         }
         transactionActionGrid.setOnQuickActionClickListener(transactionActionListener);
     }
@@ -654,6 +675,20 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
         else if (titleId == R.string.duplicate_keep_date_time) {
             duplicateTransactionKeepDateTime(selectedId);
+        }
+        // The four that used to live in the list menu, handled by the same code
+        // that handled them there rather than by a copy of it.
+        else if (titleId == R.string.save_as_template) {
+            onPopupItemSelected(MENU_SAVE_AS_TEMPLATE, null, 0, selectedId);
+        }
+        else if (titleId == R.string.transaction_show_in_account_blotter) {
+            onPopupItemSelected(MENU_SHOW_IN_ACCOUNT_BLOTTER, null, 0, selectedId);
+        }
+        else if (titleId == R.string.change_to_transaction) {
+            onPopupItemSelected(MENU_CHANGE_TO_TRANSACTION, null, 0, selectedId);
+        }
+        else if (titleId == R.string.change_to_transfer) {
+            onPopupItemSelected(MENU_CHANGE_TO_TRANSFER, null, 0, selectedId);
         }
     };
 
@@ -1217,12 +1252,21 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
     @Override
     protected void onItemClick(View v, int position, long id) {
-        if (isQuickMenuEnabledForTransaction) {
-            selectedId = id;
-            transactionActionGrid.show(v);
-        } else {
-            showTransactionInfo(id);
-        }
+        // Straight to the card, the way tapping "Informazioni" always did.
+        showTransactionInfo(id);
+    }
+
+    /**
+     * Held down: the ring of symbols, carrying everything that used to be split
+     * between it and the list menu - duplicate, save as template, show in the
+     * account, change between movement and transfer - each of them once.
+     */
+    @Override
+    protected boolean onItemLongClick(View v, int position, long id) {
+        selectedId = id;
+        prepareTransactionActionGrid();
+        transactionActionGrid.show(v);
+        return true;
     }
 
     @Override

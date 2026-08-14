@@ -94,9 +94,9 @@ public class TransactionInfoDialog {
         AccountType formAccountType = AccountType.valueOf(ti.fromAccount.type);
         add(layout, R.string.account, ti.fromAccount.title, formAccountType);
         if (ti.payee != null) {
-            add(layout, R.string.payee, ti.payee.title);
+            addWithIcon(layout, R.string.payee, ti.payee.title, R.drawable.ic_action_users);
         }
-        add(layout, R.string.category, String.join(" / ", db.getFullCategoryPath(ti.category)));
+        addCategory(layout, ti);
         if (ti.originalCurrency != null) {
             TextView amount = add(layout, R.string.original_amount, "");
             u.setAmountText(amount, ti.originalCurrency, ti.originalFromAmount, true);
@@ -179,7 +179,14 @@ public class TransactionInfoDialog {
         String locationTitle;
         if (location != null && location.id > 0) {
             locationTitle = location.title + (location.resolvedAddress != null ? " (" + location.resolvedAddress + ")" : "");
-            add(layout, R.string.location, locationTitle);
+            addWithIcon(layout, R.string.location, locationTitle, R.drawable.ic_action_location_2);
+        }
+
+        // The state of the movement in the body as well as up in the bar. The bar
+        // says it in a corner, in a colour, at the size of a full stop; anybody
+        // reading the card from the top down never gets there.
+        if (ti.status != null) {
+            add(layout, R.string.transaction_status, context.getString(ti.status.titleId));
         }
     }
 
@@ -257,7 +264,36 @@ public class TransactionInfoDialog {
                 break;
             }
         }
-        add(layout, R.string.transaction_written_by, who);
+        // In the colour that person was given, the same one the row in the list
+        // carries: the name answers "whose", the colour joins it to the dot that
+        // led somebody to open the card in the first place.
+        View row = addWithIcon(layout, R.string.transaction_written_by, who,
+                R.drawable.dot);
+        ImageView mark = row.findViewById(R.id.icon);
+        if (mark != null) {
+            mark.setColorFilter(tw.tib.financisto.utils.Identity.colourOf(db.db(), createdBy));
+        }
+    }
+
+    /** The category, wearing its own symbol and its own colour. */
+    private void addCategory(LinearLayout layout, TransactionInfo ti) {
+        String path = String.join(" / ", db.getFullCategoryPath(ti.category));
+        View row = addWithIcon(layout, R.string.category, path, R.drawable.ic_action_category);
+        ImageView icon = row.findViewById(R.id.icon);
+        if (icon == null || ti.category == null) {
+            return;
+        }
+        try {
+            tw.tib.financisto.utils.CategoryIcons.show(icon, ti.category);
+        } catch (Exception ignored) {
+            // A category with no symbol of its own keeps the plain one.
+        }
+    }
+
+    /** One line with a symbol beside it. */
+    private View addWithIcon(LinearLayout layout, int labelId, String data, int iconId) {
+        return inflater.new Builder(layout, R.layout.select_entry_simple_icon)
+                .withIcon(iconId).withLabel(labelId).withData(data).create();
     }
 
     private TextView add(LinearLayout layout, int labelId, String data) {
