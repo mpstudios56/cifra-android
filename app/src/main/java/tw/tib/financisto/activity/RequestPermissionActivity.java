@@ -18,6 +18,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -132,10 +133,61 @@ public class RequestPermissionActivity extends Activity {
         toggleButton.setChecked(false);
         if (permission.equals(Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE)) {
             startActivityForResult(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"), 0);
+            return;
         }
-        else {
-            ActivityCompat.requestPermissions(this, new String[]{permission}, 0);
+        // Android asks once, and after a refusal it will not ask again however
+        // often the app requests it: the call returns and nothing happens, so
+        // the switch looks broken. When that is the state, this opens the page
+        // in the phone's own settings where the answer can still be changed.
+        if (wasAskedBefore(permission)
+                && !ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            Toast.makeText(this, R.string.permission_ask_in_settings, Toast.LENGTH_LONG).show();
+            openTheSettingsPage(permission);
+            return;
         }
+        rememberAsked(permission);
+        ActivityCompat.requestPermissions(this, new String[]{permission}, 0);
+    }
+
+    /** The phone's own page for this permission, or failing that the app's page. */
+    private void openTheSettingsPage(String permission) {
+        try {
+            if (Manifest.permission.POST_NOTIFICATIONS.equals(permission)) {
+                Intent i = new Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                i.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, getPackageName());
+                startActivity(i);
+                return;
+            }
+        } catch (Exception ignored) {
+            // Some phones do not have that page; the one below they all have.
+        }
+        try {
+            Intent i = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            i.setData(android.net.Uri.parse("package:" + getPackageName()));
+            startActivity(i);
+        } catch (Exception ignored) {
+        }
+    }
+
+    /**
+     * Whether the phone has already put this question once.
+     * <p>
+     * Kept here because Android cannot be asked: before the first request and
+     * after a final refusal it gives the same answer, and the two need telling
+     * apart.
+     */
+    private boolean wasAskedBefore(String permission) {
+        return androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("asked_" + permission, false);
+    }
+
+    public static void rememberAsked(android.content.Context context, String permission) {
+        androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
+                .edit().putBoolean("asked_" + permission, true).apply();
+    }
+
+    private void rememberAsked(String permission) {
+        rememberAsked(this, permission);
     }
 
     private boolean isGranted(String permission) {

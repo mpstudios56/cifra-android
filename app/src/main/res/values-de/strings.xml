@@ -1517,4 +1517,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sync_notice_review">Zu prüfen: %1$d</string>
   <string name="sync_notice_merge">Zusammenzuführen: %1$d</string>
   <string name="sync_notice_both">Zu prüfen: %1$d · zusammenzuführen: %2$d</string>
+  <string name="permission_ask_in_settings">Das Telefon fragt nicht mehr: in den Einstellungen aktivieren</string>
 </resources>

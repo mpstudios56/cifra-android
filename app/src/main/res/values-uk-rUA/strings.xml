@@ -1492,4 +1492,5 @@
     <string name="sync_notice_review">Переглянути: %1$d</string>
     <string name="sync_notice_merge">Об’єднати: %1$d</string>
     <string name="sync_notice_both">Переглянути: %1$d · об’єднати: %2$d</string>
+    <string name="permission_ask_in_settings">Телефон більше не запитає: увімкніть у налаштуваннях</string>
 </resources>

@@ -1627,4 +1627,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sync_notice_review">To review: %1$d</string>
     <string name="sync_notice_merge">To merge: %1$d</string>
     <string name="sync_notice_both">To review: %1$d · to merge: %2$d</string>
+    <string name="permission_ask_in_settings">The phone will not ask again: turn it on in settings</string>
 </resources>

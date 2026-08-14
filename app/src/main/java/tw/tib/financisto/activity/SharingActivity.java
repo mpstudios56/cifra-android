@@ -509,6 +509,11 @@ public class SharingActivity extends AppCompatActivity {
             return;
         }
         prefs.edit().putBoolean("sharing_notifications_asked", true).apply();
+        // Written down for the permissions screen as well: once the phone has
+        // put the question, saying no is final, and that screen has to send
+        // whoever changes their mind to the settings instead of asking again.
+        RequestPermissionActivity.rememberAsked(this,
+                android.Manifest.permission.POST_NOTIFICATIONS);
         androidx.core.app.ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 0);
     }
