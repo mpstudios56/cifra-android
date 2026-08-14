@@ -13,11 +13,11 @@ import tw.tib.financisto.R;
 public enum SwipeAction {
 
     NONE(R.string.swipe_nothing, 0, 0, R.string.swipe_nothing),
-    EDIT(R.string.edit, 0xFFEDA00D, R.drawable.ic_action_edit, R.string.swipe_done_edit),
-    DUPLICATE(R.string.duplicate, 0xFF5B8DEF, R.drawable.ic_action_copy, R.string.swipe_done_duplicate),
-    CLEAR(R.string.clear, 0xFF79C471, R.drawable.status_cleared, R.string.swipe_done_clear),
-    RECONCILE(R.string.reconcile, 0xFF006A25, R.drawable.status_reconciled, R.string.swipe_done_reconcile),
-    DELETE(R.string.delete, 0xFFDF0024, R.drawable.ic_action_trash, R.string.swipe_done_delete);
+    EDIT(R.string.edit, 0xFFE0A33C, R.drawable.ic_action_edit, R.string.swipe_done_edit),
+    DUPLICATE(R.string.duplicate, 0xFF6C8CF5, R.drawable.ic_action_copy, R.string.swipe_done_duplicate),
+    CLEAR(R.string.clear, 0xFF4CAF7D, R.drawable.status_cleared, R.string.swipe_done_clear),
+    RECONCILE(R.string.reconcile, 0xFF2FA37A, R.drawable.status_reconciled, R.string.swipe_done_reconcile),
+    DELETE(R.string.delete, 0xFFE5484D, R.drawable.ic_action_trash, R.string.swipe_done_delete);
 
     public final int titleId;
     /** The colour that comes out from under the row as it moves. */

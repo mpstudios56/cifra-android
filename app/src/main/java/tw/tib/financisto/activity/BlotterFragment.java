@@ -1292,6 +1292,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     @Override
     public void onResume() {
         super.onResume();
+        readSwipeSettings();
         Log.d(TAG, "onResume");
         // Re-read on every return: this fragment is cached by the pager and is not
         // rebuilt when the templates tab is switched on or off in the preferences,
@@ -1347,12 +1348,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
      * something to do.
      */
     private void attachSwipe() {
-        swipeRight = MyPreferences.getSwipeRight();
-        swipeLeft = MyPreferences.getSwipeLeft();
-        if (swipeRight == tw.tib.financisto.utils.SwipeAction.NONE
-                && swipeLeft == tw.tib.financisto.utils.SwipeAction.NONE) {
-            return;
-        }
+        readSwipeSettings();
         tw.tib.financisto.view.SwipeOnRows.attach(getListView(),
                 new tw.tib.financisto.view.SwipeOnRows.Handler() {
                     @Override
@@ -1384,6 +1380,18 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
      * gesture one makes by accident: without the way back it becomes something
      * to be careful of rather than something to use.
      */
+    /**
+     * Read on every return to the screen, not once when it was built.
+     * <p>
+     * Changing the setting and coming back does not build this screen again, so
+     * read once meant the new choice took hold at some unguessable later moment
+     * - whenever the screen happened to be thrown away and made afresh.
+     */
+    private void readSwipeSettings() {
+        swipeRight = MyPreferences.getSwipeRight();
+        swipeLeft = MyPreferences.getSwipeLeft();
+    }
+
     private void doSwipe(long id, tw.tib.financisto.utils.SwipeAction action) {
         switch (action) {
             case NONE:

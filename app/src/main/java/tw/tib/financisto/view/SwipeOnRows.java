@@ -192,9 +192,17 @@ public class SwipeOnRows implements View.OnTouchListener {
             row.setBackgroundColor(0);
             return;
         }
+        // A wash rather than a band: strongest at the edge the row is uncovering
+        // and fading out under the row itself, which is what the eye expects of
+        // something coming out from underneath.
         int alpha = solid ? SOLID : FAINT;
-        ColorDrawable ground = new ColorDrawable(
-                (alpha << 24) | (colour & 0xFFFFFF));
+        int strong = (alpha << 24) | (colour & 0xFFFFFF);
+        int gone = colour & 0xFFFFFF;
+        android.graphics.drawable.GradientDrawable ground =
+                new android.graphics.drawable.GradientDrawable(
+                        android.graphics.drawable.GradientDrawable.Orientation.LEFT_RIGHT,
+                        way > 0 ? new int[]{strong, strong, gone}
+                                : new int[]{gone, strong, strong});
 
         int iconId = handler.iconFor(way > 0);
         Drawable icon = iconId == 0 ? null : ContextCompat.getDrawable(list.getContext(), iconId);
