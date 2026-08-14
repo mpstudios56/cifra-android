@@ -26,3 +26,15 @@ app/mapping.txt
 
 # Copie pronte da caricare, rigenerabili
 rilascio/
+
+# Quello che si produce attorno all'app resta sul computer: note per lo store,
+# post per il canale, elenco dei lavori, descrizioni, inviti ai tester, script
+# di servizio, campioni di importazione presi da esportazioni vere. Su GitHub
+# va il codice, non il materiale di lavoro.
+docs/*
+!docs/screenshots/
+docs/screenshots/*
+!docs/screenshots/accounts.png
+!docs/screenshots/blotter.png
+!docs/screenshots/transaction.png
+!docs/screenshots/autocomplete.png
