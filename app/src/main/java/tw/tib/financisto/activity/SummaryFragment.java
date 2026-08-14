@@ -106,6 +106,10 @@ public class SummaryFragment extends Fragment {
         });
         view.findViewById(R.id.summary_categories_side).setOnClickListener(v -> {
             categoriesAreIncome = !categoriesAreIncome;
+            // Back to the short list when the card turns round: "show the top
+            // ones only" carried over from a side with twenty categories to a
+            // side with one, where it had nothing left to hide.
+            allCategories = false;
             refresh();
         });
     }
@@ -308,6 +312,7 @@ public class SummaryFragment extends Fragment {
                         SLICES[list.getChildCount() % SLICES.length]));
             }
         }
+        int howManyThereAre = countCategories(start, end);
         int shown = list.getChildCount();
         if (shown == 0) {
             TextView empty = new TextView(getContext());
@@ -319,13 +324,33 @@ public class SummaryFragment extends Fragment {
         TextView more = view.findViewById(R.id.summary_categories_more);
         android.widget.ImageView chevron = view.findViewById(R.id.summary_categories_chevron);
         // Offering "show every category" when five is every category there is
-        // would open nothing at all.
-        boolean worthExpanding = allCategories || shown >= TOP_CATEGORIES;
+        // would open nothing at all. Counted rather than guessed from the rows
+        // on screen: with the card already open, the number of rows is the whole
+        // list, and reading five of them as "there may be more" left the line
+        // showing on a side that had one category.
+        boolean worthExpanding = howManyThereAre > TOP_CATEGORIES;
         more.setVisibility(worthExpanding ? View.VISIBLE : View.GONE);
         chevron.setVisibility(worthExpanding ? View.VISIBLE : View.GONE);
         more.setText(allCategories ? R.string.summary_show_top : R.string.summary_show_all);
         chevron.setRotation(allCategories ? 180 : 0);
         view.findViewById(R.id.summary_categories_header).setClickable(worthExpanding);
+    }
+
+    /** How many categories the period has on the side being shown. */
+    private int countCategories(long start, long end) {
+        String sql = "select count(*) from (select c._id from transactions t"
+                + " inner join category c on c._id = t.category_id"
+                + " where t.is_template = 0 and t.parent_id = 0 and t.to_account_id = 0"
+                + (categoriesAreIncome ? " and t.from_amount > 0" : " and t.from_amount < 0")
+                + " and t.datetime between ? and ?"
+                + COUNTED_ACCOUNTS
+                + " group by c._id)";
+        try (Cursor c = db.db().rawQuery(sql,
+                new String[]{String.valueOf(start), String.valueOf(end)})) {
+            return c.moveToFirst() ? c.getInt(0) : 0;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     /**

@@ -174,10 +174,18 @@
               rows, read the other way round, and a card that is empty half the
               year for anybody whose money comes in once a month.
             -->
+            <!--
+              As tall as a finger. It was as tall as the words in it, which is
+              about a fifth of that, and finding it took several goes.
+            -->
             <LinearLayout
                 android:id="@+id/summary_categories_side"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginTop="-8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -192,9 +200,9 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:alpha="0.7"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:alpha="0.9"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_swap_direction" />
             </LinearLayout>
