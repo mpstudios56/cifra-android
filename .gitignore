@@ -38,4 +38,3 @@ docs/screenshots/*
 !docs/screenshots/blotter.png
 !docs/screenshots/transaction.png
 !docs/screenshots/autocomplete.png
-.claude/
