@@ -157,15 +157,29 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
                * b) otherwise, show description as note
                *    - "Note"
                */
-        if (t.location != null && t.location.id > 0) {
-            if (note != null && note.length() > 0) {
-                desc = t.location.title + " (" + note + ")";
-            } else {
-                desc = t.location.title;
-            }
+        // What it was, on the first line: whoever it was paid to, or failing
+        // that the category it went under, or failing that the note. The bits
+        // that are left go underneath, small, and only if there are any.
+        if (t.payee != null && t.payee.id > 0) {
+            desc = t.payee.title;
+        } else if (t.category != null && t.category.id > 0) {
+            desc = t.category.title;
         } else {
-            desc = note;
+            desc = note == null ? "" : note;
         }
+        StringBuilder rest = new StringBuilder();
+        if (t.category != null && t.category.id > 0 && !t.category.title.equals(desc)) {
+            rest.append(t.category.title);
+        }
+        if (t.location != null && t.location.id > 0) {
+            if (rest.length() > 0) rest.append(" · ");
+            rest.append(t.location.title);
+        }
+        if (note != null && note.length() > 0 && !note.equals(desc)) {
+            if (rest.length() > 0) rest.append(" · ");
+            rest.append(note);
+        }
+        String under = rest.toString();
 
         // set expenses date, description and value to the respective columns
         TextView dateText = h.dateText;
@@ -176,6 +190,10 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
         dateText.setText(DateUtils.formatDateTime(context, date,
                 DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_NUMERIC_DATE) + " ");
         descText.setText(desc);
+        if (h.descText2 != null) {
+            h.descText2.setText(under);
+            h.descText2.setVisibility(under.isEmpty() ? View.GONE : View.VISIBLE);
+        }
         if (isStatementPreview) {
             u.setAmountText(valueText, currency, (-1) * value, false);
         } else {
@@ -237,6 +255,9 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
         dateText.setLayoutParams(wrapContent);
         dateText.setText("");
         descText.setText(title);
+        if (h.descText2 != null) {
+            h.descText2.setVisibility(android.view.View.GONE);
+        }
         valueText.setText("");
         dateText.setBackgroundColor(Color.DKGRAY);
         descText.setBackgroundColor(Color.DKGRAY);
@@ -264,11 +285,13 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
     private static class Holder {
         private final TextView dateText;
         private final TextView descText;
+        private final TextView descText2;
         private final TextView valueText;
 
         public Holder(View v) {
             dateText = (TextView) v.findViewById(R.id.list_date);
             descText = (TextView) v.findViewById(R.id.list_note);
+            descText2 = (TextView) v.findViewById(R.id.list_note2);
             valueText = (TextView) v.findViewById(R.id.list_value);
         }
     }

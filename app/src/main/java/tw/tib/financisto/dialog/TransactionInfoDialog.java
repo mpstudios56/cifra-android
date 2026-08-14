@@ -182,12 +182,6 @@ public class TransactionInfoDialog {
             addWithIcon(layout, R.string.location, locationTitle, R.drawable.ic_action_location_2);
         }
 
-        // The state of the movement in the body as well as up in the bar. The bar
-        // says it in a corner, in a colour, at the size of a full stop; anybody
-        // reading the card from the top down never gets there.
-        if (ti.status != null) {
-            add(layout, R.string.transaction_status, context.getString(ti.status.titleId));
-        }
     }
 
     private View createTitleView(TransactionInfo ti, LinearLayout layout) {
@@ -213,6 +207,10 @@ public class TransactionInfoDialog {
         }
         TransactionStatus status = ti.status;
         titleData.setText(context.getString(status.titleId));
+        // In the colour of the state itself. It is the one word up here that
+        // carries a meaning of its own, and it was the same grey as the rest.
+        titleData.setTextColor(readableOnDark(androidx.core.content.ContextCompat.getColor(
+                context, status.colorId)));
         titleIcon.setImageResource(status.iconId);
         return titleView;
     }
@@ -318,6 +316,30 @@ public class TransactionInfoDialog {
     private LinearLayout add(LinearLayout layout, String label, String data) {
         return (LinearLayout) inflater.new Builder(layout, R.layout.select_entry_simple).withLabel(label)
                 .withData(data).create();
+    }
+
+
+    /**
+     * The same colour, lifted enough to be read on the dark title bar.
+     * <p>
+     * Two of the five states are dark by nature - the settled green and the
+     * grey of one not yet checked - and written straight onto a near-black bar
+     * they were a word one had to guess at. Lightened only as far as they need:
+     * the colours stay recognisably the ones on the rows below.
+     */
+    private static int readableOnDark(int colour) {
+        int r = (colour >> 16) & 0xFF;
+        int g = (colour >> 8) & 0xFF;
+        int b = colour & 0xFF;
+        double light = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
+        if (light >= 0.55) {
+            return colour;
+        }
+        double lift = (0.55 - light) * 1.4;
+        r = (int) Math.min(255, r + (255 - r) * lift);
+        g = (int) Math.min(255, g + (255 - g) * lift);
+        b = (int) Math.min(255, b + (255 - b) * lift);
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
 }

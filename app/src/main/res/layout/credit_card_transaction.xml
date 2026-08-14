@@ -10,13 +10,35 @@
   android:layout_height="wrap_content"
   android:padding="3px" />
   
-  <TextView android:id="@+id/list_note"
-  android:textAppearance="?android:attr/textAppearanceSmall"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:gravity="left" 
-  android:layout_weight="1"
-  android:padding="3px" />
+  <!--
+    Two lines rather than one. It held the note alone, and most movements have
+    no note: a month of spending came out as a column of dates and figures with
+    nothing in between saying what any of it was.
+  -->
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp">
+
+    <TextView android:id="@+id/list_note"
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:maxLines="1"
+      android:ellipsize="end" />
+
+    <TextView android:id="@+id/list_note2"
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:alpha="0.7"
+      android:maxLines="1"
+      android:ellipsize="end"
+      android:visibility="gone" />
+  </LinearLayout>
   
   <TextView android:id="@+id/list_value"
   android:textAppearance="?android:attr/textAppearanceSmall"
