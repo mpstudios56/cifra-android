@@ -60,6 +60,7 @@ public class SharingActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        askAboutNotificationsOnce();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sharing_base), (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -482,4 +483,34 @@ public class SharingActivity extends AppCompatActivity {
             show();
         }
     }
+
+    /**
+     * Asks, the first time this screen is opened, to be allowed to send a
+     * notification.
+     * <p>
+     * A round of sharing can leave a payment to review or two labels to merge,
+     * and those wait on a screen nobody opens without a reason to. The phone
+     * grants nothing by default since Android 13, so without asking here the
+     * notice would be written and never shown - which is worse than not
+     * writing it. Asked once: refused is an answer.
+     */
+    private void askAboutNotificationsOnce() {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+        android.content.SharedPreferences prefs =
+                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("sharing_notifications_asked", false)) {
+            return;
+        }
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.POST_NOTIFICATIONS)
+                == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        prefs.edit().putBoolean("sharing_notifications_asked", true).apply();
+        androidx.core.app.ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 0);
+    }
+
 }
