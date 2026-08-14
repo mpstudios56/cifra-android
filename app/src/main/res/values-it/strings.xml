@@ -709,7 +709,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="show_account_last_transaction_date_summary">Videata lista conti mostra data ultima transazione (richiede riavvio)</string>
   <string name="accounts_list_screen">Videata lista conti</string>
   <string name="accounts_list_screen_summary">Preferenze per videata lista conti</string>
-  <string name="blotter_screen">Registro</string>
+  <string name="blotter_screen">Movimenti</string>
   <string name="blotter_screen_summary">Preferenze registro</string>
   <string name="hide_closed_accounts">Nascondi conti chiusi</string>
   <string name="hide_closed_accounts_summary">Nascondi o mostra i conti chiusi nella lista conti (richiede riavvio)</string>
@@ -1529,8 +1529,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sync_notice_merge">Da unire: %1$d</string>
   <string name="sync_notice_both">Da rivedere: %1$d · da unire: %2$d</string>
   <string name="permission_ask_in_settings">Il telefono non lo chiede più: attivalo dalle impostazioni</string>
-  <string name="swipe_right">Scorrimento verso destra</string>
-  <string name="swipe_left">Scorrimento verso sinistra</string>
+  <string name="swipe_right">Swipe destro</string>
+  <string name="swipe_left">Swipe sinistro</string>
   <string name="swipe_nothing">Niente</string>
   <string name="undo">Annulla</string>
   <string-array name="swipe_action_entries">

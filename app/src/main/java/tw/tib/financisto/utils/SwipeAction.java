@@ -12,20 +12,23 @@ import tw.tib.financisto.R;
  */
 public enum SwipeAction {
 
-    NONE(R.string.swipe_nothing, 0),
-    EDIT(R.string.edit, 0xFFEDA00D),
-    DUPLICATE(R.string.duplicate, 0xFF5B8DEF),
-    CLEAR(R.string.clear, 0xFF79C471),
-    RECONCILE(R.string.reconcile, 0xFF006A25),
-    DELETE(R.string.delete, 0xFFDF0024);
+    NONE(R.string.swipe_nothing, 0, 0),
+    EDIT(R.string.edit, 0xFFEDA00D, R.drawable.ic_action_edit),
+    DUPLICATE(R.string.duplicate, 0xFF5B8DEF, R.drawable.ic_action_copy),
+    CLEAR(R.string.clear, 0xFF79C471, R.drawable.status_cleared),
+    RECONCILE(R.string.reconcile, 0xFF006A25, R.drawable.status_reconciled),
+    DELETE(R.string.delete, 0xFFDF0024, R.drawable.ic_action_trash);
 
     public final int titleId;
-    /** The colour that appears under the finger once the row would act. */
+    /** The colour that comes out from under the row as it moves. */
     public final int colour;
+    /** The sign that stands in the colour, so the hand knows before it lets go. */
+    public final int iconId;
 
-    SwipeAction(int titleId, int colour) {
+    SwipeAction(int titleId, int colour, int iconId) {
         this.titleId = titleId;
         this.colour = colour;
+        this.iconId = iconId;
     }
 
     /** Reads back what the settings hold, forgivingly. */

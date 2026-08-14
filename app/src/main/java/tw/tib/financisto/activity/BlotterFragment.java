@@ -1362,8 +1362,12 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
                     @Override
                     public int colourFor(boolean toTheRight) {
-                        tw.tib.financisto.utils.SwipeAction a = toTheRight ? swipeRight : swipeLeft;
-                        return a.colour;
+                        return (toTheRight ? swipeRight : swipeLeft).colour;
+                    }
+
+                    @Override
+                    public int iconFor(boolean toTheRight) {
+                        return (toTheRight ? swipeRight : swipeLeft).iconId;
                     }
 
                     @Override
