@@ -220,22 +220,23 @@ public class SwipeOnRows implements View.OnTouchListener {
         final long which = id;
         letGo();
         final ViewGroup group = (ViewGroup) going;
-        group.animate().setDuration(0).start();
         for (int i = 0; i < group.getChildCount(); i++) {
             View child = group.getChildAt(i);
             child.animate()
                     .translationX(toTheRight ? list.getWidth() : -list.getWidth())
                     .alpha(0)
                     .setDuration(160)
+                    .setListener(null)
                     .start();
         }
+        // The row is put straight again before anything is done to the movement,
+        // and only then is the movement acted on: the list redraws immediately
+        // afterwards, and a row still lying on its side comes back carrying
+        // somebody else's payment.
         going.postDelayed(() -> {
-            // Put back as it was before anything is done: the row is reused for
-            // another movement the moment the list is redrawn, and a row left
-            // pushed aside and invisible comes back as somebody else's payment.
             undress(group);
             handler.swiped(where, which, toTheRight);
-        }, 170);
+        }, 165);
     }
 
     private void back() {
@@ -244,18 +245,32 @@ public class SwipeOnRows implements View.OnTouchListener {
         final ViewGroup group = (ViewGroup) going;
         for (int i = 0; i < group.getChildCount(); i++) {
             group.getChildAt(i).animate().translationX(0).alpha(1).setDuration(140)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            going.setBackgroundColor(0);
-                        }
-                    });
+                    .setListener(null).start();
         }
+        going.postDelayed(() -> going.setBackgroundColor(0), 145);
     }
 
     private void undress(ViewGroup group) {
+        clean(group);
+    }
+
+    /**
+     * Puts a row back the way it was born: nothing running, nothing moved,
+     * nothing faded, no colour underneath.
+     * <p>
+     * Called from here when a gesture ends, and by the list itself every time a
+     * row is handed a new movement to show - because between those two moments
+     * the row may have been reused, and an animation still running on it would
+     * otherwise finish onto whatever it is showing now.
+     */
+    public static void clean(View row) {
+        if (!(row instanceof ViewGroup)) {
+            return;
+        }
+        ViewGroup group = (ViewGroup) row;
         for (int i = 0; i < group.getChildCount(); i++) {
             View child = group.getChildAt(i);
+            child.animate().cancel();
             child.setTranslationX(0);
             child.setAlpha(1);
         }

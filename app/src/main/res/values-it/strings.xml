@@ -1541,4 +1541,9 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
       <item>Riconcilia</item>
       <item>Elimina</item>
   </string-array>
+  <string name="swipe_done_edit">Modificato</string>
+  <string name="swipe_done_duplicate">Duplicato</string>
+  <string name="swipe_done_clear">Segnato come conciliato</string>
+  <string name="swipe_done_reconcile">Riconciliato</string>
+  <string name="swipe_done_delete">Eliminato</string>
 </resources>

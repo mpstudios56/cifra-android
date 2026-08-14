@@ -12,23 +12,26 @@ import tw.tib.financisto.R;
  */
 public enum SwipeAction {
 
-    NONE(R.string.swipe_nothing, 0, 0),
-    EDIT(R.string.edit, 0xFFEDA00D, R.drawable.ic_action_edit),
-    DUPLICATE(R.string.duplicate, 0xFF5B8DEF, R.drawable.ic_action_copy),
-    CLEAR(R.string.clear, 0xFF79C471, R.drawable.status_cleared),
-    RECONCILE(R.string.reconcile, 0xFF006A25, R.drawable.status_reconciled),
-    DELETE(R.string.delete, 0xFFDF0024, R.drawable.ic_action_trash);
+    NONE(R.string.swipe_nothing, 0, 0, R.string.swipe_nothing),
+    EDIT(R.string.edit, 0xFFEDA00D, R.drawable.ic_action_edit, R.string.swipe_done_edit),
+    DUPLICATE(R.string.duplicate, 0xFF5B8DEF, R.drawable.ic_action_copy, R.string.swipe_done_duplicate),
+    CLEAR(R.string.clear, 0xFF79C471, R.drawable.status_cleared, R.string.swipe_done_clear),
+    RECONCILE(R.string.reconcile, 0xFF006A25, R.drawable.status_reconciled, R.string.swipe_done_reconcile),
+    DELETE(R.string.delete, 0xFFDF0024, R.drawable.ic_action_trash, R.string.swipe_done_delete);
 
     public final int titleId;
     /** The colour that comes out from under the row as it moves. */
     public final int colour;
     /** The sign that stands in the colour, so the hand knows before it lets go. */
     public final int iconId;
+    /** How it reads once it has happened: "Eliminato", not "Elimina". */
+    public final int doneId;
 
-    SwipeAction(int titleId, int colour, int iconId) {
+    SwipeAction(int titleId, int colour, int iconId, int doneId) {
         this.titleId = titleId;
         this.colour = colour;
         this.iconId = iconId;
+        this.doneId = doneId;
     }
 
     /** Reads back what the settings hold, forgivingly. */

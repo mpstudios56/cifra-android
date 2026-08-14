@@ -1530,4 +1530,9 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
       <item>Abstimmen</item>
       <item>Löschen</item>
   </string-array>
+  <string name="swipe_done_edit">Bearbeitet</string>
+  <string name="swipe_done_duplicate">Dupliziert</string>
+  <string name="swipe_done_clear">Als erledigt markiert</string>
+  <string name="swipe_done_reconcile">Abgestimmt</string>
+  <string name="swipe_done_delete">Gelöscht</string>
 </resources>

@@ -138,6 +138,12 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // A row is a reused view, and a row that was dragged aside carries the
+        // marks of it - contents pushed off to one side, faded out, an animation
+        // still running. Cleared here, on the way in, so that whatever this row
+        // is about to show starts from nothing: the empty bands left in the list
+        // after a swipe were rows wearing somebody else's gesture.
+        tw.tib.financisto.view.SwipeOnRows.clean(view);
         final BlotterViewHolder v = (BlotterViewHolder) view.getTag();
         bindView(v, context, cursor);
     }

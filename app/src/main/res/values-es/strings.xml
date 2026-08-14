@@ -1530,4 +1530,9 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
       <item>Conciliar</item>
       <item>Eliminar</item>
   </string-array>
+  <string name="swipe_done_edit">Editado</string>
+  <string name="swipe_done_duplicate">Duplicado</string>
+  <string name="swipe_done_clear">Marcado como liquidado</string>
+  <string name="swipe_done_reconcile">Conciliado</string>
+  <string name="swipe_done_delete">Eliminado</string>
 </resources>

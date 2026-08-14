@@ -1648,4 +1648,9 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
         <item>RECONCILE</item>
         <item>DELETE</item>
     </string-array>
+    <string name="swipe_done_edit">Edited</string>
+    <string name="swipe_done_duplicate">Duplicated</string>
+    <string name="swipe_done_clear">Marked cleared</string>
+    <string name="swipe_done_reconcile">Reconciled</string>
+    <string name="swipe_done_delete">Deleted</string>
 </resources>

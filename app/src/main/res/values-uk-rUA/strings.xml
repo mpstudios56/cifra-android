@@ -1505,4 +1505,9 @@
         <item>Узгодити</item>
         <item>Видалити</item>
     </string-array>
+    <string name="swipe_done_edit">Змінено</string>
+    <string name="swipe_done_duplicate">Здубльовано</string>
+    <string name="swipe_done_clear">Позначено</string>
+    <string name="swipe_done_reconcile">Узгоджено</string>
+    <string name="swipe_done_delete">Видалено</string>
 </resources>

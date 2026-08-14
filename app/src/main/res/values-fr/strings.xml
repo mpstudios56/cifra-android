@@ -1530,4 +1530,9 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
       <item>Rapprocher</item>
       <item>Supprimer</item>
   </string-array>
+  <string name="swipe_done_edit">Modifié</string>
+  <string name="swipe_done_duplicate">Dupliqué</string>
+  <string name="swipe_done_clear">Marqué compensé</string>
+  <string name="swipe_done_reconcile">Rapproché</string>
+  <string name="swipe_done_delete">Supprimé</string>
 </resources>

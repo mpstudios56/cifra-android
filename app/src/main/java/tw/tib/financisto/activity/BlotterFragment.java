@@ -1458,7 +1458,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             return;
         }
         com.google.android.material.snackbar.Snackbar
-                .make(view, getString(action.titleId),
+                .make(view, getString(action.doneId),
                         com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, v -> back.run())
                 .show();
