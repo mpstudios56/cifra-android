@@ -18,7 +18,7 @@ import tw.tib.financisto.utils.MyPreferences;
  * to: the folder is theirs, the round is cheap, and the only thing that takes
  * time is the cloud catching up.
  * <p>
- * So: a round when the app comes to the front, a round every couple of minutes
+ * So: a round when the app comes to the front, a round every minute
  * while it stays there, and a round straight after something is written down.
  * It cannot be live - it is a folder in somebody's cloud - but it can be close
  * enough that nobody thinks about it.
@@ -30,7 +30,7 @@ public class AutoSync {
     /** How stale a round has to be before coming back to the app starts another. */
     private static final long WHEN_RETURNING_MS = 30 * 1000L;
     /** And how often while the app is sitting open. */
-    private static final long WHILE_OPEN_MS = 2 * 60 * 1000L;
+    private static final long WHILE_OPEN_MS = 60 * 1000L;
 
     private static final Handler HANDLER = new Handler(Looper.getMainLooper());
     private static Runnable ticking;

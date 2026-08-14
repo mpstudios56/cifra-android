@@ -185,9 +185,55 @@ public class SyncEngine {
                 }
             }
         }
+        // Written only when it would say something different from what is
+        // already there. A round used to rewrite the whole file every time -
+        // two hundred identical lines, four seconds, and a cloud folder told to
+        // sync a file that had not changed. Now the same content is recognised
+        // and left alone, so the folder moves only when something has happened.
+        if (unchangedSinceLastTime(person.mark, lines)) {
+            Log.i(TAG, "nothing new for " + person.label() + ", file left as it is");
+            return 0;
+        }
         boolean written = folder.write(myName, person.mark, me, lines);
         Log.i(TAG, "wrote " + lines.size() + " lines: " + (written ? "yes" : "FAILED"));
+        if (written) {
+            rememberWhatWasWritten(person.mark, lines);
+        }
         return written ? lines.size() : 0;
+    }
+
+    /**
+     * Whether the file for this person would come out exactly as it went in last
+     * time.
+     * <p>
+     * Compared by a number worked out from the content rather than by keeping a
+     * copy of it: the file runs to hundreds of lines and there is no reason to
+     * hold a second one in the settings. Every few hours the answer is "no"
+     * whatever the content says, so that a file lost from the cloud, or a folder
+     * emptied by hand, comes back on its own instead of never being written
+     * again.
+     */
+    private static final long WRITE_ANYWAY_AFTER_MS = 6 * 60 * 60 * 1000L;
+
+    private static boolean unchangedSinceLastTime(String mark, List<String> lines) {
+        long since = System.currentTimeMillis() - MyPreferences.getSyncLastWrite(mark);
+        if (since > WRITE_ANYWAY_AFTER_MS) {
+            return false;
+        }
+        return MyPreferences.getSyncLastFingerprint(mark) == fingerprint(lines);
+    }
+
+    private static void rememberWhatWasWritten(String mark, List<String> lines) {
+        MyPreferences.setSyncLastWritten(mark, fingerprint(lines),
+                System.currentTimeMillis());
+    }
+
+    private static long fingerprint(List<String> lines) {
+        long h = 1125899906842597L;
+        for (String line : lines) {
+            h = 31 * h + line.hashCode();
+        }
+        return 31 * h + lines.size();
     }
 
     /**

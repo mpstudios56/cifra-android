@@ -639,6 +639,27 @@ public class MyPreferences {
 		return getString("sync_partner", "");
 	}
 
+	/**
+	 * What was last written into a person's file, and when.
+	 * <p>
+	 * Kept so a round can tell whether the file it is about to write would be
+	 * the same one that is already there, and leave the cloud alone if it is.
+	 */
+	public static long getSyncLastFingerprint(String mark) {
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(Application.getInstance());
+		return p.getLong("sync_written_" + mark, 0L);
+	}
+
+	public static long getSyncLastWrite(String mark) {
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(Application.getInstance());
+		return p.getLong("sync_written_on_" + mark, 0L);
+	}
+
+	public static void setSyncLastWritten(String mark, long fingerprint, long when) {
+		edit().putLong("sync_written_" + mark, fingerprint)
+				.putLong("sync_written_on_" + mark, when).apply();
+	}
+
 	/** Whether reports count what the other person wrote. Kept between visits. */
 	public static boolean isReportIncludeShared() {
 		return getBoolean("report_include_shared", true);
