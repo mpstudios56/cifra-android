@@ -56,6 +56,17 @@ public class TemplatesListFragment extends BlotterFragment {
             case ACCOUNT:
                 sortOrder = BlotterFilter.SORY_BY_ACCOUNT_NAME;
                 break;
+
+            case CATEGORY:
+                sortOrder = BlotterFilter.SORT_BY_CATEGORY;
+                break;
+
+            case PROJECT:
+                // Templates without a project fall in with the ones that have
+                // none, in category order: an empty column sorted on its own
+                // would put half the list nowhere in particular.
+                sortOrder = BlotterFilter.SORT_BY_PROJECT;
+                break;
         }
 
         return db.getAllTemplates(blotterFilter, sortOrder);
@@ -77,7 +88,11 @@ public class TemplatesListFragment extends BlotterFragment {
 
         // remove filter button and totals
         if (bFilter != null) {
-            bFilter.setVisibility(View.GONE);
+            // The filter button carries the order of this list. It was hidden
+            // because there is nothing to filter here; there is something to
+            // sort, and this is where somebody looks for it.
+            bFilter.setVisibility(View.VISIBLE);
+            bFilter.setOnClickListener(v -> askForOrder());
         }
         if (showAllBlotterButtons && bTemplate != null) {
             bTemplate.setVisibility(View.GONE);
@@ -130,6 +145,40 @@ public class TemplatesListFragment extends BlotterFragment {
         blotterFilter = new WhereFilter("templates");
         blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));
         blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
+    }
+
+
+    /**
+     * The order the templates are kept in, asked here rather than in the
+     * settings: it belongs to this list, and it is the only list it applies to.
+     */
+    private void askForOrder() {
+        final MyPreferences.TemplatesSortOrder[] orders = {
+                MyPreferences.TemplatesSortOrder.DATE,
+                MyPreferences.TemplatesSortOrder.CATEGORY,
+                MyPreferences.TemplatesSortOrder.PROJECT};
+        String[] names = {
+                getString(R.string.sort_templates_by_date),
+                getString(R.string.sort_templates_by_category),
+                getString(R.string.sort_templates_by_project)};
+        MyPreferences.TemplatesSortOrder current = MyPreferences.getTemplatessSortOrder();
+        int chosen = 0;
+        for (int i = 0; i < orders.length; i++) {
+            if (orders[i] == current) {
+                chosen = i;
+            }
+        }
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle(R.string.sort_order)
+                .setSingleChoiceItems(names, chosen, (dialog, which) -> {
+                    androidx.preference.PreferenceManager
+                            .getDefaultSharedPreferences(getContext()).edit()
+                            .putString("sort_templates", orders[which].name()).apply();
+                    dialog.dismiss();
+                    recreateCursor();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
 }

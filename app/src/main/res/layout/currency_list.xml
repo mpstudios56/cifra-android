@@ -51,6 +51,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/bPeriods"
+            style="@style/BottomBarButton"
+            android:contentDescription="@string/exchange_rates"
+            android:layout_marginRight="@dimen/action_button_margin"
+            android:src="@drawable/ic_action_gear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bRates"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
             android:id="@+id/bRates"
             style="@style/BottomBarButton"
             android:contentDescription="@string/exchange_rates"

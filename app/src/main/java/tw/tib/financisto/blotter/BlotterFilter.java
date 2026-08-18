@@ -47,4 +47,7 @@ public interface BlotterFilter {
 
 	String SORT_BY_TEMPLATE_NAME = BlotterColumns.template_name + " asc";
 	String SORY_BY_ACCOUNT_NAME = BlotterColumns.from_account_title + " asc";
+
+	String SORT_BY_CATEGORY = BlotterColumns.category_title + " asc";
+	String SORT_BY_PROJECT = BlotterColumns.project + " asc, " + BlotterColumns.category_title + " asc";
 }

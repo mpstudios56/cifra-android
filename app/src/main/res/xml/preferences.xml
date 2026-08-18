@@ -113,15 +113,6 @@
             android:summary="@string/blotter_screen_summary"
             android:title="@string/blotter_screen"
             app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="DATE"
-            android:entries="@array/sort_templates_entities"
-            android:entryValues="@array/sort_templates_values"
-            android:key="sort_templates"
-            android:summary="@string/sort_templates_summary"
-            android:title="@string/sort_templates" />
     </PreferenceCategory>
 
     <!--
@@ -163,40 +154,6 @@
             android:key="sms_transaction_note"
             android:summary="@string/pref_tpl_adding_to_note"
             android:title="@string/pref_tpl_adding_to_note_title" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_periods">
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="0"
-            android:entries="@array/first_day_of_week_entries"
-            android:entryValues="@array/first_day_of_week_values"
-            android:key="first_day_of_week"
-            android:summary="@string/first_day_of_week_summary"
-            android:title="@string/first_day_of_week" />
-        <Preference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:key="fiscal_year_start"
-            android:summary="@string/fiscal_year_start_summary"
-            android:title="@string/fiscal_year_start" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="freeCurrency"
-            android:entries="@array/exchange_rate_provider_entities"
-            android:entryValues="@array/exchange_rate_provider_values"
-            android:key="exchange_rate_provider"
-            android:summary="@string/exchange_rate_provider_summary"
-            android:title="@string/exchange_rate_provider" />
-        <EditTextPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:enabled="false"
-            android:key="openexchangerates_app_id"
-            android:summary="@string/openexchangerates_app_id_summary"
-            android:title="@string/openexchangerates_app_id" />
     </PreferenceCategory>
 
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_widgets">

@@ -1541,4 +1541,8 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sort_by_title_desc">Nach Name (Z-A)</string>
   <string name="sort_by_recent">Neueste zuerst</string>
   <string name="shortcut_not_supported">Der Launcher nimmt keine Verknüpfungen an</string>
+  <string name="periods_currencies_rates">Zeiträume, Währungen und Kurse</string>
+  <string name="sort_templates_by_date">Nach Erstellungsdatum</string>
+  <string name="sort_templates_by_category">Nach Kategorie</string>
+  <string name="sort_templates_by_project">Nach Projekt</string>
 </resources>

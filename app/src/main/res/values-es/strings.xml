@@ -1541,4 +1541,8 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sort_by_title_desc">Por nombre (Z-A)</string>
   <string name="sort_by_recent">Más recientes primero</string>
   <string name="shortcut_not_supported">El lanzador no acepta accesos directos</string>
+  <string name="periods_currencies_rates">Periodos, monedas y cambios</string>
+  <string name="sort_templates_by_date">Por fecha de creación</string>
+  <string name="sort_templates_by_category">Por categoría</string>
+  <string name="sort_templates_by_project">Por proyecto</string>
 </resources>

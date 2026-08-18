@@ -1659,4 +1659,8 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sort_by_title_desc">By name (Z-A)</string>
     <string name="sort_by_recent">Most recent first</string>
     <string name="shortcut_not_supported">The launcher does not accept shortcuts</string>
+    <string name="periods_currencies_rates">Periods, currencies and rates</string>
+    <string name="sort_templates_by_date">By creation date</string>
+    <string name="sort_templates_by_category">By category</string>
+    <string name="sort_templates_by_project">By project</string>
 </resources>

@@ -1552,4 +1552,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sort_by_title_desc">Per nome (Z-A)</string>
   <string name="sort_by_recent">Dal più recente</string>
   <string name="shortcut_not_supported">La schermata iniziale non accetta scorciatoie</string>
+  <string name="periods_currencies_rates">Periodi, valute e cambi</string>
+  <string name="sort_templates_by_date">Per data di creazione</string>
+  <string name="sort_templates_by_category">Per categoria</string>
+  <string name="sort_templates_by_project">Per progetto</string>
 </resources>

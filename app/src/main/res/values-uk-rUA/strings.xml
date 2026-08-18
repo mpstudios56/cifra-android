@@ -1516,4 +1516,8 @@
     <string name="sort_by_title_desc">За назвою (Я-А)</string>
     <string name="sort_by_recent">Спочатку нові</string>
     <string name="shortcut_not_supported">Лаунчер не приймає ярликів</string>
+    <string name="periods_currencies_rates">Періоди, валюти та курси</string>
+    <string name="sort_templates_by_date">За датою створення</string>
+    <string name="sort_templates_by_category">За категорією</string>
+    <string name="sort_templates_by_project">За проєктом</string>
 </resources>

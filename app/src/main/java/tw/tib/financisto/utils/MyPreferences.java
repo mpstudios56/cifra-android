@@ -74,7 +74,12 @@ public class MyPreferences {
 	public enum TemplatesSortOrder {
 		DATE("datetime", false),
 		NAME("template_name", true),
-		ACCOUNT("from_account", true);
+		ACCOUNT("from_account", true),
+		// Added when the choice moved out of the settings and onto the screen:
+		// "by name" meant the name of the template, which nobody had written,
+		// so it read as a list in no order at all.
+		CATEGORY("category_title", true),
+		PROJECT("project", true);
 
 		public final String property;
 		public final boolean asc;

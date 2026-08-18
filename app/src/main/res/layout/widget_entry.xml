@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Four buttons and nothing else.
+  The widgets before this one showed the balance of one account, which is a
+  figure that goes stale on the home screen and that the app itself shows in
+  full two taps away. What a home screen is good for is starting something:
+  these four are everything one starts.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/widget_ground"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <ImageButton
+        android:id="@+id/widget_transaction"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/transaction"
+        android:scaleType="centerInside"
+        android:src="@drawable/actionbar_add_big" />
+
+    <ImageButton
+        android:id="@+id/widget_transfer"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/transfer"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_action_transfer" />
+
+    <ImageButton
+        android:id="@+id/widget_quick"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/quick_bar"
+        android:scaleType="centerInside"
+        android:src="@drawable/actionbar_quick_add" />
+
+    <ImageButton
+        android:id="@+id/widget_templates"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/templates"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_tab_templates" />
+</LinearLayout>
