@@ -1561,4 +1561,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
       <item>Una vez al mes</item>
   </string-array>
   <string name="go_to_newest">Ir arriba</string>
+  <string name="go_to_top">Ir arriba</string>
 </resources>

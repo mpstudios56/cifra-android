@@ -118,4 +118,5 @@
 	<item name="today_button" type="id" />
 	<item name="oldest_button" type="id" />
 	<item name="newest_button" type="id" />
+	<item name="top_button" type="id" />
 </resources>

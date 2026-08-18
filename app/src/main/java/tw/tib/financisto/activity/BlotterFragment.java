@@ -595,11 +595,11 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_state, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_accounts, R.string.transaction_show_in_account_blotter));
+            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_backup, R.string.transaction_show_in_account_blotter));
             if (selectedIsTransfer) {
-                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transaction, R.string.change_to_transaction));
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transaction, R.string.change_to_transaction));
             } else {
-                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transfer, R.string.change_to_transfer));
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transfer, R.string.change_to_transfer));
             }
         }
         transactionActionGrid.setOnQuickActionClickListener(transactionActionListener);
@@ -841,15 +841,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             return super.createContextMenus(id);
         } else {
             List<MenuItemInfo> menus = super.createContextMenus(id);
-            menus.add(new MenuItemInfo(MENU_DUPLICATE, R.string.duplicate, R.drawable.ic_row_copy));
+            menus.add(new MenuItemInfo(MENU_DUPLICATE, R.string.duplicate, R.drawable.ic_duplicate));
             menus.add(new MenuItemInfo(MENU_SAVE_AS_TEMPLATE, R.string.save_as_template, R.drawable.ic_tab_templates));
-            menus.add(new MenuItemInfo(MENU_SHOW_IN_ACCOUNT_BLOTTER, R.string.transaction_show_in_account_blotter, R.drawable.ic_tab_accounts));
+            menus.add(new MenuItemInfo(MENU_SHOW_IN_ACCOUNT_BLOTTER, R.string.transaction_show_in_account_blotter, R.drawable.ic_action_backup));
             Transaction t = db.getTransaction(id);
             if (t.isTransfer()) {
-                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSACTION, R.string.change_to_transaction, R.drawable.ic_row_transaction));
+                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSACTION, R.string.change_to_transaction, R.drawable.ic_widget_transaction));
             }
             else {
-                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSFER, R.string.change_to_transfer, R.drawable.ic_row_transfer));
+                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSFER, R.string.change_to_transfer, R.drawable.ic_widget_transfer));
             }
             return menus;
         }
@@ -1138,7 +1138,12 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             // Only where the list is a list of movements: a line saying
             // "2024" across the templates says nothing at all.
             if (!blotterFilter.isTemplate() && !blotterFilter.isSchedule()) {
+                // Only where the rows are movements with a date behind them.
+            boolean movements = !blotterFilter.isTemplate() && !blotterFilter.isSchedule();
+            ((BlotterListAdapter) adapter).showYears(movements);
+            if (movements) {
                 wireYearFolding((BlotterListAdapter) adapter);
+            }
             }
         }
         else {
@@ -1644,6 +1649,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
         boolean asc = blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER);
         setSelection(asc ? 0 : count - 1);
+    }
+
+    /** Up to the top of the list: the newest movement of all. */
+    public void goToTop() {
+        if (adapter == null || adapter.getCount() == 0) {
+            return;
+        }
+        boolean asc = blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER);
+        setSelection(asc ? adapter.getCount() - 1 : 0);
     }
 
     /** Scrolls the list to today, or to the nearest movement before it. */

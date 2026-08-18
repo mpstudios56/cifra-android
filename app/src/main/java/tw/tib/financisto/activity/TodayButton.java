@@ -40,6 +40,7 @@ public class TodayButton {
             return;
         }
         attachOldest(activity, content);
+        attachTop(activity, content);
         attachNewest(activity, content);
         View already = content.findViewById(R.id.today_button);
         if (already != null) {
@@ -250,6 +251,43 @@ public class TodayButton {
             BlotterFragment blotter = blotterIn(activity);
             if (blotter != null) {
                 blotter.goToNewest();
+            }
+        });
+        content.addView(button);
+        wake(button);
+    }
+
+    /** Up to the top of the list, where the newest movement is. */
+    private static void attachTop(Activity activity, ViewGroup content) {
+        View already = content.findViewById(R.id.top_button);
+        if (already != null) {
+            wake(already);
+            return;
+        }
+        ImageButton button = new ImageButton(activity);
+        button.setId(R.id.top_button);
+        button.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+        button.setContentDescription(activity.getString(R.string.go_to_top));
+        int pad = dp(activity, 10);
+        button.setPadding(pad, pad, pad, pad);
+        button.setBackgroundResource(R.drawable.privacy_button_idle);
+        button.setImageResource(R.drawable.ic_top);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                dp(activity, SIZE_DP), dp(activity, SIZE_DP));
+        lp.gravity = Gravity.END | Gravity.BOTTOM;
+        lp.rightMargin = dp(activity, EDGE_DP);
+        lp.bottomMargin = dp(activity, FIRST_BOTTOM_DP + 3 * (SIZE_DP + 8));
+        button.setLayoutParams(lp);
+        button.setElevation(dp(activity, 6));
+        button.setOnClickListener(v -> {
+            wakeAll(button);
+            if (activity instanceof MainActivity) {
+                ((MainActivity) activity).goToTop();
+                return;
+            }
+            BlotterFragment blotter = blotterIn(activity);
+            if (blotter != null) {
+                blotter.goToTop();
             }
         });
         content.addView(button);

@@ -1687,4 +1687,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
         <item>30</item>
     </string-array>
     <string name="go_to_newest">Go to the top</string>
+    <string name="go_to_top">Go to the top</string>
 </resources>

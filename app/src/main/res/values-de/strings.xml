@@ -1561,4 +1561,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
       <item>Einmal im Monat</item>
   </string-array>
   <string name="go_to_newest">Nach oben</string>
+  <string name="go_to_top">Nach oben</string>
 </resources>

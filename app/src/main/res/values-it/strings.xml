@@ -697,7 +697,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="report_income_expense_expense">Uscite</string>
   <string name="report_income_expense_summary">Sommario</string>
   <string name="csv_import_inprogress_update">Importazione dati da file CSV: %s%%...</string>
-  <string name="delete_old_transactions">Elimina i movimenti vecchi</string>
+  <string name="delete_old_transactions">Elimina i vecchi</string>
   <string name="purge_account_backup_database">Fai un backup del database prima di eliminare le transazioni</string>
   <string name="purge_account_date_summary">Eliminare le transazioni precedenti alla data specificata INCLUSA. Il saldo del conto non sarà interessato.</string>
   <string name="purge_account_confirm_title">Conferma</string>
@@ -1167,7 +1167,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="tpl_parse_result">Risultato della prova sulla notifica</string>
   <string name="trading_currency">Valuta di negoziazione</string>
   <string name="trading_currency_none">(Nessuna)</string>
-  <string name="transaction_show_in_account_blotter">Mostra nei movimenti del conto</string>
+  <string name="transaction_show_in_account_blotter">Vedi nel conto</string>
   <string name="transfer_current_balance">Trasferisci il saldo attuale</string>
   <string name="try_fingerprint_again">Riprova con i dati biometrici</string>
   <string name="ui_theme">Tema</string>
@@ -1572,4 +1572,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
       <item>Una volta al mese</item>
   </string-array>
   <string name="go_to_newest">Vai in cima</string>
+  <string name="go_to_top">Vai in cima</string>
 </resources>

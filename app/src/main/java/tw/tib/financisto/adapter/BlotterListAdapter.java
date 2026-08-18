@@ -163,6 +163,16 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
     private OnYearFolded onYearFolded;
     private java.util.Set<Integer> foldedYears = java.util.Collections.emptySet();
 
+    /**
+     * Whether this list is one of movements in time. Templates and scheduled
+     * entries are not: they have no year worth drawing a line across.
+     */
+    private boolean yearsWanted = false;
+
+    public void showYears(boolean wanted) {
+        this.yearsWanted = wanted;
+    }
+
     public void setYearFolding(java.util.Set<Integer> folded, OnYearFolded listener) {
         this.foldedYears = folded == null ? java.util.Collections.emptySet() : folded;
         this.onYearFolded = listener;
@@ -201,6 +211,11 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         TextView divider = view.findViewById(R.id.year_divider);
         View body = view.findViewById(R.id.layout);
         if (divider == null || body == null) {
+            return;
+        }
+        if (!yearsWanted) {
+            divider.setVisibility(View.GONE);
+            body.setVisibility(View.VISIBLE);
             return;
         }
         int position = cursor.getPosition();

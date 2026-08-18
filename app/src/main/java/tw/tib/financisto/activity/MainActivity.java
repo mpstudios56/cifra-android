@@ -454,6 +454,10 @@ public class MainActivity extends AppCompatActivity {
         if (oldest != null) {
             oldest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
         }
+        View top = findViewById(R.id.top_button);
+        if (top != null) {
+            top.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
+        }
         View newest = findViewById(R.id.newest_button);
         if (newest != null) {
             newest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
@@ -470,6 +474,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Down to the first movement ever written down. */
+    /** Up to the newest movement, at the top of the list. */
+    public void goToTop() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+        if (f instanceof BlotterFragment) {
+            ((BlotterFragment) f).goToTop();
+        }
+    }
+
     public void goToOldest() {
         Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
         if (f instanceof BlotterFragment) {

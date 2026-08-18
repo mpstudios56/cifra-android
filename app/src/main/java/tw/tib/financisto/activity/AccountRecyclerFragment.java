@@ -112,7 +112,13 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         progressBar = view.findViewById(android.R.id.progress);
 
         bSearch = view.findViewById(R.id.bSearch);
+        // Taken out of this screen. The accounts of a household fit on one
+        // page: there is nothing here to look for, and the box it opened was
+        // the last one still fighting with the keyboard.
         if (bSearch != null) {
+            bSearch.setVisibility(View.GONE);
+        }
+        if (false && bSearch != null) {
             loadFilter();
 
             if (!filter.isEmpty()) {

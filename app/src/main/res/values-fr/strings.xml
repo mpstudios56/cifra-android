@@ -1561,4 +1561,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
       <item>Une fois par mois</item>
   </string-array>
   <string name="go_to_newest">Aller en haut</string>
+  <string name="go_to_top">Aller en haut</string>
 </resources>

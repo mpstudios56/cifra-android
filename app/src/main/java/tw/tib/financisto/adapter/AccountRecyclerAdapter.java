@@ -157,6 +157,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         }
 
         AccountType type = AccountType.valueOf(a.type);
+        boolean stripeAnyway = false;
 
         // Falls back to the icon's own grey when no accent is set or it is not a
         // colour, rather than leaving the symbol invisible.
@@ -201,6 +202,13 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             }
 
             // A logo keeps its own colours: a recoloured logo is a wrong logo.
+            // But then the colour chosen for the account would show nowhere, so
+            // on those accounts it goes to the stripe even when the choice said
+            // the symbol - a choice that cannot be honoured must not simply
+            // vanish.
+            if (itIsALogo && !Utils.isEmpty(a.accentColor)) {
+                stripeAnyway = true;
+            }
             if (itIsALogo || AccountIcon.targetOf(a) == AccountIcon.Target.BAR
                     || Utils.isEmpty(a.accentColor)) {
                 v.icon.clearColorFilter();
@@ -302,7 +310,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
 
         try {
             // Painting the symbol only means the stripe stays out of the way.
-            boolean stripeWanted = AccountIcon.targetOf(a) != AccountIcon.Target.ICON;
+            boolean stripeWanted = stripeAnyway || AccountIcon.targetOf(a) != AccountIcon.Target.ICON;
             if (stripeWanted && !Utils.isEmpty(a.accentColor)) {
                 int color = Color.parseColor(a.accentColor);
                 v.accent.setVisibility(View.VISIBLE);
