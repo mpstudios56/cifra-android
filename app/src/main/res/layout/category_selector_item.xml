@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  A category to choose from: its own symbol, its name, and a mark showing that
+  it has categories inside it.
+  This list used to borrow the row of a movement - eight fields of which it
+  filled two and hid six - so choosing a category looked like reading a
+  payment, and every change to the movement row landed here as well.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_picked"
+    android:gravity="center_vertical"
+    android:minHeight="60dp"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="16dp">
+
+    <View
+        android:id="@+id/kind"
+        android:layout_width="4dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="10dp" />
+
+    <FrameLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="14dp">
+
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/category_icon_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="19sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textAppearance="@style/ListPrimary" />
+
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:alpha="0.7"
+        android:maxLines="1"
+        android:textAppearance="@style/ListSecondary" />
+
+    <ImageView
+        android:id="@+id/deeper"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:alpha="0.6"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_deeper"
+        android:visibility="gone" />
+</LinearLayout>

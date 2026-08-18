@@ -85,7 +85,11 @@ public class Application extends MultiDexApplication {
                 if (activity instanceof tw.tib.financisto.activity.MainActivity
                         || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
                     tw.tib.financisto.activity.TodayButton.attachTo(activity);
-                    tw.tib.financisto.activity.TodayButton.stack(activity);
+                }
+                if (activity instanceof tw.tib.financisto.activity.BlotterActivity) {
+                    // A single account: its list is movements in time, so all of
+                    // them belong here. The main screen decides tab by tab.
+                    tw.tib.financisto.activity.TodayButton.showFor(activity, true);
                 }
                 // Rounds used to be started and stopped by the main screen alone,
                 // so walking into an account - which is where somebody spends

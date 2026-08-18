@@ -841,15 +841,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             return super.createContextMenus(id);
         } else {
             List<MenuItemInfo> menus = super.createContextMenus(id);
-            menus.add(new MenuItemInfo(MENU_DUPLICATE, R.string.duplicate, R.drawable.ic_duplicate));
+            menus.add(new MenuItemInfo(MENU_DUPLICATE, R.string.duplicate, R.drawable.ic_row_copy));
             menus.add(new MenuItemInfo(MENU_SAVE_AS_TEMPLATE, R.string.save_as_template, R.drawable.ic_tab_templates));
-            menus.add(new MenuItemInfo(MENU_SHOW_IN_ACCOUNT_BLOTTER, R.string.transaction_show_in_account_blotter, R.drawable.ic_action_backup));
+            menus.add(new MenuItemInfo(MENU_SHOW_IN_ACCOUNT_BLOTTER, R.string.transaction_show_in_account_blotter, R.drawable.ic_tab_accounts));
             Transaction t = db.getTransaction(id);
             if (t.isTransfer()) {
-                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSACTION, R.string.change_to_transaction, R.drawable.ic_widget_transaction));
+                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSACTION, R.string.change_to_transaction, R.drawable.ic_row_transaction));
             }
             else {
-                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSFER, R.string.change_to_transfer, R.drawable.ic_widget_transfer));
+                menus.add(new MenuItemInfo(MENU_CHANGE_TO_TRANSFER, R.string.change_to_transfer, R.drawable.ic_row_transfer));
             }
             return menus;
         }
@@ -1620,19 +1620,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                             + (keep == null || keep == 0 ? "" : " and datetime <> " + keep)
                             + ")"));
         }
-    }
-
-    /** To the top of the list. */
-    public void goToNewest() {
-        if (adapter == null) {
-            return;
-        }
-        int count = adapter.getCount();
-        if (count == 0) {
-            return;
-        }
-        boolean asc = blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER);
-        setSelection(asc ? count - 1 : 0);
     }
 
     /**

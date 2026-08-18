@@ -39,10 +39,6 @@
             android:summary="@string/hierarchical_category_selector_income_expense_summary"
             android:title="@string/hierarchical_category_selector_income_expense" />
     </PreferenceCategory>
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/remember_selection">
-    </PreferenceCategory>
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/entity_selector_type">
-    </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/screen_layout">
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"

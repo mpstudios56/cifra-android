@@ -252,19 +252,19 @@ public class MyPreferences {
 	}
 
 	public static boolean isRememberAccount() {
-		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
+		return false;
 	}
 
 	public static boolean isRememberCategory() {
-		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
+		return false;
 	}
 
 	public static boolean isRememberLocation() {
-		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
+		return false;
 	}
 
 	public static boolean isRememberProject() {
-		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
+		return false;
 	}
 
 	private static EntitySelectorType getEntitySelectorType(String key) {
