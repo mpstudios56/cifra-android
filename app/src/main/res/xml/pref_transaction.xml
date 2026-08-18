@@ -140,13 +140,6 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
-            android:key="ntsl_show_currency"
-            android:summary="@string/show_currency_summary"
-            android:title="@string/show_currency" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
             android:key="ntsl_round_up_amount"
             android:summary="@string/round_up_amount_summary"
             android:title="@string/round_up_amount" />
@@ -157,20 +150,6 @@
             android:key="ntsl_enter_currency_decimal_places"
             android:summary="@string/enter_currency_decimal_places_summary"
             android:title="@string/enter_currency_decimal_places" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_payee"
-            android:summary="@string/show_payee_summary"
-            android:title="@string/show_payee" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_location"
-            android:summary="@string/show_location_summary"
-            android:title="@string/show_location" />
         <ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -181,13 +160,6 @@
             android:key="ntsl_show_location_order"
             android:summary="@string/show_location_order_summary"
             android:title="@string/show_location_order" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_note"
-            android:summary="@string/show_note_summary"
-            android:title="@string/show_note" />
         <ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -198,13 +170,6 @@
             android:key="ntsl_show_note_order"
             android:summary="@string/show_note_order_summary"
             android:title="@string/show_note_order" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_project"
-            android:summary="@string/show_project_summary"
-            android:title="@string/show_project" />
         <ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -215,20 +180,6 @@
             android:key="ntsl_show_project_order"
             android:summary="@string/show_project_order_summary"
             android:title="@string/show_project_order" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_picture"
-            android:summary="@string/show_picture_summary"
-            android:title="@string/show_picture" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_is_ccard_payment"
-            android:summary="@string/show_is_ccard_payment_summary"
-            android:title="@string/show_is_ccard_payment" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -250,12 +201,5 @@
             android:key="ntsl_open_calculator_for_template_transactions"
             android:summary="@string/open_calculator_for_template_transactions_summary"
             android:title="@string/open_calculator_for_template_transactions" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:key="ntsl_set_focus_on_amount_field"
-            android:summary="@string/set_focus_on_amount_field_summary"
-            android:title="@string/set_focus_on_amount_field" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

@@ -295,7 +295,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowTakePicture() {
-		return getBoolean("ntsl_show_picture", true);
+		return true /* La foto dello scontrino si puo' sempre allegare. */;
 	}
 
 	public static boolean isShowCategoryInTransferScreen() {
@@ -303,7 +303,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowPayee() {
-		return getBoolean("ntsl_show_payee", true);
+		return true /* Il beneficiario si vede. */;
 	}
 
 	public static boolean isShowPayeeInTransfers() {
@@ -311,7 +311,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowCurrency() {
-		return getBoolean("ntsl_show_currency", true);
+		return true /* La valuta si vede: su un conto in valuta e' l'unica cosa che dice quale. */;
 	}
 
 	public static boolean isEnterCurrencyDecimalPlaces() {
@@ -323,7 +323,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowLocation() {
-		return isLocationSupported() && getBoolean("ntsl_show_location", true);
+		return isLocationSupported() && true /* La localita' si vede. */;
 	}
 
 	public static int getLocationOrder() {
@@ -331,7 +331,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowIsCCardPayment() {
-		return getBoolean("ntsl_show_is_ccard_payment", true);
+		return true /* "Non includere nel totale" resta a disposizione: e' l'unico modo di segnare un girofondo. */;
 	}
 
 	public static boolean isOpenCalculatorForTemplates() {
@@ -339,7 +339,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isSetFocusOnAmountField() {
-		return getBoolean("ntsl_set_focus_on_amount_field", false);
+		return true /* Si parte dall'importo, che e' il primo dato che si ha in mano. */;
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowNote() {
-		return getBoolean("ntsl_show_note", true);
+		return true /* La nota si vede. */;
 	}
 
 	public static int getNoteOrder() {
@@ -451,7 +451,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowProject() {
-		return getBoolean("ntsl_show_project", true);
+		return true /* Il progetto si vede. */;
 	}
 
 	public static int getProjectOrder() {
