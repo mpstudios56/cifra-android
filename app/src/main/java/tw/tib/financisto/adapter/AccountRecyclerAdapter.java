@@ -167,7 +167,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             v.icon.setVisibility(View.VISIBLE);
             v.iconText.setVisibility(View.INVISIBLE);
             v.icon.setImageResource(chosen.iconId);
-            AccountIcon.Target target = AccountIcon.parseTarget(a.icon);
+            AccountIcon.Target target = AccountIcon.targetOf(a);
             if (!chosen.tintable || target == AccountIcon.Target.BAR) {
                 v.icon.clearColorFilter();
             } else {
@@ -288,7 +288,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
 
         try {
             // Painting the symbol only means the stripe stays out of the way.
-            boolean stripeWanted = AccountIcon.parseTarget(a.icon) != AccountIcon.Target.ICON;
+            boolean stripeWanted = AccountIcon.targetOf(a) != AccountIcon.Target.ICON;
             if (stripeWanted && !Utils.isEmpty(a.accentColor)) {
                 int color = Color.parseColor(a.accentColor);
                 v.accent.setVisibility(View.VISIBLE);

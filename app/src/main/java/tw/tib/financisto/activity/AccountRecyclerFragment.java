@@ -223,10 +223,11 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         } else {
             accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_lock_open, R.string.reopen_account));
         }
-        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_trash, R.string.delete_account));
+        // Deleting goes last, where a hand does not land by accident.
         if (MyPreferences.isShowTransferCurrentBalance()) {
             accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.share_windows_32dp, R.string.transfer_current_balance));
         }
+        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_trash, R.string.delete_account));
         accountActionGrid.setOnQuickActionClickListener(accountActionListener);
     }
 
@@ -257,10 +258,10 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                 closeOrOpenAccount();
                 break;
             case 8:
-                deleteAccount();
+                transferCurrentBalance(selectedId);
                 break;
             case 9:
-                transferCurrentBalance(selectedId);
+                deleteAccount();
                 break;
         }
     };

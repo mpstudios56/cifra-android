@@ -30,13 +30,6 @@
         app:iconSpaceReserved="false"
         app:singleLineTitle="false"
         android:defaultValue="false"
-        android:key="blur_balances"
-        android:summary="@string/blur_balances_summary"
-        android:title="@string/blur_balances" />
-    <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
-        android:defaultValue="false"
         android:key="hide_closed_accounts"
         android:summary="@string/hide_closed_accounts_summary"
         android:title="@string/hide_closed_accounts" />
@@ -47,11 +40,4 @@
         android:key="show_menu_button_on_accounts_screen"
         android:summary="@string/show_menu_button_on_accounts_screen_summary"
         android:title="@string/show_menu_button_on_accounts_screen" />
-    <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
-        android:defaultValue="false"
-        android:key="show_transfer_current_balance"
-        android:summary="@string/show_transfer_current_balance_summary"
-        android:title="@string/show_transfer_current_balance" />
 </androidx.preference.PreferenceScreen>

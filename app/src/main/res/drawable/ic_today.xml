@@ -1,0 +1,20 @@
+<!-- A calendar with today marked: the day one keeps coming back to. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFF4EFE4">
+
+    <path android:pathData="M4.5,6 L19.5,6 L19.5,19.5 L4.5,19.5 z"
+        android:strokeColor="#FFFFFFFF" android:strokeWidth="1.7"
+        android:strokeLineJoin="round" />
+    <path android:pathData="M4.5,10 L19.5,10" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" />
+    <path android:pathData="M8.5,3.6 L8.5,7" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" android:strokeLineCap="round" />
+    <path android:pathData="M15.5,3.6 L15.5,7" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" android:strokeLineCap="round" />
+    <path android:pathData="M12,13.2A1.9,1.9 0 1,0 12,17A1.9,1.9 0 1,0 12,13.2z"
+        android:fillColor="#FFFFFFFF" />
+</vector>

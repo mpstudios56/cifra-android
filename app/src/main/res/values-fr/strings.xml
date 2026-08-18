@@ -1545,4 +1545,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sort_templates_by_date">Par date de création</string>
   <string name="sort_templates_by_category">Par catégorie</string>
   <string name="sort_templates_by_project">Par projet</string>
+  <string name="go_to_today">Aller à aujourd’hui</string>
 </resources>

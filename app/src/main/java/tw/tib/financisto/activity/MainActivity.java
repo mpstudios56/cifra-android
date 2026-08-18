@@ -407,6 +407,20 @@ public class MainActivity extends AppCompatActivity {
         BlotterFragment.templatesWanted = true;
     }
 
+    /**
+     * Back to today on whichever tab is in front: the movements scroll to it,
+     * the summary returns to the period that holds it, and anything else is
+     * left alone rather than made to pretend.
+     */
+    public void goToToday() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+        if (f instanceof BlotterFragment) {
+            ((BlotterFragment) f).goToToday();
+        } else if (f instanceof SummaryFragment) {
+            ((SummaryFragment) f).goToToday();
+        }
+    }
+
     public void refreshCurrentTab() {
         Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
         if (f instanceof RefreshSupportedActivity) {

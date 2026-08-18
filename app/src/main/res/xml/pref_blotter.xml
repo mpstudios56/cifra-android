@@ -27,13 +27,6 @@
         app:iconSpaceReserved="false"
         app:singleLineTitle="false"
         android:defaultValue="false"
-        android:key="show_go_to_today_button"
-        android:summary="@string/show_go_to_today_button_summary"
-        android:title="@string/show_go_to_today_button" />
-    <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
-        android:defaultValue="false"
         android:key="highlight_copied_unedited_transactions"
         android:summary="@string/highlight_copied_unedited_transactions_summary"
         android:title="@string/highlight_copied_unedited_transactions" />

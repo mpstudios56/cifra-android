@@ -100,6 +100,15 @@ public class AccountActivity extends AbstractActivity {
 	private View accountIconNode;
 	private View accentColorNode;
 	private TextView accentTargetText;
+	/**
+	 * What the accent colour paints, kept here and written to a field of its
+	 * own on the account.
+	 * <p>
+	 * It used to live inside the icon string, so it could only be remembered
+	 * for accounts wearing one of the app's own symbols: on everything restored
+	 * from an old backup the choice was made, shown, and thrown away.
+	 */
+	private AccountIcon.Target accentTarget = AccountIcon.Target.BOTH;
 
 	private EntityEnumAdapter<AccountType> accountTypeAdapter;
 	private EntityEnumAdapter<CardIssuer> cardIssuerAdapter;
@@ -303,6 +312,7 @@ public class AccountActivity extends AbstractActivity {
 			account.limitAmount = -Math.abs(limitInput.getAmount());
 			account.note = Utils.text(noteText);
 			account.icon = iconText.getText().toString().trim();
+			account.accentTarget = accentTarget.tag;
 			account.accentColor = accentColor.getText().toString().trim();
 			// stored as written; see AccountIcon for the format
 
@@ -649,8 +659,11 @@ public class AccountActivity extends AbstractActivity {
 		new AlertDialog.Builder(this)
 				.setTitle(R.string.accent_target_title)
 				.setItems(labels, (d, which) -> {
+					accentTarget = targets[which];
 					AccountIcon chosen = AccountIcon.parse(iconText.getText().toString());
 					if (chosen != null) {
+						// Written into the icon as well, so a phone with an
+						// older copy of the app still reads it.
 						iconText.setText(chosen.toStoredValue(targets[which]));
 					}
 					showTargetOnNode();
@@ -669,7 +682,7 @@ public class AccountActivity extends AbstractActivity {
 	}
 
 	private AccountIcon.Target currentTarget() {
-		return AccountIcon.parseTarget(iconText.getText().toString());
+		return accentTarget;
 	}
 
 	private void showIconOnNode() {
@@ -729,9 +742,12 @@ public class AccountActivity extends AbstractActivity {
 		TextView label = accountTypeNode.findViewById(R.id.label);
 		label.setText(type.titleId);
 
-		setVisibility(cardIssuerNode, type.isCard ? View.VISIBLE : View.GONE);
+		// The symbol chooser holds the card and service marks itself, so these
+		// two older lists showed the same thing twice and won when they should
+		// not have.
+		setVisibility(cardIssuerNode, View.GONE);
 		setVisibility(issuerNode, type.hasIssuer ? View.VISIBLE : View.GONE);
-		setVisibility(electronicPaymentNode, type.isElectronic ? View.VISIBLE : View.GONE);
+		setVisibility(electronicPaymentNode, View.GONE);
 		setVisibility(numberNode, type.hasNumber ? View.VISIBLE : View.GONE);
 		setVisibility(closingDayNode, type.isCreditCard ? View.VISIBLE : View.GONE);
 		setVisibility(paymentDayNode, type.isCreditCard ? View.VISIBLE : View.GONE);
@@ -810,6 +826,9 @@ public class AccountActivity extends AbstractActivity {
 		noteText.setText(account.note);
 		accentColor.setText(account.accentColor);
 		iconText.setText(account.icon);
+		// What the colour paints, as this account has it: from its own field
+		// when it has one, and from the old way of writing it otherwise.
+		accentTarget = AccountIcon.targetOf(account);
 		showIconOnNode();
 		showColorOnNode();
 		showTargetOnNode();

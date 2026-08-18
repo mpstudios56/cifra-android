@@ -473,47 +473,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             });
         }
 
-        bGoToToday = view.findViewById(R.id.bToday);
-        if (MyPreferences.isShowGoToTodayButton() && bGoToToday != null) {
-            bGoToToday.setVisibility(View.VISIBLE);
-            bGoToToday.setOnClickListener(v -> {
-                if (adapter == null) return;
-                var cursor = ((BlotterListAdapter) adapter).getCursor();
-                Calendar today = Calendar.getInstance();
-                today.set(Calendar.HOUR, 0);
-                today.set(Calendar.MINUTE, 0);
-                today.set(Calendar.SECOND, 0);
-                today.set(Calendar.MILLISECOND, 0);
-                long todayStart = today.getTimeInMillis();
-                long todayEnd = todayStart + 86400000;
-                boolean asc = (blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER));
-                int pos;
-                if (asc) {
-                    cursor.moveToLast();
-                    pos = cursor.getCount() - 1;
-                }
-                else {
-                    cursor.moveToFirst();
-                    pos = 0;
-                }
-                while (!cursor.isAfterLast() && !cursor.isBeforeFirst()) {
-                    long txTime = cursor.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal());
-                    if (txTime < todayEnd) {
-                        break;
-                    }
-                    if (asc) {
-                        cursor.moveToPrevious();
-                        pos -= 1;
-                    }
-                    else {
-                        cursor.moveToNext();
-                        pos += 1;
-                    }
-                }
-                setSelection(pos);
-            });
-        }
-        else if (bGoToToday != null) {
+        // The button in the bar is gone: today floats above the eye now, on
+        // both the screens where today means something.
+        if (bGoToToday != null) {
             bGoToToday.setVisibility(View.GONE);
         }
 
@@ -1556,6 +1518,47 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                         com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, v -> back.run())
                 .show();
+    }
+
+
+    /** Scrolls the list to today, or to the nearest movement before it. */
+    public void goToToday() {
+        if (adapter == null) return;
+        var cursor = ((BlotterListAdapter) adapter).getCursor();
+        if (cursor == null || cursor.getCount() == 0) return;
+
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MILLISECOND, 0);
+                long todayStart = today.getTimeInMillis();
+                long todayEnd = todayStart + 86400000;
+                boolean asc = (blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER));
+                int pos;
+                if (asc) {
+                    cursor.moveToLast();
+                    pos = cursor.getCount() - 1;
+                }
+                else {
+                    cursor.moveToFirst();
+                    pos = 0;
+                }
+                while (!cursor.isAfterLast() && !cursor.isBeforeFirst()) {
+                    long txTime = cursor.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal());
+                    if (txTime < todayEnd) {
+                        break;
+                    }
+                    if (asc) {
+                        cursor.moveToPrevious();
+                        pos -= 1;
+                    }
+                    else {
+                        cursor.moveToNext();
+                        pos += 1;
+                    }
+                }
+                        setSelection(pos);
     }
 
 }

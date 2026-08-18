@@ -86,6 +86,17 @@ public class Account extends MyEntity {
 	@Column(name = "icon")
 	public String icon;
 
+	/**
+	 * What the chosen colour paints: the symbol, the stripe, or both.
+	 * <p>
+	 * It used to be written inside the icon field, after the name of the
+	 * symbol. An account with no symbol of the app's own - which is every
+	 * account restored from an old backup - had nowhere to keep it, so the
+	 * choice was made, saved, and read back as "both" for ever.
+	 */
+	@Column(name = "accent_target")
+	public String accentTarget;
+
 	@Column(name = "accent_color")
 	public String accentColor;
 

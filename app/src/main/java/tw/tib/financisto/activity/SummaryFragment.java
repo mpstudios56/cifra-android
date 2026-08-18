@@ -138,6 +138,12 @@ public class SummaryFragment extends Fragment {
         PinProtection.lock(getContext());
     }
 
+    /** Back to the period that holds today. */
+    public void goToToday() {
+        periodsBack = 0;
+        refresh();
+    }
+
     /** Redraws from outside, when a round of sharing has changed the figures. */
     public void redraw() {
         refresh();

@@ -226,7 +226,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isBlurBalances() {
-		return getBoolean("blur_balances", false);
+		return false /* L'occhio nasconde gli importi meglio di una sfocatura. */;
 	}
 
 	public static LocationsSortOrder getLocationsSortOrder() {
@@ -768,7 +768,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowGoToTodayButton() {
-		return getBoolean("show_go_to_today_button", false);
+		return false /* Il tasto oggi ora galleggia sopra l'occhio. */;
 	}
 
 	private static boolean isFeatureSupported(String feature) {
@@ -924,7 +924,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowTransferCurrentBalance() {
-		return getBoolean("show_transfer_current_balance", false);
+		return true /* Trasferisci saldo sta nella bolla del conto, sempre. */;
 	}
 
 	public static StartupScreen getStartupScreen() {

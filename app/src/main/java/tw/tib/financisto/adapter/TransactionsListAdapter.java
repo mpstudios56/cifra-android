@@ -34,7 +34,6 @@ public class TransactionsListAdapter extends BlotterListAdapter {
     private final int dateColor;
     private final int projectColor;
     private final boolean showProject;
-    private final boolean colorizeWeekendDate;
 
     public TransactionsListAdapter(Context context, DatabaseAdapter db, Cursor c) {
         super(context, db, c);
@@ -43,7 +42,6 @@ public class TransactionsListAdapter extends BlotterListAdapter {
         this.dateColor = r.getColor(R.color.transaction_date);
         this.projectColor = r.getColor(R.color.project_color);
         this.showProject = MyPreferences.isShowProjectInBlotter();
-        this.colorizeWeekendDate = MyPreferences.isColorizeWeekendDate();
     }
 
     @Override
@@ -139,7 +137,7 @@ public class TransactionsListAdapter extends BlotterListAdapter {
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(date);
             int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-            if (colorizeWeekendDate && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
+            if (colorizeWeekend() && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
                 v.bottomView.setTextColor(weekendColour());
             } else {
                 v.bottomView.setTextColor(dateColor);

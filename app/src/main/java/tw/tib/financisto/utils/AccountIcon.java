@@ -133,6 +133,23 @@ public enum AccountIcon {
         return null;
     }
 
+    /**
+     * What the accent colour paints, for an account.
+     * <p>
+     * The field of its own comes first; the old way of writing it inside the
+     * icon is still read, so accounts saved before the field existed keep the
+     * choice they were given.
+     */
+    public static Target targetOf(tw.tib.financisto.model.Account account) {
+        if (account == null) {
+            return Target.BOTH;
+        }
+        if (account.accentTarget != null && !account.accentTarget.isEmpty()) {
+            return Target.of(account.accentTarget);
+        }
+        return parseTarget(account.icon);
+    }
+
     /** What the accent colour should paint for this account. */
     public static Target parseTarget(String stored) {
         String tag = symbolTag(stored);

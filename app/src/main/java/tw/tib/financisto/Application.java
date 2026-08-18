@@ -77,6 +77,9 @@ public class Application extends MultiDexApplication {
                         || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
                     PrivacyButton.attachTo(activity);
                 }
+                if (activity instanceof tw.tib.financisto.activity.MainActivity) {
+                    tw.tib.financisto.activity.TodayButton.attachTo(activity);
+                }
                 // Rounds used to be started and stopped by the main screen alone,
                 // so walking into an account - which is where somebody spends
                 // most of their time - stopped the exchange until they came out

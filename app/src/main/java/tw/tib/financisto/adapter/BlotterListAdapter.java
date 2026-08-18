@@ -79,7 +79,16 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
 
     private final boolean showRunningBalance;
     private final boolean showProject;
-    private final boolean colorizeWeekendDate;
+    /**
+     * Whether weekends are written in their own colour, asked when one is drawn.
+     * <p>
+     * Read once when the list was built it went stale exactly as the colour
+     * did: turning the setting off left the colour on the screen until Android
+     * happened to throw the screen away.
+     */
+    protected boolean colorizeWeekend() {
+        return MyPreferences.isColorizeWeekendDate();
+    }
     /**
      * The colour chosen for Saturday and Sunday, read when a weekend is drawn.
      * <p>
@@ -122,7 +131,6 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         this.highlightBackgroundColor = context.getResources().getColor(R.color.highlight_background);
         this.showRunningBalance = MyPreferences.isShowRunningBalance();
         this.showProject = MyPreferences.isShowProjectInBlotter();
-        this.colorizeWeekendDate = MyPreferences.isColorizeWeekendDate();
         this.showTimeOfDay = MyPreferences.isBlotterShowTimeOfDay();
         this.highlightCopiedUnedited = MyPreferences.isHighlightCopiedUneditedTransactions();
         this.copiedUneditedTransactions = Application.getCopiedUneditedTransactions();
@@ -341,7 +349,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
                     Calendar cal = Calendar.getInstance();
                     cal.setTimeInMillis(date);
                     int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-                    if (colorizeWeekendDate && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
+                    if (colorizeWeekend() && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
                         v.bottomView.setTextColor(weekendColour());
                     } else {
                         v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());

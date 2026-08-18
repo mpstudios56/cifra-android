@@ -1520,4 +1520,5 @@
     <string name="sort_templates_by_date">За датою створення</string>
     <string name="sort_templates_by_category">За категорією</string>
     <string name="sort_templates_by_project">За проєктом</string>
+    <string name="go_to_today">До сьогодні</string>
 </resources>

@@ -1556,4 +1556,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sort_templates_by_date">Per data di creazione</string>
   <string name="sort_templates_by_category">Per categoria</string>
   <string name="sort_templates_by_project">Per progetto</string>
+  <string name="go_to_today">Vai a oggi</string>
 </resources>

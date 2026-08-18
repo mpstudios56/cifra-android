@@ -1,4 +1,7 @@
-<!-- A box with an arrow going down into it: putting the ledger somewhere safe. -->
+<!--
+  A drum of tape, the sign a backup has had for fifty years: two circles on a
+  reel, and the ledger going onto it.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
@@ -6,10 +9,17 @@
     android:viewportHeight="24"
     android:tint="#FFF4EFE4">
 
-    <path android:pathData="M12,3 L12,13" android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.8" android:strokeLineCap="round" />
-    <path android:pathData="M8.4,9.6 L12,13.2 L15.6,9.6" android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.8" android:strokeLineCap="round" android:strokeLineJoin="round" />
-    <path android:pathData="M4,15 L4,19 L20,19 L20,15" android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.8" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path
+        android:pathData="M12,3.4A8.6,8.6 0 1,0 12,20.6A8.6,8.6 0 1,0 12,3.4z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" />
+    <path
+        android:pathData="M12,9.4A2.6,2.6 0 1,0 12,14.6A2.6,2.6 0 1,0 12,9.4z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7" />
+    <path
+        android:pathData="M8.6,18.2 L15.4,18.2"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round" />
 </vector>
