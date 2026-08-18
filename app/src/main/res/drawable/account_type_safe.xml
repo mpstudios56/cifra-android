@@ -1,68 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
-  account_type_safe for Cifra. Account icons are shown untinted in the account list, unlike
-  the tabs and the menu, so this carries its own colour and has to read on
-  either background.
-  Literal colours, not resource references: build-time PNG generation cannot
-  resolve those.
+  lock-key, from the Phosphor icon set (duotone weight), MIT licence.
+  Two paths: the body at a fifth of the ink, the drawing at full. The colour
+  chosen for an account tints both and leaves their transparency alone, so one
+  colour comes out as two tones - the look this app was after, drawn by people
+  who do it for a living.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportWidth="256"
+    android:viewportHeight="256">
     <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M5.6,3.8 H18.4 A1.6,1.6 0 0,1 20,5.4 V17.8 A1.6,1.6 0 0,1 18.4,19.4 H5.6 A1.6,1.6 0 0,1 4,17.8 V5.4 A1.6,1.6 0 0,1 5.6,3.8 Z" />
+        android:pathData="M208,88H48a8,8,0,0,0-8,8V208a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V96A8,8,0,0,0,208,88Zm-80,72a20,20,0,1,1,20-20A20,20,0,0,1,128,160Z"
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.2" />
     <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.5"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M6.9,6.4 H17.4 V16.8 H6.9 Z" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M9.1,11.6 A2.9,2.9 0 1,1 14.9,11.6 A2.9,2.9 0 1,1 9.1,11.6 Z" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.5"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M12,7.5 V8.6" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.5"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M12,14.6 V15.7" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.5"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M7.9,11.6 H9.0" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.5"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M15.0,11.6 H16.1" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M7,19.4 V21.2" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M17,19.4 V21.2" />
+        android:pathData="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-80-96a28,28,0,0,0-8,54.83V184a8,8,0,0,0,16,0V166.83A28,28,0,0,0,128,112Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,128,152Z"
+        android:fillColor="#FFFFFFFF" />
 </vector>

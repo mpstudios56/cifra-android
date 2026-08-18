@@ -1,38 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
-  account_type_electronic for Cifra. Account icons are shown untinted in the account list, unlike
-  the tabs and the menu, so this carries its own colour and has to read on
-  either background.
-  Literal colours, not resource references: build-time PNG generation cannot
-  resolve those.
+  cardholder, from the Phosphor icon set (duotone weight), MIT licence.
+  Two paths: the body at a fifth of the ink, the drawing at full. The colour
+  chosen for an account tints both and leaves their transparency alone, so one
+  colour comes out as two tones - the look this app was after, drawn by people
+  who do it for a living.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportWidth="256"
+    android:viewportHeight="256">
     <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M6.6,2.8 L14.4,2.8 A1.6,1.6 0 0,1 16,4.4 L16,19.6 A1.6,1.6 0 0,1 14.4,21.2 L6.6,21.2 A1.6,1.6 0 0,1 5,19.6 L5,4.4 A1.6,1.6 0 0,1 6.6,2.8 Z" />
+        android:pathData="M224,72v48H160a32,32,0,0,1-64,0H32V72A16,16,0,0,1,48,56H208A16,16,0,0,1,224,72Z"
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.2" />
     <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M9,18.4 L12,18.4" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M18.4,9 A4.2,4.2 0 0,1 18.4,15" />
-    <path
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.7"
-        android:strokeLineJoin="round"
-        android:strokeLineCap="round"
-        android:pathData="M20.6,6.6 A7.6,7.6 0 0,1 20.6,17.4" />
+        android:pathData="M208,48H48A24,24,0,0,0,24,72V184a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V72A24,24,0,0,0,208,48ZM40,96H216v16H160a8,8,0,0,0-8,8,24,24,0,0,1-48,0,8,8,0,0,0-8-8H40Zm8-32H208a8,8,0,0,1,8,8v8H40V72A8,8,0,0,1,48,64ZM208,192H48a8,8,0,0,1-8-8V128H88.8a40,40,0,0,0,78.4,0H216v56A8,8,0,0,1,208,192Z"
+        android:fillColor="#FFFFFFFF" />
 </vector>
