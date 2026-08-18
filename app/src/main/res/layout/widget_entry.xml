@@ -25,7 +25,7 @@
         android:alpha="0.9"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
-        android:src="@mipmap/a_icon_notify" />
+        android:src="@mipmap/app_icon" />
 
     <ImageButton
         android:id="@+id/widget_transaction"

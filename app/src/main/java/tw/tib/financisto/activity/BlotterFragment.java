@@ -730,21 +730,22 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
      */
     private void askHowToDuplicate(View anchor) {
         final long which = selectedId;
-        QuickActionGrid ways = new QuickActionGrid(getContext());
-        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate_today));
-        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, MyQuickAction.NO_FILTER, R.string.duplicate_keep_time));
-        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, getResources().getColor(R.color.holo_orange_dark), R.string.duplicate_keep_date_time));
-        ways.setOnQuickActionClickListener((widget, position, action) -> {
-            int titleId = ((MyQuickAction) action).titleId;
-            if (titleId == R.string.duplicate_today) {
+        // A list, not a ring. Three ways of copying carry three sentences -
+        // "mantieni data e ora" is not a word - and under a symbol in a ring
+        // there is room for a word.
+        java.util.List<MenuItemInfo> ways = new LinkedList<>();
+        ways.add(new MenuItemInfo(1, R.string.duplicate_today, R.drawable.ic_action_copy));
+        ways.add(new MenuItemInfo(2, R.string.duplicate_keep_time, R.drawable.ic_action_copy_keep_time));
+        ways.add(new MenuItemInfo(3, R.string.duplicate_keep_date_time, R.drawable.ic_action_copy_keep_time));
+        RowMenu.show(getActivity(), anchor != null ? anchor : getView(), ways, menuId -> {
+            if (menuId == 1) {
                 duplicateTransaction(which, 1);
-            } else if (titleId == R.string.duplicate_keep_time) {
+            } else if (menuId == 2) {
                 duplicateTransactionKeepTime(which);
             } else {
                 duplicateTransactionKeepDateTime(which);
             }
         });
-        ways.show(anchor);
     }
 
     private void prepareAddButtonActionGrid() {

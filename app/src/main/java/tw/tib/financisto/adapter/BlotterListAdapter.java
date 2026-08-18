@@ -81,13 +81,16 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
     private final boolean showProject;
     private final boolean colorizeWeekendDate;
     /**
-     * The colour chosen for Saturday and Sunday.
+     * The colour chosen for Saturday and Sunday, read when a weekend is drawn.
      * <p>
-     * This list painted them with a colour written into the code, so choosing
-     * one in the settings changed the date in every other list in the app and
-     * left untouched the only list anybody looks at.
+     * Read once when the list was built, it never changed: this screen keeps
+     * its adapter between visits, so a colour chosen in the settings arrived
+     * only if Android happened to throw the whole screen away. Reading it at
+     * the moment of use costs a lookup in a map already in memory.
      */
-    private final int weekendColour;
+    protected int weekendColour() {
+        return MyPreferences.getWeekendColour();
+    }
     private final boolean showTimeOfDay;
 
     protected final boolean highlightCopiedUnedited;
@@ -120,7 +123,6 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         this.showRunningBalance = MyPreferences.isShowRunningBalance();
         this.showProject = MyPreferences.isShowProjectInBlotter();
         this.colorizeWeekendDate = MyPreferences.isColorizeWeekendDate();
-        this.weekendColour = MyPreferences.getWeekendColour();
         this.showTimeOfDay = MyPreferences.isBlotterShowTimeOfDay();
         this.highlightCopiedUnedited = MyPreferences.isHighlightCopiedUneditedTransactions();
         this.copiedUneditedTransactions = Application.getCopiedUneditedTransactions();
@@ -340,7 +342,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
                     cal.setTimeInMillis(date);
                     int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
                     if (colorizeWeekendDate && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
-                        v.bottomView.setTextColor(weekendColour);
+                        v.bottomView.setTextColor(weekendColour());
                     } else {
                         v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
                     }
