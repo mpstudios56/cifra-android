@@ -116,15 +116,6 @@
         <ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
-            android:defaultValue="NAME"
-            android:entries="@array/sort_locations_entities"
-            android:entryValues="@array/sort_locations_values"
-            android:key="sort_locations"
-            android:summary="@string/sort_locations_summary"
-            android:title="@string/sort_locations" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
             android:defaultValue="DATE"
             android:entries="@array/sort_templates_entities"
             android:entryValues="@array/sort_templates_values"
@@ -209,13 +200,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_widgets">
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="enable_widget"
-            android:summary="@string/enable_widget_summary"
-            android:title="@string/enable_widget" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"

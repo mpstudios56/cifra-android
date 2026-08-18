@@ -1,0 +1,15 @@
+<!-- A shortcut on the home screen: the app's ground, and the sign of what it opens. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <path
+        android:pathData="M24,2C11.85,2 2,11.85 2,24s9.85,22 22,22 22,-9.85 22,-22S36.15,2 24,2z"
+        android:fillColor="#FF2E7D5B" />
+    <path android:pathData="M24,15 L24,33" android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="3.2" android:strokeLineCap="round" />
+    <path android:pathData="M15,24 L33,24" android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="3.2" android:strokeLineCap="round" />
+</vector>

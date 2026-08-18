@@ -65,12 +65,12 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
         });
         Preference pNewTransactionShortcut = preferenceScreen.findPreference("shortcut_new_transaction");
         pNewTransactionShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.icon_transaction);
+            addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.ic_shortcut_transaction);
             return true;
         });
         Preference pNewTransferShortcut = preferenceScreen.findPreference("shortcut_new_transfer");
         pNewTransferShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.icon_transfer);
+            addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.ic_shortcut_transfer);
             return true;
         });
         Preference pExchangeProvider = preferenceScreen.findPreference("exchange_rate_provider");
@@ -121,10 +121,35 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
         pFiscalYearStart.setSummary(summary);
     }
 
+    /**
+     * Asks the launcher to pin a shortcut.
+     * <p>
+     * It used to send a broadcast that launchers stopped listening to in
+     * Android 8: the app said it had made a shortcut, the phone said nothing,
+     * and no shortcut appeared. This is the way it has been done since.
+     */
     private void addShortcut(String activity, int nameId, int iconId) {
-        Intent intent = createShortcutIntent(activity, getString(nameId), Intent.ShortcutIconResource.fromContext(getContext(), iconId),
-                "com.android.launcher.action.INSTALL_SHORTCUT");
-        getContext().sendBroadcast(intent);
+        android.content.Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        Intent opens = new Intent(Intent.ACTION_MAIN);
+        opens.setComponent(new ComponentName(context.getPackageName(), activity));
+        opens.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        androidx.core.content.pm.ShortcutInfoCompat shortcut =
+                new androidx.core.content.pm.ShortcutInfoCompat.Builder(context, activity)
+                        .setShortLabel(getString(nameId))
+                        .setLongLabel(getString(nameId))
+                        .setIcon(androidx.core.graphics.drawable.IconCompat
+                                .createWithResource(context, iconId))
+                        .setIntent(opens)
+                        .build();
+        if (!androidx.core.content.pm.ShortcutManagerCompat.requestPinShortcut(
+                context, shortcut, null)) {
+            android.widget.Toast.makeText(context, R.string.shortcut_not_supported,
+                    android.widget.Toast.LENGTH_LONG).show();
+        }
     }
 
     private Intent createShortcutIntent(String activity, String shortcutName, Intent.ShortcutIconResource shortcutIcon, String action) {

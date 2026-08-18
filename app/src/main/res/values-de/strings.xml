@@ -1538,12 +1538,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="transaction_change_status">Status ändern</string>
   <string name="duplicate_today">Heute duplizieren</string>
   <string name="weekend_date_color">Wochenendfarbe</string>
-  <string-array name="weekend_colour_entries">
-      <item>Ziegel</item>
-      <item>Bernstein</item>
-      <item>Grün</item>
-      <item>Blau</item>
-      <item>Violett</item>
-      <item>Grau</item>
-  </string-array>
+  <string name="sort_by_title_desc">Nach Name (Z-A)</string>
+  <string name="sort_by_recent">Neueste zuerst</string>
+  <string name="shortcut_not_supported">Der Launcher nimmt keine Verknüpfungen an</string>
 </resources>

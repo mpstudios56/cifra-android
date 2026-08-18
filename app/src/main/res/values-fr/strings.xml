@@ -1538,12 +1538,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="transaction_change_status">Changer l’état</string>
   <string name="duplicate_today">Dupliquer à aujourd’hui</string>
   <string name="weekend_date_color">Couleur du week-end</string>
-  <string-array name="weekend_colour_entries">
-      <item>Brique</item>
-      <item>Ambre</item>
-      <item>Vert</item>
-      <item>Bleu</item>
-      <item>Violet</item>
-      <item>Gris</item>
-  </string-array>
+  <string name="sort_by_title_desc">Par nom (Z-A)</string>
+  <string name="sort_by_recent">Plus récents d’abord</string>
+  <string name="shortcut_not_supported">Le lanceur n’accepte pas les raccourcis</string>
 </resources>

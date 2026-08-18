@@ -45,6 +45,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <!--
+          The order of the list, decided here rather than in the settings: it
+          belongs to the list somebody is looking at, and each of these lists
+          wants its own answer.
+        -->
+        <ImageButton
+            a:id="@+id/bSort"
+            style="@style/BottomBarButton"
+            a:src="@drawable/ic_sort"
+            a:layout_marginRight="@dimen/action_button_margin"
+            app:layout_constraintEnd_toStartOf="@id/bMerge"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
         <ImageButton
             a:id="@+id/bMerge"
             style="@style/BottomBarButton"

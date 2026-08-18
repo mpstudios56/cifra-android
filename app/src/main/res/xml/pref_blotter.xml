@@ -44,14 +44,10 @@
         android:key="colorize_weekend_date"
         android:summary="@string/colorize_weekend_date_summary"
         android:title="@string/colorize_weekend_date" />
-    <ListPreference
+    <Preference
         app:iconSpaceReserved="false"
         app:singleLineTitle="false"
-        app:useSimpleSummaryProvider="true"
-        android:defaultValue="CC6666"
         android:dependency="colorize_weekend_date"
         android:key="weekend_date_color"
-        android:entries="@array/weekend_colour_entries"
-        android:entryValues="@array/weekend_colour_values"
         android:title="@string/weekend_date_color" />
 </androidx.preference.PreferenceScreen>

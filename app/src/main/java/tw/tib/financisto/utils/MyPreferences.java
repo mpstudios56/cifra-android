@@ -463,7 +463,11 @@ public class MyPreferences {
 	}
 
 	public static boolean isWidgetEnabled() {
-		return getBoolean("enable_widget", true);
+		// A widget somebody has just put on their home screen has been enabled
+		// by the act of putting it there. Asking them to go and find a switch
+		// in the settings, while the widget sits there looking broken, was a
+		// question with only one sensible answer.
+		return true;
 	}
 
 	public static boolean isTreatTransferToCCardAsPayment() {

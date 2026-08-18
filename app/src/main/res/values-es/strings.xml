@@ -1538,12 +1538,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="transaction_change_status">Cambiar estado</string>
   <string name="duplicate_today">Duplicar a hoy</string>
   <string name="weekend_date_color">Color del fin de semana</string>
-  <string-array name="weekend_colour_entries">
-      <item>Ladrillo</item>
-      <item>Ámbar</item>
-      <item>Verde</item>
-      <item>Azul</item>
-      <item>Violeta</item>
-      <item>Gris</item>
-  </string-array>
+  <string name="sort_by_title_desc">Por nombre (Z-A)</string>
+  <string name="sort_by_recent">Más recientes primero</string>
+  <string name="shortcut_not_supported">El lanzador no acepta accesos directos</string>
 </resources>

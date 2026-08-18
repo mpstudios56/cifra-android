@@ -80,6 +80,10 @@ public abstract class MyEntityListActivity<T extends MyEntity> extends AbstractL
 	@Override
 	protected void internalOnCreate(Bundle savedInstanceState) {
 		super.internalOnCreate(savedInstanceState);
+		View sortButton = findViewById(R.id.bSort);
+		if (sortButton != null) {
+			sortButton.setOnClickListener(v -> askForOrder());
+		}
 		((TextView) findViewById(android.R.id.empty)).setText(emptyResId);
 
 		ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.entity_list), (v, windowInsets) -> {
@@ -152,9 +156,66 @@ public abstract class MyEntityListActivity<T extends MyEntity> extends AbstractL
 		}
 	}
 
+
+	/** Which order this particular list is being kept in. */
+	private String orderKey() {
+		return "sort_entities_" + clazz.getSimpleName();
+	}
+
+	/**
+	 * The list in the order chosen for it.
+	 * <p>
+	 * Done here, on the list already read, rather than in the query: these are
+	 * short lists and the database call is shared with half the app.
+	 */
+	protected List<T> inChosenOrder(List<T> entities) {
+		String order = androidx.preference.PreferenceManager
+				.getDefaultSharedPreferences(this)
+				.getString(orderKey(), "TITLE");
+		if ("RECENT".equals(order)) {
+			java.util.Collections.sort(entities, (a, b) -> Long.compare(b.id, a.id));
+		} else if ("TITLE_DESC".equals(order)) {
+			java.util.Collections.sort(entities, (a, b) ->
+					String.valueOf(b.title).compareToIgnoreCase(String.valueOf(a.title)));
+		} else {
+			java.util.Collections.sort(entities, (a, b) ->
+					String.valueOf(a.title).compareToIgnoreCase(String.valueOf(b.title)));
+		}
+		return entities;
+	}
+
+	/** Offers the three orders, and redraws in the one picked. */
+	protected void askForOrder() {
+		final String[] orders = {"TITLE", "TITLE_DESC", "RECENT"};
+		String[] names = {
+				getString(R.string.sort_by_title),
+				getString(R.string.sort_by_title_desc),
+				getString(R.string.sort_by_recent)};
+		String current = androidx.preference.PreferenceManager
+				.getDefaultSharedPreferences(this)
+				.getString(orderKey(), "TITLE");
+		int chosen = 0;
+		for (int i = 0; i < orders.length; i++) {
+			if (orders[i].equals(current)) {
+				chosen = i;
+			}
+		}
+		new android.app.AlertDialog.Builder(this)
+				.setTitle(R.string.sort_order)
+				.setSingleChoiceItems(names, chosen, (dialog, which) -> {
+					androidx.preference.PreferenceManager
+							.getDefaultSharedPreferences(this).edit()
+							.putString(orderKey(), orders[which]).apply();
+					dialog.dismiss();
+					recreateCursor();
+				})
+				.setNegativeButton(R.string.cancel, null)
+				.show();
+	}
+
 	@Override
 	protected List<T> loadInBackground() {
-		return db.getAllEntitiesList(clazz, false, false, titleFilter);
+		return inChosenOrder(db.getAllEntitiesList(clazz, false, false, titleFilter));
 	}
 
 	@Override

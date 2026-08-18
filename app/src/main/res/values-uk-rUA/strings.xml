@@ -1513,12 +1513,7 @@
     <string name="transaction_change_status">Змінити стан</string>
     <string name="duplicate_today">Здублювати на сьогодні</string>
     <string name="weekend_date_color">Колір вихідних</string>
-    <string-array name="weekend_colour_entries">
-        <item>Цегляний</item>
-        <item>Бурштин</item>
-        <item>Зелений</item>
-        <item>Синій</item>
-        <item>Фіолетовий</item>
-        <item>Сірий</item>
-    </string-array>
+    <string name="sort_by_title_desc">За назвою (Я-А)</string>
+    <string name="sort_by_recent">Спочатку нові</string>
+    <string name="shortcut_not_supported">Лаунчер не приймає ярликів</string>
 </resources>
