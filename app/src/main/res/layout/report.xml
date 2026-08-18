@@ -28,7 +28,7 @@
         android:layout_weight="1" android:gravity="center" android:text="@string/empty_report" />
 	<LinearLayout style="@style/BottomBar">
 		<ImageButton android:id="@+id/bFilter"
-			android:src="@drawable/ic_menu_filter_off"
+			android:src="@drawable/ic_filter_off"
 			style="@style/BottomBarButton" />
         <ImageButton android:id="@+id/bToggle"
 			style="@style/BottomBarButton" />

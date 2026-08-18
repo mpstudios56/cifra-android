@@ -1,0 +1,22 @@
+<!--
+  The same funnel with something in it: a filter that is doing its work.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M3.5,5 L20.5,5 L14,12.4 L14,19.2 L10,20.8 L10,12.4 z"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M3.5,5 L20.5,5 L14,12.4 L14,19.2 L10,20.8 L10,12.4 z"
+        android:fillColor="#FF4CAF7D"
+        android:fillAlpha="0.35" />
+    <path
+        android:pathData="M18.4,15.4A3.4,3.4 0 1,0 18.4,22.2A3.4,3.4 0 1,0 18.4,15.4z"
+        android:fillColor="#FF4CAF7D" />
+</vector>

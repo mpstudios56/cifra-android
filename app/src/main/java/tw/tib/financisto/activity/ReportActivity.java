@@ -273,7 +273,7 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
 
     protected void disableFilter() {
         bFilter.setEnabled(false);
-        //bFilter.setImageResource(R.drawable.ic_menu_filter_off);
+        //bFilter.setImageResource(R.drawable.ic_filter_off);
     }
 
     protected void enableFilter() {

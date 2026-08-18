@@ -70,7 +70,7 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
         totalText = (TextView)findViewById(R.id.total);
         filterText = (TextView)findViewById(R.id.period);
         ImageButton bFilter = (ImageButton) findViewById(R.id.bFilter);
-        bFilter.setImageResource(R.drawable.ic_menu_filter_on);
+        bFilter.setImageResource(R.drawable.ic_filter_on);
         bFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

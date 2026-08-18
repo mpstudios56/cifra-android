@@ -59,7 +59,7 @@
 	</FrameLayout>
 	<LinearLayout style="@style/BottomBar">
 		<ImageButton style="@style/BottomBarButton" android:id="@+id/bFilter"
-			android:src="@drawable/ic_menu_filter_off" />
+			android:src="@drawable/ic_filter_off" />
 		<ImageButton style="@style/BottomBarButton" android:src="@drawable/btn_check_all"
 			android:id="@+id/bCheckAll" />
 		<ImageButton style="@style/BottomBarButton" android:src="@drawable/btn_uncheck_all"

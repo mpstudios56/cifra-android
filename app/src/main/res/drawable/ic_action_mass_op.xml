@@ -1,0 +1,31 @@
+<!--
+  Several movements ticked at once.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M4.5,7.5 L7,10 L11.5,5.5"
+        android:strokeColor="#FF4CAF7D"
+        android:strokeWidth="2.1"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M14,8 L20,8"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="1.9"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M4.5,15.5 L7,18 L11.5,13.5"
+        android:strokeColor="#FF4CAF7D"
+        android:strokeWidth="2.1"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M14,16 L20,16"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="1.9"
+        android:strokeLineCap="round" />
+</vector>
