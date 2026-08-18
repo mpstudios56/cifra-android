@@ -64,6 +64,11 @@ public class TodayButton {
             wake(button);
             if (activity instanceof MainActivity) {
                 ((MainActivity) activity).goToToday();
+                return;
+            }
+            BlotterFragment blotter = blotterIn(activity);
+            if (blotter != null) {
+                blotter.goToToday();
             }
         });
 
@@ -104,10 +109,33 @@ public class TodayButton {
             wake(button);
             if (activity instanceof MainActivity) {
                 ((MainActivity) activity).goToOldest();
+                return;
+            }
+            BlotterFragment blotter = blotterIn(activity);
+            if (blotter != null) {
+                blotter.goToOldest();
             }
         });
         content.addView(button);
         wake(button);
+    }
+
+    /**
+     * The movements inside a single account are the same list on a screen of
+     * their own, so the two buttons mean the same thing there and are asked of
+     * the fragment directly.
+     */
+    private static BlotterFragment blotterIn(Activity activity) {
+        if (!(activity instanceof androidx.fragment.app.FragmentActivity)) {
+            return null;
+        }
+        for (androidx.fragment.app.Fragment f : ((androidx.fragment.app.FragmentActivity) activity)
+                .getSupportFragmentManager().getFragments()) {
+            if (f instanceof BlotterFragment && f.isAdded()) {
+                return (BlotterFragment) f;
+            }
+        }
+        return null;
     }
 
     private static void wake(View button) {

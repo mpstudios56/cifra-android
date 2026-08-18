@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView android:id="@+id/active_icon"
-        android:src="@drawable/icon_lock"
+        android:src="@drawable/ic_account_closed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp" android:paddingRight="10dp"

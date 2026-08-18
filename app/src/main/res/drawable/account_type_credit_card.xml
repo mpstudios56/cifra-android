@@ -1,9 +1,7 @@
 <!--
   credit-card, from the Phosphor icon set (duotone weight), MIT licence.
-  Two paths: the body at a fifth of the ink, the drawing at full. The colour
-  chosen for an account tints both and leaves their transparency alone, so one
-  colour comes out as two tones - the look this app was after, drawn by people
-  who do it for a living.
+  Body at a fifth of the ink, drawing at full, so the colour of the account
+  reads as two tones of itself.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"

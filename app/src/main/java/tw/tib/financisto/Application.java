@@ -80,7 +80,10 @@ public class Application extends MultiDexApplication {
                         || activity instanceof tw.tib.financisto.activity.Report2DChartActivity) {
                     PrivacyButton.attachTo(activity);
                 }
-                if (activity instanceof tw.tib.financisto.activity.MainActivity) {
+                // Also inside a single account: it is the same list of
+                // movements, and today is today there too.
+                if (activity instanceof tw.tib.financisto.activity.MainActivity
+                        || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
                     tw.tib.financisto.activity.TodayButton.attachTo(activity);
                 }
                 // Rounds used to be started and stopped by the main screen alone,

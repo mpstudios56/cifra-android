@@ -1,0 +1,30 @@
+<!--
+  The padlock on a closed account.
+  It was a picture drawn for a screen of 2010, blown up on today's: the one
+  thing on that row that told you the account was shut looked like a smudge.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FF9AA0A6">
+
+    <path
+        android:pathData="M5.5,10.5 L18.5,10.5 L18.5,20 L5.5,20 z"
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.2" />
+    <path
+        android:pathData="M5.5,10.5 L18.5,10.5 L18.5,20 L5.5,20 z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M8.2,10.5 L8.2,7.6 A3.8,3.8 0 0,1 15.8,7.6 L15.8,10.5"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M12,13.6A1.6,1.6 0 1,0 12,16.8A1.6,1.6 0 1,0 12,13.6z"
+        android:fillColor="#FFFFFFFF" />
+</vector>

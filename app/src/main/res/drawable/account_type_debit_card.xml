@@ -1,9 +1,7 @@
 <!--
-  credit-card, from the Phosphor icon set (duotone weight), MIT licence.
-  Two paths: the body at a fifth of the ink, the drawing at full. The colour
-  chosen for an account tints both and leaves their transparency alone, so one
-  colour comes out as two tones - the look this app was after, drawn by people
-  who do it for a living.
+  cardholder, from the Phosphor icon set (duotone weight), MIT licence.
+  Body at a fifth of the ink, drawing at full, so the colour of the account
+  reads as two tones of itself.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
@@ -11,10 +9,10 @@
     android:viewportWidth="256"
     android:viewportHeight="256">
     <path
-        android:pathData="M232,96v96a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V96Z"
+        android:pathData="M224,72v48H160a32,32,0,0,1-64,0H32V72A16,16,0,0,1,48,56H208A16,16,0,0,1,224,72Z"
         android:fillColor="#FFFFFFFF"
         android:fillAlpha="0.2" />
     <path
-        android:pathData="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,16V88H32V64Zm0,128H32V104H224v88Zm-16-24a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h32A8,8,0,0,1,208,168Zm-64,0a8,8,0,0,1-8,8H120a8,8,0,0,1,0-16h16A8,8,0,0,1,144,168Z"
+        android:pathData="M208,48H48A24,24,0,0,0,24,72V184a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V72A24,24,0,0,0,208,48ZM40,96H216v16H160a8,8,0,0,0-8,8,24,24,0,0,1-48,0,8,8,0,0,0-8-8H40Zm8-32H208a8,8,0,0,1,8,8v8H40V72A8,8,0,0,1,48,64ZM208,192H48a8,8,0,0,1-8-8V128H88.8a40,40,0,0,0,78.4,0H216v56A8,8,0,0,1,208,192Z"
         android:fillColor="#FFFFFFFF" />
 </vector>
