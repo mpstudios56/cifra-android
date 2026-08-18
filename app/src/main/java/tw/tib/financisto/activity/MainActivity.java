@@ -446,6 +446,18 @@ public class MainActivity extends AppCompatActivity {
             today.setVisibility("summary".equals(tag) || "blotter".equals(tag)
                     ? View.VISIBLE : View.GONE);
         }
+        View oldest = findViewById(R.id.oldest_button);
+        if (oldest != null) {
+            oldest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /** Down to the first movement ever written down. */
+    public void goToOldest() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+        if (f instanceof BlotterFragment) {
+            ((BlotterFragment) f).goToOldest();
+        }
     }
 
     public void goToToday() {

@@ -1550,4 +1550,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="account_icon_briefcase">Maletín</string>
   <string name="account_icon_padlock">Candado</string>
   <string name="account_icon_shield">Protección</string>
+  <string name="go_to_oldest">Ir al primer movimiento</string>
 </resources>

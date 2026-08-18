@@ -1561,4 +1561,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="account_icon_briefcase">Valigetta</string>
   <string name="account_icon_padlock">Lucchetto</string>
   <string name="account_icon_shield">Protezione</string>
+  <string name="go_to_oldest">Vai al primo movimento</string>
 </resources>

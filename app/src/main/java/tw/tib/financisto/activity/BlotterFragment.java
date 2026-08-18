@@ -1596,6 +1596,22 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
     }
 
+    /**
+     * To the first movement ever written down: the far end of the list, which
+     * is the bottom or the top depending on which way it is sorted.
+     */
+    public void goToOldest() {
+        if (adapter == null) {
+            return;
+        }
+        int count = adapter.getCount();
+        if (count == 0) {
+            return;
+        }
+        boolean asc = blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER);
+        setSelection(asc ? 0 : count - 1);
+    }
+
     /** Scrolls the list to today, or to the nearest movement before it. */
     public void goToToday() {
         if (adapter == null) return;

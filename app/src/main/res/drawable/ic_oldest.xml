@@ -1,0 +1,15 @@
+<!-- Down to the bottom of the pile: the first movement ever written down. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFF4EFE4">
+
+    <path android:pathData="M12,3.5 L12,14.5" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.9" android:strokeLineCap="round" />
+    <path android:pathData="M7.8,10.3 L12,14.5 L16.2,10.3" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.9" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M5.5,19 L18.5,19" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.9" android:strokeLineCap="round" />
+</vector>

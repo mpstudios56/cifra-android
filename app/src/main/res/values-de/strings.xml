@@ -1550,4 +1550,5 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="account_icon_briefcase">Aktentasche</string>
   <string name="account_icon_padlock">Schloss</string>
   <string name="account_icon_shield">Schutz</string>
+  <string name="go_to_oldest">Zur ersten Buchung</string>
 </resources>

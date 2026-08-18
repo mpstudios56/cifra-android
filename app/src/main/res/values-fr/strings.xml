@@ -1550,4 +1550,5 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="account_icon_briefcase">Mallette</string>
   <string name="account_icon_padlock">Cadenas</string>
   <string name="account_icon_shield">Protection</string>
+  <string name="go_to_oldest">Aller au premier mouvement</string>
 </resources>

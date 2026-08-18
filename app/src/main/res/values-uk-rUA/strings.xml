@@ -1525,4 +1525,5 @@
     <string name="account_icon_briefcase">Портфель</string>
     <string name="account_icon_padlock">Замок</string>
     <string name="account_icon_shield">Захист</string>
+    <string name="go_to_oldest">До першого руху</string>
 </resources>

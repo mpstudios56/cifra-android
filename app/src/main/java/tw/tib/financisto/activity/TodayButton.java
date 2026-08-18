@@ -21,8 +21,9 @@ public class TodayButton {
 
     private static final int SIZE_DP = 44;
     private static final int EDGE_DP = 10;
-    /** Just above the eye, which sits at 150. */
-    private static final int ABOVE_BOTTOM_DP = 150 + SIZE_DP + 8;
+    /** The three sit in a column: the eye at 150, then the oldest, then today. */
+    private static final int OLDEST_BOTTOM_DP = 150 + SIZE_DP + 8;
+    private static final int ABOVE_BOTTOM_DP = 150 + 2 * (SIZE_DP + 8);
     private static final float RESTING_ALPHA = 0.30f;
     private static final float RESTING_TUCK = 0.52f;
     private static final long REST_AFTER_MS = 2500;
@@ -35,6 +36,7 @@ public class TodayButton {
         if (content == null || content.getChildCount() == 0) {
             return;
         }
+        attachOldest(activity, content);
         View already = content.findViewById(R.id.today_button);
         if (already != null) {
             wake(already);
@@ -65,6 +67,45 @@ public class TodayButton {
             }
         });
 
+        content.addView(button);
+        wake(button);
+    }
+
+    /**
+     * The other end of the same idea: down to the first movement ever written.
+     * <p>
+     * Only on the movements, where "the first one" means something. On a
+     * summary or a list of accounts it would be a button that scrolls to
+     * nothing in particular.
+     */
+    private static void attachOldest(Activity activity, ViewGroup content) {
+        View already = content.findViewById(R.id.oldest_button);
+        if (already != null) {
+            wake(already);
+            return;
+        }
+        ImageButton button = new ImageButton(activity);
+        button.setId(R.id.oldest_button);
+        button.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+        button.setContentDescription(activity.getString(R.string.go_to_oldest));
+        int pad = dp(activity, 10);
+        button.setPadding(pad, pad, pad, pad);
+        button.setBackgroundResource(R.drawable.privacy_button_idle);
+        button.setImageResource(R.drawable.ic_oldest);
+
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                dp(activity, SIZE_DP), dp(activity, SIZE_DP));
+        lp.gravity = Gravity.END | Gravity.BOTTOM;
+        lp.rightMargin = dp(activity, EDGE_DP);
+        lp.bottomMargin = dp(activity, OLDEST_BOTTOM_DP);
+        button.setLayoutParams(lp);
+        button.setElevation(dp(activity, 6));
+        button.setOnClickListener(v -> {
+            wake(button);
+            if (activity instanceof MainActivity) {
+                ((MainActivity) activity).goToOldest();
+            }
+        });
         content.addView(button);
         wake(button);
     }
