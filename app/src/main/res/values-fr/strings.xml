@@ -844,7 +844,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <!-- Parametres : dernieres entrees -->
   <string name="accounts_list_screen">Écran des comptes</string>
   <string name="accounts_list_screen_summary">Réglages de la liste des comptes</string>
-  <string name="blotter_screen">Écran des opérations</string>
+  <string name="blotter_screen">Préférences du registre</string>
   <string name="blotter_screen_summary">Réglages de la liste des opérations</string>
   <string name="drafts">Brouillons</string>
   <string name="hide_closed_accounts">Masquer les comptes clos</string>
@@ -1218,7 +1218,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="welcome_start">Commencer</string>
   <string name="pref_group_appearance">Apparence</string>
   <string name="pref_group_transactions">Opérations</string>
-  <string name="pref_group_lists">Listes</string>
+  <string name="pref_group_lists">Comptes</string>
   <string name="pref_group_notifications">Depuis les notifications</string>
   <string name="pref_group_periods">Périodes et devises</string>
   <string name="pref_group_widgets">Widget et raccourcis</string>

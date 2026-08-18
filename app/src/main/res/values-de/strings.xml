@@ -673,9 +673,9 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="purge_account_unable_to_do_backup">Datenbank-Sicherung nicht mögliche, abbrechen ...</string>
   <string name="show_account_last_transaction_date">Datum der letzten Transaktion</string>
   <string name="show_account_last_transaction_date_summary">Zeige Datum der letzten Transaktion in Kontenliste (Neustart erforderlich)</string>
-  <string name="accounts_list_screen">Kontenliste</string>
+  <string name="accounts_list_screen">Kontenübersicht</string>
   <string name="accounts_list_screen_summary">Einstellungen für Kontenliste</string>
-  <string name="blotter_screen">Protokoll</string>
+  <string name="blotter_screen">Journal-Einstellungen</string>
   <string name="blotter_screen_summary">Einstellungen für Protokoll</string>
   <string name="hide_closed_accounts">Verstecke geschlossene Konten</string>
   <string name="hide_closed_accounts_summary">Ausblenden oder Einblenden von geschlossene Konten in der Kontenliste (Neustart erforderlich)</string>
@@ -1225,7 +1225,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="welcome_start">Los geht\'s</string>
   <string name="pref_group_appearance">Aussehen</string>
   <string name="pref_group_transactions">Buchungen</string>
-  <string name="pref_group_lists">Listen</string>
+  <string name="pref_group_lists">Konten</string>
   <string name="pref_group_notifications">Aus Benachrichtigungen</string>
   <string name="pref_group_periods">Zeiträume und Währungen</string>
   <string name="pref_group_widgets">Widget und Verknüpfungen</string>

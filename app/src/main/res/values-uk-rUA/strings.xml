@@ -873,9 +873,9 @@
         <item>Прихована</item>
     </string-array>
 	
-    <string name="accounts_list_screen">Список рахунків</string>
+    <string name="accounts_list_screen">Екран рахунків</string>
     <string name="accounts_list_screen_summary">Налаштування списку рахунків</string>
-    <string name="blotter_screen">Журнал</string>
+    <string name="blotter_screen">Налаштування журналу</string>
     <string name="blotter_screen_summary">Налаштування журналу</string>
     <string name="hide_closed_accounts">Приховати закриті рахунки</string>
     <string name="hide_closed_accounts_summary">Показати або приховати закриті рахунки у списку рахунків (потрібний перезапуск)</string>
@@ -1332,7 +1332,7 @@
     <string name="welcome_start">Почати</string>
     <string name="pref_group_appearance">Вигляд</string>
     <string name="pref_group_transactions">Операції</string>
-    <string name="pref_group_lists">Списки</string>
+    <string name="pref_group_lists">Рахунки</string>
     <string name="pref_group_notifications">Зі сповіщень</string>
     <string name="pref_group_periods">Періоди і валюти</string>
     <string name="pref_group_widgets">Віджет і ярлики</string>

@@ -707,9 +707,9 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="purge_account_unable_to_do_backup">Backup dati impossibile chiusura App</string>
   <string name="show_account_last_transaction_date">Data ultima transazione</string>
   <string name="show_account_last_transaction_date_summary">Videata lista conti mostra data ultima transazione (richiede riavvio)</string>
-  <string name="accounts_list_screen">Videata lista conti</string>
+  <string name="accounts_list_screen">Scheda conti</string>
   <string name="accounts_list_screen_summary">Preferenze per videata lista conti</string>
-  <string name="blotter_screen">Movimenti</string>
+  <string name="blotter_screen">Preferenze registro</string>
   <string name="blotter_screen_summary">Preferenze registro</string>
   <string name="hide_closed_accounts">Nascondi conti chiusi</string>
   <string name="hide_closed_accounts_summary">Nascondi o mostra i conti chiusi nella lista conti (richiede riavvio)</string>
@@ -1228,7 +1228,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="welcome_start">Inizia</string>
   <string name="pref_group_appearance">Aspetto</string>
   <string name="pref_group_transactions">Movimenti</string>
-  <string name="pref_group_lists">Elenchi</string>
+  <string name="pref_group_lists">Conti</string>
   <string name="pref_group_notifications">Dalle notifiche</string>
   <string name="pref_group_periods">Periodi e valute</string>
   <string name="pref_group_widgets">Widget e scorciatoie</string>

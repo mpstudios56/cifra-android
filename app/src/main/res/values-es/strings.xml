@@ -673,9 +673,9 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="purge_account_unable_to_do_backup">Unable to do database backup, aborting...</string>
   <string name="show_account_last_transaction_date">Last transaction date</string>
   <string name="show_account_last_transaction_date_summary">Show last transaction date for on accounts list screen (requires restart)</string>
-  <string name="accounts_list_screen">Accounts List</string>
+  <string name="accounts_list_screen">Pantalla de cuentas</string>
   <string name="accounts_list_screen_summary">Preferences for accounts list screen</string>
-  <string name="blotter_screen">Blotter</string>
+  <string name="blotter_screen">Preferencias del registro</string>
   <string name="blotter_screen_summary">Preferences for blotter screen</string>
   <string name="hide_closed_accounts">Hide closed accounts</string>
   <string name="hide_closed_accounts_summary">Hide or show closed accounts in the accounts list (requires restart)</string>
@@ -1225,7 +1225,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="welcome_start">Empezar</string>
   <string name="pref_group_appearance">Aspecto</string>
   <string name="pref_group_transactions">Movimientos</string>
-  <string name="pref_group_lists">Listas</string>
+  <string name="pref_group_lists">Cuentas</string>
   <string name="pref_group_notifications">Desde las notificaciones</string>
   <string name="pref_group_periods">Periodos y monedas</string>
   <string name="pref_group_widgets">Widget y accesos directos</string>

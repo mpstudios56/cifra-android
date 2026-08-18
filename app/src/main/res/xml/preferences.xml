@@ -84,6 +84,12 @@
             android:summary="@string/transaction_screen_summary"
             android:title="@string/transaction_screen"
             app:fragment="tw.tib.financisto.preference.TransactionPreferencesFragment" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:summary="@string/blotter_screen_summary"
+            android:title="@string/blotter_screen"
+            app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -107,12 +113,6 @@
             android:summary="@string/accounts_list_screen_summary"
             android:title="@string/accounts_list_screen"
             app:fragment="tw.tib.financisto.preference.AccountPreferencesFragment" />
-        <Preference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:summary="@string/blotter_screen_summary"
-            android:title="@string/blotter_screen"
-            app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
     </PreferenceCategory>
 
     <!--
