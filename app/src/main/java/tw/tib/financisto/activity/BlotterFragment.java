@@ -217,6 +217,21 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // MassOp / BudgetBlotter inherit this too.
         tw.tib.financisto.utils.SafeFastScroll.attach(getListView());
 
+        // Room at the foot of the list for the phone's own buttons. Inside an
+        // account nothing had made it, so the oldest movement - the one at the
+        // bottom - was there and could not be read.
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(getListView(),
+                (v, windowInsets) -> {
+                    int under = windowInsets.getInsets(
+                            androidx.core.view.WindowInsetsCompat.Type.systemBars()).bottom;
+                    if (v.getPaddingBottom() != under) {
+                        v.setPadding(v.getPaddingLeft(), v.getPaddingTop(),
+                                v.getPaddingRight(), under);
+                        ((android.view.ViewGroup) v).setClipToPadding(false);
+                    }
+                    return windowInsets;
+                });
+
         attachSwipe();
 
         // A toolbar belongs to a screen of its own. Inside the main screen the tab
@@ -714,10 +729,12 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
     private void prepareAddButtonActionGrid() {
         addButtonActionGrid = new QuickActionGrid(getContext());
-        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.actionbar_add_big, R.string.transaction));
-        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_transfer, R.string.transfer));
+        // The same three marks the widget uses, drawn for this app: the ring
+        // under the plus was the last place still showing pictures from 2010.
+        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transaction, R.string.transaction));
+        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transfer, R.string.transfer));
         if (addTemplateToAddButton()) {
-            addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.actionbar_tiles_large, R.string.template));
+            addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_templates, R.string.template));
         } else {
             addButtonActionGrid.setNumColumns(2);
         }

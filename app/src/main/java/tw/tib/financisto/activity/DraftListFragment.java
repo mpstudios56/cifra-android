@@ -251,8 +251,7 @@ public class DraftListFragment extends ListFragment {
 
     private static class DraftAdapter extends ArrayAdapter<String[]> {
         DraftAdapter(Context context, List<String[]> rows) {
-            // The activated variant shows which rows are picked during a selection.
-            super(context, android.R.layout.simple_list_item_activated_2, android.R.id.text1, rows);
+            super(context, R.layout.draft_list_item, android.R.id.text1, rows);
         }
 
         @NonNull
@@ -260,7 +259,7 @@ public class DraftListFragment extends ListFragment {
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = convertView != null ? convertView
                     : LayoutInflater.from(getContext())
-                    .inflate(android.R.layout.simple_list_item_activated_2, parent, false);
+                    .inflate(R.layout.draft_list_item, parent, false);
             String[] row = getItem(position);
             ((TextView) view.findViewById(android.R.id.text1)).setText(row[0]);
             ((TextView) view.findViewById(android.R.id.text2)).setText(row[1]);

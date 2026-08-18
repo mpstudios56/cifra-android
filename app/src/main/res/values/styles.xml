@@ -13,7 +13,22 @@
 	<!-- The platform theme this inherits is Material from 2014: its popups and
 	     dialogs are hard-edged rectangles. Rounding them is all that separates
 	     them from what the rest of the app now looks like. -->
+    <!--
+      The bar that appears while rows are picked. Left to itself it came out in
+      the platform's colours - a teal nothing else in this app uses - with a
+      dark symbol on a dark ground.
+    -->
+    <style name="Cifra.ActionMode" parent="@android:style/Widget.Material.ActionMode">
+        <item name="android:background">#FF26282B</item>
+        <item name="android:titleTextStyle">@style/Cifra.ActionMode.Title</item>
+    </style>
+
+    <style name="Cifra.ActionMode.Title" parent="@android:style/TextAppearance.Material.Widget.ActionMode.Title">
+        <item name="android:textColor">#FFF4EFE4</item>
+    </style>
+
 	<style name="AppTheme" parent="android:Theme.Material">
+        <item name="android:actionModeStyle">@style/Cifra.ActionMode</item>
 		<item name="android:popupMenuStyle">@style/AppPopupMenu</item>
 		<item name="android:alertDialogTheme">@style/AlertDialog</item>
 		<!--
