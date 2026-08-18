@@ -1337,8 +1337,8 @@
     <string name="pref_group_periods">Періоди і валюти</string>
     <string name="pref_group_widgets">Віджет і ярлики</string>
     <string name="menu_categories_summary">Додавайте, перейменовуйте і впорядковуйте категорії, за якими ведете витрати</string>
-    <string name="menu_currencies">Валюти і курси</string>
-    <string name="menu_currencies_summary">Валюти ваших рахунків і курси між ними</string>
+    <string name="menu_currencies">Періоди, валюти та курси</string>
+    <string name="menu_currencies_summary">Валюти рахунків, курси, тиждень і фінансовий рік</string>
     <string name="menu_records">Отримувачі, місця і проєкти</string>
     <string name="menu_records_summary">Назви, що стоять в операції поруч із категорією</string>
     <string name="menu_backup_restore">Резервна копія і відновлення</string>

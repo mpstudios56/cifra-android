@@ -1230,8 +1230,8 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="pref_group_periods">Zeiträume und Währungen</string>
   <string name="pref_group_widgets">Widget und Verknüpfungen</string>
   <string name="menu_categories_summary">Kategorien anlegen, umbenennen und ordnen</string>
-  <string name="menu_currencies">Währungen und Kurse</string>
-  <string name="menu_currencies_summary">Die Währungen deiner Konten und die Kurse dazwischen</string>
+  <string name="menu_currencies">Zeiträume, Währungen und Kurse</string>
+  <string name="menu_currencies_summary">Kontowährungen, Wechselkurse, Woche und Geschäftsjahr</string>
   <string name="menu_records">Empfänger, Orte und Projekte</string>
   <string name="menu_records_summary">Die Namen, die neben der Kategorie auf einer Buchung stehen</string>
   <string name="menu_backup_restore">Sichern und Wiederherstellen</string>

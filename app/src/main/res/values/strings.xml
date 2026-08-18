@@ -1370,8 +1370,8 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="pref_group_periods">Periods and currencies</string>
     <string name="pref_group_widgets">Widget and shortcuts</string>
     <string name="menu_categories_summary">Add, rename and reorder categories</string>
-    <string name="menu_currencies">Currencies and rates</string>
-    <string name="menu_currencies_summary">Account currencies and exchange rates</string>
+    <string name="menu_currencies">Periods, currencies and rates</string>
+    <string name="menu_currencies_summary">Account currencies, exchange rates, week and fiscal year</string>
     <string name="menu_records">Payees, places and projects</string>
     <string name="menu_records_summary">Payees, locations and projects</string>
     <string name="menu_backup_restore">Backup and restore</string>

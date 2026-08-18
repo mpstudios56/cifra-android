@@ -58,24 +58,34 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             MyPreferences.switchLocale(context, locale);
             return true;
         });
+        // Guarded one by one: these entries move between screens as the settings
+        // are tidied, and this screen used to take for granted that every one of
+        // them was still here. The first that was not brought the whole screen
+        // down on opening.
         Preference pFiscalYearStart = preferenceScreen.findPreference("fiscal_year_start");
-        pFiscalYearStart.setOnPreferenceClickListener(arg0 -> {
-            selectFiscalYearStart();
-            return true;
-        });
+        if (pFiscalYearStart != null) {
+            pFiscalYearStart.setOnPreferenceClickListener(arg0 -> {
+                selectFiscalYearStart();
+                return true;
+            });
+        }
         Preference pNewTransactionShortcut = preferenceScreen.findPreference("shortcut_new_transaction");
-        pNewTransactionShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.ic_shortcut_transaction);
-            return true;
-        });
+        if (pNewTransactionShortcut != null) {
+            pNewTransactionShortcut.setOnPreferenceClickListener(arg0 -> {
+                addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.ic_shortcut_transaction);
+                return true;
+            });
+        }
         Preference pNewTransferShortcut = preferenceScreen.findPreference("shortcut_new_transfer");
-        pNewTransferShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.ic_shortcut_transfer);
-            return true;
-        });
+        if (pNewTransferShortcut != null) {
+            pNewTransferShortcut.setOnPreferenceClickListener(arg0 -> {
+                addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.ic_shortcut_transfer);
+                return true;
+            });
+        }
         Preference pExchangeProvider = preferenceScreen.findPreference("exchange_rate_provider");
         pOpenExchangeRatesAppId = preferenceScreen.findPreference("openexchangerates_app_id");
-        pExchangeProvider.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        if (pExchangeProvider != null) pExchangeProvider.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 pOpenExchangeRatesAppId.setEnabled(isOpenExchangeRatesProvider((String) newValue));
@@ -92,7 +102,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
     }
 
     private void enableOpenExchangeApp() {
-        pOpenExchangeRatesAppId.setEnabled(MyPreferences.isOpenExchangeRatesProviderSelected());
+        if (pOpenExchangeRatesAppId != null) {
+            pOpenExchangeRatesAppId.setEnabled(MyPreferences.isOpenExchangeRatesProviderSelected());
+        }
     }
 
     private void selectFiscalYearStart() {
@@ -112,6 +124,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 
     private void setFiscalYearStart() {
         Preference pFiscalYearStart = getPreferenceScreen().findPreference("fiscal_year_start");
+        if (pFiscalYearStart == null) {
+            return;
+        }
         int fiscalYearStart = MyPreferences.getFiscalYearStart();
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, fiscalYearStart / 100);

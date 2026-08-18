@@ -1233,8 +1233,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="pref_group_periods">Periodi e valute</string>
   <string name="pref_group_widgets">Widget e scorciatoie</string>
   <string name="menu_categories_summary">Aggiungi, rinomina e riordina le categorie</string>
-  <string name="menu_currencies">Valute e cambi</string>
-  <string name="menu_currencies_summary">Valute dei conti e tassi di cambio</string>
+  <string name="menu_currencies">Periodi, valute e cambi</string>
+  <string name="menu_currencies_summary">Valute dei conti, tassi di cambio, settimana e anno fiscale</string>
   <string name="menu_records">Beneficiari, luoghi e progetti</string>
   <string name="menu_records_summary">Beneficiari, luoghi e progetti</string>
   <string name="menu_backup_restore">Backup e ripristino</string>
