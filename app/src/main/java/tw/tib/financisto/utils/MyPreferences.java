@@ -252,19 +252,19 @@ public class MyPreferences {
 	}
 
 	public static boolean isRememberAccount() {
-		return true /* L'ultimo conto usato viene riproposto. */;
+		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
 	}
 
 	public static boolean isRememberCategory() {
-		return true /* La categoria di quel beneficiario viene riproposta. */;
+		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
 	}
 
 	public static boolean isRememberLocation() {
-		return true /* L'ultima localita' viene riproposta. */;
+		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
 	}
 
 	public static boolean isRememberProject() {
-		return true /* L'ultimo progetto viene riproposto. */;
+		return false /* Non si riporta avanti niente: un movimento si scrive da zero. */;
 	}
 
 	private static EntitySelectorType getEntitySelectorType(String key) {
