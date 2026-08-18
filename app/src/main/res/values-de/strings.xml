@@ -1535,4 +1535,15 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="swipe_done_clear">Als erledigt markiert</string>
   <string name="swipe_done_reconcile">Abgestimmt</string>
   <string name="swipe_done_delete">Gelöscht</string>
+  <string name="transaction_change_status">Status ändern</string>
+  <string name="duplicate_today">Heute duplizieren</string>
+  <string name="weekend_date_color">Wochenendfarbe</string>
+  <string-array name="weekend_colour_entries">
+      <item>Ziegel</item>
+      <item>Bernstein</item>
+      <item>Grün</item>
+      <item>Blau</item>
+      <item>Violett</item>
+      <item>Grau</item>
+  </string-array>
 </resources>

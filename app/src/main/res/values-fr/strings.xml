@@ -1535,4 +1535,15 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="swipe_done_clear">Marqué compensé</string>
   <string name="swipe_done_reconcile">Rapproché</string>
   <string name="swipe_done_delete">Supprimé</string>
+  <string name="transaction_change_status">Changer l’état</string>
+  <string name="duplicate_today">Dupliquer à aujourd’hui</string>
+  <string name="weekend_date_color">Couleur du week-end</string>
+  <string-array name="weekend_colour_entries">
+      <item>Brique</item>
+      <item>Ambre</item>
+      <item>Vert</item>
+      <item>Bleu</item>
+      <item>Violet</item>
+      <item>Gris</item>
+  </string-array>
 </resources>

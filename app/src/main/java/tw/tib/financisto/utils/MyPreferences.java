@@ -510,6 +510,25 @@ public class MyPreferences {
 		return true /* Una copia non ancora toccata si riconosce a colpo d'occhio. */;
 	}
 
+	/**
+	 * The colour Saturday and Sunday are written in.
+	 * <p>
+	 * Kept as the old one for anybody who never opens the setting, and picked
+	 * from a short list rather than from a wheel of sixteen million: the point
+	 * is to tell a weekend from a weekday, not to match the curtains.
+	 */
+	public static int getWeekendColour() {
+		String chosen = getString("weekend_date_color", "");
+		if (chosen.isEmpty()) {
+			return 0xFFCC6666;
+		}
+		try {
+			return (int) Long.parseLong(chosen.replace("#", ""), 16) | 0xFF000000;
+		} catch (Exception e) {
+			return 0xFFCC6666;
+		}
+	}
+
 	public static boolean isColorizeWeekendDate() {
 		return getBoolean("colorize_weekend_date", true);
 	}

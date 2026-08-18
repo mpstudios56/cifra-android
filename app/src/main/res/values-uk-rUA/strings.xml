@@ -1510,4 +1510,15 @@
     <string name="swipe_done_clear">Позначено</string>
     <string name="swipe_done_reconcile">Узгоджено</string>
     <string name="swipe_done_delete">Видалено</string>
+    <string name="transaction_change_status">Змінити стан</string>
+    <string name="duplicate_today">Здублювати на сьогодні</string>
+    <string name="weekend_date_color">Колір вихідних</string>
+    <string-array name="weekend_colour_entries">
+        <item>Цегляний</item>
+        <item>Бурштин</item>
+        <item>Зелений</item>
+        <item>Синій</item>
+        <item>Фіолетовий</item>
+        <item>Сірий</item>
+    </string-array>
 </resources>

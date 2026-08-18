@@ -1546,4 +1546,15 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="swipe_done_clear">Segnato come conciliato</string>
   <string name="swipe_done_reconcile">Riconciliato</string>
   <string name="swipe_done_delete">Eliminato</string>
+  <string name="transaction_change_status">Cambia stato</string>
+  <string name="duplicate_today">Duplica a oggi</string>
+  <string name="weekend_date_color">Colore del fine settimana</string>
+  <string-array name="weekend_colour_entries">
+      <item>Mattone</item>
+      <item>Ambra</item>
+      <item>Verde</item>
+      <item>Blu</item>
+      <item>Viola</item>
+      <item>Grigio</item>
+  </string-array>
 </resources>

@@ -384,6 +384,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSwitchToTab(tw.tib.financisto.bus.SwitchToTab event) {
+        TabLayout.Tab tab = tabs.get(event.tag);
+        if (tab != null) {
+            tabLayout.selectTab(tab);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSwitchToMenuTab(SwitchToMenuTabEvent event) {
         TabLayout.Tab tab = tabs.get("menu");
         if (tab != null) {

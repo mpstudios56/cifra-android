@@ -1535,4 +1535,15 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="swipe_done_clear">Marcado como liquidado</string>
   <string name="swipe_done_reconcile">Conciliado</string>
   <string name="swipe_done_delete">Eliminado</string>
+  <string name="transaction_change_status">Cambiar estado</string>
+  <string name="duplicate_today">Duplicar a hoy</string>
+  <string name="weekend_date_color">Color del fin de semana</string>
+  <string-array name="weekend_colour_entries">
+      <item>Ladrillo</item>
+      <item>Ámbar</item>
+      <item>Verde</item>
+      <item>Azul</item>
+      <item>Violeta</item>
+      <item>Gris</item>
+  </string-array>
 </resources>

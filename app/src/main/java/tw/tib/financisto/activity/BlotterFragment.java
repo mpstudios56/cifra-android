@@ -607,20 +607,13 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_info, R.string.info));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_edit, R.string.edit));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_trash, R.string.delete));
-        if (isQuickMenuShowAdditionalTransactionStatus) {
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_restored, MyQuickAction.NO_FILTER, R.string.transaction_status_restored));
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_pending, MyQuickAction.NO_FILTER, R.string.transaction_status_pending));
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_unreconciled, MyQuickAction.NO_FILTER, R.string.transaction_status_unreconciled));
-        }
+        // One entry each, and the choice is made in a second ring rather than
+        // in the settings. Five states and three ways of copying used to be
+        // laid out flat here, or hidden behind switches nobody had reason to
+        // find: which state, and which kind of copy, are questions about the
+        // movement in hand, not about the app.
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate));
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.clear));
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_reconciled, MyQuickAction.NO_FILTER, R.string.reconcile));
-        if (isQuickMenuShowDuplicateKeepTime) {
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, MyQuickAction.NO_FILTER, R.string.duplicate_keep_time));
-        }
-        if (isQuickMenuShowDuplicateKeepDateTime) {
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, getResources().getColor(R.color.holo_orange_dark), R.string.duplicate_keep_date_time));
-        }
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_accounts, R.string.transaction_show_in_account_blotter));
@@ -655,7 +648,10 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             unreconcileTransaction(selectedId);
         }
         else if (titleId == R.string.duplicate) {
-            duplicateTransaction(selectedId, 1);
+            askHowToDuplicate(anchorFor(widget));
+        }
+        else if (titleId == R.string.transaction_change_status) {
+            askWhichStatus(anchorFor(widget));
         }
         else if (titleId == R.string.clear) {
             clearTransaction(selectedId);
@@ -685,6 +681,67 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
     };
 
+    /** Where a second ring can hang itself: whatever the first one was on. */
+    private View anchorFor(QuickActionWidget widget) {
+        View list = getListView();
+        return list != null ? list : getView();
+    }
+
+    /**
+     * The five states, each in its own colour, chosen for the movement in hand.
+     * <p>
+     * The three uncommon ones were behind a switch in the settings, so somebody
+     * who needed one of them once had to go and find the switch, turn it on,
+     * come back, and leave it on for ever after.
+     */
+    private void askWhichStatus(View anchor) {
+        QuickActionGrid states = new QuickActionGrid(getContext());
+        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_restored, MyQuickAction.NO_FILTER, R.string.transaction_status_restored));
+        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_pending, MyQuickAction.NO_FILTER, R.string.transaction_status_pending));
+        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_unreconciled, MyQuickAction.NO_FILTER, R.string.transaction_status_unreconciled));
+        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.transaction_status_cleared));
+        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_reconciled, MyQuickAction.NO_FILTER, R.string.transaction_status_reconciled));
+        states.setOnQuickActionClickListener((widget, position, action) -> {
+            int titleId = ((MyQuickAction) action).titleId;
+            if (titleId == R.string.transaction_status_restored) {
+                restoreTransaction(selectedId);
+            } else if (titleId == R.string.transaction_status_pending) {
+                pendingTransaction(selectedId);
+            } else if (titleId == R.string.transaction_status_unreconciled) {
+                unreconcileTransaction(selectedId);
+            } else if (titleId == R.string.transaction_status_cleared) {
+                clearTransaction(selectedId);
+            } else {
+                reconcileTransaction(selectedId);
+            }
+        });
+        states.show(anchor);
+    }
+
+    /**
+     * How the copy should be dated: today, today at the same hour, or the same
+     * day and hour as the original.
+     */
+    private void askHowToDuplicate(View anchor) {
+        final long which = selectedId;
+        QuickActionGrid ways = new QuickActionGrid(getContext());
+        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate_today));
+        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, MyQuickAction.NO_FILTER, R.string.duplicate_keep_time));
+        ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, getResources().getColor(R.color.holo_orange_dark), R.string.duplicate_keep_date_time));
+        ways.setNumColumns(3);
+        ways.setOnQuickActionClickListener((widget, position, action) -> {
+            int titleId = ((MyQuickAction) action).titleId;
+            if (titleId == R.string.duplicate_today) {
+                duplicateTransaction(which, 1);
+            } else if (titleId == R.string.duplicate_keep_time) {
+                duplicateTransactionKeepTime(which);
+            } else {
+                duplicateTransactionKeepDateTime(which);
+            }
+        });
+        ways.show(anchor);
+    }
+
     private void prepareAddButtonActionGrid() {
         addButtonActionGrid = new QuickActionGrid(getContext());
         addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.actionbar_add_big, R.string.transaction));
@@ -710,7 +767,16 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
                 break;
             case 2:
-                createFromTemplate();
+                // With the tab on, this is the way to it; with the tab off the
+                // templates are still there and this is the only way to them,
+                // which is what used to make the button come and go.
+                if (MyPreferences.isTemplatesAsTab(getContext())
+                        && getActivity() instanceof MainActivity) {
+                    tw.tib.financisto.bus.GreenRobotBus_.getInstance_(getActivity())
+                            .post(new tw.tib.financisto.bus.SwitchToTab("templates"));
+                } else {
+                    createFromTemplate();
+                }
                 break;
         }
     };
@@ -1400,13 +1466,11 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 editTransaction(id);
                 return;
             case DUPLICATE: {
-                long copy = new BlotterOperations(getContext(), this, db, id)
-                        .duplicateTransaction(1);
-                recreateCursor();
-                offerUndo(action, () -> {
-                    db.deleteTransaction(copy);
-                    recreateCursor();
-                });
+                // The same question the menu asks, for the same reason: which
+                // day the copy belongs to is not something to settle once in
+                // the settings and never think about again.
+                selectedId = id;
+                askHowToDuplicate(getListView());
                 return;
             }
             case CLEAR:
