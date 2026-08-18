@@ -30,8 +30,15 @@ public class EntryWidget extends AppWidgetProvider {
                     opens(context, TransferActivity.class, 2));
             views.setOnClickPendingIntent(R.id.widget_quick,
                     opens(context, QuickTransactionActivity.class, 3));
+            // Templates behave as they do inside the app: the tab if there is
+            // one, the chooser if there is not. The screen decides, because it
+            // is the screen that knows.
+            Intent templates = new Intent(context, MainActivity.class);
+            templates.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            templates.putExtra(MainActivity.GO_TO_TEMPLATES, true);
             views.setOnClickPendingIntent(R.id.widget_templates,
-                    opens(context, MainActivity.class, 4));
+                    PendingIntent.getActivity(context, 4, templates,
+                            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
             manager.updateAppWidget(id, views);
         }
     }

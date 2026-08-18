@@ -1,0 +1,20 @@
+<!--
+  A ring with a dot in it: a thing that has a state, without saying which. The
+  five states have their own colours; the entry that opens them should not wear
+  one of the five and suggest it.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFF4EFE4">
+
+    <path
+        android:pathData="M12,3.6A8.4,8.4 0 1,0 12,20.4A8.4,8.4 0 1,0 12,3.6z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" />
+    <path
+        android:pathData="M12,8.6A3.4,3.4 0 1,0 12,15.4A3.4,3.4 0 1,0 12,8.6z"
+        android:fillColor="#FFFFFFFF" />
+</vector>

@@ -192,16 +192,8 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
     private void setupMenuButton() {
         final ImageButton bMenu = getView().findViewById(R.id.bMenu);
         if (MyPreferences.isShowMenuButtonOnAccountsScreen()) {
-            bMenu.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(getActivity(), bMenu);
-                MenuInflater inflater = getActivity().getMenuInflater();
-                inflater.inflate(R.menu.account_list_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    handlePopupMenu(item.getItemId());
-                    return true;
-                });
-                popupMenu.show();
-            });
+            // A menu of one is a button with an extra tap in front of it.
+            bMenu.setOnClickListener(v -> MenuListItem.backupNow(this));
         } else {
             bMenu.setVisibility(View.GONE);
         }

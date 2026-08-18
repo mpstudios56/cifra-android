@@ -47,6 +47,9 @@ import tw.tib.financisto.service.QuickBar;
 import tw.tib.financisto.utils.PinProtection;
 
 public class MainActivity extends AppCompatActivity {
+
+    /** Asked by the widget: show me the templates, however this app shows them. */
+    public static final String GO_TO_TEMPLATES = "go_to_templates";
     private static final String TAG = "MainActivity";
 
     public static final String GO_TO_SCREEN = "GO_TO_SCREEN";
@@ -288,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
             redrawEveryTab();
         }
         offerToReportACrash();
+        answerTheWidget(getIntent());
     }
 
     /**
@@ -316,6 +320,13 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.crash_no, null)
                 .show();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        answerTheWidget(intent);
     }
 
     @Override
@@ -370,6 +381,30 @@ public class MainActivity extends AppCompatActivity {
         }
         long t5 = System.currentTimeMillis();
         Log.d(getLocalClassName(), "Load time = " + (t5 - t0) + "ms = " + (t2 - t1) + "ms+" + (t3 - t2) + "ms+" + (t4 - t3) + "ms+" + (t5 - t4) + "ms");
+    }
+
+    /**
+     * The widget's templates button. With the tab on it lands there; with the
+     * tab off it lands on the movements and opens the chooser, which is what
+     * the plus button does in the same case.
+     */
+    private void answerTheWidget(Intent intent) {
+        if (intent == null || !intent.getBooleanExtra(GO_TO_TEMPLATES, false)) {
+            return;
+        }
+        intent.removeExtra(GO_TO_TEMPLATES);
+        if (MyPreferences.isTemplatesAsTab(this)) {
+            TabLayout.Tab tab = tabs.get("templates");
+            if (tab != null) {
+                tabLayout.selectTab(tab);
+                return;
+            }
+        }
+        TabLayout.Tab blotter = tabs.get("blotter");
+        if (blotter != null) {
+            tabLayout.selectTab(blotter);
+        }
+        BlotterFragment.templatesWanted = true;
     }
 
     public void refreshCurrentTab() {

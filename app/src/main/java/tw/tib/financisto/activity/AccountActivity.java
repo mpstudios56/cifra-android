@@ -598,10 +598,15 @@ public class AccountActivity extends AbstractActivity {
 	}
 
 	private void showColorPicker() {
+		// The same eighteen the categories are painted from, and the only
+		// palette in the app. The twenty here were the web colours of 1996 -
+		// pure red, pure yellow, black and white - and an account wearing one
+		// of them beside a category wearing a material colour looked like two
+		// different programs.
 		final String[] colors = {
-				"#000000", "#ffffff", "#ff0000", "#800000", "#ff00ff", "#ffc0cb", "#00ffff",
-				"#add8e6", "#0000ff", "#00008b", "#c0c0c0", "#808080", "#ffa500", "#a52a2a",
-				"#ffff00", "#800080", "#00ff00", "#7fffd4", "#008000", "#808000"
+				"#e53935", "#d81b60", "#8e24aa", "#5e35b1", "#3949ab", "#1e88e5",
+				"#039be5", "#00acc1", "#00897b", "#43a047", "#7cb342", "#c0ca33",
+				"#fdd835", "#ffb300", "#fb8c00", "#f4511e", "#6d4c41", "#757575"
 		};
 		var adapter = new ArrayAdapter<>(this, R.layout.select_entry_color_row, colors) {
 			@Override

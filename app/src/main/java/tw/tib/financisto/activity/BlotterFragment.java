@@ -613,7 +613,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // find: which state, and which kind of copy, are questions about the
         // movement in hand, not about the app.
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate));
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_state, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_accounts, R.string.transaction_show_in_account_blotter));
@@ -681,8 +681,14 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
     };
 
-    /** Where a second ring can hang itself: whatever the first one was on. */
+    /** The row the first ring opened on, so the second opens in the same place. */
+    private View rowTouched;
+
+    /** Where a second ring can hang itself: the row the finger was on. */
     private View anchorFor(QuickActionWidget widget) {
+        if (rowTouched != null && rowTouched.isShown()) {
+            return rowTouched;
+        }
         View list = getListView();
         return list != null ? list : getView();
     }
@@ -728,7 +734,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate_today));
         ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, MyQuickAction.NO_FILTER, R.string.duplicate_keep_time));
         ways.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy_keep_time, getResources().getColor(R.color.holo_orange_dark), R.string.duplicate_keep_date_time));
-        ways.setNumColumns(3);
         ways.setOnQuickActionClickListener((widget, position, action) -> {
             int titleId = ((MyQuickAction) action).titleId;
             if (titleId == R.string.duplicate_today) {
@@ -827,6 +832,20 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         super.onSaveInstanceState(outState);
         blotterFilter.toBundle(outState);
         outState.putBoolean(MAIN_BLOTTER, mainBlotter);
+    }
+
+    /**
+     * Left here by the widget when the templates have no tab of their own: the
+     * movements screen picks it up the moment it is on show. A message on the
+     * bus would need this screen to be listening, and it is not.
+     */
+    public static volatile boolean templatesWanted = false;
+
+    private void openTemplatesIfAsked() {
+        if (templatesWanted && mainBlotter && isAdded()) {
+            templatesWanted = false;
+            createFromTemplate();
+        }
     }
 
     protected void createFromTemplate() {
@@ -1323,6 +1342,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     @Override
     protected boolean onItemLongClick(View v, int position, long id) {
         selectedId = id;
+        rowTouched = v;
         prepareTransactionActionGrid();
         transactionActionGrid.show(v);
         return true;
@@ -1359,6 +1379,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     public void onResume() {
         super.onResume();
         readSwipeSettings();
+        openTemplatesIfAsked();
         Log.d(TAG, "onResume");
         // Re-read on every return: this fragment is cached by the pager and is not
         // rebuilt when the templates tab is switched on or off in the preferences,
@@ -1470,7 +1491,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 // day the copy belongs to is not something to settle once in
                 // the settings and never think about again.
                 selectedId = id;
-                askHowToDuplicate(getListView());
+                askHowToDuplicate(anchorFor(null));
                 return;
             }
             case CLEAR:

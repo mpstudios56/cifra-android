@@ -13,6 +13,20 @@
     android:orientation="horizontal"
     android:padding="6dp">
 
+    <!--
+      Whose buttons these are. A bare row of four symbols on a home screen full
+      of other rows of symbols says nothing about where it leads.
+    -->
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="6dp"
+        android:alpha="0.9"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/a_icon_notify" />
+
     <ImageButton
         android:id="@+id/widget_transaction"
         android:layout_width="0dp"
@@ -21,7 +35,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/transaction"
         android:scaleType="centerInside"
-        android:src="@drawable/actionbar_add_big" />
+        android:src="@drawable/ic_widget_transaction" />
 
     <ImageButton
         android:id="@+id/widget_transfer"
@@ -31,7 +45,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/transfer"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_action_transfer" />
+        android:src="@drawable/ic_widget_transfer" />
 
     <ImageButton
         android:id="@+id/widget_quick"
@@ -41,7 +55,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/quick_bar"
         android:scaleType="centerInside"
-        android:src="@drawable/actionbar_quick_add" />
+        android:src="@drawable/ic_widget_quick" />
 
     <ImageButton
         android:id="@+id/widget_templates"
@@ -51,5 +65,5 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/templates"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_tab_templates" />
+        android:src="@drawable/ic_widget_templates" />
 </LinearLayout>

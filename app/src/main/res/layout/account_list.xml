@@ -90,7 +90,7 @@
 		<ImageButton
 			android:id="@+id/bMenu"
 			style="@style/BottomBarButton"
-			android:src="@drawable/actionbar_dot_menu" />
+			android:src="@drawable/ic_action_backup" />
 
 		<include layout="@layout/total_text" />
 	</LinearLayout>
