@@ -1546,4 +1546,8 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="sort_templates_by_category">Nach Kategorie</string>
   <string name="sort_templates_by_project">Nach Projekt</string>
   <string name="go_to_today">Zu heute</string>
+  <string name="account_icon_deposit">Einzahlung</string>
+  <string name="account_icon_briefcase">Aktentasche</string>
+  <string name="account_icon_padlock">Schloss</string>
+  <string name="account_icon_shield">Schutz</string>
 </resources>

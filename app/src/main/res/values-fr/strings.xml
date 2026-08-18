@@ -1546,4 +1546,8 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="sort_templates_by_category">Par catégorie</string>
   <string name="sort_templates_by_project">Par projet</string>
   <string name="go_to_today">Aller à aujourd’hui</string>
+  <string name="account_icon_deposit">Dépôt</string>
+  <string name="account_icon_briefcase">Mallette</string>
+  <string name="account_icon_padlock">Cadenas</string>
+  <string name="account_icon_shield">Protection</string>
 </resources>

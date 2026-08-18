@@ -1546,4 +1546,8 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="sort_templates_by_category">Por categoría</string>
   <string name="sort_templates_by_project">Por proyecto</string>
   <string name="go_to_today">Ir a hoy</string>
+  <string name="account_icon_deposit">Depósito</string>
+  <string name="account_icon_briefcase">Maletín</string>
+  <string name="account_icon_padlock">Candado</string>
+  <string name="account_icon_shield">Protección</string>
 </resources>

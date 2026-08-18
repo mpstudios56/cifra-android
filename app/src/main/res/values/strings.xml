@@ -1664,4 +1664,8 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="sort_templates_by_category">By category</string>
     <string name="sort_templates_by_project">By project</string>
     <string name="go_to_today">Go to today</string>
+    <string name="account_icon_deposit">Deposit</string>
+    <string name="account_icon_briefcase">Briefcase</string>
+    <string name="account_icon_padlock">Padlock</string>
+    <string name="account_icon_shield">Shield</string>
 </resources>

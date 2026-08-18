@@ -38,6 +38,14 @@ public enum AccountIcon {
     LIABILITY("liability", R.drawable.account_type_liability, R.string.account_type_liability),
     OTHER("other", R.drawable.account_type_other, R.string.account_type_other),
 
+    // Four more to choose from, asked for by name: a deposit, a briefcase, a
+    // padlock and a shield. They are kinds of nothing in particular - they say
+    // what an account is for rather than what it is.
+    DEPOSIT("deposit", R.drawable.account_extra_deposit, R.string.account_icon_deposit),
+    BRIEFCASE("briefcase", R.drawable.account_extra_briefcase, R.string.account_icon_briefcase),
+    PADLOCK("padlock", R.drawable.account_extra_lock, R.string.account_icon_padlock),
+    SHIELD("shield", R.drawable.account_extra_shield, R.string.account_icon_shield),
+
     // The card and service marks, so an account can be marked by who it is with
     // rather than by what kind it is. Never tinted: they carry their own colours,
     // and a recoloured logo is a wrong logo.

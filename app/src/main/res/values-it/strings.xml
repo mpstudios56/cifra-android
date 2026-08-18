@@ -1557,4 +1557,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="sort_templates_by_category">Per categoria</string>
   <string name="sort_templates_by_project">Per progetto</string>
   <string name="go_to_today">Vai a oggi</string>
+  <string name="account_icon_deposit">Deposito</string>
+  <string name="account_icon_briefcase">Valigetta</string>
+  <string name="account_icon_padlock">Lucchetto</string>
+  <string name="account_icon_shield">Protezione</string>
 </resources>

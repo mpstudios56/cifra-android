@@ -1521,4 +1521,8 @@
     <string name="sort_templates_by_category">За категорією</string>
     <string name="sort_templates_by_project">За проєктом</string>
     <string name="go_to_today">До сьогодні</string>
+    <string name="account_icon_deposit">Депозит</string>
+    <string name="account_icon_briefcase">Портфель</string>
+    <string name="account_icon_padlock">Замок</string>
+    <string name="account_icon_shield">Захист</string>
 </resources>
