@@ -119,23 +119,9 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="false"
-            android:key="ntsl_use_twin_date_picker"
-            android:summary="@string/use_twin_date_picker_summary"
-            android:title="@string/use_twin_date_picker" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
             android:key="ntsl_show_account_balance_on_selector"
             android:title="@string/show_account_balance_on_selector"
             android:summary="@string/show_account_balance_on_selector_summary" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_use_fixed_layout"
-            android:summary="@string/use_fixed_layout_summary"
-            android:title="@string/use_fixed_layout" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -150,36 +136,6 @@
             android:key="ntsl_enter_currency_decimal_places"
             android:summary="@string/enter_currency_decimal_places_summary"
             android:title="@string/enter_currency_decimal_places" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="1"
-            android:dependency="ntsl_show_location"
-            android:entries="@array/sort_order_entities"
-            android:entryValues="@array/sort_order_entities"
-            android:key="ntsl_show_location_order"
-            android:summary="@string/show_location_order_summary"
-            android:title="@string/show_location_order" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="2"
-            android:dependency="ntsl_show_note"
-            android:entries="@array/sort_order_entities"
-            android:entryValues="@array/sort_order_entities"
-            android:key="ntsl_show_note_order"
-            android:summary="@string/show_note_order_summary"
-            android:title="@string/show_note_order" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="3"
-            android:dependency="ntsl_show_project"
-            android:entries="@array/sort_order_entities"
-            android:entryValues="@array/sort_order_entities"
-            android:key="ntsl_show_project_order"
-            android:summary="@string/show_project_order_summary"
-            android:title="@string/show_project_order" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"

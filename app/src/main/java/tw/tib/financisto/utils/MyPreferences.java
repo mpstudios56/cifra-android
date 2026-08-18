@@ -327,7 +327,7 @@ public class MyPreferences {
 	}
 
 	public static int getLocationOrder() {
-		return Integer.parseInt(getString("ntsl_show_location_order", "1"));
+		return 1 /* La localita' sta dove sta: la disposizione dei campi e' una scelta da fare una volta, non da chiedere. */;
 	}
 
 	public static boolean isShowIsCCardPayment() {
@@ -447,7 +447,7 @@ public class MyPreferences {
 	}
 
 	public static int getNoteOrder() {
-		return Integer.parseInt(getString("ntsl_show_note_order", "3"));
+		return 3 /* La nota dopo la localita', come e' sempre stato. */;
 	}
 
 	public static boolean isShowProject() {
@@ -455,16 +455,16 @@ public class MyPreferences {
 	}
 
 	public static int getProjectOrder() {
-		return Integer.parseInt(getString("ntsl_show_project_order", "4"));
+		return 4 /* Il progetto per ultimo. */;
 	}
 
 	public static boolean isUseTwinDatePicker() {
-		return getBoolean("ntsl_use_twin_date_picker", false);
+		return false /* Data e ora in due passi, che e' il modo in cui l'app le ha sempre chieste. */;
 
 	}
 
 	public static boolean isUseFixedLayout() {
-		return getBoolean("ntsl_use_fixed_layout", true);
+		return true /* La disposizione fissa dei campi, che e' quella che l'app usa da sempre. */;
 	}
 
 	public static boolean isWidgetEnabled() {
