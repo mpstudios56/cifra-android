@@ -34,7 +34,12 @@ public class AmountPicker extends LinearLayout implements NumberPicker.OnChanged
 	public AmountPicker(Context context, int decimals) {
         super(context);
         
-        integers = new NumberPicker[Math.max(0, 5-decimals)];
+        // Five wheels for the whole part whatever the currency does after the
+        // comma. It used to be five wheels for the two halves together, so a
+        // currency with cents was left with three: two thousand five hundred
+        // and thirteen euros could be read on the wheels and not touched,
+        // because the thousands had no wheel of their own.
+        integers = new NumberPicker[5];
         fractions = new NumberPicker[decimals];
         
         int totalWidth = 6*getResources().getDimensionPixelSize(R.dimen.amount_picker_width);

@@ -200,9 +200,6 @@ public class AccountListFragment extends AbstractListFragment<Cursor> {
             case R.id.backup:
                 MenuListItem.backupNow(this);
                 break;
-            case R.id.go_to_menu:
-                GreenRobotBus_.getInstance_(getActivity()).post(new SwitchToMenuTabEvent());
-                break;
         }
     }
 

@@ -475,15 +475,15 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowRunningBalance() {
-		return getBoolean("show_running_balance", true);
+		return true /* Il saldo progressivo si vede: nasconderlo era una scelta di quando non c'era l'occhio. */;
 	}
 
 	public static boolean isColorizeBlotterItem() {
-		return getBoolean("colorize_blotter_item", true);
+		return true /* I campi dei movimenti sono colorati. */;
 	}
 
 	public static boolean isShowProjectInBlotter() {
-		return getBoolean("show_project_in_blotter", true);
+		return true /* Il progetto si vede. */;
 	}
 
 	public static boolean isResetCopiedTransactionStatus() {
@@ -503,11 +503,11 @@ public class MyPreferences {
 	}
 
 	public static boolean isUpdateCopiedTransactionProject() {
-		return getBoolean("update_copied_transaction_project", false);
+		return false /* Una copia non si riscrive il progetto da sola. */;
 	}
 
 	public static boolean isHighlightCopiedUneditedTransactions() {
-		return getBoolean("highlight_copied_unedited_transactions", false);
+		return true /* Una copia non ancora toccata si riconosce a colpo d'occhio. */;
 	}
 
 	public static boolean isColorizeWeekendDate() {
@@ -515,7 +515,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isBlotterShowTimeOfDay() {
-		return getBoolean("blotter_show_time_of_day", true);
+		return true /* L'orario si vede: in una contabilita' l'ora di un pagamento e' un dato. */;
 	}
 
 	public static boolean isPreventEditClearedReconciledTransactions() {
@@ -736,7 +736,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isCollapseBlotterButtons() {
-		return getBoolean("collapse_blotter_buttons", false);
+		return true /* I tasti stanno nella bolla del piu', che e' piu' pulita della fila. */;
 	}
 
 	public static boolean isShowGoToTodayButton() {
@@ -811,7 +811,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isQuickMenuShowAdditionalTransactionStatus() {
-		return getBoolean("quick_menu_transaction_additional_status", false);
+		return true /* Gli stati ci sono tutti: sceglierne alcuni era una scelta senza motivo. */;
 	}
 
 	public static boolean isQuickMenuShowDuplicateKeepTime() {

@@ -212,9 +212,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             case R.id.backup:
                 MenuListItem.backupNow(this);
                 break;
-            case R.id.go_to_menu:
-                GreenRobotBus_.getInstance_(getActivity()).post(new SwitchToMenuTabEvent());
-                break;
+
         }
     }
 
