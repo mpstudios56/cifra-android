@@ -80,6 +80,14 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
     private final boolean showRunningBalance;
     private final boolean showProject;
     private final boolean colorizeWeekendDate;
+    /**
+     * The colour chosen for Saturday and Sunday.
+     * <p>
+     * This list painted them with a colour written into the code, so choosing
+     * one in the settings changed the date in every other list in the app and
+     * left untouched the only list anybody looks at.
+     */
+    private final int weekendColour;
     private final boolean showTimeOfDay;
 
     protected final boolean highlightCopiedUnedited;
@@ -112,6 +120,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         this.showRunningBalance = MyPreferences.isShowRunningBalance();
         this.showProject = MyPreferences.isShowProjectInBlotter();
         this.colorizeWeekendDate = MyPreferences.isColorizeWeekendDate();
+        this.weekendColour = MyPreferences.getWeekendColour();
         this.showTimeOfDay = MyPreferences.isBlotterShowTimeOfDay();
         this.highlightCopiedUnedited = MyPreferences.isHighlightCopiedUneditedTransactions();
         this.copiedUneditedTransactions = Application.getCopiedUneditedTransactions();
@@ -331,7 +340,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
                     cal.setTimeInMillis(date);
                     int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
                     if (colorizeWeekendDate && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
-                        v.bottomView.setTextColor(Color.rgb(224, 112, 112));
+                        v.bottomView.setTextColor(weekendColour);
                     } else {
                         v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
                     }
