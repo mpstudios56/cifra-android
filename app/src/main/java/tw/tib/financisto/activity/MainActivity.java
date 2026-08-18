@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -233,6 +234,14 @@ public class MainActivity extends AppCompatActivity {
                     tabs.put(which.tag, tab);
                 });
         tabLayoutMediator.attach();
+
+        // The floating buttons follow the tab: see floatingButtonsFor.
+        viewPager.registerOnPageChangeCallback(new androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                floatingButtonsFor(position);
+            }
+        });
     }
 
     /** Position of a tab by name, or -1 when it is not currently shown. */
@@ -292,6 +301,10 @@ public class MainActivity extends AppCompatActivity {
         }
         offerToReportACrash();
         answerTheWidget(getIntent());
+        // The buttons are attached by the application after this runs, so the
+        // first decision about them is taken once they exist.
+        findViewById(android.R.id.content).post(
+                () -> floatingButtonsFor(viewPager.getCurrentItem()));
     }
 
     /**
@@ -412,6 +425,29 @@ public class MainActivity extends AppCompatActivity {
      * the summary returns to the period that holds it, and anything else is
      * left alone rather than made to pretend.
      */
+    /**
+     * Which of the two floating buttons the tab in front has any use for.
+     * <p>
+     * The eye hides figures, so it belongs wherever figures are shown - not on
+     * the menu, and not on the drafts, which are movements not yet written
+     * down. Today jumps to a date, so it belongs only where there are dates in
+     * a row: the summary and the movements.
+     */
+    private void floatingButtonsFor(int position) {
+        String tag = position >= 0 && position < visibleTabs.size()
+                ? visibleTabs.get(position).tag : "";
+        View eye = findViewById(R.id.privacy_button);
+        View today = findViewById(R.id.today_button);
+        if (eye != null) {
+            eye.setVisibility("menu".equals(tag) || "drafts".equals(tag)
+                    ? View.GONE : View.VISIBLE);
+        }
+        if (today != null) {
+            today.setVisibility("summary".equals(tag) || "blotter".equals(tag)
+                    ? View.VISIBLE : View.GONE);
+        }
+    }
+
     public void goToToday() {
         Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
         if (f instanceof BlotterFragment) {

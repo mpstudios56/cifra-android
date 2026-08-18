@@ -210,17 +210,23 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
 
         boolean folded = foldedYears.contains(year);
         body.setVisibility(folded ? View.GONE : View.VISIBLE);
+        if (folded) {
+            // The row is only holding the line up; nothing of the movement on
+            // it should be read as being there.
+            view.setBackgroundColor(0);
+        }
 
         if (!first) {
             divider.setVisibility(View.GONE);
             return;
         }
         divider.setVisibility(View.VISIBLE);
+        // Open, the arrow points down at what is below it; closed, it becomes a
+        // full stop - there is nothing under it to point at.
+        String below = folded ? "\u2022" : "\u25be";
         divider.setText(before == 0
-                ? (folded ? "\u25b8  " + year : "\u25be  " + year)
-                : (folded
-                        ? "\u25b4  " + before + "   \u2022   " + year + "  \u25b8"
-                        : "\u25b4  " + before + "   \u2022   " + year + "  \u25be"));
+                ? below + "  " + year
+                : "\u25b4  " + before + "   \u2022   " + year + "  " + below);
         divider.setOnClickListener(v -> {
             if (onYearFolded != null) {
                 onYearFolded.folded(year);

@@ -73,8 +73,12 @@ public class ScheduledListFragment extends BlotterFragment {
 
         scheduler = new RecurrenceScheduler(db);
         // remove filter button and totals
-        bFilter.setVisibility(View.GONE);
-        bGoToToday.setVisibility(View.GONE);
+        if (bFilter != null) {
+            bFilter.setVisibility(View.GONE);
+        }
+        if (bGoToToday != null) {
+            bGoToToday.setVisibility(View.GONE);
+        }
         view.findViewById(R.id.total).setVisibility(View.GONE);
         internalOnCreateTemplates();
     }

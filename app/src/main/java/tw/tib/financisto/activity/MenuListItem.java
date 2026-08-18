@@ -137,16 +137,6 @@ public enum MenuListItem implements SummaryEntityEnum {
             new IntegrityFixTask(fragment.getContext()).execute();
         }
     },
-    MENU_DONATE(R.string.donate, R.string.donate_summary, R.drawable.actionbar_donate) {
-        @Override
-        public void call(Fragment fragment) {
-            // Straight to the payment page. The card that comes up on its own
-            // is there to ask; somebody who has come looking for this row has
-            // already been asked, and being asked a second time by the thing
-            // one has just chosen reads as a wall rather than as an invitation.
-            DonatePrompt.open(fragment.getContext());
-        }
-    },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {
         @Override
         public void call(Fragment fragment) {

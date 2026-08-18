@@ -23,8 +23,8 @@ public class TodayButton {
     private static final int EDGE_DP = 10;
     /** Just above the eye, which sits at 150. */
     private static final int ABOVE_BOTTOM_DP = 150 + SIZE_DP + 8;
-    private static final float RESTING_ALPHA = 0.35f;
-    private static final float RESTING_TUCK = 0.35f;
+    private static final float RESTING_ALPHA = 0.30f;
+    private static final float RESTING_TUCK = 0.52f;
     private static final long REST_AFTER_MS = 2500;
 
     private TodayButton() {

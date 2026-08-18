@@ -74,7 +74,10 @@ public class Application extends MultiDexApplication {
                 // currency list, of every dialog - which reads as something
                 // broken rather than as something useful.
                 if (activity instanceof tw.tib.financisto.activity.MainActivity
-                        || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
+                        || activity instanceof tw.tib.financisto.activity.BlotterActivity
+                        || activity instanceof tw.tib.financisto.activity.ReportActivity
+                        || activity instanceof tw.tib.financisto.activity.ReportPieChartActivity
+                        || activity instanceof tw.tib.financisto.activity.Report2DChartActivity) {
                     PrivacyButton.attachTo(activity);
                 }
                 if (activity instanceof tw.tib.financisto.activity.MainActivity) {

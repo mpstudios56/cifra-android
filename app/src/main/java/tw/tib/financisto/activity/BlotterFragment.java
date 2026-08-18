@@ -474,7 +474,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         }
 
         // The button in the bar is gone: today floats above the eye now, on
-        // both the screens where today means something.
+        // both the screens where today means something. The view is still
+        // found, because screens built on this one reach for it.
+        bGoToToday = view.findViewById(R.id.bToday);
         if (bGoToToday != null) {
             bGoToToday.setVisibility(View.GONE);
         }
@@ -574,7 +576,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // laid out flat here, or hidden behind switches nobody had reason to
         // find: which state, and which kind of copy, are questions about the
         // movement in hand, not about the app.
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_duplicate, R.string.duplicate));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_state, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
@@ -696,9 +698,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // "mantieni data e ora" is not a word - and under a symbol in a ring
         // there is room for a word.
         java.util.List<MenuItemInfo> ways = new LinkedList<>();
-        ways.add(new MenuItemInfo(1, R.string.duplicate_today, R.drawable.ic_action_copy));
-        ways.add(new MenuItemInfo(2, R.string.duplicate_keep_time, R.drawable.ic_action_copy_keep_time));
-        ways.add(new MenuItemInfo(3, R.string.duplicate_keep_date_time, R.drawable.ic_action_copy_keep_time));
+        ways.add(new MenuItemInfo(1, R.string.duplicate_today, R.drawable.ic_duplicate));
+        ways.add(new MenuItemInfo(2, R.string.duplicate_keep_time, R.drawable.ic_duplicate_clock));
+        ways.add(new MenuItemInfo(3, R.string.duplicate_keep_date_time, R.drawable.ic_duplicate_clock));
         RowMenu.show(getActivity(), anchor != null ? anchor : getView(), ways, menuId -> {
             if (menuId == 1) {
                 duplicateTransaction(which, 1);
@@ -1091,6 +1093,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         this.lastDay = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
         long t2 = System.nanoTime();
         Log.d(TAG, "getLastTransactionId() = " + lastTxId + ", " + format("%,d", (t2 - t1)) + " ns");
+        leaveOutFoldedYears(blotterFilterCopy);
         long accountId = blotterFilterCopy.getAccountId();
         if (accountId != -1) {
             c = db.getBlotterForAccount(blotterFilterCopy);
@@ -1524,14 +1527,73 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
     /** The years folded away, for as long as this screen is open. */
     private final java.util.Set<Integer> foldedYears = new java.util.HashSet<>();
+    /**
+     * The one movement of each folded year that stays in the list.
+     * <p>
+     * Folding used to leave every row where it was and merely hide it. The list
+     * still had to measure a thousand hidden rows, which is why it took a
+     * moment to answer, and it still drew a line between each pair of them,
+     * which is the empty band that stayed behind. Now the year leaves the
+     * question altogether except for its newest movement, which is the row the
+     * year line is drawn on - without it there would be nothing left to touch
+     * to get the year back.
+     */
+    private final java.util.Map<Integer, Long> foldMarker = new java.util.HashMap<>();
 
     private void wireYearFolding(BlotterListAdapter a) {
         a.setYearFolding(foldedYears, year -> {
-            if (!foldedYears.remove(year)) {
+            if (foldedYears.remove(year)) {
+                foldMarker.remove(year);
+            } else {
                 foldedYears.add(year);
+                foldMarker.put(year, newestOf(year, a));
             }
-            a.notifyDataSetChanged();
+            recreateCursor();
         });
+    }
+
+    /** The newest movement of that year in the list as it stands. */
+    private long newestOf(int year, BlotterListAdapter a) {
+        Cursor c = a.getCursor();
+        if (c == null) {
+            return 0;
+        }
+        int was = c.getPosition();
+        try {
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            for (int i = 0; i < c.getCount(); i++) {
+                if (!c.moveToPosition(i)) {
+                    break;
+                }
+                long when = c.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal());
+                cal.setTimeInMillis(when);
+                if (cal.get(java.util.Calendar.YEAR) == year) {
+                    return when;
+                }
+            }
+        } catch (Exception e) {
+            return 0;
+        } finally {
+            c.moveToPosition(was);
+        }
+        return 0;
+    }
+
+    /** Adds to the question the years that are not to be answered. */
+    private void leaveOutFoldedYears(WhereFilter filter) {
+        for (Integer year : foldedYears) {
+            java.util.Calendar from = java.util.Calendar.getInstance();
+            from.clear();
+            from.set(year, 0, 1);
+            java.util.Calendar to = (java.util.Calendar) from.clone();
+            to.add(java.util.Calendar.YEAR, 1);
+            Long keep = foldMarker.get(year);
+            filter.put(tw.tib.financisto.filter.Criterion.raw(
+                    "not (datetime >= " + from.getTimeInMillis()
+                            + " and datetime < " + to.getTimeInMillis()
+                            + (keep == null || keep == 0 ? "" : " and datetime <> " + keep)
+                            + ")"));
+        }
     }
 
     /** Scrolls the list to today, or to the nearest movement before it. */

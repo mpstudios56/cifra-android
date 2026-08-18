@@ -271,7 +271,7 @@
   <string name="gdocs_io_error">Errore di connessione con Google Drive.</string>
   <string name="success">Completato! %s</string>
   <string name="fail">Fallito...</string>
-  <string name="duplicate">Copia</string>
+  <string name="duplicate">Duplica</string>
   <string name="select_from_account">Seleziona il conto sorgente...</string>
   <string name="select_to_account">Seleziona il conto destinatario...</string>
   <string name="update_balance">Aggiorna bilancio</string>

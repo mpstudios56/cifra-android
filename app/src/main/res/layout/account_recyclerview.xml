@@ -34,7 +34,7 @@
         <ImageButton
             android:id="@+id/bMenu"
             style="@style/BottomBarButton"
-            android:src="@drawable/more_vert" />
+            android:src="@drawable/ic_action_backup" />
 
         <ImageButton
             android:id="@+id/bAddSeparator"
