@@ -21,7 +21,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/GreenDroid.Widget.QuickAction.Grid.Item"
 
-	android:maxLines="2"
+	android:maxLines="3"
 	android:ellipsize="end"
 	android:lineSpacingMultiplier="0.95"
 	android:gravity="center"

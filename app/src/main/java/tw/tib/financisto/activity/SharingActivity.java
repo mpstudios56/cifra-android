@@ -315,7 +315,7 @@ public class SharingActivity extends AppCompatActivity {
         items.add(new tw.tib.financisto.utils.MenuItemInfo(1, R.string.sharing_person_look,
                 R.drawable.palette));
         items.add(new tw.tib.financisto.utils.MenuItemInfo(2, R.string.delete,
-                R.drawable.ic_row_delete));
+                R.drawable.ic_menu_delete));
         RowMenu.show(this, anchor, items, which -> {
             if (which == 1) {
                 askPerson(person);

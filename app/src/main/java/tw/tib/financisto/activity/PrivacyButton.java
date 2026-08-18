@@ -26,14 +26,14 @@ import tw.tib.financisto.utils.Privacy;
  */
 public class PrivacyButton {
 
-    private static final int SIZE_DP = 44;
+    private static final int SIZE_DP = 48;
     private static final int EDGE_DP = 10;
     private static final int ABOVE_BOTTOM_DP = 150;
     /** How long a wakeful button stays bright before retiring to the edge. */
     private static final long REST_AFTER_MS = 2500;
-    private static final float RESTING_ALPHA = 0.30f;
+    private static final float RESTING_ALPHA = 0.55f;
     /** How much of it hides past the edge once it settles. */
-    private static final float RESTING_TUCK = 0.52f;
+    private static final float RESTING_TUCK = 0.22f;
 
     private static final int TAG_ID = R.id.privacy_button;
 

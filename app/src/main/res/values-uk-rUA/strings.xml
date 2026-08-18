@@ -1526,4 +1526,14 @@
     <string name="account_icon_padlock">Замок</string>
     <string name="account_icon_shield">Захист</string>
     <string name="go_to_oldest">До першого руху</string>
+    <string name="auto_backup_every">Як часто</string>
+    <string-array name="backup_every_entries">
+        <item>Щодня</item>
+        <item>Що два дні</item>
+        <item>Двічі на тиждень</item>
+        <item>Раз на тиждень</item>
+        <item>Двічі на місяць</item>
+        <item>Раз на місяць</item>
+    </string-array>
+    <string name="go_to_newest">Догори</string>
 </resources>

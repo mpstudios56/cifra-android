@@ -15,6 +15,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <!--
+      The search box at the top, where a keyboard cannot cover it. At the
+      foot of the screen it was hidden by the very keyboard one had just
+      opened in order to type in it.
+    -->
+    <FrameLayout
+        android:id="@+id/search_text_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:maxLines="1"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/search_text_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:visibility="gone"
+            android:background="@android:drawable/ic_delete" />
+    </FrameLayout>
+
     <LinearLayout style="@style/BottomBar" android:id="@+id/bottom_bar">
         <ImageButton
             android:id="@+id/bAdd"
@@ -87,30 +117,6 @@
             android:indeterminate="true"/>
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/search_text_frame"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/search_text"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:maxLines="1"
-            android:inputType="text" />
-
-        <ImageButton
-            android:id="@+id/search_text_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right|center_vertical"
-            android:visibility="gone"
-            android:background="@android:drawable/ic_delete" />
-    </FrameLayout>
 
     <TextView
         android:id="@+id/integrity_error"

@@ -72,8 +72,11 @@ public class DailyAutoBackupScheduler {
 
         Log.i(TAG, "Initial delay: " + initialDelay + " ms");
 
+        // Every day, or every two, or every seven: whatever the settings say.
+        // The hour stays the hour that was chosen; only how often changes.
+        int everyDays = MyPreferences.getAutoBackupEveryDays();
         var builder = new PeriodicWorkRequest.Builder(AutoBackupWorker.class,
-                24, TimeUnit.HOURS, 1, TimeUnit.HOURS);
+                24L * everyDays, TimeUnit.HOURS, 1, TimeUnit.HOURS);
 
         builder.setNextScheduleTimeOverride(scheduledTime.getTime());
 

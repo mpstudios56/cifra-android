@@ -180,18 +180,32 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
             v.iconText.setText(a.icon);
         }
         else {
-            v.icon.clearColorFilter();
+            // No symbol chosen: the account wears the mark of its kind. This is
+            // every account restored from an old backup, and until now the mark
+            // was left white whatever colour the account was given - the colour
+            // could be chosen, saved, and never seen.
             v.icon.setVisibility(View.VISIBLE);
             v.iconText.setVisibility(View.INVISIBLE);
 
+            boolean itIsALogo = false;
             if (type.isCard && a.cardIssuer != null) {
                 CardIssuer cardIssuer = CardIssuer.valueOf(a.cardIssuer);
                 v.icon.setImageResource(cardIssuer.iconId);
+                itIsALogo = true;
             } else if (type.isElectronic && a.cardIssuer != null) {
                 ElectronicPaymentType electronicPaymentType = ElectronicPaymentType.valueOf(a.cardIssuer);
                 v.icon.setImageResource(electronicPaymentType.iconId);
+                itIsALogo = true;
             } else {
                 v.icon.setImageResource(type.iconId);
+            }
+
+            // A logo keeps its own colours: a recoloured logo is a wrong logo.
+            if (itIsALogo || AccountIcon.targetOf(a) == AccountIcon.Target.BAR
+                    || Utils.isEmpty(a.accentColor)) {
+                v.icon.clearColorFilter();
+            } else {
+                v.icon.setColorFilter(accentOrNull(a.accentColor));
             }
         }
 

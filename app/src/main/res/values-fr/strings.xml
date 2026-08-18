@@ -1551,4 +1551,14 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="account_icon_padlock">Cadenas</string>
   <string name="account_icon_shield">Protection</string>
   <string name="go_to_oldest">Aller au premier mouvement</string>
+  <string name="auto_backup_every">Fréquence</string>
+  <string-array name="backup_every_entries">
+      <item>Chaque jour</item>
+      <item>Tous les deux jours</item>
+      <item>Deux fois par semaine</item>
+      <item>Une fois par semaine</item>
+      <item>Deux fois par mois</item>
+      <item>Une fois par mois</item>
+  </string-array>
+  <string name="go_to_newest">Aller en haut</string>
 </resources>

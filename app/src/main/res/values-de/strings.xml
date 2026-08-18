@@ -1551,4 +1551,14 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="account_icon_padlock">Schloss</string>
   <string name="account_icon_shield">Schutz</string>
   <string name="go_to_oldest">Zur ersten Buchung</string>
+  <string name="auto_backup_every">Häufigkeit</string>
+  <string-array name="backup_every_entries">
+      <item>Täglich</item>
+      <item>Alle zwei Tage</item>
+      <item>Zweimal pro Woche</item>
+      <item>Einmal pro Woche</item>
+      <item>Zweimal im Monat</item>
+      <item>Einmal im Monat</item>
+  </string-array>
+  <string name="go_to_newest">Nach oben</string>
 </resources>

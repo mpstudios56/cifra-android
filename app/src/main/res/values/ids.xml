@@ -117,4 +117,5 @@
     <item name="shared_with" type="id"/>
 	<item name="today_button" type="id" />
 	<item name="oldest_button" type="id" />
+	<item name="newest_button" type="id" />
 </resources>

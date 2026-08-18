@@ -252,30 +252,26 @@ public class MyPreferences {
 	}
 
 	public static boolean isRememberAccount() {
-		return getBoolean("remember_last_account", true);
+		return true /* L'ultimo conto usato viene riproposto. */;
 	}
 
 	public static boolean isRememberCategory() {
-		return getBoolean("remember_last_category", false);
+		return true /* La categoria di quel beneficiario viene riproposta. */;
 	}
 
 	public static boolean isRememberLocation() {
-		return getBoolean("remember_last_location", false);
+		return true /* L'ultima localita' viene riproposta. */;
 	}
 
 	public static boolean isRememberProject() {
-		return getBoolean("remember_last_project", false);
+		return true /* L'ultimo progetto viene riproposto. */;
 	}
 
 	private static EntitySelectorType getEntitySelectorType(String key) {
-		// Dropdown by default: search opens an empty box in place of the current
-		// value, which reads as the list being empty and the selection lost.
-		String selectorType = getString(key, EntitySelectorType.DROPDOWN.name());
-		try {
-			return EntitySelectorType.valueOf(selectorType);
-		} catch (IllegalArgumentException e) {
-			return EntitySelectorType.DROPDOWN;
-		}
+		// The one with the search: tried against the other, it is the only one
+		// that answers when a list is long, and a list of payees always becomes
+		// long. The three settings that chose between them are gone.
+		return EntitySelectorType.SEARCH;
 	}
 
 	public static boolean isShowAccountBalanceOnSelector() {
@@ -299,7 +295,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowCategoryInTransferScreen() {
-		return getBoolean("ntsl_show_category_in_transfer", true);
+		return true /* Un trasferimento puo' avere una categoria: chi non la vuole lascia il campo vuoto. */;
 	}
 
 	public static boolean isShowPayee() {
@@ -307,7 +303,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isShowPayeeInTransfers() {
-		return getBoolean("ntsl_show_payee_in_transfers", false);
+		return true /* E anche un beneficiario, con lo stesso ragionamento. */;
 	}
 
 	public static boolean isShowCurrency() {
@@ -335,7 +331,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isOpenCalculatorForTemplates() {
-		return getBoolean("ntsl_open_calculator_for_template_transactions", true);
+		return false /* Non apriva niente: meglio niente di un interruttore che non commuta. */;
 	}
 
 	public static boolean isSetFocusOnAmountField() {
@@ -891,7 +887,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isUseHierarchicalCategorySelector() {
-		return getBoolean("use_hierarchical_category_selector", true);
+		return true /* Le categorie si scelgono scendendo nell'albero. */;
 	}
 
 	public static boolean isShowRecentlyUsedCategory() {
@@ -899,7 +895,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isAutoSelectChildCategory() {
-		return getBoolean("hierarchical_category_selector_select_child_immediately", true);
+		return true /* Toccare una categoria la sceglie: spento non se ne poteva scegliere nessuna. */;
 	}
 
 	public static boolean isSeparateIncomeExpense() {
@@ -1055,6 +1051,21 @@ public class MyPreferences {
 
 	public static long getLastAutobackupCheck() {
 		return getLong("last_autobackup_check", 0);
+	}
+
+	/**
+	 * How many days apart the automatic backups are.
+	 * <p>
+	 * Every day out of the box. Somebody who writes down two payments a week
+	 * does not need seven copies of the same ledger, and the copies are kept on
+	 * the phone: fewer of them is not less safety, it is less clutter.
+	 */
+	public static int getAutoBackupEveryDays() {
+		try {
+			return Math.max(1, Integer.parseInt(getString("auto_backup_every", "1")));
+		} catch (Exception e) {
+			return 1;
+		}
 	}
 
 	public static void updateLastAutobackupCheck() {

@@ -1551,4 +1551,14 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="account_icon_padlock">Candado</string>
   <string name="account_icon_shield">Protección</string>
   <string name="go_to_oldest">Ir al primer movimiento</string>
+  <string name="auto_backup_every">Frecuencia</string>
+  <string-array name="backup_every_entries">
+      <item>Cada día</item>
+      <item>Cada dos días</item>
+      <item>Dos veces por semana</item>
+      <item>Una vez por semana</item>
+      <item>Dos veces al mes</item>
+      <item>Una vez al mes</item>
+  </string-array>
+  <string name="go_to_newest">Ir arriba</string>
 </resources>

@@ -454,7 +454,19 @@ public class MainActivity extends AppCompatActivity {
         if (oldest != null) {
             oldest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
         }
+        View newest = findViewById(R.id.newest_button);
+        if (newest != null) {
+            newest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
+        }
         TodayButton.stack(this);
+    }
+
+    /** Up to the top of the list, where the newest movement is. */
+    public void goToNewest() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+        if (f instanceof BlotterFragment) {
+            ((BlotterFragment) f).goToNewest();
+        }
     }
 
     /** Down to the first movement ever written down. */

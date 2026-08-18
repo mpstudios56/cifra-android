@@ -1562,4 +1562,14 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="account_icon_padlock">Lucchetto</string>
   <string name="account_icon_shield">Protezione</string>
   <string name="go_to_oldest">Vai al primo movimento</string>
+  <string name="auto_backup_every">Ogni quanto</string>
+  <string-array name="backup_every_entries">
+      <item>Ogni giorno</item>
+      <item>Ogni due giorni</item>
+      <item>Due volte a settimana</item>
+      <item>Una volta a settimana</item>
+      <item>Due volte al mese</item>
+      <item>Una volta al mese</item>
+  </string-array>
+  <string name="go_to_newest">Vai in cima</string>
 </resources>

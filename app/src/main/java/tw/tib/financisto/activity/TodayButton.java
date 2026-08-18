@@ -20,14 +20,15 @@ import tw.tib.financisto.R;
 public class TodayButton {
 
     /** One set of measurements for all three buttons, shared with the eye. */
-    static final int SIZE_DP = 44;
+    static final int SIZE_DP = 48;
     static final int EDGE_DP = 10;
     static final int FIRST_BOTTOM_DP = 150;
     /** The three sit in a column: the eye at 150, then the oldest, then today. */
     private static final int OLDEST_BOTTOM_DP = FIRST_BOTTOM_DP + SIZE_DP + 8;
     private static final int ABOVE_BOTTOM_DP = FIRST_BOTTOM_DP + 2 * (SIZE_DP + 8);
-    private static final float RESTING_ALPHA = 0.30f;
-    private static final float RESTING_TUCK = 0.52f;
+    private static final int NEWEST_BOTTOM_DP = FIRST_BOTTOM_DP + 3 * (SIZE_DP + 8);
+    private static final float RESTING_ALPHA = 0.55f;
+    private static final float RESTING_TUCK = 0.22f;
     private static final long REST_AFTER_MS = 2500;
 
     private TodayButton() {
@@ -39,6 +40,7 @@ public class TodayButton {
             return;
         }
         attachOldest(activity, content);
+        attachNewest(activity, content);
         View already = content.findViewById(R.id.today_button);
         if (already != null) {
             wake(already);
@@ -152,6 +154,7 @@ public class TodayButton {
         View eye = activity.findViewById(R.id.privacy_button);
         View oldest = activity.findViewById(R.id.oldest_button);
         View today = activity.findViewById(R.id.today_button);
+        View newest = activity.findViewById(R.id.newest_button);
         // Above the navigation keys, wherever the screen has not already made
         // room for them: inside an account nothing had, and the column ended up
         // underneath the phone's own buttons.
@@ -167,7 +170,7 @@ public class TodayButton {
         }
         int step = SIZE_DP + 8;
         int at = FIRST_BOTTOM_DP;
-        for (View button : new View[]{eye, oldest, today}) {
+        for (View button : new View[]{eye, oldest, today, newest}) {
             if (button == null || button.getVisibility() != View.VISIBLE) {
                 continue;
             }
@@ -207,12 +210,50 @@ public class TodayButton {
             return;
         }
         ViewGroup content = (ViewGroup) parent;
-        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.today_button}) {
+        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.today_button, R.id.newest_button}) {
             View one = content.findViewById(id);
             if (one != null && one.getVisibility() == View.VISIBLE) {
                 wake(one);
             }
         }
+    }
+
+    /** And back to the top of the list, which is where the newest movement is. */
+    private static void attachNewest(Activity activity, ViewGroup content) {
+        View already = content.findViewById(R.id.newest_button);
+        if (already != null) {
+            wake(already);
+            return;
+        }
+        ImageButton button = new ImageButton(activity);
+        button.setId(R.id.newest_button);
+        button.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+        button.setContentDescription(activity.getString(R.string.go_to_newest));
+        int pad = dp(activity, 10);
+        button.setPadding(pad, pad, pad, pad);
+        button.setBackgroundResource(R.drawable.privacy_button_idle);
+        button.setImageResource(R.drawable.ic_newest);
+
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                dp(activity, SIZE_DP), dp(activity, SIZE_DP));
+        lp.gravity = Gravity.END | Gravity.BOTTOM;
+        lp.rightMargin = dp(activity, EDGE_DP);
+        lp.bottomMargin = dp(activity, NEWEST_BOTTOM_DP);
+        button.setLayoutParams(lp);
+        button.setElevation(dp(activity, 6));
+        button.setOnClickListener(v -> {
+            wakeAll(button);
+            if (activity instanceof MainActivity) {
+                ((MainActivity) activity).goToNewest();
+                return;
+            }
+            BlotterFragment blotter = blotterIn(activity);
+            if (blotter != null) {
+                blotter.goToNewest();
+            }
+        });
+        content.addView(button);
+        wake(button);
     }
 
     private static void wake(View button) {

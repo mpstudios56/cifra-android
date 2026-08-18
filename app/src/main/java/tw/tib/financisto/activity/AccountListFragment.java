@@ -206,9 +206,9 @@ public class AccountListFragment extends AbstractListFragment<Cursor> {
     protected void prepareAccountActionGrid() {
         Account a = db.getAccount(selectedId);
         accountActionGrid = new QuickActionGrid(getContext());
-        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_info, R.string.info));
+        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_info, R.string.info));
         accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_list, R.string.blotter));
-        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_edit, R.string.edit));
+        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_edit, R.string.edit));
         accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_add, R.string.transaction));
         accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_transfer, R.string.transfer));
         accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_tick, R.string.balance));
@@ -218,7 +218,7 @@ public class AccountListFragment extends AbstractListFragment<Cursor> {
         } else {
             accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_lock_open, R.string.reopen_account));
         }
-        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_trash, R.string.delete_account));
+        accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_delete, R.string.delete_account));
         if (MyPreferences.isShowTransferCurrentBalance()) {
             accountActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.share_windows_32dp, R.string.transfer_current_balance));
         }

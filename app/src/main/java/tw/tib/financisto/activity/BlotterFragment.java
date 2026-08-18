@@ -583,9 +583,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             }
         }
         transactionActionGrid = new QuickActionGrid(getContext());
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_info, R.string.info));
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_edit, R.string.edit));
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_trash, R.string.delete));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_info, R.string.info));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_edit, R.string.edit));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_menu_delete, R.string.delete));
         // One entry each, and the choice is made in a second ring rather than
         // in the settings. Five states and three ways of copying used to be
         // laid out flat here, or hidden behind switches nobody had reason to
@@ -1135,7 +1135,11 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             } else {
                 adapter = new BlotterListAdapter(context, db, cursor);
             }
-            wireYearFolding((BlotterListAdapter) adapter);
+            // Only where the list is a list of movements: a line saying
+            // "2024" across the templates says nothing at all.
+            if (!blotterFilter.isTemplate() && !blotterFilter.isSchedule()) {
+                wireYearFolding((BlotterListAdapter) adapter);
+            }
         }
         else {
             isNewAdapter = false;
@@ -1611,6 +1615,19 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                             + (keep == null || keep == 0 ? "" : " and datetime <> " + keep)
                             + ")"));
         }
+    }
+
+    /** To the top of the list. */
+    public void goToNewest() {
+        if (adapter == null) {
+            return;
+        }
+        int count = adapter.getCount();
+        if (count == 0) {
+            return;
+        }
+        boolean asc = blotterFilter.getSortOrder().contains(BlotterFilter.SORT_OLDER_TO_NEWER);
+        setSelection(asc ? count - 1 : 0);
     }
 
     /**

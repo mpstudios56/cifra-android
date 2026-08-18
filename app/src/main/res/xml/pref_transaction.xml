@@ -28,23 +28,9 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="true"
-            android:key="use_hierarchical_category_selector"
-            android:summary="@string/use_hierarchical_category_selector_summary"
-            android:title="@string/use_hierarchical_category_selector" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
             android:key="show_recently_used_category"
             android:summary="@string/show_recently_used_category_summary"
             android:title="@string/show_recently_used_category" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="hierarchical_category_selector_select_child_immediately"
-            android:summary="@string/hierarchical_category_selector_select_child_immediately_summary"
-            android:title="@string/hierarchical_category_selector_select_child_immediately" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -54,65 +40,8 @@
             android:title="@string/hierarchical_category_selector_income_expense" />
     </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/remember_selection">
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="remember_last_account"
-            android:summary="@string/remember_last_account_summary"
-            android:title="@string/remember_last_account" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:key="remember_last_category"
-            android:summary="@string/remember_last_category_for_payee_summary"
-            android:title="@string/remember_last_category_for_payee" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:dependency="remember_last_category"
-            android:key="remember_last_location"
-            android:summary="@string/remember_last_location_summary"
-            android:title="@string/remember_last_location" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:dependency="remember_last_category"
-            android:key="remember_last_project"
-            android:summary="@string/remember_last_project_summary"
-            android:title="@string/remember_last_project" />
     </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/entity_selector_type">
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="DROPDOWN"
-            android:entries="@array/selector_type_entries"
-            android:entryValues="@array/selector_type_values"
-            android:key="payee_selector_type"
-            android:title="@string/payee_selector_type_title"
-            android:summary="@string/payee_selector_type_summary" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="DROPDOWN"
-            android:entries="@array/selector_type_entries"
-            android:entryValues="@array/selector_type_values"
-            android:key="project_selector_type"
-            android:title="@string/project_selector_type_title"
-            android:summary="@string/project_selector_type_summary" />
-        <ListPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="DROPDOWN"
-            android:entries="@array/selector_type_entries"
-            android:entryValues="@array/selector_type_values"
-            android:key="location_selector_type"
-            android:title="@string/location_selector_type_title"
-            android:summary="@string/location_selector_type_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/screen_layout">
         <SwitchPreferenceCompat
@@ -136,26 +65,5 @@
             android:key="ntsl_enter_currency_decimal_places"
             android:summary="@string/enter_currency_decimal_places_summary"
             android:title="@string/enter_currency_decimal_places" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_show_category_in_transfer"
-            android:summary="@string/show_category_in_transfer_summary"
-            android:title="@string/show_category_in_transfer" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:key="ntsl_show_payee_in_transfers"
-            android:summary="@string/show_payee_in_transfer_summary"
-            android:title="@string/show_payee_in_transfer" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="true"
-            android:key="ntsl_open_calculator_for_template_transactions"
-            android:summary="@string/open_calculator_for_template_transactions_summary"
-            android:title="@string/open_calculator_for_template_transactions" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

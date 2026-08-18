@@ -119,9 +119,9 @@ abstract public class AbstractListFragment<D> extends ListFragment
 
     protected List<MenuItemInfo> createContextMenus(long id) {
         List<MenuItemInfo> menus = new LinkedList<>();
-        menus.add(new MenuItemInfo(MENU_VIEW, R.string.view, R.drawable.ic_action_info));
-        menus.add(new MenuItemInfo(MENU_EDIT, R.string.edit, R.drawable.ic_row_edit));
-        menus.add(new MenuItemInfo(MENU_DELETE, R.string.delete, R.drawable.ic_row_delete));
+        menus.add(new MenuItemInfo(MENU_VIEW, R.string.view, R.drawable.ic_menu_info));
+        menus.add(new MenuItemInfo(MENU_EDIT, R.string.edit, R.drawable.ic_menu_edit));
+        menus.add(new MenuItemInfo(MENU_DELETE, R.string.delete, R.drawable.ic_menu_delete));
         return menus;
     }
 

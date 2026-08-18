@@ -101,7 +101,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             fragment.startActivity(new Intent(fragment.getContext(), SharingActivity.class));
         }
     },
-    MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_action_trash) {
+    MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_menu_delete) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), TrashActivity.class));
@@ -137,7 +137,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             new IntegrityFixTask(fragment.getContext()).execute();
         }
     },
-    MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {
+    MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_menu_info) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), AboutActivity.class));

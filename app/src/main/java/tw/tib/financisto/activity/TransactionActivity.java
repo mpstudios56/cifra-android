@@ -146,7 +146,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     private void prepareSplitActionGrid() {
         splitActionGrid = new QuickActionGrid(this);
         splitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.clear));
-        splitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_edit, R.string.edit));
+        splitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_edit, R.string.edit));
         splitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.status_reconciled, MyQuickAction.NO_FILTER, R.string.reconcile));
         splitActionGrid.setOnQuickActionClickListener(splitActionListener);
     }
