@@ -75,12 +75,12 @@ public class PrivacyButton {
             activity.recreate();
         });
         button.setOnLongClickListener(v -> {
-            wake(button);
+            TodayButton.wakeAll(button);
             return true;
         });
 
         content.addView(button);
-        wake(button);
+        TodayButton.wakeAll(button);
     }
 
     /** Colour and symbol for the state the app is currently in. */

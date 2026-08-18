@@ -61,7 +61,7 @@ public class TodayButton {
         button.setElevation(dp(activity, 6));
 
         button.setOnClickListener(v -> {
-            wake(button);
+            wakeAll(button);
             if (activity instanceof MainActivity) {
                 ((MainActivity) activity).goToToday();
                 return;
@@ -106,7 +106,7 @@ public class TodayButton {
         button.setLayoutParams(lp);
         button.setElevation(dp(activity, 6));
         button.setOnClickListener(v -> {
-            wake(button);
+            wakeAll(button);
             if (activity instanceof MainActivity) {
                 ((MainActivity) activity).goToOldest();
                 return;
@@ -150,6 +150,19 @@ public class TodayButton {
         View eye = activity.findViewById(R.id.privacy_button);
         View oldest = activity.findViewById(R.id.oldest_button);
         View today = activity.findViewById(R.id.today_button);
+        // Above the navigation keys, wherever the screen has not already made
+        // room for them: inside an account nothing had, and the column ended up
+        // underneath the phone's own buttons.
+        int under = 0;
+        View content = activity.findViewById(android.R.id.content);
+        if (content != null && content.getPaddingBottom() == 0) {
+            androidx.core.view.WindowInsetsCompat insets =
+                    androidx.core.view.ViewCompat.getRootWindowInsets(content);
+            if (insets != null) {
+                under = insets.getInsets(
+                        androidx.core.view.WindowInsetsCompat.Type.systemBars()).bottom;
+            }
+        }
         int step = SIZE_DP + 8;
         int at = 150;
         for (View button : new View[]{eye, oldest, today}) {
@@ -159,13 +172,35 @@ public class TodayButton {
             android.view.ViewGroup.LayoutParams lp = button.getLayoutParams();
             if (lp instanceof FrameLayout.LayoutParams) {
                 FrameLayout.LayoutParams f = (FrameLayout.LayoutParams) lp;
-                int wanted = dp(activity, at);
+                int wanted = dp(activity, at) + under;
                 if (f.bottomMargin != wanted) {
                     f.bottomMargin = wanted;
                     button.setLayoutParams(f);
                 }
             }
             at += step;
+        }
+    }
+
+    /**
+     * Wakes the whole column, not one of its buttons.
+     * <p>
+     * Each used to keep its own clock, so one would be tucked against the edge
+     * while the one above it was still out: three buttons in a line that never
+     * looked like a line.
+     */
+    static void wakeAll(View button) {
+        android.view.ViewParent parent = button.getParent();
+        if (!(parent instanceof ViewGroup)) {
+            wake(button);
+            return;
+        }
+        ViewGroup content = (ViewGroup) parent;
+        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.today_button}) {
+            View one = content.findViewById(id);
+            if (one != null && one.getVisibility() == View.VISIBLE) {
+                wake(one);
+            }
         }
     }
 
