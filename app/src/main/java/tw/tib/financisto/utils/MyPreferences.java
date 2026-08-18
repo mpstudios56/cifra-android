@@ -831,7 +831,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isQuickMenuEnabledForAccount() {
-		return getBoolean("quick_menu_account_enabled", true);
+		return false /* Un tocco apre i movimenti, la bolla si apre col tocco lungo: non c'e' piu' niente da accendere. */;
 	}
 
 	public static boolean isQuickMenuEnabledForTransaction() {
