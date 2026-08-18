@@ -450,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
         if (oldest != null) {
             oldest.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
         }
+        TodayButton.stack(this);
     }
 
     /** Down to the first movement ever written down. */

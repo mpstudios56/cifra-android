@@ -1,5 +1,8 @@
 <!--
-  A sheet half written: something begun and not yet put away.
+  A sheet begun and not put away.
+  Drawn like the other tabs - one colour, 1.8 of stroke, rounded corners -
+  because a tab strip is read as one row: the one icon with a fill and a second
+  colour in it looked squashed and borrowed.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
@@ -7,25 +10,25 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
     <path
-        android:pathData="M5,4.5 L14.5,4.5 L19,9 L19,19.5 L5,19.5 z"
-        android:fillColor="#FF4CAF7D"
-        android:fillAlpha="0.22"
-        android:strokeColor="#FF4CAF7D"
-        android:strokeWidth="1.9"
-        android:strokeLineJoin="round" />
-    <path
-        android:pathData="M14.2,4.6 L14.2,9.2 L18.8,9.2"
-        android:strokeColor="#FF4CAF7D"
-        android:strokeWidth="1.9"
-        android:strokeLineJoin="round" />
-    <path
-        android:pathData="M8.5,13 L15,13"
-        android:strokeColor="#FFF4EFE4"
+        android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.8"
-        android:strokeLineCap="round" />
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M6.6,3 L14,3 L19.4,8.4 L19.4,19.2 A1.8,1.8 0 0,1 17.6,21 L6.6,21 A1.8,1.8 0 0,1 4.8,19.2 L4.8,4.8 A1.8,1.8 0 0,1 6.6,3 Z" />
     <path
-        android:pathData="M8.5,16.2 L13,16.2"
-        android:strokeColor="#FFF4EFE4"
+        android:strokeColor="#FFFFFFFF"
         android:strokeWidth="1.8"
-        android:strokeLineCap="round" />
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M13.8,3.2 L13.8,8.6 L19.2,8.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M8.4,13.6 L15.8,13.6" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M8.4,17 L13,17" />
 </vector>

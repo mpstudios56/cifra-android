@@ -138,6 +138,37 @@ public class TodayButton {
         return null;
     }
 
+    /**
+     * Puts the buttons that are showing in a column with no gaps.
+     * <p>
+     * Each used to sit at a height of its own, so on a screen where one of them
+     * is not wanted the others stood apart with a hole between them, as though
+     * something were missing. Whoever is on screen is stacked from the eye
+     * upwards, in the order eye, oldest, today.
+     */
+    public static void stack(Activity activity) {
+        View eye = activity.findViewById(R.id.privacy_button);
+        View oldest = activity.findViewById(R.id.oldest_button);
+        View today = activity.findViewById(R.id.today_button);
+        int step = SIZE_DP + 8;
+        int at = 150;
+        for (View button : new View[]{eye, oldest, today}) {
+            if (button == null || button.getVisibility() != View.VISIBLE) {
+                continue;
+            }
+            android.view.ViewGroup.LayoutParams lp = button.getLayoutParams();
+            if (lp instanceof FrameLayout.LayoutParams) {
+                FrameLayout.LayoutParams f = (FrameLayout.LayoutParams) lp;
+                int wanted = dp(activity, at);
+                if (f.bottomMargin != wanted) {
+                    f.bottomMargin = wanted;
+                    button.setLayoutParams(f);
+                }
+            }
+            at += step;
+        }
+    }
+
     private static void wake(View button) {
         button.animate().cancel();
         button.setAlpha(1f);

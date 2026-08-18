@@ -85,6 +85,7 @@ public class Application extends MultiDexApplication {
                 if (activity instanceof tw.tib.financisto.activity.MainActivity
                         || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
                     tw.tib.financisto.activity.TodayButton.attachTo(activity);
+                    tw.tib.financisto.activity.TodayButton.stack(activity);
                 }
                 // Rounds used to be started and stopped by the main screen alone,
                 // so walking into an account - which is where somebody spends
