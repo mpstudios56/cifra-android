@@ -45,7 +45,10 @@ public class PrivacyButton {
             // Coming back to the app: show it for a moment. Whoever put the
             // figures out on the bus wants to see, on picking the phone up
             // again, that they are still out and where the switch is.
-            wake(already);
+            // The whole column, not this button alone: waking the eye by
+            // itself is what left the three of them out of step, one tucked
+            // against the edge while the others were still out.
+            TodayButton.wakeAll(already);
             return;
         }
 

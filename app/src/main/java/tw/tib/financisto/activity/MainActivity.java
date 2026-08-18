@@ -239,7 +239,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(new androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                floatingButtonsFor(position);
+                // After the pager has finished with the frame, not during it:
+                // changing the layout of anything in the window while the pager
+                // is settling makes it drop the page it was asked for, which is
+                // why a tab sometimes lit up while the screen stayed behind.
+                viewPager.post(() -> floatingButtonsFor(position));
             }
         });
     }

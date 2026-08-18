@@ -19,11 +19,13 @@ import tw.tib.financisto.R;
  */
 public class TodayButton {
 
-    private static final int SIZE_DP = 44;
-    private static final int EDGE_DP = 10;
+    /** One set of measurements for all three buttons, shared with the eye. */
+    static final int SIZE_DP = 44;
+    static final int EDGE_DP = 10;
+    static final int FIRST_BOTTOM_DP = 150;
     /** The three sit in a column: the eye at 150, then the oldest, then today. */
-    private static final int OLDEST_BOTTOM_DP = 150 + SIZE_DP + 8;
-    private static final int ABOVE_BOTTOM_DP = 150 + 2 * (SIZE_DP + 8);
+    private static final int OLDEST_BOTTOM_DP = FIRST_BOTTOM_DP + SIZE_DP + 8;
+    private static final int ABOVE_BOTTOM_DP = FIRST_BOTTOM_DP + 2 * (SIZE_DP + 8);
     private static final float RESTING_ALPHA = 0.30f;
     private static final float RESTING_TUCK = 0.52f;
     private static final long REST_AFTER_MS = 2500;
@@ -164,7 +166,7 @@ public class TodayButton {
             }
         }
         int step = SIZE_DP + 8;
-        int at = 150;
+        int at = FIRST_BOTTOM_DP;
         for (View button : new View[]{eye, oldest, today}) {
             if (button == null || button.getVisibility() != View.VISIBLE) {
                 continue;
@@ -173,8 +175,17 @@ public class TodayButton {
             if (lp instanceof FrameLayout.LayoutParams) {
                 FrameLayout.LayoutParams f = (FrameLayout.LayoutParams) lp;
                 int wanted = dp(activity, at) + under;
-                if (f.bottomMargin != wanted) {
+                int side = dp(activity, SIZE_DP);
+                int edge = dp(activity, EDGE_DP);
+                // Height, width and distance from the edge all set here, so the
+                // three cannot drift apart however each of them was made.
+                if (f.bottomMargin != wanted || f.rightMargin != edge
+                        || f.width != side || f.height != side) {
                     f.bottomMargin = wanted;
+                    f.rightMargin = edge;
+                    f.width = side;
+                    f.height = side;
+                    f.gravity = Gravity.END | Gravity.BOTTOM;
                     button.setLayoutParams(f);
                 }
             }
