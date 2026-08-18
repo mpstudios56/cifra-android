@@ -155,6 +155,79 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         view.setTag(h);
     }
 
+    /** Told when somebody folds a year away. */
+    public interface OnYearFolded {
+        void folded(int year);
+    }
+
+    private OnYearFolded onYearFolded;
+    private java.util.Set<Integer> foldedYears = java.util.Collections.emptySet();
+
+    public void setYearFolding(java.util.Set<Integer> folded, OnYearFolded listener) {
+        this.foldedYears = folded == null ? java.util.Collections.emptySet() : folded;
+        this.onYearFolded = listener;
+    }
+
+    /** The year a row belongs to, or zero when it has no date. */
+    private int yearAt(Cursor cursor, int position) {
+        if (position < 0 || position >= cursor.getCount()) {
+            return 0;
+        }
+        int was = cursor.getPosition();
+        try {
+            if (!cursor.moveToPosition(position)) {
+                return 0;
+            }
+            long when = cursor.getLong(BlotterColumns.datetime.ordinal());
+            java.util.Calendar c = java.util.Calendar.getInstance();
+            c.setTimeInMillis(when);
+            return c.get(java.util.Calendar.YEAR);
+        } catch (Exception e) {
+            return 0;
+        } finally {
+            cursor.moveToPosition(was);
+        }
+    }
+
+    /**
+     * Puts the year line above the first movement of each year, and hides the
+     * rows of a year that has been folded away.
+     * <p>
+     * Folding is done by giving the row nothing to show rather than by leaving
+     * it out of the query: the line that folded it has to stay, or there would
+     * be no way of asking for it back.
+     */
+    private void markYear(View view, Cursor cursor) {
+        TextView divider = view.findViewById(R.id.year_divider);
+        View body = view.findViewById(R.id.layout);
+        if (divider == null || body == null) {
+            return;
+        }
+        int position = cursor.getPosition();
+        final int year = yearAt(cursor, position);
+        int before = yearAt(cursor, position - 1);
+        boolean first = year != 0 && year != before;
+
+        boolean folded = foldedYears.contains(year);
+        body.setVisibility(folded ? View.GONE : View.VISIBLE);
+
+        if (!first) {
+            divider.setVisibility(View.GONE);
+            return;
+        }
+        divider.setVisibility(View.VISIBLE);
+        divider.setText(before == 0
+                ? (folded ? "\u25b8  " + year : "\u25be  " + year)
+                : (folded
+                        ? "\u25b4  " + before + "   \u2022   " + year + "  \u25b8"
+                        : "\u25b4  " + before + "   \u2022   " + year + "  \u25be"));
+        divider.setOnClickListener(v -> {
+            if (onYearFolded != null) {
+                onYearFolded.folded(year);
+            }
+        });
+    }
+
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         // A row is a reused view, and a row that was dragged aside carries the
@@ -163,6 +236,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         // is about to show starts from nothing: the empty bands left in the list
         // after a swipe were rows wearing somebody else's gesture.
         tw.tib.financisto.view.SwipeOnRows.clean(view);
+        markYear(view, cursor);
         final BlotterViewHolder v = (BlotterViewHolder) view.getTag();
         bindView(v, context, cursor);
     }

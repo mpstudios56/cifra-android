@@ -1115,6 +1115,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             } else {
                 adapter = new BlotterListAdapter(context, db, cursor);
             }
+            wireYearFolding((BlotterListAdapter) adapter);
         }
         else {
             isNewAdapter = false;
@@ -1520,6 +1521,18 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 .show();
     }
 
+
+    /** The years folded away, for as long as this screen is open. */
+    private final java.util.Set<Integer> foldedYears = new java.util.HashSet<>();
+
+    private void wireYearFolding(BlotterListAdapter a) {
+        a.setYearFolding(foldedYears, year -> {
+            if (!foldedYears.remove(year)) {
+                foldedYears.add(year);
+            }
+            a.notifyDataSetChanged();
+        });
+    }
 
     /** Scrolls the list to today, or to the nearest movement before it. */
     public void goToToday() {

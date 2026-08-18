@@ -173,7 +173,13 @@ public class SwipeOnRows implements View.OnTouchListener {
     private void slide(float dx) {
         ViewGroup group = (ViewGroup) row;
         for (int i = 0; i < group.getChildCount(); i++) {
-            group.getChildAt(i).setTranslationX(dx);
+            View child = group.getChildAt(i);
+            if (child.getId() == tw.tib.financisto.R.id.year_divider) {
+                // The line that says which year this is belongs to the list,
+                // not to the movement being dragged.
+                continue;
+            }
+            child.setTranslationX(dx);
         }
     }
 
