@@ -80,6 +80,7 @@ public class TimePreference extends DialogPreference implements TimePicker.OnTim
 
     @Override
     public CharSequence getSummary() {
-        return getContext().getString(R.string.auto_backup_time_summary, getHour(), getMinute());
+        return tw.tib.financisto.preference.TimePreference.said(
+                getContext(), getHour(), getMinute());
     }
 }

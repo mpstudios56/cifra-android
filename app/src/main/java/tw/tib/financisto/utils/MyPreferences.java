@@ -1041,6 +1041,15 @@ public class MyPreferences {
 		return getBoolean("auto_backup_warning_enabled", true);
 	}
 
+	/** A failure with the name of what failed, when it was not the backup itself. */
+	public static void notifyAutobackupFailed(String where, Exception e) {
+		edit()
+				.putBoolean("auto_backup_failed_notify", isAutoBackupWarningEnabled())
+				.putString("auto_backup_failed_error", where + ": " + messageForException(e))
+				.putLong("auto_backup_failed_timestamp", System.currentTimeMillis())
+				.apply();
+	}
+
 	public static void notifyAutobackupFailed(Exception e) {
 		edit()
 				.putBoolean("auto_backup_failed_notify", isAutoBackupWarningEnabled())

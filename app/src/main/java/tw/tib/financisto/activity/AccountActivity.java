@@ -313,10 +313,15 @@ public class AccountActivity extends AbstractActivity {
 					tw.tib.financisto.db.DatabaseHelper.ACCOUNT_TABLE, accountId);
 			boolean wasShared = tw.tib.financisto.sync.SharedThings.isShared(db.db(),
 					tw.tib.financisto.sync.SharedThings.ACCOUNT, accountUuid);
-			// Shared with somebody is what shared means.
+			// Shared with somebody is what shared means - and an account that
+			// arrived from somebody keeps travelling with them whether or not
+			// this phone gives it to anyone.
 			boolean nowShared = !sharedWithMarks.isEmpty();
+			boolean arrived = !tw.tib.financisto.sync.SharedWith
+					.arrivedFrom(db.db(), accountUuid).isEmpty();
 			tw.tib.financisto.sync.SharedThings.set(db.db(),
-					tw.tib.financisto.sync.SharedThings.ACCOUNT, accountUuid, nowShared);
+					tw.tib.financisto.sync.SharedThings.ACCOUNT, accountUuid,
+					nowShared || arrived);
 			tw.tib.financisto.sync.SharedWith.set(db.db(), accountUuid, sharedWithMarks);
 
 			long amount = amountInput.getAmount();

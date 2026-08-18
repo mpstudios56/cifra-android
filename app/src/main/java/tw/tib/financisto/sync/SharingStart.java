@@ -68,8 +68,14 @@ public class SharingStart {
     private static int everything(SQLiteDatabase db, long accountId) {
         List<Long> ids = new ArrayList<>();
         try (Cursor c = db.query(DatabaseHelper.TRANSACTION_TABLE, new String[]{"_id"},
-                "from_account_id=? and is_template=0 and parent_id=0",
-                new String[]{String.valueOf(accountId)}, null, null, "datetime asc")) {
+                // Both sides. A transfer is written down once, against the
+                // account the money left; read from the leaving side alone, an
+                // account received everything it paid out and nothing it took
+                // in, and the balance at the far end came out wrong by the sum
+                // of every transfer into it.
+                "(from_account_id=? or to_account_id=?) and is_template=0 and parent_id=0",
+                new String[]{String.valueOf(accountId), String.valueOf(accountId)},
+                null, null, "datetime asc")) {
             while (c.moveToNext()) {
                 ids.add(c.getLong(0));
             }

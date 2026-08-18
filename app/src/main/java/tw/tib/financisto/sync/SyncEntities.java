@@ -110,7 +110,7 @@ public class SyncEntities {
         if (idByUuid(db, kind, uuid) > 0) {
             SharedThings.adopt(db, kind, uuid);
             if (SharedThings.ACCOUNT.equals(kind)) {
-                SharedWith.add(db, uuid, from);
+                SharedWith.arrived(db, uuid, from);
             }
             return false;
         }
@@ -126,7 +126,7 @@ public class SyncEntities {
             if (SharedThings.ACCOUNT.equals(kind)) {
                 // It came from somebody, and that somebody is who it is held
                 // with here as well - which is where its dot takes its colour.
-                SharedWith.add(db, uuid, from);
+                SharedWith.arrived(db, uuid, from);
             }
         }
         return made;

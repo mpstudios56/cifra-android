@@ -53,7 +53,7 @@ public class AutoBackupWorker extends Worker {
                 } catch (Exception e) {
                     Log.e(TAG, "Unable to upload auto-backup to Dropbox", e);
                     log.append("Unable to upload auto-backup to Dropbox\n").append(e);
-                    MyPreferences.notifyAutobackupFailed(e);
+                    MyPreferences.notifyAutobackupFailed("Dropbox", e);
                     successful = false;
                 }
             }
@@ -63,7 +63,7 @@ public class AutoBackupWorker extends Worker {
                 } catch (Exception e) {
                     Log.e(TAG, "Unable to upload auto-backup to Google Drive", e);
                     log.append("Unable to upload auto-backup to Google Drive\n").append(e);
-                    MyPreferences.notifyAutobackupFailed(e);
+                    MyPreferences.notifyAutobackupFailed("Google Drive", e);
                     successful = false;
                 }
             }

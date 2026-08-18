@@ -22,6 +22,13 @@ public class BackupExportTask extends ImportExportAsyncTask {
 	protected Object work(Context context, DatabaseAdapter db, Uri...params) throws Exception {
 		DatabaseExport export = new DatabaseExport(context, db.db(), true);
         backupFileUri = export.export();
+        if (backupFileUri != null) {
+            // The backup was made. Any earlier failure still on the books is
+            // history, and a red warning about a backup that has since been
+            // made - naming a cloud service that was never asked for - is worse
+            // than no warning at all.
+            tw.tib.financisto.utils.MyPreferences.notifyAutobackupSucceeded();
+        }
         if (backupFileUri != null && uploadOnline) {
             doUploadToDropbox(context, backupFileUri);
 			doUploadToGoogleDrive(context, backupFileUri);

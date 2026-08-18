@@ -120,6 +120,26 @@ public class SharedWith {
      * nobody in particular, and the dot beside it has no colour to take.
      */
     public static void add(SQLiteDatabase db, String accountUuid, String mark) {
+        note(db, accountUuid, mark, false);
+    }
+
+    /**
+     * Notes that this account arrived from that person, which is not the same
+     * as being shared with them.
+     * <p>
+     * It was the same row before, and that is how an account went round in a
+     * circle: what Marcello gave to Deborah came back marked as something
+     * Deborah was sharing with Marcello, so opening it to change its colour was
+     * enough to send its opening balance back and double his. Receiving is now
+     * written down as receiving; sharing it onward - to him or to a third
+     * person - is a choice made in the account, like any other.
+     */
+    public static void arrived(SQLiteDatabase db, String accountUuid, String mark) {
+        note(db, accountUuid, mark, true);
+    }
+
+    private static void note(SQLiteDatabase db, String accountUuid, String mark,
+                             boolean incoming) {
         if (accountUuid == null || accountUuid.isEmpty() || mark == null || mark.isEmpty()) {
             return;
         }
@@ -127,19 +147,29 @@ public class SharedWith {
             ContentValues v = new ContentValues();
             v.put("uuid", accountUuid);
             v.put("mark", mark);
+            v.put("incoming", incoming ? 1 : 0);
             db.insertWithOnConflict(TABLE, null, v, SQLiteDatabase.CONFLICT_IGNORE);
         } catch (Exception e) {
             Log.e(TAG, "could not note " + accountUuid + " as held with " + mark, e);
         }
     }
 
-    /** The people this account goes to, or empty for everybody. */
-    public static Set<String> of(SQLiteDatabase db, String accountUuid) {
+    /** The people this account came from, if it came from anybody. */
+    public static Set<String> arrivedFrom(SQLiteDatabase db, String accountUuid) {
+        return marks(db, accountUuid, "uuid=? and incoming=1");
+    }
+
+    /** Whether anything at all has been said about this account. */
+    private static boolean anythingAbout(SQLiteDatabase db, String accountUuid) {
+        return !marks(db, accountUuid, "uuid=?").isEmpty();
+    }
+
+    private static Set<String> marks(SQLiteDatabase db, String accountUuid, String where) {
         Set<String> marks = new HashSet<>();
         if (accountUuid == null || accountUuid.isEmpty()) {
             return marks;
         }
-        try (Cursor c = db.query(TABLE, new String[]{"mark"}, "uuid=?",
+        try (Cursor c = db.query(TABLE, new String[]{"mark"}, where,
                 new String[]{accountUuid}, null, null, null)) {
             while (c.moveToNext()) {
                 marks.add(c.getString(0));
@@ -150,13 +180,25 @@ public class SharedWith {
         return marks;
     }
 
+    /**
+     * The people this account goes to. Only the ones it is given to: whoever
+     * gave it is not on this list, and nothing on it travels back to them
+     * unless somebody says so.
+     */
+    public static Set<String> of(SQLiteDatabase db, String accountUuid) {
+        return marks(db, accountUuid, "uuid=? and incoming=0");
+    }
+
     /** Replaces the list. An empty list means everybody. */
     public static void set(SQLiteDatabase db, String accountUuid, List<String> marks) {
         if (accountUuid == null || accountUuid.isEmpty()) {
             return;
         }
         try {
-            db.delete(TABLE, "uuid=?", new String[]{accountUuid});
+            // Only what this phone gives away is rewritten. Where the account
+            // came from is a fact about it, not a choice, and clearing the list
+            // must not lose it.
+            db.delete(TABLE, "uuid=? and incoming=0", new String[]{accountUuid});
             if (marks == null) {
                 return;
             }
@@ -180,7 +222,14 @@ public class SharedWith {
      */
     public static boolean reaches(SQLiteDatabase db, String accountUuid, String mark) {
         Set<String> marks = of(db, accountUuid);
-        return marks.isEmpty() || marks.contains(mark);
+        if (!marks.isEmpty()) {
+            return marks.contains(mark);
+        }
+        // Nothing said about it at all still means everybody, which is what a
+        // tick meant before there were people to tick. But an account that is
+        // only known to have arrived reaches nobody: it is not being given to
+        // anyone until somebody says it is.
+        return !anythingAbout(db, accountUuid);
     }
 
     /**
@@ -193,4 +242,6 @@ public class SharedWith {
     public static Set<String> recipientsOf(SQLiteDatabase db, String accountUuid) {
         return of(db, accountUuid);
     }
+
+    /** Sets the ContentValues import used above. */
 }

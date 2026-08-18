@@ -69,7 +69,14 @@ public class Application extends MultiDexApplication {
 
             @Override public void onActivityResumed(Activity activity) {
                 if (activity instanceof PinActivity) return;
-                PrivacyButton.attachTo(activity);
+                // Only where there are figures to hide. It used to follow every
+                // screen in the app, so it sat on top of the settings, of the
+                // currency list, of every dialog - which reads as something
+                // broken rather than as something useful.
+                if (activity instanceof tw.tib.financisto.activity.MainActivity
+                        || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
+                    PrivacyButton.attachTo(activity);
+                }
                 // Rounds used to be started and stopped by the main screen alone,
                 // so walking into an account - which is where somebody spends
                 // most of their time - stopped the exchange until they came out
