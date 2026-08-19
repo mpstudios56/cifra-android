@@ -12,6 +12,13 @@
         <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/TextViewSpinnerDropDownItem</item>
         <item name="android:windowBackground">@android:color/black</item>
+        <!--
+          The calendar and the clock that set the date and the time of a
+          movement. This is the theme phones actually run - the one in values/
+          is shadowed by it - so this is where they have to be named.
+        -->
+        <item name="android:datePickerDialogTheme">@style/CifraDatePickerDialog</item>
+        <item name="android:timePickerDialogTheme">@style/CifraTimePickerDialog</item>
     </style>
 
     <style name="Button" parent="@android:style/Widget.Holo.Light.Button">
