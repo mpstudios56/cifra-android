@@ -12,9 +12,9 @@
         <item name="colorAccent">#FF4CAF7D</item>
         <item name="android:textColorPrimary">#FFF4EFE4</item>
         <item name="android:textColorSecondary">#B3F4EFE4</item>
-        <item name="buttonBarPositiveButtonStyle">@style/DialogAnswer</item>
-        <item name="buttonBarNegativeButtonStyle">@style/DialogAnswer</item>
-        <item name="buttonBarNeutralButtonStyle">@style/DialogAnswer</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogAnswerPrimary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogAnswerGhost</item>
+        <item name="buttonBarNeutralButtonStyle">@style/DialogAnswerGhost</item>
     </style>
 
 
