@@ -1575,6 +1575,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 foldMarker.put(year, newestOf(year, a));
             }
             recreateCursor();
+            if (getActivity() != null) {
+                TodayButton.showYearsClosed(getActivity(), !foldedYears.isEmpty());
+            }
         });
     }
 
@@ -1674,6 +1677,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             }
         }
         recreateCursor();
+        if (getActivity() != null) {
+            TodayButton.showYearsClosed(getActivity(), !foldedYears.isEmpty());
+        }
     }
 
     /** Up to the top of the list: the newest movement of all. */

@@ -184,6 +184,18 @@ public class TodayButton {
         }
     }
 
+    /**
+     * The years button shows what a touch would do: arrows drawing in while
+     * they are open, arrows pushing out once they are all closed.
+     */
+    public static void showYearsClosed(Activity activity, boolean closed) {
+        View button = activity.findViewById(R.id.fold_button);
+        if (button instanceof ImageButton) {
+            ((ImageButton) button).setImageResource(
+                    closed ? R.drawable.ic_unfold_years : R.drawable.ic_fold_years);
+        }
+    }
+
     public static void stack(Activity activity) {
         View eye = activity.findViewById(R.id.privacy_button);
         View oldest = activity.findViewById(R.id.oldest_button);
