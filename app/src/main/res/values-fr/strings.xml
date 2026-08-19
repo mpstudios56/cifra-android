@@ -1566,4 +1566,11 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="main_accounts">Comptes principaux</string>
   <string name="other_accounts">Autres comptes</string>
   <string name="main_accounts_prompt">Quels comptes servent tous les jours ? Ils sont proposés en premier.</string>
+  <string name="screen_rotation">Rotation de l’écran</string>
+  <string name="screen_rotation_summary">Si l’écran tourne avec le téléphone</string>
+  <string-array name="screen_rotation_entities">
+    <item>Suivre le téléphone</item>
+    <item>Toujours vertical</item>
+    <item>Toujours horizontal</item>
+  </string-array>
 </resources>

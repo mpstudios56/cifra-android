@@ -1566,4 +1566,11 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="main_accounts">Cuentas principales</string>
   <string name="other_accounts">Otras cuentas</string>
   <string name="main_accounts_prompt">¿Qué cuentas se usan a diario? Se ofrecen primero.</string>
+  <string name="screen_rotation">Rotación de pantalla</string>
+  <string name="screen_rotation_summary">Si la pantalla gira con el teléfono</string>
+  <string-array name="screen_rotation_entities">
+    <item>Seguir al teléfono</item>
+    <item>Siempre vertical</item>
+    <item>Siempre horizontal</item>
+  </string-array>
 </resources>

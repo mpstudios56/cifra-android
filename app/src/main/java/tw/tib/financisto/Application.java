@@ -69,6 +69,11 @@ public class Application extends MultiDexApplication {
 
             @Override public void onActivityResumed(Activity activity) {
                 if (activity instanceof PinActivity) return;
+                // Asked of every screen as it comes to the front: the answer is
+                // one setting and there are sixty screens, and coming back from
+                // the settings is exactly when it has just changed.
+                activity.setRequestedOrientation(
+                        tw.tib.financisto.utils.MyPreferences.getScreenRotation(activity));
                 // Only where there are figures to hide. It used to follow every
                 // screen in the app, so it sat on top of the settings, of the
                 // currency list, of every dialog - which reads as something

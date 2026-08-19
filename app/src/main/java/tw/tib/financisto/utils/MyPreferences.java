@@ -1133,4 +1133,22 @@ public class MyPreferences {
 		}
 	}
 
+
+	/**
+	 * Whether the screen is allowed to turn with the phone.
+	 * <p>
+	 * The phone's own switch governs every app at once; this one governs Cifra,
+	 * which is used lying down as often as standing up.
+	 */
+	public static int getScreenRotation(Context context) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		String chosen = sharedPreferences.getString("screen_rotation", "PHONE");
+		if ("PORTRAIT".equals(chosen)) {
+			return android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+		}
+		if ("LANDSCAPE".equals(chosen)) {
+			return android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+		}
+		return android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+	}
 }

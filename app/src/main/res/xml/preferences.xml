@@ -38,6 +38,20 @@
             android:key="startup_screen"
             android:summary="@string/startup_screen_summary"
             android:title="@string/startup_screen" />
+        <!--
+          Whether the screen turns with the phone. Kept here rather than left to
+          the phone's own switch: somebody entering the week's shopping lying
+          down does not want the list swinging round every time they move.
+        -->
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="PHONE"
+            android:entries="@array/screen_rotation_entities"
+            android:entryValues="@array/screen_rotation_values"
+            android:key="screen_rotation"
+            android:summary="@string/screen_rotation_summary"
+            android:title="@string/screen_rotation" />
         <CheckBoxPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"

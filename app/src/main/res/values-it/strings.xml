@@ -1577,4 +1577,11 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="main_accounts">Conti principali</string>
   <string name="other_accounts">Altri conti</string>
   <string name="main_accounts_prompt">Quali conti si usano ogni giorno? Vengono proposti per primi quando un movimento chiede un conto.</string>
+  <string name="screen_rotation">Rotazione dello schermo</string>
+  <string name="screen_rotation_summary">Se lo schermo gira insieme al telefono</string>
+  <string-array name="screen_rotation_entities">
+    <item>Segui il telefono</item>
+    <item>Sempre in verticale</item>
+    <item>Sempre in orizzontale</item>
+  </string-array>
 </resources>

@@ -1566,4 +1566,11 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="main_accounts">Hauptkonten</string>
   <string name="other_accounts">Weitere Konten</string>
   <string name="main_accounts_prompt">Welche Konten werden täglich benutzt? Sie werden zuerst angeboten.</string>
+  <string name="screen_rotation">Bildschirmdrehung</string>
+  <string name="screen_rotation_summary">Ob sich der Bildschirm mit dem Telefon dreht</string>
+  <string-array name="screen_rotation_entities">
+    <item>Dem Telefon folgen</item>
+    <item>Immer hochkant</item>
+    <item>Immer quer</item>
+  </string-array>
 </resources>
