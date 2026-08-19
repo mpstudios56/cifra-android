@@ -239,7 +239,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             titles[i] = accounts.get(i).title;
             chosen[i] = accounts.get(i).isMain;
         }
-        new android.app.AlertDialog.Builder(getContext())
+        new androidx.appcompat.app.AlertDialog.Builder(getContext(), R.style.CifraChoiceDialog)
                 .setTitle(R.string.main_accounts)
                 .setMultiChoiceItems(titles, chosen, (dialog, which, isChecked) -> chosen[which] = isChecked)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {

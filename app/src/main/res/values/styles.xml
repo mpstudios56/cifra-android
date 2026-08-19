@@ -63,6 +63,29 @@
 	  Same rounded dark card as every other dialog, and the app's green where
 	  the blue was. The hands of the clock are left as they are.
 	-->
+	<!--
+	  A list one ticks through - which accounts are the everyday ones, and any
+	  other question answered with more than one mark. The platform draws it as
+	  a grey slab with blue ticks; this is the app's card, and the app's green.
+	-->
+	<style name="CifraChoiceDialog" parent="@style/Theme.MaterialComponents.Dialog.Alert">
+		<item name="android:windowBackground">@drawable/dialog_background</item>
+		<item name="colorAccent">#FF4CAF7D</item>
+		<item name="colorSecondary">#FF4CAF7D</item>
+		<item name="colorControlActivated">#FF4CAF7D</item>
+		<item name="android:colorControlActivated">#FF4CAF7D</item>
+		<item name="android:textColorPrimary">#FFF4EFE4</item>
+		<item name="android:textColorSecondary">#B3F4EFE4</item>
+		<item name="buttonBarPositiveButtonStyle">@style/DialogAnswer</item>
+		<item name="buttonBarNegativeButtonStyle">@style/DialogAnswer</item>
+	</style>
+
+	<style name="DialogAnswer" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+		<item name="android:textColor">#FF4CAF7D</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
 	<style name="CifraDatePickerDialog" parent="android:Theme.Material.Dialog">
 		<item name="android:windowBackground">@drawable/dialog_background</item>
 		<item name="android:colorAccent">#FF4CAF7D</item>

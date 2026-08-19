@@ -75,6 +75,7 @@ public class Application extends MultiDexApplication {
                 // broken rather than as something useful.
                 if (activity instanceof tw.tib.financisto.activity.MainActivity
                         || activity instanceof tw.tib.financisto.activity.BlotterActivity
+                        || activity instanceof tw.tib.financisto.activity.SplitsBlotterActivity
                         || activity instanceof tw.tib.financisto.activity.ReportActivity
                         || activity instanceof tw.tib.financisto.activity.ReportPieChartActivity
                         || activity instanceof tw.tib.financisto.activity.Report2DChartActivity) {
@@ -82,16 +83,22 @@ public class Application extends MultiDexApplication {
                 }
                 // Also inside a single account: it is the same list of
                 // movements, and today is today there too.
-                if (activity instanceof tw.tib.financisto.activity.MainActivity
-                        || activity instanceof tw.tib.financisto.activity.BlotterActivity) {
+                // Every screen that is a list of movements in time, however it
+                // was reached: three of the reports open a screen of their own
+                // for the movements behind a slice, and there the column was
+                // simply missing.
+                boolean listOfMovements =
+                        activity instanceof tw.tib.financisto.activity.BlotterActivity
+                        || activity instanceof tw.tib.financisto.activity.SplitsBlotterActivity;
+                if (activity instanceof tw.tib.financisto.activity.MainActivity || listOfMovements) {
                     tw.tib.financisto.activity.TodayButton.attachTo(activity);
                 }
-                if (activity instanceof tw.tib.financisto.activity.BlotterActivity) {
-                    // A single account: its list is movements in time, so all of
-                    // them belong here. The main screen decides tab by tab.
+                if (listOfMovements) {
                     tw.tib.financisto.activity.TodayButton.showFor(activity, true);
                     if (activity.getIntent() != null && activity.getIntent()
                             .getBooleanExtra(tw.tib.financisto.report.Report.FROM_REPORT, false)) {
+                        // Reached from a chart: the years are not marked out in
+                        // that list, so there is nothing there to fold.
                         tw.tib.financisto.activity.TodayButton.showFold(activity, false);
                     }
                 }
