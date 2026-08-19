@@ -239,7 +239,8 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             titles[i] = accounts.get(i).title;
             chosen[i] = accounts.get(i).isMain;
         }
-        new androidx.appcompat.app.AlertDialog.Builder(getContext(), R.style.CifraChoiceDialog)
+        DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+                getContext(), R.style.CifraChoiceDialog)
                 .setTitle(R.string.main_accounts)
                 .setMultiChoiceItems(titles, chosen, (dialog, which, isChecked) -> chosen[which] = isChecked)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {
@@ -254,7 +255,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                     recreateCursor();
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show();
+                .create());
     }
 
     private void setupMenuButton() {

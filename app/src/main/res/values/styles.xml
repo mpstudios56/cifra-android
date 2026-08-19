@@ -71,7 +71,7 @@
 	  other question answered with more than one mark. The platform draws it as
 	  a grey slab with blue ticks; this is the app's card, and the app's green.
 	-->
-	<style name="CifraChoiceDialog" parent="@style/Theme.MaterialComponents.Dialog.Alert">
+	<style name="CifraChoiceDialog" parent="@style/Theme.AppCompat.Dialog.Alert">
 		<item name="android:windowBackground">@drawable/dialog_background</item>
 		<item name="colorAccent">#FF4CAF7D</item>
 		<item name="colorSecondary">#FF4CAF7D</item>
