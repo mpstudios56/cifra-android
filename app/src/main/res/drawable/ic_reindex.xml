@@ -1,0 +1,22 @@
+<!--
+  Putting the tree back in order: what the lightning bolt did, drawn as what it
+  is. Beside the two buttons that open and close the tree, a bolt read as a
+  third way of doing the same thing.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFF4EFE4">
+    <path android:pathData="M5,7.5 L13,7.5" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" android:strokeLineCap="round" />
+    <path android:pathData="M5,12 L11,12" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" android:strokeLineCap="round" />
+    <path android:pathData="M5,16.5 L9,16.5" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" android:strokeLineCap="round" />
+    <path android:pathData="M16.5,6 A5,5 0 1,1 16.4,16" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" android:strokeLineCap="round" />
+    <path android:pathData="M14,4.2 L16.8,6 L14,7.8" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" android:strokeLineCap="round" android:strokeLineJoin="round" />
+</vector>

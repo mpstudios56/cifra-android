@@ -172,6 +172,7 @@ public class AmountInput extends LinearLayout implements AmountListener {
             OnRequestAssignListener onRequestAssignListener)
     {
         this.onRequestAssignListener = onRequestAssignListener;
+        showAssignOnlyWhenItWorks();
     }
 
     private final TextWatcher textWatcher = new TextWatcher() {
@@ -200,6 +201,7 @@ public class AmountInput extends LinearLayout implements AmountListener {
 
     @AfterViews
     protected void initialize() {
+        showAssignOnlyWhenItWorks();
         setMinimumHeight(minHeight);
         plusDrawable.mutate().setColorFilter(plusColor, PorterDuff.Mode.SRC_ATOP);
         minusDrawable.mutate().setColorFilter(minusColor, PorterDuff.Mode.SRC_ATOP);
@@ -245,6 +247,18 @@ public class AmountInput extends LinearLayout implements AmountListener {
         }
         else {
             resizeScale(2);
+        }
+    }
+
+    /**
+     * The equals sign belongs to a split, where it hands the remaining amount to
+     * the part being written. Everywhere else - opening an account, for one -
+     * nothing is listening to it, so it sat between the wheels and the
+     * calculator doing nothing at all.
+     */
+    private void showAssignOnlyWhenItWorks() {
+        if (assign != null) {
+            assign.setVisibility(onRequestAssignListener != null ? View.VISIBLE : View.GONE);
         }
     }
 

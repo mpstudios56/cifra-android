@@ -57,6 +57,6 @@
         <ImageButton
             android:id="@+id/bFix"
             style="@style/BottomBarButton"
-            android:src="@drawable/actionbar_flash" />
+            android:src="@drawable/ic_reindex" />
     </LinearLayout>
 </LinearLayout>

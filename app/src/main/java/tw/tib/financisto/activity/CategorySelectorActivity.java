@@ -238,12 +238,10 @@ public class CategorySelectorActivity extends AbstractListActivity<Cursor> {
     protected void viewItem(View v, int position, long id) {
         if (navigator.navigateTo(id)) {
             setListAdapter(createAdapter(null));
-        } else if (id > 0 && MyPreferences.isAutoSelectChildCategory()) {
-            // Only a category of one's own counts as a choice. The rows that
-            // carry no category - the one that goes back up, and the one that
-            // stands for a split - were confirmed as though they had been
-            // picked, and a movement told it was split hides payee, project and
-            // place, because on a split those belong to its parts.
+        } else if (MyPreferences.isAutoSelectChildCategory()) {
+            // Every row that is not a branch is a choice, "no category" and
+            // "split" included. Excluding them stopped those two from being
+            // chosen at all, which is worse than the fault it was meant to fix.
             confirmSelection();
         }
     }
