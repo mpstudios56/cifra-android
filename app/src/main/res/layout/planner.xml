@@ -20,6 +20,13 @@
         android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:layout_weight="1" android:gravity="center" android:text="@string/empty_report" />
 	<LinearLayout style="@style/BottomBar">
+		<!--
+		  The period is the whole question here - how far ahead one is looking -
+		  so it is asked directly, instead of being one line inside the filters.
+		-->
+		<ImageButton android:id="@+id/bPeriod" style="@style/BottomBarButton"
+			android:src="@drawable/ic_today"/>
+
 		<ImageButton android:id="@+id/bFilter" style="@style/BottomBarButton"
 			android:src="@drawable/ic_filter_off"/>
 

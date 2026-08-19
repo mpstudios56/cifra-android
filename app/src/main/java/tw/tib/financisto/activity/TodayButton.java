@@ -42,9 +42,12 @@ public class TodayButton {
         attachOldest(activity, content);
         attachTop(activity, content);
         attachFold(activity, content);
+        attachSort(activity, content);
         View already = content.findViewById(R.id.today_button);
         if (already != null) {
-            wake(already);
+            // Nothing woken on its own: the column keeps one clock, and a
+            // button given a timer of its own here is exactly how one of them
+            // came to withdraw while the others were still out.
             return;
         }
 
@@ -94,7 +97,9 @@ public class TodayButton {
     private static void attachOldest(Activity activity, ViewGroup content) {
         View already = content.findViewById(R.id.oldest_button);
         if (already != null) {
-            wake(already);
+            // Nothing woken on its own: the column keeps one clock, and a
+            // button given a timer of its own here is exactly how one of them
+            // came to withdraw while the others were still out.
             return;
         }
         ImageButton button = new ImageButton(activity);
@@ -174,6 +179,11 @@ public class TodayButton {
                 one.setVisibility(movements ? View.VISIBLE : View.GONE);
             }
         }
+        // The order of the accounts is a question only the accounts screen asks.
+        View sort = activity.findViewById(R.id.sort_button);
+        if (sort != null) {
+            sort.setVisibility(View.GONE);
+        }
         stack(activity);
         // Whoever has just been turned on gets a timer of their own. A button
         // made visible after the others had been woken never received one, so
@@ -201,6 +211,7 @@ public class TodayButton {
         View oldest = activity.findViewById(R.id.oldest_button);
         View today = activity.findViewById(R.id.today_button);
         View fold = activity.findViewById(R.id.fold_button);
+        View sort = activity.findViewById(R.id.sort_button);
         View top = activity.findViewById(R.id.top_button);
         // Above the navigation keys, wherever the screen has not already made
         // room for them: inside an account nothing had, and the column ended up
@@ -217,7 +228,7 @@ public class TodayButton {
         }
         int step = SIZE_DP + 8;
         int at = FIRST_BOTTOM_DP;
-        for (View button : new View[]{eye, oldest, fold, today, top}) {
+        for (View button : new View[]{eye, sort, oldest, fold, today, top}) {
             if (button == null || button.getVisibility() != View.VISIBLE) {
                 continue;
             }
@@ -269,8 +280,8 @@ public class TodayButton {
             CLOCK.removeCallbacks(pending);
         }
         final java.util.List<View> column = new java.util.ArrayList<>();
-        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.fold_button,
-                R.id.today_button, R.id.top_button}) {
+        for (int id : new int[]{R.id.privacy_button, R.id.sort_button, R.id.oldest_button,
+                R.id.fold_button, R.id.today_button, R.id.top_button}) {
             View one = content.findViewById(id);
             if (one != null && one.getVisibility() == View.VISIBLE) {
                 one.animate().cancel();
@@ -291,7 +302,9 @@ public class TodayButton {
     private static void attachTop(Activity activity, ViewGroup content) {
         View already = content.findViewById(R.id.top_button);
         if (already != null) {
-            wake(already);
+            // Nothing woken on its own: the column keeps one clock, and a
+            // button given a timer of its own here is exactly how one of them
+            // came to withdraw while the others were still out.
             return;
         }
         ImageButton button = new ImageButton(activity);
@@ -327,6 +340,42 @@ public class TodayButton {
         content.addView(button);
     }
 
+    /**
+     * Whether the accounts are shown with their place in the order.
+     * <p>
+     * It was a button in the bar at the foot of the accounts, among the ones
+     * that add and back up; it belongs with the others that change how a list
+     * is read, not with those that change what is in it.
+     */
+    private static void attachSort(Activity activity, ViewGroup content) {
+        View already = content.findViewById(R.id.sort_button);
+        if (already != null) {
+            return;
+        }
+        ImageButton button = new ImageButton(activity);
+        button.setId(R.id.sort_button);
+        button.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+        button.setContentDescription(activity.getString(R.string.sort_order));
+        int pad = dp(activity, 10);
+        button.setPadding(pad, pad, pad, pad);
+        button.setBackgroundResource(R.drawable.privacy_button_idle);
+        button.setImageResource(R.drawable.format_list_numbered);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                dp(activity, SIZE_DP), dp(activity, SIZE_DP));
+        lp.gravity = Gravity.END | Gravity.BOTTOM;
+        lp.rightMargin = dp(activity, EDGE_DP);
+        button.setLayoutParams(lp);
+        button.setElevation(dp(activity, 6));
+        button.setOnClickListener(v -> {
+            wakeAll(button);
+            if (activity instanceof MainActivity) {
+                ((MainActivity) activity).toggleAccountSortOrder();
+            }
+        });
+        button.setVisibility(View.GONE);
+        content.addView(button);
+    }
+
     /** Closes every year at once, where there are years to close. */
     private static void attachFold(Activity activity, ViewGroup content) {
         View already = content.findViewById(R.id.fold_button);
@@ -357,6 +406,16 @@ public class TodayButton {
         });
         button.setVisibility(View.GONE);
         content.addView(button);
+    }
+
+    /** The order button lights up while the numbers are on show. */
+    public static void showSortOn(Activity activity, boolean on) {
+        View button = activity.findViewById(R.id.sort_button);
+        if (button instanceof ImageButton) {
+            ((ImageButton) button).setColorFilter(on
+                    ? activity.getResources().getColor(R.color.holo_blue_dark)
+                    : 0xFFF4EFE4);
+        }
     }
 
     private static void wake(View button) {

@@ -60,9 +60,9 @@
 	<LinearLayout style="@style/BottomBar">
 		<ImageButton style="@style/BottomBarButton" android:id="@+id/bFilter"
 			android:src="@drawable/ic_filter_off" />
-		<ImageButton style="@style/BottomBarButton" android:src="@drawable/btn_check_all"
+		<ImageButton style="@style/BottomBarButton" android:src="@drawable/ic_select_all"
 			android:id="@+id/bCheckAll" />
-		<ImageButton style="@style/BottomBarButton" android:src="@drawable/btn_uncheck_all"
+		<ImageButton style="@style/BottomBarButton" android:src="@drawable/ic_select_none"
 			android:id="@+id/bUncheckAll" />
 		<!--
 		  The button that carries out the operation, on the app's own green.

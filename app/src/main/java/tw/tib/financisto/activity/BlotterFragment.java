@@ -349,6 +349,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         period = view.findViewById(R.id.period);
         progressBar = view.findViewById(android.R.id.progress);
 
+        // What is still to come, next to what has already happened: the planner
+        // was a line in the menu, three screens away from the list it belongs
+        // beside.
+        ImageButton bPlanner = view.findViewById(R.id.bPlanner);
+        if (bPlanner != null) {
+            bPlanner.setOnClickListener(v ->
+                    startActivity(new Intent(getContext(), PlannerActivity.class)));
+        }
+
         bSearch = view.findViewById(R.id.bSearch);
         if (bSearch != null) {
             bSearch.setOnClickListener(method -> {
@@ -591,15 +600,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // laid out flat here, or hidden behind switches nobody had reason to
         // find: which state, and which kind of copy, are questions about the
         // movement in hand, not about the app.
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_duplicate, R.string.duplicate));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_state, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
-            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_backup, R.string.transaction_show_in_account_blotter));
+            transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_accounts, R.string.transaction_show_in_account_blotter));
             if (selectedIsTransfer) {
-                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transaction, R.string.change_to_transaction));
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transaction, R.string.change_to_transaction));
             } else {
-                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transfer, R.string.change_to_transfer));
+                transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_row_transfer, R.string.change_to_transfer));
             }
         }
         transactionActionGrid.setOnQuickActionClickListener(transactionActionListener);

@@ -22,7 +22,7 @@ import java.util.*;
  * Date: 12/17/12 9:08 PM
  */
 public enum PeriodType implements LocalizableEnum {
-    TODAY(R.string.period_today, true, true) {
+    TODAY(R.string.period_today, true, false) {
         @Override
         public Period calculatePeriod(long refTime) {
             Calendar c = Calendar.getInstance();
@@ -217,7 +217,7 @@ public enum PeriodType implements LocalizableEnum {
             return new Period(PeriodType.THIS_AND_LAST_YEAR, start, end);
         }
     },
-    THIS_AND_LAST_FISCAL_YEAR(R.string.period_this_and_last_fiscal_year, true, true) {
+    THIS_AND_LAST_FISCAL_YEAR(R.string.period_this_and_last_fiscal_year, true, false) {
         public Period calculatePeriod(long refTime) {
             int fiscalYearStart = MyPreferences.getFiscalYearStart();
             Calendar c = Calendar.getInstance();
@@ -241,7 +241,7 @@ public enum PeriodType implements LocalizableEnum {
             return new Period(PeriodType.THIS_AND_LAST_FISCAL_YEAR, start, end);
         }
     },
-    TOMORROW(R.string.period_tomorrow, false, true) {
+    TOMORROW(R.string.period_tomorrow, false, false) {
         @Override
         public Period calculatePeriod(long refTime) {
             Calendar c = Calendar.getInstance();
@@ -328,7 +328,14 @@ public enum PeriodType implements LocalizableEnum {
     }
 
     public final int titleId;
+    /** Offered where one is looking back: the filters on a list of movements. */
     public final boolean inPast;
+    /**
+     * Offered where one is looking forward: the planner.
+     * <p>
+     * A single day, one's own or tomorrow's, plans nothing; and a fiscal year
+     * that has already closed is not something still to come.
+     */
     public final boolean inFuture;
 
     PeriodType(int titleId, boolean inPast,boolean inFuture) {

@@ -19,16 +19,19 @@
 	</ScrollView>
 	<LinearLayout style="@style/BottomBar">
 		<Button android:id="@+id/bOK" android:text="@string/ok"
-			android:layout_height="@dimen/action_button_size" android:layout_width="0dp"
-			style="@style/TransactionDateTimeButton" android:layout_weight="1" />
+			android:layout_height="wrap_content" android:layout_width="0dp"
+			android:layout_marginLeft="6dp" android:layout_marginRight="3dp"
+			android:layout_gravity="center_vertical" android:maxLines="1"
+			style="@style/FormButtonPrimary" android:layout_weight="1" />
 		<ImageButton android:id="@+id/bNoFilter"
 			android:text="@string/no_filter" android:src="@drawable/actionbar_filter_cancel"
 			android:layout_height="@dimen/action_button_size"
 			android:layout_width="@dimen/action_button_size"
-			style="@style/TransactionDateTimeButton" />
+			style="@style/BottomBarButton" />
 		<Button android:id="@+id/bCancel" android:text="@string/cancel"
-			android:layout_height="@dimen/action_button_size" android:layout_width="0dp"
-			style="@style/TransactionDateTimeButton" android:layout_weight="1"
+			android:layout_height="wrap_content" android:layout_width="0dp"
+			android:layout_marginLeft="3dp" android:layout_gravity="center_vertical"
+			android:maxLines="1" style="@style/FormButtonGhost" android:layout_weight="1"
 			android:layout_marginRight="@dimen/action_button_margin" />
 	</LinearLayout>
 </LinearLayout>

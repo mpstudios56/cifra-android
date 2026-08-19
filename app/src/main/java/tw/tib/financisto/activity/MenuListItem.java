@@ -119,12 +119,6 @@ public enum MenuListItem implements SummaryEntityEnum {
             fragment.startActivity(new Intent(fragment.getContext(), ScheduledListActivity.class));
         }
     },
-    MENU_PLANNER(R.string.planner, R.string.planner_summary, R.drawable.ic_action_planner) {
-        @Override
-        public void call(Fragment fragment) {
-            fragment.startActivity(new Intent(fragment.getContext(), PlannerActivity.class));
-        }
-    },
     MENU_PERMISSIONS(R.string.permissions, R.string.permissions_summary, R.drawable.ic_tab_about) {
         @Override
         public void call(Fragment fragment) {

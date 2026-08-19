@@ -197,8 +197,16 @@
 		<item name="android:textColor">#FFF4EFE4</item>
 		<item name="android:textStyle">normal</item>
 	</style>
-	<style name="TransactionDateTimeButton" parent="android:Widget.Holo.Light.Button">
-		<item name="android:textColor">@android:color/primary_text_dark</item>
+	<!--
+	  The date and the time of a movement, and the two answers at the foot of
+	  the filters. They were the platform button of 2011 - a grey slab with a
+	  shadow - sitting under fields drawn this year.
+	-->
+	<style name="TransactionDateTimeButton" parent="@style/FormButtonGhost">
+		<item name="android:minHeight">44dp</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:layout_margin">3dp</item>
 	</style>
 	<style name="LockScreenButton" parent="@android:style/Widget.Button">
 		<item name="android:layout_width">@dimen/pin_button_width</item>

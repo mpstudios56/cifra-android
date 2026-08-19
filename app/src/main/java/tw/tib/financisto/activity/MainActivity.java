@@ -484,6 +484,10 @@ public class MainActivity extends AppCompatActivity {
         if (fold != null) {
             fold.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
         }
+        View sort = findViewById(R.id.sort_button);
+        if (sort != null) {
+            sort.setVisibility("accounts".equals(tag) ? View.VISIBLE : View.GONE);
+        }
         TodayButton.stack(this);
         View awake = findViewById(R.id.privacy_button);
         if (awake != null) {
@@ -493,6 +497,21 @@ public class MainActivity extends AppCompatActivity {
 
     /** Down to the first movement ever written down. */
     /** Up to the newest movement, at the top of the list. */
+    /**
+     * Shows or hides the place each account holds in the order.
+     * <p>
+     * Asked by the button in the navigation bar, answered by the accounts
+     * screen itself, which is the only one that knows what it is showing.
+     */
+    public void toggleAccountSortOrder() {
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f instanceof AccountRecyclerFragment && f.isAdded()) {
+                ((AccountRecyclerFragment) f).toggleSortOrder();
+                return;
+            }
+        }
+    }
+
     /** The list of movements in front, when there is one. */
     BlotterFragment blotterInFront() {
         Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());

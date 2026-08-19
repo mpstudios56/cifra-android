@@ -60,6 +60,11 @@
 					android:src="@drawable/actionbar_filter" />
 
 				<ImageButton
+					android:id="@+id/bPlanner"
+					style="@style/BottomBarButton"
+					android:src="@drawable/ic_action_planner" />
+
+				<ImageButton
 					android:id="@+id/bToday"
 					style="@style/BottomBarButton"
                     android:src="@drawable/today"

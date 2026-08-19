@@ -120,4 +120,5 @@
 	<item name="newest_button" type="id" />
 	<item name="top_button" type="id" />
 	<item name="fold_button" type="id" />
+	<item name="sort_button" type="id" />
 </resources>

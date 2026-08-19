@@ -69,6 +69,17 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
 
         totalText = (TextView)findViewById(R.id.total);
         filterText = (TextView)findViewById(R.id.period);
+        ImageButton bPeriod = (ImageButton) findViewById(R.id.bPeriod);
+        if (bPeriod != null) {
+            bPeriod.setOnClickListener(view -> {
+                Intent intent = new Intent(this, DateFilterActivity.class);
+                filter.toIntent(intent);
+                intent.putExtra(DateFilterActivity.EXTRA_FILTER_DONT_SHOW_NO_FILTER, true);
+                intent.putExtra(DateFilterActivity.EXTRA_FILTER_SHOW_PLANNER, true);
+                startActivityForResult(intent, 2);
+            });
+        }
+
         ImageButton bFilter = (ImageButton) findViewById(R.id.bFilter);
         bFilter.setImageResource(R.drawable.ic_filter_on);
         bFilter.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +162,15 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 2) {
+            // Only the dates came back: everything else in the filter is left
+            // exactly as it was.
+            DateTimeCriterion chosen = WhereFilter.fromIntent(data).getDateTime();
+            applyDateTimeCriteria(chosen);
+            saveFilter();
+            recreateCursor();
+            return;
+        }
         if (resultCode == RESULT_OK) {
             filter = WhereFilter.fromIntent(data);
             DateTimeCriterion c = filter.getDateTime();

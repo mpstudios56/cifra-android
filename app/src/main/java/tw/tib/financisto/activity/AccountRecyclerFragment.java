@@ -181,18 +181,21 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             });
         }
 
+        // The order of the accounts is asked from the navigation bar now, where
+        // the other buttons that change how a list is read already live.
         bShowSortOrder = view.findViewById(R.id.bShowSortOrder);
         if (bShowSortOrder != null) {
-            bShowSortOrder.setColorFilter(getResources().getColor(R.color.bottom_bar_tint));
-
-            bShowSortOrder.setOnClickListener(v -> {
-                showSortOrder = !showSortOrder;
-                bShowSortOrder.setColorFilter(showSortOrder ?
-                        getResources().getColor(R.color.holo_blue_dark) :
-                        getResources().getColor(R.color.bottom_bar_tint));
-                recreateCursor();
-            });
+            bShowSortOrder.setVisibility(View.GONE);
         }
+    }
+
+    /** Shows or hides the place each account holds in the order. */
+    public void toggleSortOrder() {
+        showSortOrder = !showSortOrder;
+        if (getActivity() != null) {
+            TodayButton.showSortOn(getActivity(), showSortOrder);
+        }
+        recreateCursor();
     }
 
     private void setupMenuButton() {

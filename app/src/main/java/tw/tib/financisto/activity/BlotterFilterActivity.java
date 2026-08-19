@@ -83,14 +83,20 @@ public class BlotterFilterActivity extends FilterAbstractActivity {
 		noFilterValue = getString(R.string.no_filter);
 
 		LinearLayout layout = findViewById(R.id.layout);
-		period = x.addFilterNodeMinus(layout, R.id.period, R.id.period_clear, R.string.period, R.string.no_filter);
+		if (!isPlannerFilter) {
+			// In the planner the period has a button of its own, at the foot of
+			// the screen: it is the question that screen exists to ask.
+			period = x.addFilterNodeMinus(layout, R.id.period, R.id.period_clear, R.string.period, R.string.no_filter);
+		}
 		account = x.addFilterNodeMinus(layout, R.id.account, R.id.account_clear, R.string.account, R.string.no_filter);
 		currency = x.addFilterNodeMinus(layout, R.id.currency, R.id.currency_clear, R.string.currency, R.string.no_filter);
 		initCategorySelector(layout);
 		initPayeeSelector(layout);
 		initProjectSelector(layout);
 		initLocationSelector(layout);
-		note = x.addFilterNodeMinus(layout, R.id.note, R.id.note_clear, R.string.note, R.string.no_filter);
+		// A note is written for whoever reads the movement, in whatever words
+		// came to mind that day. It is not a thing one searches a year of
+		// accounts by, and the search box already looks there.
 		status = x.addFilterNodeMinus(layout, R.id.status, R.id.status_clear, R.string.transaction_status, R.string.no_filter);
 		split = x.addFilterNodeMinus(layout, R.id.split, R.id.split_clear, R.string.filter_split, R.string.filter_split_default);
 		if (!isPlannerFilter) {
@@ -168,6 +174,9 @@ public class BlotterFilterActivity extends FilterAbstractActivity {
 	}
 
 	private void updatePeriodFromFilter() {
+		if (period == null) {
+			return;
+		}
 		DateTimeCriterion c = (DateTimeCriterion)filter.get(BlotterFilter.DATETIME);
 		if (c != null) {
 			Period p = c.getPeriod();
@@ -197,6 +206,9 @@ public class BlotterFilterActivity extends FilterAbstractActivity {
 	}
 
 	private void updateNoteFromFilter() {
+		if (note == null) {
+			return;
+		}
 		Criterion c = filter.get(BlotterFilter.NOTE);
 		if (c != null) {
 			String v = c.getStringValue();

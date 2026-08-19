@@ -82,9 +82,26 @@ public class TemplatesListFragment extends BlotterFragment {
         };
     }
 
+    /**
+     * A template is a movement waiting to happen, so touching one makes it
+     * happen: the movement is written into the register there and then, dated
+     * at this moment, and opened for whatever needs changing - most often the
+     * amount. Before, a touch showed the card of a movement that did not exist.
+     */
+    @Override
+    protected void onItemClick(View v, int position, long id) {
+        long created = db.duplicateTransaction(id);
+        new BlotterOperations(getContext(), this, db, created).editTransaction();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View planner = view.findViewById(R.id.bPlanner);
+        if (planner != null) {
+            // What is still to come belongs beside the movements, not here.
+            planner.setVisibility(View.GONE);
+        }
         View quick = view.findViewById(R.id.bQuick);
         if (quick != null) {
             // Quick entry has nothing to do among templates and scheduled rows.
