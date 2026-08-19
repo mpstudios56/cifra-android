@@ -1,27 +1,72 @@
 <!--
+  Which stretch of time one is looking at.
+
+  The two dates below belong to the last entry in the list, "personalizzato",
+  and to nothing else: for this month or next week they are worked out, not
+  chosen, and they used to sit there greyed out as though something were
+  missing.
+
   Copyright (c) 2010 Denis Solonenko.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
-  Contributors:
-      Denis Solonenko - initial API and implementation
 -->
-<LinearLayout android:layout_width="fill_parent"
-	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:minWidth="300dp">
-	<Spinner android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:id="@+id/period" android:prompt="@string/period"/>
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_gravity="center"
-		android:text="@string/period_from" />		
-	<Button android:layout_height="wrap_content" android:layout_width="fill_parent" android:enabled="false" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:id="@+id/bPeriodFrom"></Button><TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_gravity="center"
-		android:text="@string/period_to" /><Button android:layout_height="wrap_content" android:layout_width="fill_parent" android:enabled="false" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:id="@+id/bPeriodTo"></Button>
-	<Button android:layout_height="wrap_content" android:id="@+id/bNoFilter"
-		android:text="@string/no_filter" android:drawableLeft="@drawable/ic_filter_clear"
-		android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-		android:layout_marginRight="3dp" android:layout_marginTop="3dp" />		
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:minWidth="300dp">
+
+	<Spinner android:id="@+id/period"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:prompt="@string/period" />
+
+	<LinearLayout android:id="@+id/custom_period"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:visibility="gone">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="8dp"
+			android:text="@string/period_from" />
+
+		<Button android:id="@+id/bPeriodFrom"
+			style="@style/TransactionDateTimeButton"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="3dp"
+			android:layout_marginRight="3dp" />
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="8dp"
+			android:text="@string/period_to" />
+
+		<Button android:id="@+id/bPeriodTo"
+			style="@style/TransactionDateTimeButton"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="3dp"
+			android:layout_marginRight="3dp" />
+	</LinearLayout>
+
+	<Button android:id="@+id/bNoFilter"
+		style="@style/TransactionDateTimeButton"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:layout_marginTop="8dp"
+		android:drawableLeft="@drawable/ic_filter_clear"
+		android:text="@string/no_filter" />
+
 	<include layout="@layout/ok_cancel_buttons" />
 </LinearLayout>

@@ -163,10 +163,10 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 2) {
-            // Only the dates came back: everything else in the filter is left
-            // exactly as it was.
-            DateTimeCriterion chosen = WhereFilter.fromIntent(data).getDateTime();
-            applyDateTimeCriteria(chosen);
+            // Only the dates came back, and they come back as three plain
+            // extras rather than as a whole filter: read as a filter they were
+            // nothing at all, and the period chosen was thrown away every time.
+            applyDateTimeCriteria(WhereFilter.dateTimeFromIntent(data));
             saveFilter();
             recreateCursor();
             return;
@@ -182,12 +182,22 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
 
     private void updateFilterText(WhereFilter filter) {
         Criterion c = filter.get(DatabaseHelper.ReportColumns.DATETIME);
-        if (c != null) {
-            filterText.setText(DateUtils.formatDateRange(this, c.getLongValue1(), c.getLongValue2(),
-                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH));
-        } else {
+        if (c == null) {
             filterText.setText(R.string.no_filter);
+            return;
         }
+        // Said by its name - "questo mese" - and not as two dates, which read
+        // like a stretch somebody had picked out by hand even when they had
+        // chosen a month from the list.
+        if (c instanceof DateTimeCriterion) {
+            Period p = ((DateTimeCriterion) c).getPeriod();
+            if (p != null && p.type != PeriodType.CUSTOM) {
+                filterText.setText(p.type.titleId);
+                return;
+            }
+        }
+        filterText.setText(DateUtils.formatDateRange(this, c.getLongValue1(), c.getLongValue2(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH));
     }
 
     private void setTotals(Total[] totals) {

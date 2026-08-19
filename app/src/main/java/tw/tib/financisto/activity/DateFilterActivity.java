@@ -46,6 +46,8 @@ public class DateFilterActivity extends Activity {
 	private final Calendar cTo = Calendar.getInstance();
 	
 	private Spinner spinnerPeriodType;
+	/** The two dates, shown only when the period chosen is the custom one. */
+	private View customPeriod;
 	private Button buttonPeriodFrom;
 	private Button buttonPeriodTo;
 	
@@ -64,6 +66,8 @@ public class DateFilterActivity extends Activity {
 		setContentView(R.layout.date_filter);
 
 		df = DateUtils.getShortDateFormat(this);
+
+        customPeriod = findViewById(R.id.custom_period);
 
         Intent intent = getIntent();
         setCorrectPeriods(intent);
@@ -148,6 +152,10 @@ public class DateFilterActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 PeriodType period = periods[position];
+                if (customPeriod != null) {
+                    customPeriod.setVisibility(period == PeriodType.CUSTOM
+                            ? View.VISIBLE : View.GONE);
+                }
                 if (period == PeriodType.CUSTOM) {
                     selectCustom();
                 } else {
