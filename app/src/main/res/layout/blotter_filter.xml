@@ -24,7 +24,7 @@
 			android:layout_gravity="center_vertical" android:maxLines="1"
 			style="@style/FormButtonPrimary" android:layout_weight="1" />
 		<ImageButton android:id="@+id/bNoFilter"
-			android:text="@string/no_filter" android:src="@drawable/actionbar_filter_cancel"
+			android:text="@string/no_filter" android:src="@drawable/ic_filter_clear"
 			android:layout_height="@dimen/action_button_size"
 			android:layout_width="@dimen/action_button_size"
 			style="@style/BottomBarButton" />

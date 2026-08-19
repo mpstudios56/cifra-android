@@ -1,0 +1,17 @@
+<!-- The same mark, filled: there are main accounts chosen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M12,3.2 L14.7,9 L21,9.8 L16.4,14.2 L17.6,20.4 L12,17.4 L6.4,20.4 L7.6,14.2 L3,9.8 L9.3,9 z"
+        android:fillColor="#FF4CAF7D"
+        android:fillAlpha="0.45" />
+    <path
+        android:pathData="M12,3.2 L14.7,9 L21,9.8 L16.4,14.2 L17.6,20.4 L12,17.4 L6.4,20.4 L7.6,14.2 L3,9.8 L9.3,9 z"
+        android:strokeColor="#FFF4EFE4"
+        android:strokeWidth="1.7"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round" />
+</vector>

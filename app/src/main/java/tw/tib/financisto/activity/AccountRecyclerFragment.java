@@ -181,6 +181,8 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             });
         }
 
+        setupMainAccountsButton(view);
+
         // The order of the accounts is asked from the navigation bar now, where
         // the other buttons that change how a list is read already live.
         bShowSortOrder = view.findViewById(R.id.bShowSortOrder);
@@ -196,6 +198,63 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             TodayButton.showSortOn(getActivity(), showSortOrder);
         }
         recreateCursor();
+    }
+
+    /**
+     * Which accounts money moves through every day.
+     * <p>
+     * Asked once, from the mark above the list, and answered by ticking them
+     * off: from then on those accounts stand at the top of every list a
+     * movement offers, under a heading of their own.
+     */
+    private void setupMainAccountsButton(View view) {
+        ImageButton button = view.findViewById(R.id.bMainAccounts);
+        if (button == null) {
+            return;
+        }
+        showMainMark(button);
+        button.setOnClickListener(v -> askWhichAreMain(button));
+    }
+
+    private void showMainMark(ImageButton button) {
+        boolean any = false;
+        for (Account a : db.getAllAccountsList()) {
+            if (a.isMain) {
+                any = true;
+                break;
+            }
+        }
+        button.setImageResource(any
+                ? R.drawable.ic_main_accounts_on : R.drawable.ic_main_accounts);
+    }
+
+    private void askWhichAreMain(ImageButton button) {
+        final List<Account> accounts = db.getAllAccountsList();
+        if (accounts.isEmpty()) {
+            return;
+        }
+        final String[] titles = new String[accounts.size()];
+        final boolean[] chosen = new boolean[accounts.size()];
+        for (int i = 0; i < accounts.size(); i++) {
+            titles[i] = accounts.get(i).title;
+            chosen[i] = accounts.get(i).isMain;
+        }
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle(R.string.main_accounts)
+                .setMultiChoiceItems(titles, chosen, (dialog, which, isChecked) -> chosen[which] = isChecked)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    for (int i = 0; i < accounts.size(); i++) {
+                        Account a = accounts.get(i);
+                        if (a.isMain != chosen[i]) {
+                            a.isMain = chosen[i];
+                            db.saveAccount(a);
+                        }
+                    }
+                    showMainMark(button);
+                    recreateCursor();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void setupMenuButton() {

@@ -236,7 +236,18 @@ public abstract class MyEntityManager extends EntityManager {
 	}
 
 	public Cursor getAccountsForTransaction(Transaction t) {
-		return getAllAccounts(true, null, t.fromAccountId, t.toAccountId);
+		return getAllAccounts(true, null, true, t.fromAccountId, t.toAccountId);
+	}
+
+	/**
+	 * The accounts as a movement is offered them: the everyday ones first.
+	 * <p>
+	 * The list itself keeps whatever order it was given - somebody arranged it
+	 * by hand - but a movement asking which account it belongs to is answered
+	 * from three or four, and those three or four should not be scrolled to.
+	 */
+	public Cursor getAllActiveAccountsMainFirst() {
+		return getAllAccounts(true, null, true);
 	}
 
 	public Cursor getAllActiveAccounts() {
@@ -256,6 +267,10 @@ public abstract class MyEntityManager extends EntityManager {
 	}
 
 	private Cursor getAllAccounts(boolean isActiveOnly, String filter, long... includeAccounts) {
+		return getAllAccounts(isActiveOnly, filter, false, includeAccounts);
+	}
+
+	private Cursor getAllAccounts(boolean isActiveOnly, String filter, boolean mainFirst, long... includeAccounts) {
 		MyPreferences.AccountSortOrder sortOrder = MyPreferences.getAccountSortOrder();
 		Query<AccountForSearch> q = createQuery(AccountForSearch.class);
 		ArrayList<Expression> e = new ArrayList<>();
@@ -286,6 +301,9 @@ public abstract class MyEntityManager extends EntityManager {
 			q.where(Expressions.and(e.toArray(new Expression[0])));
 		}
 		q.desc("isActive");
+		if (mainFirst) {
+			q.desc("isMain");
+		}
 		if (sortOrder.asc) {
 			q.asc(sortOrder.property);
 		} else {

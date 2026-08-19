@@ -90,6 +90,10 @@ public class Application extends MultiDexApplication {
                     // A single account: its list is movements in time, so all of
                     // them belong here. The main screen decides tab by tab.
                     tw.tib.financisto.activity.TodayButton.showFor(activity, true);
+                    if (activity.getIntent() != null && activity.getIntent()
+                            .getBooleanExtra(tw.tib.financisto.report.Report.FROM_REPORT, false)) {
+                        tw.tib.financisto.activity.TodayButton.showFold(activity, false);
+                    }
                 }
                 // Rounds used to be started and stopped by the main screen alone,
                 // so walking into an account - which is where somebody spends

@@ -1689,4 +1689,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="go_to_newest">Go to the top</string>
     <string name="go_to_top">Go to the top</string>
     <string name="fold_years">Close every year</string>
+  <string name="main_accounts">Main accounts</string>
+  <string name="other_accounts">Other accounts</string>
+  <string name="main_accounts_prompt">Which accounts are used every day? They are offered first when a movement asks for one.</string>
 </resources>

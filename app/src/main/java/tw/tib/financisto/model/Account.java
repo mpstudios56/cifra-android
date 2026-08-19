@@ -67,6 +67,16 @@ public class Account extends MyEntity {
 	 */
 	@Column(name = "is_include_into_reports")
 	public boolean isIncludeIntoReports = true;
+
+	/**
+	 * One of the handful of accounts money actually moves through every day.
+	 * <p>
+	 * A household ends up with a dozen accounts and uses three of them: those
+	 * three are offered first when a movement asks which account it belongs to,
+	 * so the answer is one touch away instead of a scroll.
+	 */
+	@Column(name = "is_main")
+	public boolean isMain = false;
 	
 	@Column(name = "last_account_id")
 	public long lastAccountId;

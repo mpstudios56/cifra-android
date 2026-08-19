@@ -1318,7 +1318,18 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     }
 
     protected void updateFilterImage() {
+        if (!filterButtonFilters()) {
+            return;
+        }
         FilterState.updateFilterColor(getContext(), blotterFilter, bFilter);
+    }
+
+    /**
+     * Whether the button at that place in the bar is a filter at all: the
+     * templates and the scheduled movements borrow it to hold their order.
+     */
+    protected boolean filterButtonFilters() {
+        return true;
     }
 
     /**

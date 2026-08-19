@@ -270,7 +270,7 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 		}
 
 		if (transaction.id == -1) {
-			accountCursor = db.getAllActiveAccounts();
+			accountCursor = db.getAllActiveAccountsMainFirst();
 		} else {
 			accountCursor = db.getAccountsForTransaction(transaction);
 		}

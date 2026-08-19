@@ -122,4 +122,9 @@ public class ScheduledListFragment extends BlotterFragment {
         new InstalledOnSdCardCheckTask(getActivity()).execute();
     }
 
+
+    @Override
+    protected boolean filterButtonFilters() {
+        return false;
+    }
 }

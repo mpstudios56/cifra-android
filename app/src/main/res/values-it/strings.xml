@@ -1574,4 +1574,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="go_to_newest">Vai in cima</string>
   <string name="go_to_top">Vai in cima</string>
   <string name="fold_years">Chiudi tutti gli anni</string>
+  <string name="main_accounts">Conti principali</string>
+  <string name="other_accounts">Altri conti</string>
+  <string name="main_accounts_prompt">Quali conti si usano ogni giorno? Vengono proposti per primi quando un movimento chiede un conto.</string>
 </resources>

@@ -81,7 +81,8 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
         }
 
         ImageButton bFilter = (ImageButton) findViewById(R.id.bFilter);
-        bFilter.setImageResource(R.drawable.ic_filter_on);
+        bFilter.setImageResource(filter.isEmpty()
+                ? R.drawable.ic_filter_off : R.drawable.ic_filter_on);
         bFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

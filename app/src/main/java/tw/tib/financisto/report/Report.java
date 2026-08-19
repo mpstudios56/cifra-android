@@ -159,6 +159,9 @@ public abstract class Report {
         return total;
     }
 
+    /** Set on the list a chart opens, where the years are not drawn. */
+    public static final String FROM_REPORT = "from_report";
+
     protected long getId(Cursor c) {
         return c.getLong(0);
     }
@@ -197,6 +200,9 @@ public abstract class Report {
         filter.eq("from_account_is_include_into_reports", "1");
         Intent intent = new Intent(context, getBlotterActivityClass());
         filter.toIntent(intent);
+        // Reached from a chart: the same list, but the years are not marked out
+        // in it, so there is nothing there to fold.
+        intent.putExtra(FROM_REPORT, true);
         return intent;
     }
 

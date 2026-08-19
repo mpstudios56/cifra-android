@@ -85,7 +85,7 @@ public class SplitTransferActivity extends AbstractSplitActivity implements Cate
 
     @Override
     protected void fetchData() {
-        accountCursor = db.getAllActiveAccounts();
+        accountCursor = db.getAllActiveAccountsMainFirst();
         startManagingCursor(accountCursor);
 
         if (MyPreferences.isShowAccountBalanceOnSelector()) {

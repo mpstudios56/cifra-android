@@ -194,6 +194,15 @@ public class TodayButton {
         }
     }
 
+    /** Whether this screen has years to fold at all. */
+    public static void showFold(Activity activity, boolean wanted) {
+        View button = activity.findViewById(R.id.fold_button);
+        if (button != null) {
+            button.setVisibility(wanted ? View.VISIBLE : View.GONE);
+            stack(activity);
+        }
+    }
+
     /**
      * The years button shows what a touch would do: arrows drawing in while
      * they are open, arrows pushing out once they are all closed.

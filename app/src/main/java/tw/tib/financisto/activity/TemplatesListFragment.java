@@ -114,6 +114,9 @@ public class TemplatesListFragment extends BlotterFragment {
             // because there is nothing to filter here; there is something to
             // sort, and this is where somebody looks for it.
             bFilter.setVisibility(View.VISIBLE);
+            // Here it orders rather than filters, so it carries the mark of an
+            // order and not the funnel.
+            bFilter.setImageResource(R.drawable.format_list_numbered);
             bFilter.setOnClickListener(v -> askForOrder());
         }
         if (showAllBlotterButtons && bTemplate != null) {
@@ -203,4 +206,9 @@ public class TemplatesListFragment extends BlotterFragment {
                 .show();
     }
 
+
+    @Override
+    protected boolean filterButtonFilters() {
+        return false;
+    }
 }

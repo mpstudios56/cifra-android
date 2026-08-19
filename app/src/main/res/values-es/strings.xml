@@ -1563,4 +1563,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="go_to_newest">Ir arriba</string>
   <string name="go_to_top">Ir arriba</string>
   <string name="fold_years">Cerrar todos los años</string>
+  <string name="main_accounts">Cuentas principales</string>
+  <string name="other_accounts">Otras cuentas</string>
+  <string name="main_accounts_prompt">¿Qué cuentas se usan a diario? Se ofrecen primero.</string>
 </resources>

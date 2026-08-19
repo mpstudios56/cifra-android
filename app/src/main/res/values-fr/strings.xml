@@ -1563,4 +1563,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="go_to_newest">Aller en haut</string>
   <string name="go_to_top">Aller en haut</string>
   <string name="fold_years">Fermer toutes les années</string>
+  <string name="main_accounts">Comptes principaux</string>
+  <string name="other_accounts">Autres comptes</string>
+  <string name="main_accounts_prompt">Quels comptes servent tous les jours ? Ils sont proposés en premier.</string>
 </resources>

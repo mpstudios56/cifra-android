@@ -57,7 +57,7 @@
 				<ImageButton
 					android:id="@+id/bFilter"
 					style="@style/BottomBarButton"
-					android:src="@drawable/actionbar_filter" />
+					android:src="@drawable/ic_filter_off" />
 
 				<ImageButton
 					android:id="@+id/bPlanner"
