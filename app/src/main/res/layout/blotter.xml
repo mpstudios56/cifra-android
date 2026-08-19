@@ -38,11 +38,6 @@
 					android:src="@drawable/actionbar_add_big" />
 
 				<ImageButton
-					android:id="@+id/bQuick"
-					style="@style/BottomBarButton"
-					android:src="@drawable/actionbar_quick_add" />
-
-				<ImageButton
 					android:id="@+id/bTransfer"
 					style="@style/BottomBarButton"
 					android:src="@drawable/actionbar_transfer"
@@ -55,9 +50,9 @@
 					android:visibility="gone" />
 
 				<ImageButton
-					android:id="@+id/bSearch"
+					android:id="@+id/bQuick"
 					style="@style/BottomBarButton"
-					android:src="@android:drawable/ic_menu_search" />
+					android:src="@drawable/actionbar_quick_add" />
 
 				<ImageButton
 					android:id="@+id/bFilter"
@@ -70,6 +65,11 @@
                     android:src="@drawable/today"
                     app:tint="#e2e2e2"
 					android:visibility="gone" />
+
+				<ImageButton
+					android:id="@+id/bSearch"
+					style="@style/BottomBarButton"
+					android:src="@android:drawable/ic_menu_search" />
 
 			</LinearLayout>
 		</HorizontalScrollView>

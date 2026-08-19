@@ -85,6 +85,11 @@ public class TemplatesListFragment extends BlotterFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View quick = view.findViewById(R.id.bQuick);
+        if (quick != null) {
+            // Quick entry has nothing to do among templates and scheduled rows.
+            quick.setVisibility(View.GONE);
+        }
 
         // remove filter button and totals
         if (bFilter != null) {
