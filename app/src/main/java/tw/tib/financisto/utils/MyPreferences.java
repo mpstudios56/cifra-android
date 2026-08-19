@@ -551,7 +551,7 @@ public class MyPreferences {
 	}
 
 	public static boolean isTrackSplitEntityInChild() {
-		return getBoolean("split_entity_in_child", false);
+		return false /* Beneficiario, luogo e progetto appartengono allo scontrino, non alle sue parti. */;
 	}
 
 	private static final String DEFAULT = "default";

@@ -692,15 +692,16 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 		if (selectLast && isRememberLastProject) {
 			projectSelector.selectEntity(category.lastProjectId);
 		}
-		if (isTrackSplitEntityInChild) {
-			if (transaction.payeeId == Payee.EMPTY.id && payeeSelector != null) {
-				payeeSelector.setNodeVisible(!category.isSplit());
-			}
-			if (transaction.locationId == CURRENT_LOCATION_ID) {
-				locationSelector.setNodeVisible(!category.isSplit());
-			}
+		// A split divides an amount between categories; it does not divide the
+		// shop one was in. One receipt has one payee, one place and one project
+		// however many categories it is cut into, so those three stay where they
+		// are - hiding them is what made them vanish when somebody backed out of
+		// the category list.
+		if (payeeSelector != null) {
+			payeeSelector.setNodeVisible(true);
 		}
-		projectSelector.setNodeVisible(!category.isSplit());
+		locationSelector.setNodeVisible(true);
+		projectSelector.setNodeVisible(true);
 	}
 
 	protected void addOrRemoveSplits() {
