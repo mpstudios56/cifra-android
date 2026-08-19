@@ -24,7 +24,13 @@
         <item name="android:numColumns">3</item>
     </style>
 
+    <!--
+      The symbols in the ring are read before the words under them, so they are
+      given the room to be read: at the size they had, a coloured state was a
+      dot of colour and nothing more.
+    -->
     <style name="GreenDroid.Widget.QuickAction.Item">
+        <item name="android:drawablePadding">8dp</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:paddingLeft">4dp</item>

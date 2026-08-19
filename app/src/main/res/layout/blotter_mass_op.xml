@@ -64,7 +64,20 @@
 			android:id="@+id/bCheckAll" />
 		<ImageButton style="@style/BottomBarButton" android:src="@drawable/btn_uncheck_all"
 			android:id="@+id/bUncheckAll" />
-		<Button android:id="@+id/proceed" android:text="@string/proceed"
-			style="@style/BottomBarButton" />
+		<!--
+		  The button that carries out the operation, on the app's own green.
+		  Dressed as one of the round symbol buttons it was a slab too narrow
+		  for its own word, which broke across two lines.
+		-->
+		<Button android:id="@+id/proceed"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_marginStart="8dp"
+			android:layout_marginEnd="6dp"
+			android:layout_gravity="center_vertical"
+			android:maxLines="1"
+			style="@style/FormButtonPrimary"
+			android:text="@string/proceed" />
 	</LinearLayout>
 </LinearLayout>

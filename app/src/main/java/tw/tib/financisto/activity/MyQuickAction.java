@@ -39,20 +39,35 @@ public class MyQuickAction extends QuickAction {
         this.titleId = titleId;
     }
 
+    /**
+     * How large a symbol stands in the ring.
+     * <p>
+     * They were drawn at whatever size the picture happened to be, which for
+     * the coloured states meant a dot: the symbol is read before the word under
+     * it, so it is given the room to be read.
+     */
+    private static final int SYMBOL_DP = 34;
+
+    private static Drawable sized(Context ctx, Drawable d) {
+        int side = Math.round(SYMBOL_DP * ctx.getResources().getDisplayMetrics().density);
+        d.setBounds(0, 0, side, side);
+        return d;
+    }
+
     private static Drawable buildDrawable(Context ctx, int drawableId) {
         Drawable d = ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate();
         d.setColorFilter(LIGHT_CF);
-        return d;
+        return sized(ctx, d);
     }
 
     private static Drawable buildColorDrawable(Context ctx, @ColorInt int color, int drawableId) {
         if (color == NO_FILTER) {
-            return ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null);
+            return sized(ctx, ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate());
         }
         else {
             Drawable d = ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate();
             d.setColorFilter(new LightingColorFilter(Color.BLACK, color));
-            return d;
+            return sized(ctx, d);
         }
     }
 }
