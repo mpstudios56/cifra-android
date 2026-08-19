@@ -32,6 +32,7 @@
 		<item name="android:popupMenuStyle">@style/AppPopupMenu</item>
 		<item name="android:alertDialogTheme">@style/AlertDialog</item>
 		<item name="android:datePickerDialogTheme">@style/CifraDatePickerDialog</item>
+		<item name="android:timePickerDialogTheme">@style/CifraTimePickerDialog</item>
 		<!--
 		  The screens that still use the platform's own title bar - the budget,
 		  the category, the account - were showing the app's icon beside the
@@ -70,6 +71,24 @@
 	<style name="CifraDatePicker" parent="android:Widget.Material.DatePicker">
 		<item name="android:datePickerMode">calendar</item>
 		<item name="android:headerBackground">#FF303030</item>
+		<item name="android:textColorPrimary">#FFF4EFE4</item>
+		<item name="android:textColorSecondary">#B3F4EFE4</item>
+	</style>
+	<!--
+	  And the clock that sets the time, on the same ground: the dial came in the
+	  platform's blue on a pale disc, next to a calendar that no longer does.
+	-->
+	<style name="CifraTimePickerDialog" parent="android:Theme.Material.Dialog">
+		<item name="android:windowBackground">@drawable/dialog_background</item>
+		<item name="android:colorAccent">#FF4CAF7D</item>
+		<item name="android:timePickerStyle">@style/CifraTimePicker</item>
+	</style>
+	<style name="CifraTimePicker" parent="android:Widget.Material.TimePicker">
+		<item name="android:headerBackground">#FF303030</item>
+		<item name="android:numbersBackgroundColor">#FF262626</item>
+		<item name="android:numbersSelectorColor">#FF4CAF7D</item>
+		<item name="android:numbersTextColor">#FFF4EFE4</item>
+		<item name="android:numbersInnerTextColor">#B3F4EFE4</item>
 	</style>
 	<style name="CalculatorDialog" parent="android:Theme.Material.Dialog" />
 

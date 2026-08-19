@@ -62,12 +62,19 @@ public class MyQuickAction extends QuickAction {
      * the coloured states meant a dot: the symbol is read before the word under
      * it, so it is given the room to be read.
      */
-    private static final int SYMBOL_DP = 34;
+    private static final int SYMBOL_DP = 38;
 
     private static Drawable sized(Context ctx, Drawable d) {
         int side = Math.round(SYMBOL_DP * ctx.getResources().getDisplayMetrics().density);
+        // Drawn onto a square of the size wanted, rather than merely asked to
+        // occupy one: the ring hangs its symbols by their own measurements, so
+        // bounds set from outside were thrown away and nothing grew.
+        android.graphics.Bitmap bitmap =
+                android.graphics.Bitmap.createBitmap(side, side, android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(bitmap);
         d.setBounds(0, 0, side, side);
-        return d;
+        d.draw(canvas);
+        return new android.graphics.drawable.BitmapDrawable(ctx.getResources(), bitmap);
     }
 
     private static Drawable buildDrawable(Context ctx, int drawableId) {

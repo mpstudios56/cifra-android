@@ -15,11 +15,20 @@
 		android:layout_height="wrap_content" android:orientation="vertical">
 		<LinearLayout android:layout_height="wrap_content"
 			android:layout_width="fill_parent" style="@style/BottomBar">
+			<!--
+			  The state of the movement, dressed as the date and the time beside
+			  it: the same pill, the same ground. It was a square button of its
+			  own, from a different year to everything around it.
+			-->
 			<ImageButton android:id="@+id/status"
-				style="@style/BottomBarButton"
-				android:src="@drawable/status_unreconciled"
-			android:scaleType="centerInside"
-			android:padding="10dp"/>
+				android:layout_width="52dp"
+				android:layout_height="44dp"
+				android:layout_gravity="center_vertical"
+				android:layout_margin="3dp"
+				android:background="@drawable/form_button_ghost"
+				android:scaleType="centerInside"
+				android:padding="9dp"
+				android:src="@drawable/status_unreconciled" />
 			<Button android:layout_width="wrap_content" android:gravity="center"
 				android:text="04/03/09" android:id="@+id/date"
 				android:layout_height="wrap_content" android:layout_weight="1"
