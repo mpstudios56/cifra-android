@@ -480,11 +480,25 @@ public class MainActivity extends AppCompatActivity {
         if (top != null) {
             top.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
         }
+        View fold = findViewById(R.id.fold_button);
+        if (fold != null) {
+            fold.setVisibility("blotter".equals(tag) ? View.VISIBLE : View.GONE);
+        }
         TodayButton.stack(this);
+        View awake = findViewById(R.id.privacy_button);
+        if (awake != null) {
+            TodayButton.wakeAll(awake);
+        }
     }
 
     /** Down to the first movement ever written down. */
     /** Up to the newest movement, at the top of the list. */
+    /** The list of movements in front, when there is one. */
+    BlotterFragment blotterInFront() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+        return f instanceof BlotterFragment ? (BlotterFragment) f : null;
+    }
+
     public void goToTop() {
         Fragment f = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
         if (f instanceof BlotterFragment) {

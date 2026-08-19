@@ -1562,4 +1562,5 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   </string-array>
   <string name="go_to_newest">Ir arriba</string>
   <string name="go_to_top">Ir arriba</string>
+  <string name="fold_years">Cerrar todos los años</string>
 </resources>

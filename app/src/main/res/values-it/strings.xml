@@ -1573,4 +1573,5 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   </string-array>
   <string name="go_to_newest">Vai in cima</string>
   <string name="go_to_top">Vai in cima</string>
+  <string name="fold_years">Chiudi tutti gli anni</string>
 </resources>

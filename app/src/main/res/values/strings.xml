@@ -1688,4 +1688,5 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     </string-array>
     <string name="go_to_newest">Go to the top</string>
     <string name="go_to_top">Go to the top</string>
+    <string name="fold_years">Close every year</string>
 </resources>

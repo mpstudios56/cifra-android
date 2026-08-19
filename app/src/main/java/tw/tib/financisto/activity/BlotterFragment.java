@@ -1638,6 +1638,44 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         setSelection(asc ? 0 : count - 1);
     }
 
+    /**
+     * Closes every year at once - or opens them all again when they are already
+     * closed. On a ledger that goes back years, the short view is the one
+     * somebody wants first.
+     */
+    public void foldEveryYear() {
+        if (adapter == null) {
+            return;
+        }
+        Cursor c = ((BlotterListAdapter) adapter).getCursor();
+        if (c == null || c.getCount() == 0) {
+            return;
+        }
+        java.util.Set<Integer> years = new java.util.HashSet<>();
+        int was = c.getPosition();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        for (int i = 0; i < c.getCount(); i++) {
+            if (!c.moveToPosition(i)) {
+                break;
+            }
+            cal.setTimeInMillis(c.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal()));
+            years.add(cal.get(java.util.Calendar.YEAR));
+        }
+        c.moveToPosition(was);
+        if (!years.isEmpty() && foldedYears.containsAll(years)) {
+            foldedYears.clear();
+            foldMarker.clear();
+        } else {
+            for (Integer year : years) {
+                if (!foldedYears.contains(year)) {
+                    foldedYears.add(year);
+                    foldMarker.put(year, newestOf(year, (BlotterListAdapter) adapter));
+                }
+            }
+        }
+        recreateCursor();
+    }
+
     /** Up to the top of the list: the newest movement of all. */
     public void goToTop() {
         if (adapter == null || adapter.getCount() == 0) {
