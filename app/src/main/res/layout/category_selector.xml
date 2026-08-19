@@ -42,14 +42,24 @@
 	<LinearLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" style="@style/BottomBar"
 		android:paddingTop="2dp">
-		<Button android:layout_width="wrap_content"
+		<!--
+		  The two buttons this screen ends with, in the app's hand: the one that
+		  goes back is an outline, the one that chooses is filled. They were the
+		  grey slabs of the platform, which is what made this screen look older
+		  than the rest.
+		-->
+		<Button android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
+			android:layout_margin="6dp"
+			style="@style/FormButtonGhost"
 			android:text="@string/back"
 			android:id="@+id/bBack"/>
-		<Button android:layout_width="wrap_content"
+		<Button android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
+			android:layout_margin="6dp"
+			style="@style/FormButtonPrimary"
 			android:text="@string/select"
 			android:id="@+id/bSelect"/>
 	</LinearLayout>

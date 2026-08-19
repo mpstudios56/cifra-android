@@ -1537,4 +1537,5 @@
     </string-array>
     <string name="go_to_newest">Догори</string>
     <string name="go_to_top">Догори</string>
+    <string name="search_hint">Пошук</string>
 </resources>

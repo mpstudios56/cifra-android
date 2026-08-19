@@ -194,6 +194,25 @@ public class CategorySelectorActivity extends AbstractListActivity<Cursor> {
     private View buildViewForCategory(CategoryTag c) {
         var res = new Button(this);
         res.setText(c.title);
+        // A pill in the app's colours rather than a platform slab: these sit in
+        // a row of five or six, and six grey boxes with shadows are what made
+        // this screen read as somebody else's.
+        res.setAllCaps(false);
+        res.setBackgroundResource(R.drawable.chip_background);
+        res.setTextColor(0xFFF4EFE4);
+        res.setTextSize(13);
+        res.setStateListAnimator(null);
+        int side = Math.round(14 * getResources().getDisplayMetrics().density);
+        int tall = Math.round(6 * getResources().getDisplayMetrics().density);
+        res.setPadding(side, tall, side, tall);
+        res.setMinHeight(0);
+        res.setMinimumHeight(0);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(tall, tall, 0, tall);
+        lp.gravity = android.view.Gravity.CENTER_VERTICAL;
+        res.setLayoutParams(lp);
         return res;
     }
 
