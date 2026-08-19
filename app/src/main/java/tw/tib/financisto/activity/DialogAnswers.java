@@ -43,8 +43,23 @@ public class DialogAnswers {
             return;
         }
         float density = context.getResources().getDisplayMetrics().density;
-        button.setBackgroundResource(proposed
-                ? R.drawable.form_button_primary : R.drawable.form_button_ghost);
+        // Built here rather than taken from a file: a button inside a dialog
+        // carries a tint of its own, which swallowed the outline of the way out
+        // and left the word standing on nothing.
+        button.setBackgroundTintList(null);
+        android.graphics.drawable.GradientDrawable shape =
+                new android.graphics.drawable.GradientDrawable();
+        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        shape.setCornerRadius(24 * density);
+        if (proposed) {
+            shape.setColor(0xFF2F8F63);
+        } else {
+            shape.setColor(Color.TRANSPARENT);
+            shape.setStroke(Math.max(1, Math.round(density)), 0x59FFFFFF);
+        }
+        button.setBackground(new android.graphics.drawable.RippleDrawable(
+                android.content.res.ColorStateList.valueOf(proposed ? 0x33000000 : 0x33FFFFFF),
+                shape, null));
         button.setTextColor(proposed ? Color.WHITE : 0xFFF4EFE4);
         button.setAllCaps(false);
         button.setTypeface(button.getTypeface(),
