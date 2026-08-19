@@ -250,6 +250,11 @@ public class TodayButton {
      * while the one above it was still out: three buttons in a line that never
      * looked like a line.
      */
+    /** One clock for the whole column, so they cannot drift apart. */
+    private static final android.os.Handler CLOCK =
+            new android.os.Handler(android.os.Looper.getMainLooper());
+    private static Runnable pending;
+
     static void wakeAll(View button) {
         android.view.ViewParent parent = button.getParent();
         if (!(parent instanceof ViewGroup)) {
@@ -257,12 +262,29 @@ public class TodayButton {
             return;
         }
         ViewGroup content = (ViewGroup) parent;
-        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.fold_button, R.id.today_button, R.id.top_button}) {
+        // Woken together and rested together, by one timer held here: each
+        // button used to keep its own, so they went out one at a time in
+        // whatever order they had last been touched.
+        if (pending != null) {
+            CLOCK.removeCallbacks(pending);
+        }
+        final java.util.List<View> column = new java.util.ArrayList<>();
+        for (int id : new int[]{R.id.privacy_button, R.id.oldest_button, R.id.fold_button,
+                R.id.today_button, R.id.top_button}) {
             View one = content.findViewById(id);
             if (one != null && one.getVisibility() == View.VISIBLE) {
-                wake(one);
+                one.animate().cancel();
+                one.setAlpha(1f);
+                one.setTranslationX(0f);
+                column.add(one);
             }
         }
+        pending = () -> {
+            for (View one : column) {
+                rest(one);
+            }
+        };
+        CLOCK.postDelayed(pending, REST_AFTER_MS);
     }
 
     /** And back to the top of the list, which is where the newest movement is. */
