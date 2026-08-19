@@ -1,7 +1,8 @@
 <!--
-  scales, the filled weight, from the Phosphor icon set, MIT licence.
-  Solid shapes rather than outlines: bars read as quantities at a glance, where
-  arrows read as directions and say nothing about how much.
+  scales-fill, the filled weight, from the Phosphor icon set, MIT licence.
+  The two weighed against each other, which is what a summary is: one figure,
+  what is left when the one is taken from the other.
+  The picture it replaces was made in 2012 for a screen a quarter as fine.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
