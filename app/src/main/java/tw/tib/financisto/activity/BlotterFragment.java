@@ -1095,11 +1095,16 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         Cursor c;
         blotterFilter.recalculatePeriod();
         WhereFilter blotterFilterCopy = WhereFilter.copyOf(blotterFilter);
+        // The totals are worked out from the question as it was asked, before
+        // the folded years are taken out of it. Folding a year is a way of
+        // reading the list, not a way of changing what is in it: the balance at
+        // the foot must not move because somebody tidied the view.
+        WhereFilter forTotals = WhereFilter.copyOf(blotterFilterCopy);
 
         new Handler(Looper.getMainLooper()).post(()-> {
             emptyText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            calculateTotals(blotterFilterCopy);
+            calculateTotals(forTotals);
         });
 
         if (db == null) {
