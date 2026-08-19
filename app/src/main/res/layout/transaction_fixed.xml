@@ -14,8 +14,11 @@
 	android:orientation="vertical">
 	<LinearLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" style="@style/BottomBar">
-		<ImageButton android:id="@+id/status" android:layout_width="wrap_content"
-			android:layout_height="match_parent" android:src="@drawable/transaction_status_unreconciled_2"/>
+		<ImageButton android:id="@+id/status"
+			style="@style/BottomBarButton"
+			android:src="@drawable/status_unreconciled"
+			android:scaleType="centerInside"
+			android:padding="10dp"/>
 		<Button android:layout_width="wrap_content" android:gravity="center"
 			android:text="04/03/09" android:id="@+id/date"
 			android:layout_height="wrap_content" android:layout_weight="1"

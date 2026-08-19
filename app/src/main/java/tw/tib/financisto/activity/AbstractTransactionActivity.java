@@ -43,6 +43,9 @@ import tw.tib.financisto.model.Payee;
 import tw.tib.financisto.model.SystemAttribute;
 import tw.tib.financisto.model.Transaction;
 import tw.tib.financisto.model.TransactionAttribute;
+import android.widget.ListAdapter;
+
+import tw.tib.financisto.adapter.EntityEnumAdapter;
 import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.recur.NotificationOptions;
 import tw.tib.financisto.recur.Recurrence;
@@ -284,7 +287,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
 		status = findViewById(R.id.status);
 		status.setOnClickListener(v -> {
-			ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(AbstractTransactionActivity.this, statuses);
+			// Each state beside its own mark, in its own colour: five words in a
+			// list said nothing about which of them was the green tick.
+			ListAdapter adapter = new EntityEnumAdapter<>(
+					AbstractTransactionActivity.this, statuses, false);
 			x.selectPosition(AbstractTransactionActivity.this, R.id.status, R.string.transaction_status, adapter, transaction.status.ordinal());
 		});
 

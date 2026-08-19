@@ -11,9 +11,14 @@
 package tw.tib.financisto.model;
 
 import tw.tib.financisto.R;
-import tw.tib.financisto.utils.LocalizableEnum;
+import tw.tib.financisto.utils.EntityEnum;
 
-public enum TransactionStatus implements LocalizableEnum {
+/**
+ * Where a movement stands: written down, still to happen, checked against the
+ * statement. Each carries its own mark, so wherever the five are listed they
+ * can be shown as they are drawn on the rows themselves.
+ */
+public enum TransactionStatus implements EntityEnum {
 	RS(R.string.transaction_status_restored, R.drawable.status_restored, R.color.restored_transaction_color),
 	PN(R.string.transaction_status_pending, R.drawable.status_pending, R.color.pending_transaction_color),
 	UR(R.string.transaction_status_unreconciled, R.drawable.status_unreconciled, R.color.unreconciled_transaction_color),
@@ -33,6 +38,11 @@ public enum TransactionStatus implements LocalizableEnum {
 	@Override
 	public int getTitleId() {
 		return titleId;
+	}
+
+	@Override
+	public int getIconId() {
+		return iconId;
 	}
 
 }

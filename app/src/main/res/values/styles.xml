@@ -31,6 +31,7 @@
         <item name="android:actionModeStyle">@style/Cifra.ActionMode</item>
 		<item name="android:popupMenuStyle">@style/AppPopupMenu</item>
 		<item name="android:alertDialogTheme">@style/AlertDialog</item>
+		<item name="android:datePickerDialogTheme">@style/CifraDatePickerDialog</item>
 		<!--
 		  The screens that still use the platform's own title bar - the budget,
 		  the category, the account - were showing the app's icon beside the
@@ -53,6 +54,22 @@
 	</style>
 	<style name="AlertDialog" parent="android:Theme.Material.Dialog">
 		<item name="android:windowBackground">@drawable/dialog_background</item>
+	</style>
+	<!--
+	  The calendar that picks the date of a movement.
+	  It came dressed in the platform's own colours - a blue head, a blue ring
+	  round today - on a white card, which is nothing like the rest of the app.
+	  Same rounded dark card as every other dialog, and the app's green where
+	  the blue was. The hands of the clock are left as they are.
+	-->
+	<style name="CifraDatePickerDialog" parent="android:Theme.Material.Dialog">
+		<item name="android:windowBackground">@drawable/dialog_background</item>
+		<item name="android:colorAccent">#FF4CAF7D</item>
+		<item name="android:datePickerStyle">@style/CifraDatePicker</item>
+	</style>
+	<style name="CifraDatePicker" parent="android:Widget.Material.DatePicker">
+		<item name="android:datePickerMode">calendar</item>
+		<item name="android:headerBackground">#FF303030</item>
 	</style>
 	<style name="CalculatorDialog" parent="android:Theme.Material.Dialog" />
 

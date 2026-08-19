@@ -40,6 +40,22 @@ public class MyQuickAction extends QuickAction {
     }
 
     /**
+     * The same, drawn larger.
+     * <p>
+     * For the five states and nothing else: they are read as colours, and a
+     * colour needs room to be one. The rest of the ring keeps the size it had.
+     */
+    public static MyQuickAction big(Context ctx, int drawableId, int titleId) {
+        return new MyQuickAction(ctx, drawableId, titleId, true);
+    }
+
+    private MyQuickAction(Context ctx, int drawableId, int titleId, boolean big) {
+        super(ctx, sized(ctx, ResourcesCompat.getDrawable(
+                ctx.getResources(), drawableId, null).mutate()), titleId);
+        this.titleId = titleId;
+    }
+
+    /**
      * How large a symbol stands in the ring.
      * <p>
      * They were drawn at whatever size the picture happened to be, which for
@@ -57,17 +73,17 @@ public class MyQuickAction extends QuickAction {
     private static Drawable buildDrawable(Context ctx, int drawableId) {
         Drawable d = ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate();
         d.setColorFilter(LIGHT_CF);
-        return sized(ctx, d);
+        return d;
     }
 
     private static Drawable buildColorDrawable(Context ctx, @ColorInt int color, int drawableId) {
         if (color == NO_FILTER) {
-            return sized(ctx, ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate());
+            return ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null);
         }
         else {
             Drawable d = ResourcesCompat.getDrawable(ctx.getResources(), drawableId, null).mutate();
             d.setColorFilter(new LightingColorFilter(Color.BLACK, color));
-            return sized(ctx, d);
+            return d;
         }
     }
 }

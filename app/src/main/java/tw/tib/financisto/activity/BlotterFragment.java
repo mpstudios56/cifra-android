@@ -690,11 +690,11 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
      */
     private void askWhichStatus(View anchor) {
         QuickActionGrid states = new QuickActionGrid(getContext());
-        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_restored, MyQuickAction.NO_FILTER, R.string.transaction_status_restored));
-        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_pending, MyQuickAction.NO_FILTER, R.string.transaction_status_pending));
-        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_unreconciled, MyQuickAction.NO_FILTER, R.string.transaction_status_unreconciled));
-        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_cleared, MyQuickAction.NO_FILTER, R.string.transaction_status_cleared));
-        states.addQuickAction(new MyQuickAction(getContext(), R.drawable.status_reconciled, MyQuickAction.NO_FILTER, R.string.transaction_status_reconciled));
+        states.addQuickAction(MyQuickAction.big(getContext(), R.drawable.status_restored, R.string.transaction_status_restored));
+        states.addQuickAction(MyQuickAction.big(getContext(), R.drawable.status_pending, R.string.transaction_status_pending));
+        states.addQuickAction(MyQuickAction.big(getContext(), R.drawable.status_unreconciled, R.string.transaction_status_unreconciled));
+        states.addQuickAction(MyQuickAction.big(getContext(), R.drawable.status_cleared, R.string.transaction_status_cleared));
+        states.addQuickAction(MyQuickAction.big(getContext(), R.drawable.status_reconciled, R.string.transaction_status_reconciled));
         states.setOnQuickActionClickListener((widget, position, action) -> {
             int titleId = ((MyQuickAction) action).titleId;
             if (titleId == R.string.transaction_status_restored) {

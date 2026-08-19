@@ -16,6 +16,9 @@ import tw.tib.financisto.datetime.DateUtils;
 import tw.tib.financisto.model.Account;
 import tw.tib.financisto.model.Currency;
 import tw.tib.financisto.model.Transaction;
+import android.widget.ListAdapter;
+
+import tw.tib.financisto.adapter.EntityEnumAdapter;
 import tw.tib.financisto.model.TransactionStatus;
 import tw.tib.financisto.utils.CurrencyCache;
 import tw.tib.financisto.utils.EnumUtils;
@@ -98,7 +101,7 @@ public abstract class AbstractSplitActivity extends AbstractActivity {
 
         status = findViewById(R.id.status);
         status.setOnClickListener(v -> {
-            ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(AbstractSplitActivity.this, statuses);
+            ListAdapter adapter = new EntityEnumAdapter<>(AbstractSplitActivity.this, statuses, false);
             x.selectPosition(AbstractSplitActivity.this, R.id.status, R.string.transaction_status, adapter, split.status.ordinal());
         });
 
