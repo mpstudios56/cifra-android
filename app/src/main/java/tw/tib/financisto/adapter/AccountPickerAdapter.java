@@ -63,6 +63,7 @@ public class AccountPickerAdapter extends ResourceCursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder vh = (ViewHolder) view.getTag();
         Account a = EntityManager.loadFromCursor(cursor, Account.class);
+        tw.tib.financisto.utils.AccountMark.drawInto(vh.icon, vh.iconText, a);
         if (showBalance) {
             u.setAccountTitleBalance(a, vh.title, vh.balance, vh.limit);
         } else {
@@ -96,6 +97,8 @@ public class AccountPickerAdapter extends ResourceCursorAdapter {
     }
 
     static class ViewHolder {
+        final android.widget.ImageView icon;
+        final TextView iconText;
         final TextView title;
         final TextView balance;
         final TextView limit;
@@ -103,6 +106,8 @@ public class AccountPickerAdapter extends ResourceCursorAdapter {
         final TextView sectionLabel;
 
         ViewHolder(View v) {
+            icon = v.findViewById(R.id.icon);
+            iconText = v.findViewById(R.id.icon_text);
             title = v.findViewById(R.id.data);
             balance = v.findViewById(R.id.balance);
             limit = v.findViewById(R.id.limit);

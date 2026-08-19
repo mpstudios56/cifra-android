@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  One account as a movement is offered it, with the heading that opens a
-  section above it: "Conti principali" over the handful used every day, "Altri
-  conti" over the rest. The heading is hidden on every row but the first of
-  each group.
+  One account as a movement is offered it: its own mark, its name, its balance,
+  and above the first of each group the heading that opens the group - "Conti
+  principali" over the handful used every day, "Altri conti" over the rest.
+
+  The mark is what the accounts screen shows; here there used to be a line of
+  text and nothing else, so the same account looked like two different things
+  depending on which screen one was standing in.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,17 +20,17 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingTop="10dp"
-        android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="6dp"
         android:visibility="gone">
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#33F4EFE4" />
+            android:background="#2EF4EFE4" />
 
         <TextView
             android:id="@+id/section_label"
@@ -35,35 +38,65 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:letterSpacing="0.06"
+            android:textAllCaps="true"
             android:textColor="#8CF4EFE4"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#33F4EFE4" />
+            android:background="#2EF4EFE4" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/activatedBackgroundIndicator"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
+        android:minHeight="56dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/icon_text"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#FFF4EFE4"
+            android:textSize="13sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:maxLines="1"
             android:text="title"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="#FFF4EFE4"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/balance"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="10dp" />
 
         <TextView
             android:id="@+id/balance"
@@ -72,10 +105,11 @@
             android:duplicateParentState="true"
             android:singleLine="true"
             android:text="balance"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/limit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/limit"
@@ -83,7 +117,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-1sp"
-            android:layout_marginBottom="2sp"
             android:singleLine="true"
             android:text="limit"
             app:layout_constraintBottom_toBottomOf="parent"
