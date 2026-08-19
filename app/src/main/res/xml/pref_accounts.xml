@@ -26,11 +26,4 @@
         android:key="hide_closed_accounts"
         android:summary="@string/hide_closed_accounts_summary"
         android:title="@string/hide_closed_accounts" />
-    <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
-        android:defaultValue="true"
-        android:key="show_menu_button_on_accounts_screen"
-        android:summary="@string/show_menu_button_on_accounts_screen_summary"
-        android:title="@string/show_menu_button_on_accounts_screen" />
 </androidx.preference.PreferenceScreen>

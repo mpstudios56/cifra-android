@@ -300,6 +300,11 @@ public class MainActivity extends AppCompatActivity {
         // one thing this screen owes them: if a round landed while its tabs were
         // not being looked at, they are redrawn now rather than left showing what
         // they had loaded before.
+        // The four rows that carry a placeholder instead of a name are put
+        // right on every visit, not only at the first start: restoring a backup
+        // brings the placeholders back with it, and until now they stayed on
+        // screen as "<current>" until the app was closed and opened again.
+        nameTheSpecialRows();
         if (AutoSync.tookSomethingIn()) {
             redrawEveryTab();
         }
@@ -358,6 +363,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         PinProtection.immediateLock(this);
+    }
+
+    /** Gives the four special rows the names of this language. */
+    private void nameTheSpecialRows() {
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        try {
+            db.open();
+            SQLiteDatabase x = db.db();
+            updateFieldInTable(x, DatabaseHelper.CATEGORY_TABLE, 0, "title", getString(R.string.no_category));
+            updateFieldInTable(x, DatabaseHelper.CATEGORY_TABLE, -1, "title", getString(R.string.split));
+            updateFieldInTable(x, DatabaseHelper.PROJECT_TABLE, 0, "title", getString(R.string.no_project));
+            updateFieldInTable(x, DatabaseHelper.LOCATIONS_TABLE, 0, "title", getString(R.string.current_location));
+        } catch (Exception e) {
+            Log.e(TAG, "could not name the special rows", e);
+        } finally {
+            db.close();
+        }
     }
 
     private void initialLoad() {

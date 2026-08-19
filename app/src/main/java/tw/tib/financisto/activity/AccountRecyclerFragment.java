@@ -118,8 +118,8 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         if (bSearch != null) {
             bSearch.setVisibility(View.GONE);
         }
+        loadFilter();
         if (false && bSearch != null) {
-            loadFilter();
 
             if (!filter.isEmpty()) {
                 searchLayout.setVisibility(View.VISIBLE);
@@ -197,12 +197,14 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
 
     private void setupMenuButton() {
         final ImageButton bMenu = getView().findViewById(R.id.bMenu);
-        if (MyPreferences.isShowMenuButtonOnAccountsScreen()) {
-            // A menu of one is a button with an extra tap in front of it.
-            bMenu.setOnClickListener(v -> MenuListItem.backupNow(this));
-        } else {
-            bMenu.setVisibility(View.GONE);
+        if (bMenu == null) {
+            return;
         }
+        // Always there. It was governed by a switch from the days when it opened
+        // a menu; now it makes a backup, and a backup button that can be hidden
+        // by a setting nobody remembers is a backup button one day missing.
+        bMenu.setVisibility(View.VISIBLE);
+        bMenu.setOnClickListener(v -> MenuListItem.backupNow(this));
     }
 
     private void handlePopupMenu(int id) {

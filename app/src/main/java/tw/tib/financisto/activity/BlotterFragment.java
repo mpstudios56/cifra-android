@@ -591,7 +591,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // laid out flat here, or hidden behind switches nobody had reason to
         // find: which state, and which kind of copy, are questions about the
         // movement in hand, not about the app.
-        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_duplicate, R.string.duplicate));
+        transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_copy, R.string.duplicate));
         transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_action_state, MyQuickAction.NO_FILTER, R.string.transaction_change_status));
         if (plainMovement) {
             transactionActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_tab_templates, R.string.save_as_template));
@@ -713,9 +713,9 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // "mantieni data e ora" is not a word - and under a symbol in a ring
         // there is room for a word.
         java.util.List<MenuItemInfo> ways = new LinkedList<>();
-        ways.add(new MenuItemInfo(1, R.string.duplicate_today, R.drawable.ic_duplicate));
-        ways.add(new MenuItemInfo(2, R.string.duplicate_keep_time, R.drawable.ic_duplicate_clock));
-        ways.add(new MenuItemInfo(3, R.string.duplicate_keep_date_time, R.drawable.ic_duplicate_clock));
+        ways.add(new MenuItemInfo(1, R.string.duplicate_today, R.drawable.ic_action_copy));
+        ways.add(new MenuItemInfo(2, R.string.duplicate_keep_time, R.drawable.ic_action_copy_keep_time));
+        ways.add(new MenuItemInfo(3, R.string.duplicate_keep_date_time, R.drawable.ic_action_copy_keep_time));
         RowMenu.show(getActivity(), anchor != null ? anchor : getView(), ways, menuId -> {
             if (menuId == 1) {
                 duplicateTransaction(which, 1);

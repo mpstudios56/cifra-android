@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -194,16 +192,17 @@ public class CategorySelectorActivity extends AbstractListActivity<Cursor> {
     private View buildViewForCategory(CategoryTag c) {
         var res = new Button(this);
         res.setText(c.title);
-        // A pill in the app's colours rather than a platform slab: these sit in
-        // a row of five or six, and six grey boxes with shadows are what made
-        // this screen read as somebody else's.
+        // A pill in the app's colours rather than a platform slab. Only the
+        // look: what these buttons do, and the rows underneath them, are left
+        // exactly as they were.
         res.setAllCaps(false);
         res.setBackgroundResource(R.drawable.chip_background);
         res.setTextColor(0xFFF4EFE4);
         res.setTextSize(13);
         res.setStateListAnimator(null);
-        int side = Math.round(14 * getResources().getDisplayMetrics().density);
-        int tall = Math.round(6 * getResources().getDisplayMetrics().density);
+        float density = getResources().getDisplayMetrics().density;
+        int side = Math.round(14 * density);
+        int tall = Math.round(6 * density);
         res.setPadding(side, tall, side, tall);
         res.setMinHeight(0);
         res.setMinimumHeight(0);
@@ -284,38 +283,45 @@ public class CategorySelectorActivity extends AbstractListActivity<Cursor> {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            BlotterListAdapter.BlotterViewHolder v;
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.category_selector_item, parent, false);
+                convertView = inflater.inflate(R.layout.blotter_list_item, parent, false);
+                v = new BlotterListAdapter.BlotterViewHolder(convertView);
+                convertView.setTag(v);
+            } else {
+                v = (BlotterListAdapter.BlotterViewHolder)convertView.getTag();
             }
             Category c = getItem(position);
-            TextView title = convertView.findViewById(R.id.title);
-            TextView tag = convertView.findViewById(R.id.tag);
-            ImageView symbol = convertView.findViewById(R.id.category_icon);
-            TextView symbolText = convertView.findViewById(R.id.category_icon_text);
-            View kind = convertView.findViewById(R.id.kind);
-            View deeper = convertView.findViewById(R.id.deeper);
-
             if (c.id == CategoryTreeNavigator.INCOME_CATEGORY_ID) {
-                title.setText(getString(R.string.income));
+                v.centerView.setText(getString(R.string.income));                
             } else if (c.id == CategoryTreeNavigator.EXPENSE_CATEGORY_ID) {
-                title.setText(getString(R.string.expense));
+                v.centerView.setText(getString(R.string.expense));
             } else {
-                title.setText(c.title);
+                v.centerView.setText(c.title);
             }
-
-            // The attribute of a category, where it has one, reads as a note
-            // beside the name rather than as a figure on the right.
-            String note = attributes != null && attributes.containsKey(c.id)
-                    ? attributes.get(c.id) : c.tag;
-            tag.setText(note == null ? "" : note);
-            tag.setVisibility(note == null || note.isEmpty() ? View.GONE : View.VISIBLE);
-
-            CategoryIcons.show(symbol, symbolText, c);
-            kind.setBackgroundColor(c.isIncome() ? incomeColor : expenseColor);
-            deeper.setVisibility(c.hasChildren() ? View.VISIBLE : View.GONE);
-            convertView.setActivated(navigator.isSelected(c.id));
+            v.bottomView.setText(c.tag);
+            // The same symbol as in the list one picks from, so choosing a category
+            // and reading one back look like the same thing.
+            CategoryIcons.show(v.categoryIcon, v.categoryIconText, c);
+            v.indicator.setBackgroundColor(c.isIncome() ? incomeColor : expenseColor);
+            v.rightCenterView.setVisibility(View.INVISIBLE);
+            v.iconView.setVisibility(View.INVISIBLE);
+            if (attributes != null && attributes.containsKey(c.id)) {
+                v.rightView.setText(attributes.get(c.id));
+                v.rightView.setVisibility(View.VISIBLE);
+            } else {
+                v.rightView.setVisibility(View.GONE);
+            }
+            v.topView.setVisibility(View.INVISIBLE);
+            if (navigator.isSelected(c.id)) {
+                v.layout.setBackgroundResource(R.drawable.list_selector_background_focus);
+            } else {
+                v.layout.setBackgroundResource(0);
+            }
+            v.top2View.setVisibility(View.INVISIBLE);
             return convertView;
         }
+
     }
     
 
