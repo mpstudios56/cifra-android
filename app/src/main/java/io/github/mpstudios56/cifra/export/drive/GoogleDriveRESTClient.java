@@ -55,13 +55,19 @@ public class GoogleDriveRESTClient {
                         .build();
     }
 
-    private String getBackupFolderName() throws ImportExportException {
+    /** Where the copies go on Drive, by name. */
+    private static final String DEFAULT_FOLDER = "Cifra";
+
+    /**
+     * The folder on Drive the copies belong in.
+     * <p>
+     * Nobody has to name it: a folder is a place, not a decision, and refusing
+     * to make a backup because a field was left empty is a refusal for no
+     * reason. Whoever wants it somewhere else says so in the settings.
+     */
+    private String getBackupFolderName() {
         String folder = MyPreferences.getGoogleDriveBackupFolder();
-        // check the backup folder registered on preferences
-        if (folder == null || folder.equals("")) {
-            throw new ImportExportException(R.string.gdocs_folder_not_configured);
-        }
-        return folder;
+        return folder == null || folder.isEmpty() ? DEFAULT_FOLDER : folder;
     }
 
     public String getFolderID(String folderName, String parentFolderId, boolean createIfNotExist) throws Exception {
@@ -175,7 +181,10 @@ public class GoogleDriveRESTClient {
     }
 
     public void uploadBackup(Uri uri) throws Exception {
-        String folderID = getBackupFolderID(false);
+        // Made if it is not there yet: the first copy has nowhere to go, and
+        // asking somebody to create a folder by hand in Drive before their
+        // first backup is asking them to fail at it.
+        String folderID = getBackupFolderID(true);
         if (folderID == null) {
             throw new ImportExportException(R.string.gdocs_folder_not_configured);
         }
