@@ -364,4 +364,91 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
                 getString(R.string.dropbox_loading_files), true);
         new io.github.mpstudios56.cifra.export.dropbox.DropboxListFilesTask(getActivity(), d).execute();
     }
+
+    // ---------------------------------------- listening for what comes back
+    //
+    // The tasks that talk to Drive and to Dropbox do not return an answer to
+    // whoever started them: they announce it, and whoever is listening picks it
+    // up. The listening used to be done by the menu screen, which is where the
+    // buttons used to be. The buttons are here now, so the listening is here
+    // too - without it the account was chosen, the task ran, and nothing at all
+    // appeared to happen.
+
+    private io.github.mpstudios56.cifra.bus.GreenRobotBus announcements;
+
+    private io.github.mpstudios56.cifra.bus.GreenRobotBus announcements() {
+        if (announcements == null) {
+            announcements = io.github.mpstudios56.cifra.bus.GreenRobotBus_.getInstance_(getContext());
+        }
+        return announcements;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        announcements().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        announcements().unregister(this);
+    }
+
+    /** The backups found on Drive, offered one to be brought back. */
+    @org.greenrobot.eventbus.Subscribe(threadMode = org.greenrobot.eventbus.ThreadMode.MAIN)
+    public void onGoogleDriveFileList(io.github.mpstudios56.cifra.export.drive.GoogleDriveFileList event) {
+        final io.github.mpstudios56.cifra.export.drive.GoogleDriveFileInfo[] files = event.files;
+        final String[] names = new String[files.length];
+        for (int i = 0; i < files.length; i++) {
+            names[i] = files[i].name;
+        }
+        final Context context = getContext();
+        final io.github.mpstudios56.cifra.export.drive.GoogleDriveFileInfo[] chosen =
+                new io.github.mpstudios56.cifra.export.drive.GoogleDriveFileInfo[1];
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle(R.string.restore_database_online_google_drive)
+                .setSingleChoiceItems(names, -1, (dialog, which) -> {
+                    if (which >= 0 && which < names.length) {
+                        chosen[0] = files[which];
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.restore, (dialog, which) -> {
+                    if (chosen[0] != null) {
+                        android.app.ProgressDialog d = android.app.ProgressDialog.show(context, null,
+                                getString(R.string.google_drive_restore_in_progress), true);
+                        new io.github.mpstudios56.cifra.export.drive.GoogleDriveRestoreTask(
+                                getActivity(), d, chosen[0]).execute();
+                    }
+                })
+                .show();
+    }
+
+    /** The same, on Dropbox. */
+    @org.greenrobot.eventbus.Subscribe(threadMode = org.greenrobot.eventbus.ThreadMode.MAIN)
+    public void onDropboxFileList(io.github.mpstudios56.cifra.export.dropbox.DropboxFileList event) {
+        final String[] files = event.files;
+        if (files == null) {
+            return;
+        }
+        final String[] chosen = new String[1];
+        new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                .setTitle(R.string.restore_database_online_dropbox)
+                .setSingleChoiceItems(files, -1, (dialog, which) -> {
+                    if (which >= 0 && which < files.length) {
+                        chosen[0] = files[which];
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.restore, (dialog, which) -> {
+                    if (chosen[0] != null) {
+                        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                                getString(R.string.restore_database_inprogress_dropbox), true);
+                        new io.github.mpstudios56.cifra.export.dropbox.DropboxRestoreTask(
+                                getActivity(), d, chosen[0]).execute();
+                    }
+                })
+                .show();
+    }
 }

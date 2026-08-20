@@ -177,7 +177,12 @@ public abstract class Export {
             GoogleDriveRESTClient googleDriveRESTClient = new GoogleDriveRESTClient(context);
             googleDriveRESTClient.uploadBackup(backupFileUri);
         } catch (Exception e) {
-            throw new ImportExportException(R.string.google_drive_error);
+            // The reason is carried through instead of being dropped: without
+            // it every failure - no permission, no folder, no network, an
+            // account the app was never allowed to use - read as the same
+            // three words, and there was nothing to go on.
+            android.util.Log.e("Cifra", "Google Drive upload failed", e);
+            throw new ImportExportException(R.string.google_drive_error, e);
         }
     }
 
