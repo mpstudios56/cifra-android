@@ -78,8 +78,8 @@ public enum MenuListItem implements SummaryEntityEnum {
             // A page of its own, sliding in over the menu, rather than a box
             // dropped on top of it: everything else opened from this list is a
             // screen, and this was the odd one out.
-            openBackupSettings(fragment,
-                    io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_LOCAL);
+            openSettingsScreen(fragment,
+                    "io.github.mpstudios56.cifra.preference.BackupPreferencesFragment");
         }
     },
     /**
@@ -92,8 +92,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_BACKUP_ONLINE(R.string.backup_online, R.string.backup_online_summary, R.drawable.ic_menu_cloud) {
         @Override
         public void call(Fragment fragment) {
-            openBackupSettings(fragment,
-                    io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_ONLINE);
+            openSettingsScreen(fragment,
+                    "io.github.mpstudios56.cifra.preference.OnlineBackupPreferencesFragment");
         }
     },
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
@@ -209,11 +209,9 @@ public enum MenuListItem implements SummaryEntityEnum {
      * Which half - the lock and the copy on this phone, or the two services -
      * is decided by the entry that opened it.
      */
-    private static void openBackupSettings(Fragment fragment, String half) {
+    private static void openSettingsScreen(Fragment fragment, String screen) {
         Intent intent = new Intent(fragment.getContext(), PreferencesActivity2.class);
-        intent.putExtra(PreferencesActivity2.SCREEN_EXTRA,
-                "io.github.mpstudios56.cifra.preference.BackupPreferencesFragment");
-        intent.putExtra(io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_EXTRA, half);
+        intent.putExtra(PreferencesActivity2.SCREEN_EXTRA, screen);
         fragment.startActivity(intent);
     }
 

@@ -59,13 +59,21 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
     public static final String ONLY_LOCAL = "local";
     public static final String ONLY_ONLINE = "online";
 
-    private String only;
+    /**
+     * Which half this screen is.
+     * <p>
+     * Said by the class itself rather than by a message handed to it: the
+     * message travelled through an activity that keeps a single instance of
+     * itself, and a second opening went on showing the first one’s answer.
+     */
+    protected boolean isOnline() {
+        return false;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        only = getArguments() != null ? getArguments().getString(ONLY_EXTRA) : null;
-        title = ONLY_ONLINE.equals(only) ? R.string.backup_online : R.string.menu_backup_security;
+        title = isOnline() ? R.string.backup_online : R.string.menu_backup_security;
     }
 
     @Override
@@ -305,10 +313,7 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
 
     /** Hides the groups that belong to the other half of this screen. */
     private void showOnlyWhatWasAskedFor() {
-        if (only == null) {
-            return;
-        }
-        boolean online = ONLY_ONLINE.equals(only);
+        boolean online = isOnline();
         hide("cat_protection", online);
         hide("cat_backup_local", online);
         hide("cat_dropbox", !online);

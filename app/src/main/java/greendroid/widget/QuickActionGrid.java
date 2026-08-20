@@ -105,13 +105,12 @@ public class QuickActionGrid extends QuickActionWidget {
         float density = contentView.getResources().getDisplayMetrics().density;
         int margin = Math.round(16 * density);
         int roomPerEntry = Math.round(104 * density);
-        // Never wider than what it actually holds: a ring of two, in a grid
-        // still willing to lay out three, was a bubble with an empty column in
-        // it.
-        int columns = mGridView.getNumColumns();
-        if (quickActions != null && !quickActions.isEmpty()) {
-            columns = Math.min(columns, quickActions.size());
-        }
+        // How many entries there are, which is the only thing known for
+        // certain at this moment: the grid is asked how many columns it will
+        // lay out, and before it has been laid out even once it answers "work
+        // it out yourself" - which was read as no answer, and left the ring the
+        // width of the screen with two buttons stretched across it.
+        int columns = quickActions != null && !quickActions.isEmpty() ? quickActions.size() : 3;
         int width = getScreenWidth() - 2 * margin;
         if (columns > 0) {
             width = Math.min(width, columns * roomPerEntry);
