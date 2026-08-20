@@ -35,10 +35,20 @@ import io.github.mpstudios56.cifra.R;
 import io.github.mpstudios56.cifra.adapter.CategoryListAdapter2;
 import io.github.mpstudios56.cifra.model.Category;
 import io.github.mpstudios56.cifra.model.CategoryTree;
+import java.util.List;
+
+import io.github.mpstudios56.cifra.utils.MenuItemInfo;
 
 public class CategoryListActivity2 extends AbstractListActivity<Cursor> {
 
 	private static final int NEW_CATEGORY_REQUEST = 1;
+
+	// The moves, numbered past the entries the list menu already has.
+	private static final int MENU_POS_TOP = MENU_ADD + 1;
+	private static final int MENU_POS_UP = MENU_ADD + 2;
+	private static final int MENU_POS_DOWN = MENU_ADD + 3;
+	private static final int MENU_POS_BOTTOM = MENU_ADD + 4;
+	private static final int MENU_POS_SORT = MENU_ADD + 5;
 	private static final int EDIT_CATEGORY_REQUEST = 2;
 
 	public CategoryListActivity2() {
@@ -135,41 +145,105 @@ public class CategoryListActivity2 extends AbstractListActivity<Cursor> {
 		startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
 	}
 
+	/**
+	 * A touch goes into the category, where the small arrow used to be the only
+	 * way in.
+	 * <p>
+	 * It used to open a box of arrows for moving the category up and down,
+	 * which is a thing one does once in a while, while going into a category is
+	 * a thing one does constantly. Those arrows are on the held-down menu now,
+	 * where the rest of what can be done to a category already lives.
+	 */
 	@Override
-	protected void viewItem(View v, final int position, long id) {
-		final Category c = (Category) getListAdapter().getItem(position);
-		final ArrayList<PositionAction> actions = new ArrayList<>();
-		Category p = c.parent;
-		CategoryTree<Category> categories;
-		if (p == null) {
-			categories = this.categories;
+	protected void onItemClick(View v, int position, long id) {
+		Category c = (Category) getListAdapter().getItem(position);
+		if (c != null && c.hasChildren()) {
+			((CategoryListAdapter2) adapter).onListItemClick(c.id);
 		} else {
-			categories = p.children;
+			editItem(v, position, id);
 		}
-		final int pos = categories.indexOf(c);
+	}
+
+	@Override
+	protected void viewItem(View v, int position, long id) {
+		editItem(v, position, id);
+	}
+
+	/** Where the category stands among the ones it shares a parent with. */
+	private CategoryTree<Category> treeOf(Category c) {
+		return c.parent == null ? categories : c.parent.children;
+	}
+
+	private Category categoryAt(int position) {
+		Object item = getListAdapter().getItem(position);
+		return item instanceof Category ? (Category) item : null;
+	}
+
+	/**
+	 * The held-down menu: what can be done to a category, including the moves
+	 * that used to be behind a touch.
+	 */
+	@Override
+	protected List<MenuItemInfo> createContextMenus(long id) {
+		List<MenuItemInfo> menus = super.createContextMenus(id);
+		Category c = findById(id);
+		if (c == null) {
+			return menus;
+		}
+		CategoryTree<Category> tree = treeOf(c);
+		int pos = tree.indexOf(c);
 		if (pos > 0) {
-			actions.add(top);
-			actions.add(up);
+			menus.add(new MenuItemInfo(MENU_POS_TOP, R.string.position_move_top, R.drawable.ic_move_top));
+			menus.add(new MenuItemInfo(MENU_POS_UP, R.string.position_move_up, R.drawable.ic_move_up));
 		}
-		if (pos < categories.size() - 1) {
-			actions.add(down);
-			actions.add(bottom);
+		if (pos >= 0 && pos < tree.size() - 1) {
+			menus.add(new MenuItemInfo(MENU_POS_DOWN, R.string.position_move_down, R.drawable.ic_move_down));
+			menus.add(new MenuItemInfo(MENU_POS_BOTTOM, R.string.position_move_bottom, R.drawable.ic_move_bottom));
 		}
 		if (c.hasChildren()) {
-			actions.add(sortByTitle);
+			menus.add(new MenuItemInfo(MENU_POS_SORT, R.string.sort_by_title, R.drawable.sort));
 		}
-		final ListAdapter a = new CategoryPositionListAdapter(actions);
-		final CategoryTree<Category> tree = categories;
-		new AlertDialog.Builder(this)
-				.setTitle(c.getTitle())
-				.setAdapter(a, (dialog, which) -> {
-					PositionAction action = actions.get(which);
-					if (action.execute(tree, pos)) {
-						db.updateCategoryTree(tree);
-						notifyDataSetChanged();
-					}
-				})
-				.show();
+		return menus;
+	}
+
+	private Category findById(long id) {
+		ListAdapter a = getListAdapter();
+		for (int i = 0; i < a.getCount(); i++) {
+			Object item = a.getItem(i);
+			if (item instanceof Category && ((Category) item).id == id) {
+				return (Category) item;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean onPopupItemSelected(int itemId, View view, int position, long id) {
+		Category c = categoryAt(position);
+		if (c == null) {
+			return super.onPopupItemSelected(itemId, view, position, id);
+		}
+		CategoryTree<Category> tree = treeOf(c);
+		int pos = tree.indexOf(c);
+		boolean moved;
+		if (itemId == MENU_POS_TOP) {
+			moved = tree.moveCategoryToTheTop(pos);
+		} else if (itemId == MENU_POS_UP) {
+			moved = tree.moveCategoryUp(pos);
+		} else if (itemId == MENU_POS_DOWN) {
+			moved = tree.moveCategoryDown(pos);
+		} else if (itemId == MENU_POS_BOTTOM) {
+			moved = tree.moveCategoryToTheBottom(pos);
+		} else if (itemId == MENU_POS_SORT) {
+			moved = tree.sortByTitle();
+		} else {
+			return super.onPopupItemSelected(itemId, view, position, id);
+		}
+		if (moved) {
+			db.updateCategoryTree(tree);
+			notifyDataSetChanged();
+		}
+		return true;
 	}
 
 	protected void notifyDataSetChanged() {
@@ -180,90 +254,11 @@ public class CategoryListActivity2 extends AbstractListActivity<Cursor> {
 		((CategoryListAdapter2) adapter).notifyDataSetInvalidated();
 	}
 
-	private abstract class PositionAction {
-		final int icon;
-		final int title;
 
-		public PositionAction(int icon, int title) {
-			this.icon = icon;
-			this.title = title;
-		}
 
-		public abstract boolean execute(CategoryTree<Category> tree, int pos);
-	}
 
-	private final PositionAction top = new PositionAction(R.drawable.ic_btn_round_top, R.string.position_move_top) {
-		@Override
-		public boolean execute(CategoryTree<Category> tree, int pos) {
-			return tree.moveCategoryToTheTop(pos);
-		}
-	};
 
-	private final PositionAction up = new PositionAction(R.drawable.ic_btn_round_up, R.string.position_move_up) {
-		@Override
-		public boolean execute(CategoryTree<Category> tree, int pos) {
-			return tree.moveCategoryUp(pos);
-		}
-	};
 
-	private final PositionAction down = new PositionAction(R.drawable.ic_btn_round_down, R.string.position_move_down) {
-		@Override
-		public boolean execute(CategoryTree<Category> tree, int pos) {
-			return tree.moveCategoryDown(pos);
-		}
-	};
 
-	private final PositionAction bottom = new PositionAction(R.drawable.ic_btn_round_bottom, R.string.position_move_bottom) {
-		@Override
-		public boolean execute(CategoryTree<Category> tree, int pos) {
-			return tree.moveCategoryToTheBottom(pos);
-		}
-	};
-
-	private final PositionAction sortByTitle = new PositionAction(R.drawable.ic_btn_round_sort_by_title, R.string.sort_by_title) {
-		@Override
-		public boolean execute(CategoryTree<Category> tree, int pos) {
-			return tree.sortByTitle();
-		}
-	};
-
-	private class CategoryPositionListAdapter extends BaseAdapter {
-
-		private final ArrayList<PositionAction> actions;
-
-		public CategoryPositionListAdapter(ArrayList<PositionAction> actions) {
-			this.actions = actions;
-		}
-
-		@Override
-		public int getCount() {
-			return actions.size();
-		}
-
-		@Override
-		public PositionAction getItem(int position) {
-			return actions.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return actions.get(position).hashCode();
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-				convertView = inflater.inflate(R.layout.position_list_item, parent, false);
-			}
-			ImageView v = convertView.findViewById(R.id.icon);
-			TextView t = convertView.findViewById(R.id.line1);
-			PositionAction a = actions.get(position);
-			v.setImageResource(a.icon);
-			t.setText(a.title);
-			return convertView;
-		}
-
-	}
 
 }
