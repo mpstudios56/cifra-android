@@ -1,14 +1,33 @@
 <!--
-  calendar-dots, from the Phosphor icon set, MIT licence.
-  A movement written down for days still to come.
+  clock-countdown, from the Phosphor icon set, MIT licence.
+  A movement written down for a day still to come.
+
+  The drawing arrives as a single shape; it is split here so the hands can carry
+  the app's green while the dial and the three marks stay in the cream the other
+  symbols of the ring are drawn in.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="28dp"
     android:height="28dp"
     android:viewportWidth="256"
-    android:viewportHeight="256"
-    android:tint="#FFF4EFE4">
+    android:viewportHeight="256">
+
+    <!-- The dial, open at the top, and the three marks that close it. -->
     <path
-        android:pathData="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"
-        android:fillColor="#FFFFFFFF" />
+        android:pathData="M232,136.66A104.12,104.12,0,1,1,119.34,24,8,8,0,0,1,120.66,40,88.12,88.12,0,1,0,216,135.34,8,8,0,0,1,232,136.66Z"
+        android:fillColor="#FFF4EFE4" />
+    <path
+        android:pathData="M160,48a12,12,0,1,0,-12,-12A12,12,0,0,0,160,48Z"
+        android:fillColor="#FFF4EFE4" />
+    <path
+        android:pathData="M196,72a12,12,0,1,0,-12,-12A12,12,0,0,0,196,72Z"
+        android:fillColor="#FFF4EFE4" />
+    <path
+        android:pathData="M220,108a12,12,0,1,0,-12,-12A12,12,0,0,0,220,108Z"
+        android:fillColor="#FFF4EFE4" />
+
+    <!-- The hands, in the app's green. -->
+    <path
+        android:pathData="M120,72v56a8,8,0,0,0,8,8h56a8,8,0,0,0,0,-16H136V72a8,8,0,0,0,-16,0Z"
+        android:fillColor="#FF4CAF7D" />
 </vector>
