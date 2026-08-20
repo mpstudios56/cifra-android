@@ -1157,6 +1157,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             ((BlotterListAdapter) adapter).showYears(movements);
             if (movements) {
                 wireYearFolding((BlotterListAdapter) adapter);
+                checkFoldedYearsSurvived(cursor);
             }
             }
         }
@@ -1596,9 +1597,14 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         if (getContext() == null) {
             return;
         }
+        // Year and marker together. Writing down the year alone was what broke
+        // it: on the next opening the year was left out of the question with
+        // nothing kept visible, so it vanished with no line to touch and no way
+        // back.
         java.util.Set<String> scritti = new java.util.HashSet<>();
         for (Integer year : foldedYears) {
-            scritti.add(String.valueOf(year));
+            Long segno = foldMarker.get(year);
+            scritti.add(year + "|" + (segno == null ? 0L : segno));
         }
         getContext().getSharedPreferences(getClass().getName(), 0).edit()
                 .putStringSet(foldedYearsKey(), scritti).apply();
@@ -1615,9 +1621,21 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         if (scritti == null) {
             return;
         }
-        for (String year : scritti) {
+        for (String riga : scritti) {
             try {
-                foldedYears.add(Integer.valueOf(year));
+                int taglio = riga.indexOf('|');
+                if (taglio < 0) {
+                    // Scritto dalla versione precedente, senza segnalibro: si
+                    // lascia perdere, perche' senza segnalibro l'anno sparisce.
+                    continue;
+                }
+                int year = Integer.parseInt(riga.substring(0, taglio));
+                long segno = Long.parseLong(riga.substring(taglio + 1));
+                if (segno == 0) {
+                    continue;
+                }
+                foldedYears.add(year);
+                foldMarker.put(year, segno);
             } catch (NumberFormatException storto) {
                 // una riga scritta male non deve impedire di leggere le altre
             }
@@ -1681,6 +1699,43 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             c.moveToPosition(was);
         }
         return 0;
+    }
+
+    /**
+     * Checks that every closed year still has its line on screen.
+     * <p>
+     * The marker is a movement, and a movement can be deleted or filtered out.
+     * When that happens the year would be left out of the question with nothing
+     * to touch, so it is opened again rather than disappearing.
+     */
+    private void checkFoldedYearsSurvived(Cursor c) {
+        if (foldedYears.isEmpty() || c == null || c.isClosed()) {
+            return;
+        }
+        java.util.Set<Integer> visti = new java.util.HashSet<>();
+        int was = c.getPosition();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        for (int i = 0; i < c.getCount(); i++) {
+            if (!c.moveToPosition(i)) {
+                break;
+            }
+            cal.setTimeInMillis(c.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal()));
+            visti.add(cal.get(java.util.Calendar.YEAR));
+        }
+        c.moveToPosition(was);
+        boolean cambiato = false;
+        for (java.util.Iterator<Integer> i = foldedYears.iterator(); i.hasNext(); ) {
+            Integer year = i.next();
+            if (!visti.contains(year)) {
+                i.remove();
+                foldMarker.remove(year);
+                cambiato = true;
+            }
+        }
+        if (cambiato) {
+            rememberFoldedYears();
+            recreateCursor();
+        }
     }
 
     /** Adds to the question the years that are not to be answered. */
