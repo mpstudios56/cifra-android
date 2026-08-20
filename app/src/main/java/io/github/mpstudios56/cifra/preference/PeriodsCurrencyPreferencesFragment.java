@@ -34,6 +34,8 @@ public class PeriodsCurrencyPreferencesFragment extends PreferenceFragmentBase {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.pref_periods_currency, rootKey);
 
+        showWhatIsSet();
+
         Preference start = findPreference("fiscal_year_start");
         if (start != null) {
             start.setOnPreferenceClickListener(p -> {
@@ -82,5 +84,49 @@ public class PeriodsCurrencyPreferencesFragment extends PreferenceFragmentBase {
                         android.text.format.DateUtils.FORMAT_SHOW_DATE
                                 | android.text.format.DateUtils.FORMAT_ABBREV_MONTH
                                 | android.text.format.DateUtils.FORMAT_NO_YEAR)));
+    }
+
+    /**
+     * The two lists, and a line under each saying what is in it.
+     * <p>
+     * Which currencies are set, and how many rates have been written down: the
+     * answer to both was one screen away, and both are one line long.
+     */
+    private void showWhatIsSet() {
+        io.github.mpstudios56.cifra.db.DatabaseAdapter db =
+                new io.github.mpstudios56.cifra.db.DatabaseAdapter(getContext());
+        androidx.preference.Preference currencies = findPreference("open_currencies");
+        if (currencies != null) {
+            StringBuilder said = new StringBuilder();
+            for (io.github.mpstudios56.cifra.model.Currency c : db.getAllCurrenciesList()) {
+                if (said.length() > 0) {
+                    said.append(", ");
+                }
+                said.append(c.name);
+            }
+            currencies.setSummary(said.length() > 0 ? said.toString()
+                    : getString(R.string.no_currencies));
+            currencies.setOnPreferenceClickListener(p -> {
+                startActivity(new android.content.Intent(getContext(),
+                        io.github.mpstudios56.cifra.activity.CurrencyListActivity.class));
+                return true;
+            });
+        }
+        androidx.preference.Preference rates = findPreference("open_rates");
+        if (rates != null) {
+            rates.setOnPreferenceClickListener(p -> {
+                startActivity(new android.content.Intent(getContext(),
+                        io.github.mpstudios56.cifra.activity.ExchangeRatesListActivity.class));
+                return true;
+            });
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Coming back from the list of currencies, the line under it should say
+        // what is there now, not what was there when the screen opened.
+        showWhatIsSet();
     }
 }

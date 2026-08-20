@@ -53,12 +53,27 @@
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
+    <!--
+      Every box that opens over one of the screens built on this theme - the
+      planner, the templates, the lists that ask a question. They were square
+      grey rectangles while the rest of the app had been rounded; the corners
+      are the same as everywhere else now, and the two answers carry the app’s
+      green.
+    -->
     <style name="AppThemeCompat.Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@color/material_grey_900</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="colorAccent">#FF4CAF7D</item>
+        <item name="android:textColorPrimary">#FFF4EFE4</item>
     </style>
 
     <style name="AppThemeCompat.Dialog.Alert" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowBackground">@color/material_grey_900</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="colorAccent">#FF4CAF7D</item>
+        <item name="android:textColorPrimary">#FFF4EFE4</item>
+        <item name="android:textColorSecondary">#B3F4EFE4</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogAnswerPrimary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogAnswerGhost</item>
+        <item name="buttonBarNeutralButtonStyle">@style/DialogAnswerGhost</item>
     </style>
 
     <style name="AppThemeCompat" parent="@style/Theme.AppCompat.NoActionBar">

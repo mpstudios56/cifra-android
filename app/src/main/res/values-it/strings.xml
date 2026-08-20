@@ -1593,4 +1593,6 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="section_qif">QIF</string>
   <string name="section_automatic">Lettura automatica</string>
   <string name="google_drive">Google Drive</string>
+  <string name="section_period">Periodo</string>
+  <string name="section_currencies_rates">Valute e cambi</string>
 </resources>

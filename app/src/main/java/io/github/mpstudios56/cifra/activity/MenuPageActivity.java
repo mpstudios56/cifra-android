@@ -28,16 +28,26 @@ public class MenuPageActivity extends AppCompatActivity {
     public static final String PAGE_EXTRA = "page";
     public static final String PAGE_CURRENCIES = "currencies";
     public static final String PAGE_ENTITIES = "entities";
+    public static final String PAGE_IMPORT_EXPORT = "import_export";
 
     private static Object[] rowsFor(String page) {
         if (PAGE_ENTITIES.equals(page)) {
             return MenuListItem.entitiesPage();
         }
+        if (PAGE_IMPORT_EXPORT.equals(page)) {
+            return MenuListItem.importExportPage();
+        }
         return MenuListItem.currencyPage();
     }
 
     private static int titleFor(String page) {
-        return PAGE_ENTITIES.equals(page) ? R.string.menu_records : R.string.menu_currencies;
+        if (PAGE_ENTITIES.equals(page)) {
+            return R.string.menu_records;
+        }
+        if (PAGE_IMPORT_EXPORT.equals(page)) {
+            return R.string.import_export;
+        }
+        return R.string.menu_currencies;
     }
 
     @Override

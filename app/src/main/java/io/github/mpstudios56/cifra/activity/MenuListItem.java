@@ -99,7 +99,9 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Fragment fragment) {
-            MenuListFragment.openSubMenu(fragment, R.string.import_export, importExportPage());
+            Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
+            intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_IMPORT_EXPORT);
+            fragment.startActivity(intent);
         }
     },
     MENU_SHARING(R.string.sharing, R.string.sharing_summary, R.drawable.category_family) {

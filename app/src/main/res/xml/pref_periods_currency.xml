@@ -5,6 +5,12 @@
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="cat_period"
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/section_period">
+
     <ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -20,7 +26,30 @@
             android:key="fiscal_year_start"
             android:summary="@string/fiscal_year_start_summary"
             android:title="@string/fiscal_year_start" />
-    <ListPreference
+        </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_currencies"
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/section_currencies_rates">
+
+        <!--
+          The two lists themselves. Their summary says what is set, so the
+          screen answers "which currencies do I have" without being entered.
+        -->
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_currencies"
+            android:title="@string/currencies" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_rates"
+            android:title="@string/exchange_rates" />
+
+<ListPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:defaultValue="freeCurrency"
@@ -36,4 +65,6 @@
             android:key="openexchangerates_app_id"
             android:summary="@string/openexchangerates_app_id_summary"
             android:title="@string/openexchangerates_app_id" />
+    </PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

@@ -50,18 +50,6 @@ public class CurrencyListActivity extends AbstractListActivity<Cursor> {
 			startActivity(intent);
 		});
 
-		ImageButton bPeriods = findViewById(R.id.bPeriods);
-		if (bPeriods != null) {
-			// The week, the fiscal year and the source of the rates: they were
-			// three screens away in the settings, and they belong here.
-			bPeriods.setOnClickListener(view -> {
-				Intent intent = new Intent(CurrencyListActivity.this,
-						io.github.mpstudios56.cifra.activity.PreferencesActivity2.class);
-				intent.putExtra(io.github.mpstudios56.cifra.activity.PreferencesActivity2.SCREEN_EXTRA,
-						"io.github.mpstudios56.cifra.preference.PeriodsCurrencyPreferencesFragment");
-				startActivity(intent);
-			});
-		}
 
 		ImageButton bTidy = findViewById(R.id.bTidy);
 		bTidy.setOnClickListener(view -> tidyCurrencies());

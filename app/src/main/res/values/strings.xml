@@ -1713,4 +1713,6 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
   <string name="section_qif">QIF</string>
   <string name="section_automatic">Read automatically</string>
   <string name="google_drive">Google Drive</string>
+  <string name="section_period">Period</string>
+  <string name="section_currencies_rates">Currencies and rates</string>
 </resources>
