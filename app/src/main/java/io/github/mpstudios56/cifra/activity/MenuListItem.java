@@ -59,13 +59,17 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_CURRENCIES(R.string.menu_currencies, R.string.menu_currencies_summary, R.drawable.ic_action_money) {
         @Override
         public void call(Fragment fragment) {
-            MenuListFragment.openSubMenu(fragment, R.string.menu_currencies, currencyPage());
+            Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
+            intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_CURRENCIES);
+            fragment.startActivity(intent);
         }
     },
     MENU_ENTITIES(R.string.menu_records, R.string.menu_records_summary, R.drawable.drawer_action_entities) {
         @Override
         public void call(Fragment fragment) {
-            MenuListFragment.openSubMenu(fragment, R.string.menu_records, entitiesPage());
+            Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
+            intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_ENTITIES);
+            fragment.startActivity(intent);
         }
     },
     MENU_BACKUP_RESTORE(R.string.menu_backup_security, R.string.menu_backup_security_summary, R.drawable.actionbar_db_backup) {
@@ -74,7 +78,8 @@ public enum MenuListItem implements SummaryEntityEnum {
             // A page of its own, sliding in over the menu, rather than a box
             // dropped on top of it: everything else opened from this list is a
             // screen, and this was the odd one out.
-            MenuListFragment.openSubMenu(fragment, R.string.menu_backup_security, backupPage());
+            openBackupSettings(fragment,
+                    io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_LOCAL);
         }
     },
     /**
@@ -87,7 +92,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_BACKUP_ONLINE(R.string.backup_online, R.string.backup_online_summary, R.drawable.ic_menu_cloud) {
         @Override
         public void call(Fragment fragment) {
-            MenuListFragment.openSubMenu(fragment, R.string.backup_online, onlineBackupPage());
+            openBackupSettings(fragment,
+                    io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_ONLINE);
         }
     },
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
@@ -180,6 +186,37 @@ public enum MenuListItem implements SummaryEntityEnum {
      * Backs up straight away. The accounts screen offers this from its own popup
      * without going through the menu, so it cannot live inside a menu row.
      */
+    /** A copy made and then handed to whatever the phone can send it with. */
+    public static void backupTo(Fragment fragment) {
+        if (!checkBackupFolderConfigured(fragment.getContext())) return;
+        ProgressDialog d = ProgressDialog.show(fragment.getContext(), null,
+                fragment.getString(R.string.backup_database_inprogress), true);
+        final BackupExportTask t = new BackupExportTask(fragment.getContext(), d, false);
+        t.setShowResultMessage(false);
+        t.setListener(result -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_STREAM, t.backupFileUri);
+            intent.setType(Export.BACKUP_MIME_TYPE);
+            fragment.startActivity(Intent.createChooser(intent,
+                    fragment.getString(R.string.backup_database_to_title)));
+        });
+        t.execute((Uri[]) null);
+    }
+
+    /**
+     * The settings and the buttons that use them, on one screen.
+     * <p>
+     * Which half - the lock and the copy on this phone, or the two services -
+     * is decided by the entry that opened it.
+     */
+    private static void openBackupSettings(Fragment fragment, String half) {
+        Intent intent = new Intent(fragment.getContext(), PreferencesActivity2.class);
+        intent.putExtra(PreferencesActivity2.SCREEN_EXTRA,
+                "io.github.mpstudios56.cifra.preference.BackupPreferencesFragment");
+        intent.putExtra(io.github.mpstudios56.cifra.preference.BackupPreferencesFragment.ONLY_EXTRA, half);
+        fragment.startActivity(intent);
+    }
+
     public static void backupNow(Fragment fragment) {
         if (!checkBackupFolderConfigured(fragment.getContext())) return;
         ProgressDialog d = ProgressDialog.show(fragment.getContext(), null,
@@ -539,31 +576,7 @@ public enum MenuListItem implements SummaryEntityEnum {
     // is an entry. Written here rather than in the screen that shows them,
     // because what belongs with what is a question about the menu.
 
-    static Object[] backupPage() {
-        return new Object[]{
-                R.string.protection,
-                BackupRestoreEntities.MENU_SECURITY,
-                R.string.section_local_backup,
-                BackupRestoreEntities.MENU_BACKUP_SETTINGS,
-                BackupRestoreEntities.MENU_BACKUP,
-                BackupRestoreEntities.MENU_RESTORE,
-                BackupRestoreEntities.MENU_BACKUP_TO,
-                R.string.section_app_settings,
-                BackupRestoreEntities.MENU_EXPORT_SETTINGS,
-                BackupRestoreEntities.MENU_IMPORT_SETTINGS,
-        };
-    }
 
-    static Object[] onlineBackupPage() {
-        return new Object[]{
-                R.string.google_drive,
-                BackupRestoreEntities.GOOGLE_DRIVE_BACKUP,
-                BackupRestoreEntities.GOOGLE_DRIVE_RESTORE,
-                R.string.dropbox,
-                BackupRestoreEntities.DROPBOX_BACKUP,
-                BackupRestoreEntities.DROPBOX_RESTORE,
-        };
-    }
 
     static Object[] importExportPage() {
         return new Object[]{

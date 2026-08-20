@@ -5,6 +5,12 @@
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory
+        android:key="cat_protection"
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/protection">
+
+
         <!--
           Off out of the box. Blocking screenshots protects a screen full of
           somebody's money, which is the right instinct - but it also stops the
@@ -75,5 +81,8 @@
             android:key="pin_protection_haptic_feedback"
             android:summary="@string/pin_protection_haptic_feedback_summary"
             android:title="@string/pin_protection_haptic_feedback" />
+
+
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

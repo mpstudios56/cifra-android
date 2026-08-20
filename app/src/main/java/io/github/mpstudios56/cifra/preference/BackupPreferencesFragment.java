@@ -46,15 +46,33 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
     private Preference pGoogleDriveSignIn;
     private Preference pGoogleDriveSignOut;
 
+    /**
+     * Which half of this screen is wanted.
+     * <p>
+     * The settings and the buttons that use them are one screen, and that
+     * screen is opened twice from the menu: once for the lock and the copy kept
+     * on this phone, once for the two services a copy can be sent to. The
+     * groups that do not belong to the half asked for are hidden rather than
+     * written twice.
+     */
+    public static final String ONLY_EXTRA = "only";
+    public static final String ONLY_LOCAL = "local";
+    public static final String ONLY_ONLINE = "online";
+
+    private String only;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        title = R.string.database_backup;
+        only = getArguments() != null ? getArguments().getString(ONLY_EXTRA) : null;
+        title = ONLY_ONLINE.equals(only) ? R.string.backup_online : R.string.menu_backup_security;
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.pref_backup, rootKey);
+        // The lock first, then the copies: two subjects that are one worry.
+        setPreferencesFromResource(R.xml.pref_security, rootKey);
+        addPreferencesFromResource(R.xml.pref_backup);
 
         Context context = getContext();
         PreferenceScreen screen = getPreferenceScreen();
@@ -95,6 +113,10 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         linkToDropbox();
         setCurrentDatabaseBackupFolder();
         selectAccount();
+
+        wireActions();
+        sayIfFingerprintUnavailable();
+        showOnlyWhatWasAskedFor();
     }
 
     @Override
@@ -189,6 +211,15 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         if (resultCode != RESULT_OK) return;
         Context context = getContext();
         switch (requestCode) {
+            case RESTORE_DATABASE:
+                if (data != null && data.getData() != null) {
+                    android.app.ProgressDialog d = android.app.ProgressDialog.show(context, null,
+                            getString(R.string.restore_database_inprogress), true);
+                    new io.github.mpstudios56.cifra.export.BackupImportTask(getActivity(), d)
+                            .execute(data.getData());
+                }
+                break;
+
             case SELECT_DATABASE_FOLDER:
                 if (data != null) {
                     Uri folder = data.getData();
@@ -218,6 +249,14 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
 
     @Override
     public void onDisplayPreferenceDialog(@NonNull Preference preference) {
+        // The PIN keypad is a dialog of our own, and without this the framework
+        // opens an empty one in its place.
+        if (preference instanceof PinPreference) {
+            PinDialogFragment pin = PinDialogFragment.newInstance(preference.getKey());
+            pin.setTargetFragment(this, 0);
+            pin.show(getParentFragmentManager(), null);
+            return;
+        }
         // The nightly backup time is picked on a clock of our own.
         if (preference instanceof TimePreference) {
             TimeDialogFragment f = TimeDialogFragment.newInstance(preference.getKey());
@@ -226,5 +265,98 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
             return;
         }
         super.onDisplayPreferenceDialog(preference);
+    }
+
+    /** The buttons that make a copy, bring one back, or send one away. */
+    private void wireActions() {
+        onClick("do_backup", () -> io.github.mpstudios56.cifra.activity.MenuListItem.backupNow(this));
+        onClick("do_restore", this::chooseBackupToRestore);
+        onClick("do_backup_to", () -> io.github.mpstudios56.cifra.activity.MenuListItem.backupTo(this));
+        onClick("do_drive_backup", this::driveBackup);
+        onClick("do_drive_restore", this::driveRestore);
+        onClick("do_dropbox_backup", this::dropboxBackup);
+        onClick("do_dropbox_restore", this::dropboxRestore);
+    }
+
+    private void onClick(String key, Runnable what) {
+        Preference p = getPreferenceScreen().findPreference(key);
+        if (p != null) {
+            p.setOnPreferenceClickListener(clicked -> {
+                what.run();
+                return true;
+            });
+        }
+    }
+
+    /**
+     * Offering a fingerprint on a phone that has none, or has none enrolled, is
+     * offering a lock with no key: say why instead.
+     */
+    private void sayIfFingerprintUnavailable() {
+        Preference fingerprint = getPreferenceScreen().findPreference("pin_protection_use_fingerprint");
+        if (fingerprint != null
+                && io.github.mpstudios56.cifra.utils.FingerprintUtils.fingerprintUnavailable(getContext())) {
+            fingerprint.setSummary(getString(R.string.fingerprint_unavailable,
+                    io.github.mpstudios56.cifra.utils.FingerprintUtils
+                            .reasonWhyFingerprintUnavailable(getContext())));
+            fingerprint.setEnabled(false);
+        }
+    }
+
+    /** Hides the groups that belong to the other half of this screen. */
+    private void showOnlyWhatWasAskedFor() {
+        if (only == null) {
+            return;
+        }
+        boolean online = ONLY_ONLINE.equals(only);
+        hide("cat_protection", online);
+        hide("cat_backup_local", online);
+        hide("cat_dropbox", !online);
+        hide("cat_drive", !online);
+    }
+
+    private void hide(String key, boolean hidden) {
+        Preference p = getPreferenceScreen().findPreference(key);
+        if (p != null) {
+            p.setVisible(!hidden);
+        }
+    }
+
+
+    // -------------------------------------------- making one and bringing it back
+
+    private static final int RESTORE_DATABASE = 103;
+
+    private void chooseBackupToRestore() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI,
+                Export.getBackupFolder(getContext()));
+        startActivityForResult(intent, RESTORE_DATABASE);
+    }
+
+    private void driveBackup() {
+        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                getString(R.string.backup_database_gdocs_inprogress), true);
+        new io.github.mpstudios56.cifra.export.drive.GoogleDriveBackupTask(getActivity(), d).execute();
+    }
+
+    private void driveRestore() {
+        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                getString(R.string.google_drive_loading_files), true);
+        new io.github.mpstudios56.cifra.export.drive.GoogleDriveListFilesTask(getActivity(), d).execute();
+    }
+
+    private void dropboxBackup() {
+        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                getString(R.string.backup_database_dropbox_inprogress), true);
+        new io.github.mpstudios56.cifra.export.dropbox.DropboxBackupTask(getActivity(), d).execute();
+    }
+
+    private void dropboxRestore() {
+        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                getString(R.string.dropbox_loading_files), true);
+        new io.github.mpstudios56.cifra.export.dropbox.DropboxListFilesTask(getActivity(), d).execute();
     }
 }

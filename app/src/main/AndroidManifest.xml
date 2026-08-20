@@ -267,6 +267,8 @@
 		<activity android:name=".activity.BudgetActivity" android:label="@string/budgets"
 			android:configChanges="screenSize|smallestScreenSize|orientation|screenLayout|keyboardHidden"/>		
 		
+		<activity android:name=".activity.MenuPageActivity"
+			android:exported="false" />
 		<activity android:name=".activity.PreferencesActivity2" android:label="@string/preferences"
 			android:taskAffinity=".MainActivity"
 			android:theme="@style/AppThemeCompat"

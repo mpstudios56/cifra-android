@@ -10,7 +10,7 @@
 -->
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/database_backup">
+    <PreferenceCategory android:key="cat_backup_local" android:layout="@layout/preference_category_bullet" android:title="@string/section_local_backup">
         <Preference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -54,9 +54,24 @@
             android:key="auto_backup_reminder_enabled"
             android:summary="@string/auto_backup_reminder_enabled_summary"
             android:title="@string/auto_backup_reminder_enabled" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_backup"
+            android:title="@string/backup_database" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_restore"
+            android:title="@string/restore_database" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_backup_to"
+            android:title="@string/backup_database_to" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/dropbox">
+    <PreferenceCategory android:key="cat_dropbox" android:layout="@layout/preference_category_bullet" android:title="@string/dropbox">
         <Preference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -97,9 +112,19 @@
             android:key="dropbox_download_pictures"
             android:summary="@string/dropbox_download_pictures_summary"
             android:title="@string/dropbox_download_pictures" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_dropbox_backup"
+            android:title="@string/backup_database_online_dropbox" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_dropbox_restore"
+            android:title="@string/restore_database_online_dropbox" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/gdocs_backup">
+    <PreferenceCategory android:key="cat_drive" android:layout="@layout/preference_category_bullet" android:title="@string/google_drive">
         <Preference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -147,6 +172,16 @@
             android:key="google_drive_download_pictures"
             android:summary="@string/google_drive_download_pictures_summary"
             android:title="@string/google_drive_download_pictures" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_drive_backup"
+            android:title="@string/backup_database_online_google_drive" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_drive_restore"
+            android:title="@string/restore_database_online_google_drive" />
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>
