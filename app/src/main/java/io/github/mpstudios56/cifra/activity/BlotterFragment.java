@@ -744,14 +744,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_transfer, R.string.transfer));
         if (addTemplateToAddButton()) {
             addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(), R.drawable.ic_widget_templates, R.string.template));
-        } else {
-            addButtonActionGrid.setNumColumns(2);
         }
         // What is written down for days still to come. It was a line in the
         // menu, three screens away from the ring where everything else that
         // makes a movement already lives.
         addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(),
                 R.drawable.ic_widget_scheduled, R.string.scheduled_transactions));
+        // All of them side by side: four ways of writing a movement down are
+        // one choice, and a choice reads better in a row than in a block.
+        addButtonActionGrid.setNumColumns(addTemplateToAddButton() ? 4 : 3);
         addButtonActionGrid.setOnQuickActionClickListener(addButtonActionListener);
     }
 
