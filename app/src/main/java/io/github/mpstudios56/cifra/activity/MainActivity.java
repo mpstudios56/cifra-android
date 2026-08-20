@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -234,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
                     tabs.put(which.tag, tab);
                 });
         tabLayoutMediator.attach();
+        tabLayout.post(this::oneLinePerTab);
 
         // The floating buttons follow the tab: see floatingButtonsFor.
         viewPager.registerOnPageChangeCallback(new androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
@@ -506,6 +508,40 @@ public class MainActivity extends AppCompatActivity {
 
     /** Down to the first movement ever written down. */
     /** Up to the newest movement, at the top of the list. */
+    /**
+     * Keeps every tab label on one line.
+     * <p>
+     * With all the tabs on show each of them is narrow, and a long word like
+     * "Riepilogo" breaks in two - which makes the whole strip a line taller
+     * than it is when some tabs are switched off. One line each, and the strip
+     * keeps one height whatever is on it.
+     */
+    private void oneLinePerTab() {
+        if (tabLayout == null || tabLayout.getChildCount() == 0) {
+            return;
+        }
+        View strip = tabLayout.getChildAt(0);
+        if (!(strip instanceof ViewGroup)) {
+            return;
+        }
+        ViewGroup row = (ViewGroup) strip;
+        for (int i = 0; i < row.getChildCount(); i++) {
+            View tab = row.getChildAt(i);
+            if (!(tab instanceof ViewGroup)) {
+                continue;
+            }
+            ViewGroup inside = (ViewGroup) tab;
+            for (int j = 0; j < inside.getChildCount(); j++) {
+                View piece = inside.getChildAt(j);
+                if (piece instanceof android.widget.TextView) {
+                    android.widget.TextView label = (android.widget.TextView) piece;
+                    label.setMaxLines(1);
+                    label.setEllipsize(android.text.TextUtils.TruncateAt.END);
+                }
+            }
+        }
+    }
+
     /**
      * Shows or hides the place each account holds in the order.
      * <p>

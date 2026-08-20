@@ -19,7 +19,6 @@
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabTextAppearance="@style/TabLabel"
-        app:tabMaxLines="1"
         app:tabInlineLabel="false"
         app:tabPaddingStart="1dp"
         app:tabPaddingEnd="1dp"
