@@ -1577,7 +1577,54 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
 
     /** The years folded away, for as long as this screen is open. */
+    /**
+     * Which years are closed.
+     * <p>
+     * Kept in writing rather than in memory: somebody closes twenty years,
+     * opens the two they are working in, and expects to find exactly that when
+     * they come back - not the whole ledger open again because they had walked
+     * over to the accounts for a moment.
+     */
     private final java.util.Set<Integer> foldedYears = new java.util.HashSet<>();
+
+    /** Where the choice is written, one note per list. */
+    private String foldedYearsKey() {
+        return "folded_years_" + (mainBlotter ? "main" : String.valueOf(blotterFilter.getAccountId()));
+    }
+
+    private void rememberFoldedYears() {
+        if (getContext() == null) {
+            return;
+        }
+        java.util.Set<String> scritti = new java.util.HashSet<>();
+        for (Integer year : foldedYears) {
+            scritti.add(String.valueOf(year));
+        }
+        getContext().getSharedPreferences(getClass().getName(), 0).edit()
+                .putStringSet(foldedYearsKey(), scritti).apply();
+    }
+
+    private void recallFoldedYears() {
+        if (getContext() == null || foldedYearsRecalled) {
+            return;
+        }
+        foldedYearsRecalled = true;
+        java.util.Set<String> scritti = getContext()
+                .getSharedPreferences(getClass().getName(), 0)
+                .getStringSet(foldedYearsKey(), null);
+        if (scritti == null) {
+            return;
+        }
+        for (String year : scritti) {
+            try {
+                foldedYears.add(Integer.valueOf(year));
+            } catch (NumberFormatException storto) {
+                // una riga scritta male non deve impedire di leggere le altre
+            }
+        }
+    }
+
+    private boolean foldedYearsRecalled = false;
     /**
      * The one movement of each folded year that stays in the list.
      * <p>
@@ -1592,12 +1639,15 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     private final java.util.Map<Integer, Long> foldMarker = new java.util.HashMap<>();
 
     private void wireYearFolding(BlotterListAdapter a) {
+        recallFoldedYears();
         a.setYearFolding(foldedYears, year -> {
             if (foldedYears.remove(year)) {
                 foldMarker.remove(year);
+                rememberFoldedYears();
             } else {
                 foldedYears.add(year);
                 foldMarker.put(year, newestOf(year, a));
+                rememberFoldedYears();
             }
             recreateCursor();
             if (getActivity() != null) {
@@ -1693,6 +1743,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         if (!years.isEmpty() && foldedYears.containsAll(years)) {
             foldedYears.clear();
             foldMarker.clear();
+            rememberFoldedYears();
         } else {
             for (Integer year : years) {
                 if (!foldedYears.contains(year)) {
@@ -1701,6 +1752,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 }
             }
         }
+        rememberFoldedYears();
         recreateCursor();
         if (getActivity() != null) {
             TodayButton.showYearsClosed(getActivity(), !foldedYears.isEmpty());
