@@ -1,59 +1,54 @@
-/*
- * Copyright (c) 2013 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.http;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
- * Created with IntelliJ IDEA.
- * User: dsolonenko
- * Date: 2/17/13
- * Time: 1:55 AM
+ * Fetching a page from the network, in the three shapes the app asks for.
+ * <p>
+ * Used only to look up exchange rates, which is the one thing Cifra goes out to
+ * the network for on its own account.
  */
 public class HttpClientWrapper {
 
     private final OkHttpClient client;
 
-    public HttpClientWrapper(OkHttpClient httpClient) {
-        this.client = httpClient;
+    public HttpClientWrapper(OkHttpClient client) {
+        this.client = client;
     }
 
+    /** The answer read as figures, for a service that speaks JSON. */
     public JSONObject getAsJson(String url) throws Exception {
-        String s = getAsString(url);
-        return new JSONObject(s);
+        return new JSONObject(getAsString(url));
     }
 
+    /** The answer as it came, whatever it says. */
     public String getAsString(String url) throws Exception {
-        Response response = get(url);
-        return response.body().string();
+        return get(url).body().string();
     }
 
+    /**
+     * The answer, but only when the far end said it went well.
+     * <p>
+     * A refusal often carries a message worth showing, so it is raised rather
+     * than swallowed - a rate that failed to arrive must not look like a rate
+     * of zero.
+     */
     public String getAsStringIfOk(String url) throws Exception {
         Response response = get(url);
-        String s = response.body().string();
-        if (response.isSuccessful()) {
-            return s;
-        } else {
-            throw new RuntimeException(s);
+        String said = response.body().string();
+        if (!response.isSuccessful()) {
+            throw new RuntimeException(said);
         }
+        return said;
     }
 
     protected Response get(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        return client.newCall(request).execute();
+        return client.newCall(new Request.Builder().url(url).build()).execute();
     }
-
 }

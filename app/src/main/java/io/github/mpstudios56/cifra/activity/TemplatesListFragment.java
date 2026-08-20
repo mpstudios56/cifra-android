@@ -116,7 +116,7 @@ public class TemplatesListFragment extends BlotterFragment {
             bFilter.setVisibility(View.VISIBLE);
             // Here it orders rather than filters, so it carries the mark of an
             // order and not the funnel.
-            bFilter.setImageResource(R.drawable.format_list_numbered);
+            bFilter.setImageResource(R.drawable.sort);
             bFilter.setOnClickListener(v -> askForOrder());
         }
         if (showAllBlotterButtons && bTemplate != null) {

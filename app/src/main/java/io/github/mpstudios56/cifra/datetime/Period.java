@@ -1,18 +1,12 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.datetime;
 
 /**
-* Created by IntelliJ IDEA.
-* User: denis.solonenko
-* Date: 12/17/12 9:07 PM
-*/
+ * A stretch of time, and the name it was chosen by.
+ * <p>
+ * The two moments are what a query needs; the name is what lets "this month" be
+ * worked out again next month instead of staying the fortnight it was when it
+ * was first chosen, and lets a screen say the period in words.
+ */
 public class Period {
 
     public PeriodType type;
@@ -25,12 +19,13 @@ public class Period {
         this.end = end;
     }
 
+    /** Whether it covers exactly those two moments. */
     public boolean isSame(long start, long end) {
         return this.start == start && this.end == end;
     }
 
+    /** Whether it was picked by hand rather than chosen from the list. */
     public boolean isCustom() {
         return type == PeriodType.CUSTOM;
     }
-
 }
