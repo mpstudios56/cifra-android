@@ -216,6 +216,28 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Choosing a Google account can come back refused, and until now a
+        // refusal looked exactly like nothing happening: the picker opened, one
+        // chose, and the screen sat there. The reason Google gives is said out
+        // loud instead.
+        if (requestCode == CHOOSE_ACCOUNT && resultCode != RESULT_OK) {
+            String why;
+            try {
+                GoogleSignIn.getSignedInAccountFromIntent(data)
+                        .getResult(com.google.android.gms.common.api.ApiException.class);
+                why = "annullato";
+            } catch (com.google.android.gms.common.api.ApiException refused) {
+                why = "codice " + refused.getStatusCode() + " - " + refused.getMessage();
+            } catch (Exception other) {
+                why = String.valueOf(other.getMessage());
+            }
+            android.util.Log.e("Cifra", "Google sign-in refused: " + why);
+            Toast.makeText(getContext(), getString(R.string.google_drive_error) + ": " + why,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (resultCode != RESULT_OK) return;
         Context context = getContext();
         switch (requestCode) {

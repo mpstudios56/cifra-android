@@ -51,7 +51,7 @@ public class GoogleDriveRESTClient {
                         new NetHttpTransport(),
                         new GsonFactory(),
                         credential)
-                        .setApplicationName("Financisto 1 Holo Test")
+                        .setApplicationName("Cifra")
                         .build();
     }
 

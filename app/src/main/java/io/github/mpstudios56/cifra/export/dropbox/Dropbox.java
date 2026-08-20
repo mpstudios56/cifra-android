@@ -91,7 +91,7 @@ public class Dropbox {
     }
 
     private DbxRequestConfig getDbxRequestConfig() {
-        return DbxRequestConfig.newBuilder("financisto/" + BuildConfig.VERSION_CODE).build();
+        return DbxRequestConfig.newBuilder("Cifra/" + BuildConfig.VERSION_CODE).build();
     }
 
     private boolean authSession() {

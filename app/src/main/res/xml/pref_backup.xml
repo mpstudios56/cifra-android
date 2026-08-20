@@ -140,7 +140,7 @@
         <EditTextPreference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
-            android:defaultValue="financisto"
+            android:defaultValue="Cifra"
             android:key="google_drive_backup_folder"
             android:summary="@string/backup_folder_summary"
             android:title="@string/backup_folder" />
