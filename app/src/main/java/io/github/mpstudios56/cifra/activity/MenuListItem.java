@@ -85,14 +85,18 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_BACKUP_RESTORE(R.string.menu_backup_security, R.string.menu_backup_security_summary, R.drawable.actionbar_db_backup) {
         @Override
         public void call(Fragment fragment) {
-            EnumUtils.showPickOneDialog(fragment.getContext(), R.string.menu_backup_security,
-                    BackupRestoreEntities.values(), fragment);
+            // A page of its own, sliding in over the menu, rather than a box
+            // dropped on top of it: everything else opened from this list is a
+            // screen, and this was the odd one out.
+            MenuListFragment.openSubMenu(fragment, R.string.menu_backup_security,
+                    BackupRestoreEntities.values());
         }
     },
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Fragment fragment) {
-            EnumUtils.showPickOneDialog(fragment.getContext(), R.string.import_export, ImportExportEntities.values(), fragment);
+            MenuListFragment.openSubMenu(fragment, R.string.import_export,
+                    ImportExportEntities.values());
         }
     },
     MENU_SHARING(R.string.sharing, R.string.sharing_summary, R.drawable.category_family) {
@@ -101,19 +105,19 @@ public enum MenuListItem implements SummaryEntityEnum {
             fragment.startActivity(new Intent(fragment.getContext(), SharingActivity.class));
         }
     },
-    MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_menu_delete) {
+    MENU_TRASH(R.string.trash, R.string.trash_summary, R.drawable.ic_menu_trash) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), TrashActivity.class));
         }
     },
-    MENU_MASS_OP(R.string.mass_operations, R.string.mass_operations_summary, R.drawable.ic_action_mass_op) {
+    MENU_MASS_OP(R.string.mass_operations, R.string.mass_operations_summary, R.drawable.ic_menu_massop) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), MassOpActivity.class));
         }
     },
-    MENU_PERMISSIONS(R.string.permissions, R.string.permissions_summary, R.drawable.ic_tab_about) {
+    MENU_PERMISSIONS(R.string.permissions, R.string.permissions_summary, R.drawable.ic_menu_permissions) {
         @Override
         public void call(Fragment fragment) {
             RequestPermissionActivity_.intent(fragment.getContext()).start();
@@ -125,7 +129,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             new IntegrityFixTask(fragment.getContext()).execute();
         }
     },
-    MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_menu_info) {
+    MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_menu_about) {
         @Override
         public void call(Fragment fragment) {
             fragment.startActivity(new Intent(fragment.getContext(), AboutActivity.class));
@@ -264,7 +268,7 @@ public enum MenuListItem implements SummaryEntityEnum {
     }
 
     /** Every way of getting the data out and back in, in one place. */
-    private enum BackupRestoreEntities implements ExecutableEntityEnum<Fragment> {
+    enum BackupRestoreEntities implements ExecutableEntityEnum<Fragment> {
 
         MENU_SECURITY(R.string.protection, R.drawable.ic_action_lock) {
             @Override
@@ -382,7 +386,7 @@ public enum MenuListItem implements SummaryEntityEnum {
         }
     }
 
-    private enum ImportExportEntities implements ExecutableEntityEnum<Fragment> {
+    enum ImportExportEntities implements ExecutableEntityEnum<Fragment> {
 
         /**
          * First, and on purpose: it is the one somebody needs on their first day,

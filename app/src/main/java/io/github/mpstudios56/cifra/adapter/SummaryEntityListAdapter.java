@@ -28,7 +28,7 @@ public class SummaryEntityListAdapter extends BaseAdapter {
         void picked(int position);
     }
 
-    private final SummaryEntityEnum[] entities;
+    private final io.github.mpstudios56.cifra.utils.EntityEnum[] entities;
     private final LayoutInflater inflater;
     private OnPicked onPicked;
 
@@ -46,8 +46,8 @@ public class SummaryEntityListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public SummaryEntityListAdapter(Context context, SummaryEntityEnum[] reports) {
-        this.entities = reports;
+    public SummaryEntityListAdapter(Context context, io.github.mpstudios56.cifra.utils.EntityEnum[] entries) {
+        this.entities = entries;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -83,9 +83,17 @@ public class SummaryEntityListAdapter extends BaseAdapter {
             final int line = position;
             convertView.setOnClickListener(v -> onPicked.picked(line));
         }
-        SummaryEntityEnum r = entities[position];
+        io.github.mpstudios56.cifra.utils.EntityEnum r = entities[position];
         h.title.setText(r.getTitleId());
-        h.label.setText(r.getSummaryId());
+        // A line of explanation where there is one; the sub-lists are single
+        // words - "Backup", "Ripristina" - and a second line under them would
+        // only repeat the first.
+        if (r instanceof SummaryEntityEnum) {
+            h.label.setVisibility(View.VISIBLE);
+            h.label.setText(((SummaryEntityEnum) r).getSummaryId());
+        } else {
+            h.label.setVisibility(View.GONE);
+        }
         if (r.getIconId() > 0) {
             h.icon.setImageResource(r.getIconId());
         }

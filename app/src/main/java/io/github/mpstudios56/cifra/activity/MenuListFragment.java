@@ -71,15 +71,85 @@ public class MenuListFragment extends ListFragment {
             return WindowInsetsCompat.CONSUMED;
         });
 
+        showTopLevel();
+    }
+
+    /**
+     * What is on show: the menu itself, or one of the lists opened from it.
+     * <p>
+     * Backup and import used to drop a box on top of the screen, which is the
+     * only thing in the app that still did; they are pages now, sliding in from
+     * the right over the menu and going back with the phone's own back gesture.
+     */
+    private io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] subEntries;
+
+    private void showTopLevel() {
+        subEntries = null;
         SummaryEntityListAdapter adapter =
                 new SummaryEntityListAdapter(getContext(), MenuListItem.values());
         adapter.setOnPicked(position -> MenuListItem.values()[position].call(this));
         setListAdapter(adapter);
+        setTitleRow(0);
+    }
+
+    /** Asked by an entry of the menu that has a list of its own behind it. */
+    public static void openSubMenu(androidx.fragment.app.Fragment from, int titleId,
+                                   io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] entries) {
+        if (from instanceof MenuListFragment) {
+            ((MenuListFragment) from).showSubMenu(titleId, entries);
+        }
+    }
+
+    private void showSubMenu(int titleId,
+                             io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] entries) {
+        subEntries = entries;
+        SummaryEntityListAdapter adapter = new SummaryEntityListAdapter(getContext(), entries);
+        adapter.setOnPicked(position -> entries[position].execute(this));
+        setListAdapter(adapter);
+        setTitleRow(titleId);
+        slideIn();
+    }
+
+    /** The name of the list one is standing in, with the way back beside it. */
+    private void setTitleRow(int titleId) {
+        View header = getView() == null ? null : getView().findViewById(R.id.sub_menu_header);
+        if (header == null) {
+            return;
+        }
+        if (titleId == 0) {
+            header.setVisibility(View.GONE);
+            return;
+        }
+        header.setVisibility(View.VISIBLE);
+        ((android.widget.TextView) header.findViewById(R.id.sub_menu_title)).setText(titleId);
+        header.findViewById(R.id.sub_menu_back).setOnClickListener(v -> showTopLevel());
+    }
+
+    private void slideIn() {
+        View list = getView() == null ? null : getView().findViewById(android.R.id.list);
+        if (list == null) {
+            return;
+        }
+        list.setTranslationX(list.getWidth() > 0 ? list.getWidth() * 0.25f : 200f);
+        list.animate().translationX(0f).setDuration(180).start();
+    }
+
+    /** The phone's own way back closes the list before leaving the menu. */
+    public boolean onBackPressedHere() {
+        if (subEntries == null) {
+            return false;
+        }
+        showTopLevel();
+        return true;
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        MenuListItem.values()[position].call(this);
+        if (subEntries != null) {
+            subEntries[position].execute(this);
+        } else {
+            MenuListItem.values()[position].call(this);
+        }
     }
 
     @OnActivityResult(MenuListItem.ACTIVITY_RESTORE_DATABASE)
