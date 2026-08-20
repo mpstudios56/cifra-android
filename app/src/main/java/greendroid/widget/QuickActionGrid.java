@@ -98,7 +98,14 @@ public class QuickActionGrid extends QuickActionWidget {
     protected void onMeasureAndLayout(Rect anchorRect, View contentView) {
 
         //contentView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
-        contentView.measure(MeasureSpec.makeMeasureSpec(getScreenWidth(), MeasureSpec.EXACTLY),
+        // The ring is given nearly the whole width of the screen instead of
+        // only what its contents ask for. Four words share that width, and the
+        // longest of them - "Trasferimento" - was breaking in two inside a
+        // bubble that had left half the screen empty beside it.
+        int margin = Math.round(16 * contentView.getResources().getDisplayMetrics().density);
+        int width = getScreenWidth() - 2 * margin;
+        setWidth(width);
+        contentView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         int rootHeight = contentView.getMeasuredHeight();
