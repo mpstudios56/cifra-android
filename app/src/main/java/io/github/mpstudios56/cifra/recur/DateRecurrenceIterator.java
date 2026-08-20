@@ -2,7 +2,6 @@ package io.github.mpstudios56.cifra.recur;
 
 import com.google.ical.iter.RecurrenceIterator;
 import com.google.ical.iter.RecurrenceIteratorFactory;
-import com.google.ical.util.TimeUtils;
 import com.google.ical.values.RRule;
 
 import java.text.ParseException;
@@ -12,48 +11,72 @@ import java.util.Date;
 import static io.github.mpstudios56.cifra.recur.RecurrencePeriod.dateToDateValue;
 import static io.github.mpstudios56.cifra.recur.RecurrencePeriod.dateValueToDate;
 
+/**
+ * Walks through the dates a rule produces, one after the next.
+ * <p>
+ * The calendar library underneath speaks in its own kind of date and always
+ * starts from the beginning of the rule; this walks it forward to the moment
+ * asked for and hands back ordinary dates from there on.
+ */
 public class DateRecurrenceIterator {
 
-	private final RecurrenceIterator ri;
-    private Date firstDate;
-    private boolean isStartDateInDaylight;
+    private final RecurrenceIterator dates;
+    /** The one already taken out of the walk while looking for the moment. */
+    private Date held;
+    /** Whether the rule started in summer time, which shifts the hour. */
+    private boolean startedInDaylight;
 
-	private DateRecurrenceIterator(RecurrenceIterator ri) {
-		this.ri = ri;
-	}
-
-	public boolean hasNext() {
-		return firstDate != null || ri.hasNext();
-	}
-
-	public Date next() {
-        if (firstDate != null) {
-            Date date = firstDate;
-            firstDate = null;
-            return date;
-        }
-        return dateValueToDate(ri.next(), isStartDateInDaylight);
-	}
-
-	public static DateRecurrenceIterator create(RRule rrule, Date nowDate, Date startDate) throws ParseException {
-        RecurrenceIterator ri = RecurrenceIteratorFactory.createRecurrenceIterator(rrule,
-                dateToDateValue(startDate), Calendar.getInstance().getTimeZone());
-        Date date = null;
-        boolean isStartDateInDaylight = Calendar.getInstance().getTimeZone().inDaylightTime(startDate);
-        while (ri.hasNext() && (date = dateValueToDate(ri.next(), isStartDateInDaylight)).before(nowDate));
-        //ri.advanceTo(dateToDateValue(nowDate));
-        DateRecurrenceIterator iterator = new DateRecurrenceIterator(ri);
-        iterator.isStartDateInDaylight = isStartDateInDaylight;
-        iterator.firstDate = date;
-        return iterator;
-	}
-
-    public static DateRecurrenceIterator empty() {
-        return new EmptyDateRecurrenceIterator();
+    private DateRecurrenceIterator(RecurrenceIterator dates) {
+        this.dates = dates;
     }
 
-    private static class EmptyDateRecurrenceIterator extends DateRecurrenceIterator {
-        public EmptyDateRecurrenceIterator() {
+    public boolean hasNext() {
+        return held != null || dates.hasNext();
+    }
+
+    public Date next() {
+        if (held != null) {
+            Date date = held;
+            held = null;
+            return date;
+        }
+        return dateValueToDate(dates.next(), startedInDaylight);
+    }
+
+    /**
+     * A walk over the rule, standing at the first date that is not before
+     * {@code from}.
+     * <p>
+     * When the rule has already run out before that moment, the last date it
+     * produced is what stands ready - which is how the scheduler learns that
+     * there is nothing further ahead.
+     */
+    public static DateRecurrenceIterator create(RRule rule, Date from, Date start)
+            throws ParseException {
+        Calendar here = Calendar.getInstance();
+        boolean startedInDaylight = here.getTimeZone().inDaylightTime(start);
+        RecurrenceIterator dates = RecurrenceIteratorFactory.createRecurrenceIterator(
+                rule, dateToDateValue(start), here.getTimeZone());
+        Date date = null;
+        while (dates.hasNext()) {
+            date = dateValueToDate(dates.next(), startedInDaylight);
+            if (!date.before(from)) {
+                break;
+            }
+        }
+        DateRecurrenceIterator walk = new DateRecurrenceIterator(dates);
+        walk.startedInDaylight = startedInDaylight;
+        walk.held = date;
+        return walk;
+    }
+
+    /** A walk with nothing in it, for a movement that does not come back. */
+    public static DateRecurrenceIterator empty() {
+        return new Empty();
+    }
+
+    private static class Empty extends DateRecurrenceIterator {
+        Empty() {
             super(null);
         }
 

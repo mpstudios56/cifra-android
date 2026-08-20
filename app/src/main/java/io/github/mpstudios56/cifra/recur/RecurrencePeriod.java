@@ -1,19 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.recur;
 
 import com.google.ical.util.TimeUtils;
-import com.google.ical.values.*;
-
-import io.github.mpstudios56.cifra.datetime.DateUtils;
+import com.google.ical.values.DateTimeValueImpl;
+import com.google.ical.values.DateValue;
+import com.google.ical.values.DateValueImpl;
+import com.google.ical.values.RRule;
+import com.google.ical.values.TimeValue;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -21,97 +13,121 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import io.github.mpstudios56.cifra.datetime.DateUtils;
+
+/**
+ * When a repetition stops.
+ * <p>
+ * Either never, or after a number of times, or on a chosen day. Like the
+ * pattern beside it, it keeps the answers from its panel as one line of text
+ * and knows how to write them into the rule.
+ * <p>
+ * It also holds the two translations between the calendar library's kind of
+ * date and an ordinary one, because this is where they were first needed.
+ */
 public class RecurrencePeriod {
 
-	public final RecurrenceUntil until;
-	public final String params;
-	
-	public RecurrencePeriod(RecurrenceUntil until, String params) {
-		this.until = until;
-		this.params = params;
-	}
-	
-	public static RecurrencePeriod noEndDate() {
-		return new RecurrencePeriod(RecurrenceUntil.INDEFINETELY, null);
-	}
-	
-	public static RecurrencePeriod empty(RecurrenceUntil until) {
-		return new RecurrencePeriod(until, null);
-	}
+    public final RecurrenceUntil until;
+    /** The answers from the panel, as one line. */
+    public final String params;
 
-	public static RecurrencePeriod parse(String string) {
-		String[] a = string.split(":");
-		return new RecurrencePeriod(RecurrenceUntil.valueOf(a[0]), a[1]);
-	}
-
-	public String stateToString() {
-		return until.name()+":"+params;
-	}
-
-	public void updateRRule(RRule r, Calendar startDate) {
-		HashMap<String, String> state = RecurrenceViewFactory.parseState(params);
-		switch (until) {
-		case EXACTLY_TIMES:
-			int count = Integer.parseInt(state.get(RecurrenceViewFactory.P_COUNT));
-			r.setCount(count);
-			break;
-		case STOPS_ON_DATE:
-			Calendar c = Calendar.getInstance();
-			String stopsOnDate = state.get(RecurrenceViewFactory.P_DATE);
-			try {
-				c.setTime(DateUtils.FORMAT_DATE_RFC_2445.parse(stopsOnDate));
-				c.set(Calendar.HOUR_OF_DAY, startDate.get(Calendar.HOUR_OF_DAY));
-				c.set(Calendar.MINUTE, startDate.get(Calendar.MINUTE));
-				c.set(Calendar.SECOND, startDate.get(Calendar.SECOND));
-				c.set(Calendar.MILLISECOND, 0);
-			} catch (ParseException e) {
-				throw new IllegalArgumentException(params);
-			}
-			r.setUntil(dateToDateValue(c.getTime()));
-			break;
-		}
-	}
-
-    static Date dateValueToDate(DateValue dvUtc, boolean isStartDateInDaylight) {
-        GregorianCalendar c = new GregorianCalendar();
-		DateValue dv = TimeUtils.fromUtc(dvUtc, c.getTimeZone());
-        if (dv instanceof TimeValue) {
-            TimeValue tv = (TimeValue) dv;
-            c.set(dv.year(),
-                    dv.month() - 1,  // java.util's dates are zero-indexed
-                    dv.day(),
-                    tv.hour(),
-                    tv.minute(),
-                    tv.second());
-        } else {
-            c.set(dv.year(),
-                    dv.month() - 1,  // java.util's dates are zero-indexed
-                    dv.day(),
-                    0,
-                    0,
-                    0);
-        }
-		return c.getTime();
+    public RecurrencePeriod(RecurrenceUntil until, String params) {
+        this.until = until;
+        this.params = params;
     }
 
+    public static RecurrencePeriod noEndDate() {
+        return new RecurrencePeriod(RecurrenceUntil.INDEFINETELY, null);
+    }
+
+    public static RecurrencePeriod empty(RecurrenceUntil until) {
+        return new RecurrencePeriod(until, null);
+    }
+
+    public static RecurrencePeriod parse(String written) {
+        String[] parts = written.split(":");
+        return new RecurrencePeriod(RecurrenceUntil.valueOf(parts[0]), parts[1]);
+    }
+
+    public String stateToString() {
+        return until.name() + ":" + params;
+    }
+
+    /** Writes the end of the repetition into the rule, where there is one. */
+    public void updateRRule(RRule rule, Calendar startDate) {
+        HashMap<String, String> answers = RecurrenceViewFactory.parseState(params);
+        switch (until) {
+            case EXACTLY_TIMES:
+                rule.setCount(Integer.parseInt(answers.get(RecurrenceViewFactory.P_COUNT)));
+                break;
+            case STOPS_ON_DATE:
+                rule.setUntil(dateToDateValue(
+                        lastDay(answers.get(RecurrenceViewFactory.P_DATE), startDate)));
+                break;
+            default:
+                // Never stops: the rule says nothing about an end.
+                break;
+        }
+    }
+
+    /**
+     * The chosen last day, at the same time of day the repetition starts at.
+     * <p>
+     * The day is picked on a calendar, which knows nothing of the hour; taking
+     * the hour from the start is what makes the last occurrence fall inside the
+     * period instead of just outside it.
+     */
+    private Date lastDay(String chosen, Calendar startDate) {
+        Calendar end = Calendar.getInstance();
+        try {
+            end.setTime(DateUtils.FORMAT_DATE_RFC_2445.parse(chosen));
+        } catch (ParseException unreadable) {
+            throw new IllegalArgumentException(params);
+        }
+        end.set(Calendar.HOUR_OF_DAY, startDate.get(Calendar.HOUR_OF_DAY));
+        end.set(Calendar.MINUTE, startDate.get(Calendar.MINUTE));
+        end.set(Calendar.SECOND, startDate.get(Calendar.SECOND));
+        end.set(Calendar.MILLISECOND, 0);
+        return end.getTime();
+    }
+
+    /**
+     * The library's date, brought back to this phone's clock.
+     *
+     * @param startedInDaylight kept for the caller's sake; the shift is already
+     *                          worked out by the conversion below.
+     */
+    static Date dateValueToDate(DateValue utc, boolean startedInDaylight) {
+        GregorianCalendar here = new GregorianCalendar();
+        DateValue local = TimeUtils.fromUtc(utc, here.getTimeZone());
+        // Months are counted from one there and from zero here.
+        int month = local.month() - 1;
+        if (local instanceof TimeValue) {
+            TimeValue time = (TimeValue) local;
+            here.set(local.year(), month, local.day(),
+                    time.hour(), time.minute(), time.second());
+        } else {
+            here.set(local.year(), month, local.day(), 0, 0, 0);
+        }
+        return here.getTime();
+    }
+
+    /**
+     * An ordinary date as the library wants it: a bare day when the time is
+     * midnight, a day and a time otherwise.
+     */
     static DateValue dateToDateValue(Date date) {
-        GregorianCalendar c = new GregorianCalendar();
-        c.setTime(date);
-        int h = c.get(Calendar.HOUR_OF_DAY),
-                m = c.get(Calendar.MINUTE),
-                s = c.get(Calendar.SECOND);
-        if (0 == (h | m | s)) {
-            return new DateValueImpl(c.get(Calendar.YEAR),
-                    c.get(Calendar.MONTH) + 1,
-                    c.get(Calendar.DAY_OF_MONTH));
-        } else {
-            return new DateTimeValueImpl(c.get(Calendar.YEAR),
-                    c.get(Calendar.MONTH) + 1,
-                    c.get(Calendar.DAY_OF_MONTH),
-                    h,
-                    m,
-                    s);
+        GregorianCalendar here = new GregorianCalendar();
+        here.setTime(date);
+        int year = here.get(Calendar.YEAR);
+        int month = here.get(Calendar.MONTH) + 1;
+        int day = here.get(Calendar.DAY_OF_MONTH);
+        int hour = here.get(Calendar.HOUR_OF_DAY);
+        int minute = here.get(Calendar.MINUTE);
+        int second = here.get(Calendar.SECOND);
+        if (hour == 0 && minute == 0 && second == 0) {
+            return new DateValueImpl(year, month, day);
         }
+        return new DateTimeValueImpl(year, month, day, hour, minute, second);
     }
-
 }

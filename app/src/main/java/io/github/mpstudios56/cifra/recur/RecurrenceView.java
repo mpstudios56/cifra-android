@@ -1,25 +1,26 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.recur;
 
 import android.widget.LinearLayout;
 
+/**
+ * One panel of the repetition screen.
+ * <p>
+ * Each way of repeating - every day, every week, on certain days of the month -
+ * knows how to draw its own questions, how to write its answers down as a
+ * single line of text, and how to read that line back. The screen holds several
+ * of them and shows the one that matches what has been chosen.
+ */
 public interface RecurrenceView {
 
-	void createNodes(LinearLayout layout);
-	
-	String stateToString();
-	
-	void stateFromString(String state);
+    /** Draws this panel's questions into the space given. */
+    void createNodes(LinearLayout layout);
 
-	boolean validateState();
+    /** The answers as one line, to be stored with the movement. */
+    String stateToString();
 
+    /** Puts the answers back on screen from a line stored earlier. */
+    void stateFromString(String state);
+
+    /** Whether what has been answered makes sense; complains on screen if not. */
+    boolean validateState();
 }
