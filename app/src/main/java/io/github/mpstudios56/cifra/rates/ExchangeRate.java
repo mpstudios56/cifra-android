@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.rates;
 
 import android.content.ContentValues;
@@ -13,16 +5,20 @@ import android.database.Cursor;
 
 import java.util.List;
 
-import io.github.mpstudios56.cifra.db.DatabaseHelper;
+import io.github.mpstudios56.cifra.db.DatabaseHelper.ExchangeRateColumns;
 
 /**
- * Created by IntelliJ IDEA.
- * User: denis.solonenko
- * Date: 1/17/12 11:25 PM
+ * What one currency was worth in another, on a given day.
+ * <p>
+ * A rate that could not be fetched is still a rate object, carrying the reason
+ * instead of a figure: a total that could not be converted has to say so rather
+ * than quietly read as zero.
  */
 public class ExchangeRate implements Comparable<ExchangeRate> {
 
+    /** A currency against itself. */
     public static final ExchangeRate ONE = new ExchangeRate();
+    /** No rate to be had, and the total that needed it cannot be worked out. */
     public static final ExchangeRate NA = new ExchangeRate();
 
     static {
@@ -30,50 +26,55 @@ public class ExchangeRate implements Comparable<ExchangeRate> {
         NA.error = "N/A";
     }
 
+    public long fromCurrencyId;
+    public long toCurrencyId;
+    /** The day the rate belongs to. */
+    public long date;
+    public double rate;
+    /** Whether it was worked out by turning another rate upside down. */
+    public int is_flip;
+    /** Why there is no figure, when there is none. */
+    public String error;
+    /** The rates this one was worked out from, when it was not fetched directly. */
+    public List<ExchangeRate> derivedFrom;
+
     public static ExchangeRate fromCursor(Cursor c) {
         ExchangeRate r = new ExchangeRate();
-        r.fromCurrencyId = c.getLong(DatabaseHelper.ExchangeRateColumns.from_currency_id.ordinal());
-        r.toCurrencyId = c.getLong(DatabaseHelper.ExchangeRateColumns.to_currency_id.ordinal());
-        r.date = c.getLong(DatabaseHelper.ExchangeRateColumns.rate_date.ordinal());
-        r.rate = c.getFloat(DatabaseHelper.ExchangeRateColumns.rate.ordinal());
+        r.fromCurrencyId = c.getLong(ExchangeRateColumns.from_currency_id.ordinal());
+        r.toCurrencyId = c.getLong(ExchangeRateColumns.to_currency_id.ordinal());
+        r.date = c.getLong(ExchangeRateColumns.rate_date.ordinal());
+        r.rate = c.getFloat(ExchangeRateColumns.rate.ordinal());
+        // Older rows were written before the mark existed.
         if (c.getColumnCount() >= 5) {
-            r.is_flip = c.getInt(DatabaseHelper.ExchangeRateColumns.is_flip.ordinal());
+            r.is_flip = c.getInt(ExchangeRateColumns.is_flip.ordinal());
         }
         return r;
     }
 
     public ContentValues toValues() {
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.ExchangeRateColumns.from_currency_id.name(), fromCurrencyId);
-        values.put(DatabaseHelper.ExchangeRateColumns.to_currency_id.name(), toCurrencyId);
-        values.put(DatabaseHelper.ExchangeRateColumns.rate_date.name(), date);
-        values.put(DatabaseHelper.ExchangeRateColumns.rate.name(), rate);
+        values.put(ExchangeRateColumns.from_currency_id.name(), fromCurrencyId);
+        values.put(ExchangeRateColumns.to_currency_id.name(), toCurrencyId);
+        values.put(ExchangeRateColumns.rate_date.name(), date);
+        values.put(ExchangeRateColumns.rate.name(), rate);
         return values;
     }
 
-    public long fromCurrencyId;
-    public long toCurrencyId;
-    public long date;
-    public double rate;
-    public int is_flip;
-    public String error;
-    public List<ExchangeRate> derivedFrom;
-
+    /**
+     * The same rate read the other way round.
+     * <p>
+     * A service quotes euros in dollars; the app often needs dollars in euros,
+     * which is the same fact upside down. The turned rate is marked as such, so
+     * it is not mistaken for one that was quoted.
+     */
     public ExchangeRate flip() {
-        ExchangeRate r = new ExchangeRate();
-        r.fromCurrencyId = toCurrencyId;
-        r.toCurrencyId = fromCurrencyId;
-        r.date = date;
-        r.rate = rate == 0 ? 0 : 1.0d/rate;
-        r.is_flip = r.is_flip == 0 ? 1 : 0;
-        return r;
-    }
-
-    @Override
-    public int compareTo(ExchangeRate that) {
-        long d0 = this.date;
-        long d1 = that.date;
-        return d0 > d1 ? -1 : (d0 < d1 ? 1 : 0);
+        ExchangeRate turned = new ExchangeRate();
+        turned.fromCurrencyId = toCurrencyId;
+        turned.toCurrencyId = fromCurrencyId;
+        turned.date = date;
+        turned.rate = rate == 0 ? 0 : 1.0d / rate;
+        turned.is_flip = is_flip == 0 ? 1 : 0;
+        return turned;
     }
 
     public boolean isOk() {
@@ -84,15 +85,17 @@ public class ExchangeRate implements Comparable<ExchangeRate> {
         return error != null ? error : "";
     }
 
+    /** Newest first: a list of rates is read from the most recent backwards. */
+    @Override
+    public int compareTo(ExchangeRate that) {
+        return Long.compare(that.date, this.date);
+    }
+
     @Override
     public String toString() {
-        return "ExchangeRate{" +
-                "fromCurrencyId=" + fromCurrencyId +
-                ", toCurrencyId=" + toCurrencyId +
-                ", date=" + date +
-                ", rate=" + rate +
-                ", is_flip=" + is_flip +
-                ", error='" + error + '\'' +
-                '}';
+        return "ExchangeRate{" + fromCurrencyId + "->" + toCurrencyId
+                + " on " + date + " = " + rate
+                + (is_flip != 0 ? " (flipped)" : "")
+                + (error != null ? " error=" + error : "") + "}";
     }
 }

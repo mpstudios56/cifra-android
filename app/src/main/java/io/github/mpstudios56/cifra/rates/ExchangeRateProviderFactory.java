@@ -1,45 +1,38 @@
-/*
- * Copyright (c) 2013 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.rates;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import okhttp3.OkHttpClient;
 import io.github.mpstudios56.cifra.http.HttpClientWrapper;
+import okhttp3.OkHttpClient;
 
 /**
- * Created with IntelliJ IDEA.
- * User: dsolonenko
- * Date: 2/19/13
- * Time: 12:06 AM
+ * The services that can be asked for exchange rates, and how each is set up.
+ * <p>
+ * One of them wants a key of its own, which is kept in the settings; the other
+ * asks for nothing. Which is used is a choice made in the settings, and the
+ * name of the choice is the name of the entry here.
  */
 public enum ExchangeRateProviderFactory {
 
-    openexchangerates(){
+    openexchangerates {
         @Override
-        public ExchangeRateProvider createProvider(SharedPreferences sharedPreferences, Context context) {
-            String appId = sharedPreferences.getString("openexchangerates_app_id", "");
-            return new OpenExchangeRatesDownloader(createDefaultWrapper(), appId, context);
+        public ExchangeRateProvider createProvider(SharedPreferences settings, Context context) {
+            String key = settings.getString("openexchangerates_app_id", "");
+            return new OpenExchangeRatesDownloader(network(), key, context);
         }
     },
-    freeCurrency(){
+
+    freeCurrency {
         @Override
-        public ExchangeRateProvider createProvider(SharedPreferences sharedPreferences, Context context) {
-            return new FreeCurrencyRateDownloader(createDefaultWrapper(), System.currentTimeMillis(), context);
+        public ExchangeRateProvider createProvider(SharedPreferences settings, Context context) {
+            return new FreeCurrencyRateDownloader(network(), System.currentTimeMillis(), context);
         }
     };
 
-    public abstract ExchangeRateProvider createProvider(SharedPreferences sharedPreferences, Context context);
+    public abstract ExchangeRateProvider createProvider(SharedPreferences settings, Context context);
 
-    private static HttpClientWrapper createDefaultWrapper() {
+    private static HttpClientWrapper network() {
         return new HttpClientWrapper(new OkHttpClient());
     }
-
 }

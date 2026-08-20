@@ -1,101 +1,102 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.rates;
 
 import android.content.Context;
 
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import io.github.mpstudios56.cifra.model.Currency;
 import io.github.mpstudios56.cifra.utils.CurrencyCache;
-
-import java.util.*;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 /**
- * Not thread safe
- *
- * Created by IntelliJ IDEA.
- * User: denis.solonenko
- * Date: 1/30/12 7:54 PM
+ * The rate between two currencies as it stood on a given day.
+ * <p>
+ * Unlike its neighbour, which keeps only the most recent rate, this holds every
+ * rate that was ever written down for a pair, newest first. A movement of three
+ * years ago is converted at the rate of three years ago, not at today's - which
+ * is the difference between a history and a snapshot.
+ * <p>
+ * "The rate on that day" means the most recent rate that is not older than the
+ * day asked for. When there is none, the same three ways round are tried as
+ * elsewhere: the pair upside down, and the two of them through the home
+ * currency. A failure is kept as well, so it is not tried again for every
+ * movement of the same currency.
  */
 public class HistoryExchangeRates implements ExchangeRateProvider, ExchangeRatesCollection {
-    private static final String TAG = "HistoryRates";
 
     protected Context context;
     protected Currency homeCurrency;
+
+    /** From one currency, to another, every rate ever known, newest first. */
+    private final Long2ObjectOpenHashMap<Long2ObjectOpenHashMap<SortedSet<ExchangeRate>>> rates =
+            new Long2ObjectOpenHashMap<>();
 
     public HistoryExchangeRates(Context context) {
         this.context = context;
     }
 
-    private final Long2ObjectOpenHashMap<Long2ObjectOpenHashMap<SortedSet<ExchangeRate>>> rates = new Long2ObjectOpenHashMap<>();
-
     @Override
-    public void addRate(ExchangeRate r) {
-        SortedSet<ExchangeRate> s = getRates(r.fromCurrencyId, r.toCurrencyId);
-        s.add(r);
+    public void addRate(ExchangeRate rate) {
+        history(rate.fromCurrencyId, rate.toCurrencyId).add(rate);
     }
 
+    /** The most recent rate of all, whenever it is from. */
     @Override
-    public ExchangeRate getRate(Currency fromCurrency, Currency toCurrency) {
-        SortedSet<ExchangeRate> s = getRates(fromCurrency.id, toCurrency.id);
-        if (!s.isEmpty()) {
-            return s.first();
+    public ExchangeRate getRate(Currency from, Currency to) {
+        SortedSet<ExchangeRate> known = history(from.id, to.id);
+        if (!known.isEmpty()) {
+            return known.first();
         }
-        s = getRates(toCurrency.id, fromCurrency.id);
-        if (!s.isEmpty()) {
-            return s.first().flip();
+        SortedSet<ExchangeRate> other = history(to.id, from.id);
+        if (!other.isEmpty()) {
+            return other.first().flip();
         }
         return ExchangeRate.NA;
     }
 
     @Override
-    public ExchangeRate getRate(Currency fromCurrency, Currency toCurrency, long atTime) {
-        ExchangeRate r = new ExchangeRate();
-        SortedSet<ExchangeRate> s = getRates(fromCurrency.id, toCurrency.id);
-        r.date = atTime;
-        // s.tailSet(r) still creates a new TreeSet object
-        SortedSet<ExchangeRate> rates = s.tailSet(r);
-        if (!rates.isEmpty()) {
-            return rates.first();
+    public ExchangeRate getRate(Currency from, Currency to, long when) {
+        // Rates sort newest first, so everything at or before the moment asked
+        // for is the tail of the set, and its first entry is the one wanted.
+        ExchangeRate asking = new ExchangeRate();
+        asking.date = when;
+
+        SortedSet<ExchangeRate> known = history(from.id, to.id);
+        SortedSet<ExchangeRate> byThen = known.tailSet(asking);
+        if (!byThen.isEmpty()) {
+            return byThen.first();
         }
-        // estimate from inverse exchange
-        SortedSet<ExchangeRate> fs = getRates(toCurrency.id, fromCurrency.id);
-        rates = fs.tailSet(r);
-        if (!rates.isEmpty()) {
-            ExchangeRate inverse = rates.first().flip();
-            s.add(inverse);
-            return inverse;
+
+        SortedSet<ExchangeRate> otherWay = history(to.id, from.id).tailSet(asking);
+        if (!otherWay.isEmpty()) {
+            ExchangeRate turned = otherWay.first().flip();
+            known.add(turned);
+            return turned;
         }
-        // estimate from exchange via home currency
+
         if (homeCurrency == null) {
             homeCurrency = CurrencyCache.getHomeCurrency();
         }
-        if (!homeCurrency.equals(Currency.EMPTY) &&
-            !fromCurrency.equals(homeCurrency) &&
-            !toCurrency.equals(homeCurrency))
-        {
-            ExchangeRate e1 = getRate(fromCurrency, homeCurrency, atTime);
-            if (e1 != ExchangeRate.NA) {
-                ExchangeRate e2 = getRate(homeCurrency, toCurrency, atTime);
-                if (e2 != ExchangeRate.NA) {
-                    r.fromCurrencyId = fromCurrency.id;
-                    r.toCurrencyId = toCurrency.id;
-                    r.rate = e1.rate * e2.rate;
-                    s.add(r);
-                    return r;
+        if (!homeCurrency.equals(Currency.EMPTY)
+                && !from.equals(homeCurrency)
+                && !to.equals(homeCurrency)) {
+            ExchangeRate first = getRate(from, homeCurrency, when);
+            if (first != ExchangeRate.NA) {
+                ExchangeRate second = getRate(homeCurrency, to, when);
+                if (second != ExchangeRate.NA) {
+                    asking.fromCurrencyId = from.id;
+                    asking.toCurrencyId = to.id;
+                    asking.rate = first.rate * second.rate;
+                    known.add(asking);
+                    return asking;
                 }
             }
         }
-        // negative cache
-        ExchangeRate defaultRate = ExchangeRate.NA;
-        s.add(defaultRate);
-        return defaultRate;
+
+        known.add(ExchangeRate.NA);
+        return ExchangeRate.NA;
     }
 
     @Override
@@ -103,27 +104,17 @@ public class HistoryExchangeRates implements ExchangeRateProvider, ExchangeRates
         throw new UnsupportedOperationException();
     }
 
-    private SortedSet<ExchangeRate> getRates(long fromCurrencyId, long toCurrencyId) {
-        var map = getMapFor(fromCurrencyId);
-        return getSetFor(map, toCurrencyId);
-    }
-
-    private Long2ObjectOpenHashMap<SortedSet<ExchangeRate>> getMapFor(long fromCurrencyId) {
-        var m = rates.get(fromCurrencyId);
-        if (m == null) {
-            m = new Long2ObjectOpenHashMap<>();
-            rates.put(fromCurrencyId, m);
+    private SortedSet<ExchangeRate> history(long fromCurrencyId, long toCurrencyId) {
+        Long2ObjectOpenHashMap<SortedSet<ExchangeRate>> against = rates.get(fromCurrencyId);
+        if (against == null) {
+            against = new Long2ObjectOpenHashMap<>();
+            rates.put(fromCurrencyId, against);
         }
-        return m;
-    }
-    
-    private SortedSet<ExchangeRate> getSetFor(Long2ObjectOpenHashMap<SortedSet<ExchangeRate>> rates, long date) {
-        SortedSet<ExchangeRate> s = rates.get(date);
-        if (s == null) {
-            s = new TreeSet<ExchangeRate>();
-            rates.put(date, s);
+        SortedSet<ExchangeRate> known = against.get(toCurrencyId);
+        if (known == null) {
+            known = new TreeSet<>();
+            against.put(toCurrencyId, known);
         }
-        return s;
+        return known;
     }
-
 }

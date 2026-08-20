@@ -1,28 +1,24 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.rates;
-
-import io.github.mpstudios56.cifra.model.Currency;
 
 import java.util.List;
 
+import io.github.mpstudios56.cifra.model.Currency;
+
 /**
- * Created by IntelliJ IDEA.
- * User: denis.solonenko
- * Date: 1/30/12 7:46 PM
+ * Where an exchange rate comes from.
+ * <p>
+ * Two of these exist: one asks a service on the network, the other looks in the
+ * rates already written down. Both answer the same three questions, so whatever
+ * needs a rate does not have to know which it is talking to.
  */
 public interface ExchangeRateProvider {
 
-    ExchangeRate getRate(Currency fromCurrency, Currency toCurrency);
+    /** The rate between the two as it stands now. */
+    ExchangeRate getRate(Currency from, Currency to);
 
-    ExchangeRate getRate(Currency fromCurrency, Currency toCurrency, long atTime);
+    /** The rate between the two as it stood at that moment. */
+    ExchangeRate getRate(Currency from, Currency to, long when);
 
+    /** Every currency against the home one, in a single round. */
     List<ExchangeRate> getRates(Currency homeCurrency, List<Currency> currencies);
-
 }
