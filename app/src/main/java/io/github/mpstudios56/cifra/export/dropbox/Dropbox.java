@@ -41,7 +41,15 @@ import java.util.List;
 public class Dropbox {
     private static final String TAG = "Dropbox";
 
-    private static final String APP_KEY = "aenijec51r68hsv";
+    /**
+     * The key by which Dropbox knows this app.
+     * <p>
+     * It was the key of the app Cifra grew out of, which is why Dropbox showed
+     * that app's name and its icon to anybody who connected an account, and put
+     * the copies in a folder named after it. Not a secret: it says which app is
+     * asking, and nothing more.
+     */
+    private static final String APP_KEY = "sheezzy1coavd0r";
 
     private static final String PICTURES_DIR = "/pictures";
 
