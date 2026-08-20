@@ -105,7 +105,13 @@ public class QuickActionGrid extends QuickActionWidget {
         float density = contentView.getResources().getDisplayMetrics().density;
         int margin = Math.round(16 * density);
         int roomPerEntry = Math.round(104 * density);
+        // Never wider than what it actually holds: a ring of two, in a grid
+        // still willing to lay out three, was a bubble with an empty column in
+        // it.
         int columns = mGridView.getNumColumns();
+        if (quickActions != null && !quickActions.isEmpty()) {
+            columns = Math.min(columns, quickActions.size());
+        }
         int width = getScreenWidth() - 2 * margin;
         if (columns > 0) {
             width = Math.min(width, columns * roomPerEntry);

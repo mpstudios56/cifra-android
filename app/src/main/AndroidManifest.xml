@@ -268,6 +268,8 @@
 			android:configChanges="screenSize|smallestScreenSize|orientation|screenLayout|keyboardHidden"/>		
 		
 		<activity android:name=".activity.MenuPageActivity"
+			android:theme="@style/AppThemeCompat"
+			android:taskAffinity=".MainActivity"
 			android:exported="false" />
 		<activity android:name=".activity.PreferencesActivity2" android:label="@string/preferences"
 			android:taskAffinity=".MainActivity"

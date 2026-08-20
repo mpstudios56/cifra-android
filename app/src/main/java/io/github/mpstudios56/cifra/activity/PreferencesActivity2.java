@@ -83,6 +83,34 @@ public class PreferencesActivity2 extends AppCompatActivity {
         }
     }
 
+    /**
+     * Opened a second time with a different request.
+     * <p>
+     * This screen keeps a single instance of itself, so a second opening does
+     * not build a new one: without this it went on showing whatever was asked
+     * for the first time, which is why backup and online backup looked like the
+     * same screen twice.
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        String screen = intent != null ? intent.getStringExtra(SCREEN_EXTRA) : null;
+        if (screen == null) {
+            return;
+        }
+        try {
+            @SuppressWarnings("unchecked")
+            Class<? extends Fragment> fragment = (Class<? extends Fragment>) Class.forName(screen);
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.fragment_container_view, fragment, intent.getExtras())
+                    .commit();
+        } catch (Exception e) {
+            Log.e("PreferencesActivity2", "no such settings screen: " + screen, e);
+        }
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         getOnBackPressedDispatcher().onBackPressed();
