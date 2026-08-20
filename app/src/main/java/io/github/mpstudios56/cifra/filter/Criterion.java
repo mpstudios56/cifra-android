@@ -1,43 +1,41 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.filter;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
-import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-
-import io.github.mpstudios56.cifra.utils.StringUtil;
-import io.github.mpstudios56.cifra.orb.Expression;
-import io.github.mpstudios56.cifra.orb.Expressions;
+import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: denis.solonenko
- * Date: 12/17/12 9:06 PM
+ * One condition a movement has to satisfy to be shown.
+ * <p>
+ * "The account is this one", "the date falls between these two", "the note
+ * contains this word". A condition knows the column it asks about, the way it
+ * asks - equals, between, one of - and the values it asks with; from those it
+ * can produce the fragment of SQL that goes into the query, and the arguments
+ * that fill its question marks.
+ * <p>
+ * Two conditions can be joined into one with {@link #and} or {@link #or}, and
+ * then the joined condition carries its parts as children and asks them for
+ * their own fragments in turn.
+ * <p>
+ * A condition can also be written down as text - a small JSON array - so that
+ * it survives being put in an intent or in the settings, and read back.
  */
 public class Criterion {
-    private static final String TAG = "Criterion";
 
-    private static Gson gson = new GsonBuilder()
+    /** Reads and writes the text form; the two adapters decide its shape. */
+    private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Criterion.class, new CriterionAdapter())
             .registerTypeAdapter(DateTimeCriterion.class, new DateTimeCriterionAdapter())
             .create();
 
-    private static Type criterionType = Criterion.class;
+    // ---------------------------------------------------------------- asking
 
     public static Criterion eq(String column, String value) {
         return new Criterion(column, WhereFilter.Operation.EQ, value);
@@ -47,13 +45,19 @@ public class Criterion {
         return new Criterion(column, WhereFilter.Operation.NEQ, value);
     }
 
+    /** Between the first value and the second, both included. */
     public static Criterion btw(String column, String... values) {
-        if (values.length < 2) throw new IllegalArgumentException("No values for BTW filter!");
+        if (values.length < 2) {
+            throw new IllegalArgumentException("Un intervallo ha bisogno di due estremi");
+        }
         return new Criterion(column, WhereFilter.Operation.BTW, values);
     }
 
+    /** Any one of the values given. */
     public static Criterion in(String column, String... values) {
-        if (values.length == 0) throw new IllegalArgumentException("No values for IN filter!");
+        if (values.length == 0) {
+            throw new IllegalArgumentException("Un elenco vuoto non seleziona nulla");
+        }
         return new Criterion(column, WhereFilter.Operation.IN, values);
     }
 
@@ -81,92 +85,66 @@ public class Criterion {
         return new Criterion(column, WhereFilter.Operation.LIKE, text);
     }
 
-    public static Criterion raw(String text) {
-        return new Criterion("(" + text + ")", WhereFilter.Operation.RAW);
+    /**
+     * A fragment of SQL written out by hand, for the questions the operations
+     * above cannot express. It carries no arguments, so whatever is put in it
+     * must already be safe: only figures worked out by the app, never anything
+     * somebody typed.
+     */
+    public static Criterion raw(String sql) {
+        return new Criterion("(" + sql + ")", WhereFilter.Operation.RAW);
     }
 
+    /**
+     * A marker rather than a question: it selects everything, and exists so
+     * that something can be attached to the filter and read back later.
+     */
     public static Criterion tag(String column, String text) {
         return new Criterion(column, WhereFilter.Operation.TAG, text);
     }
 
-    public static Criterion or(Criterion... children) {
-        Log.d(TAG, "Criterion or() children.length=" + children.length);
-        return new Criterion(children[0].columnName, WhereFilter.Operation.OR, combineValues(children), children);
+    /** Satisfied when any one of these is. */
+    public static Criterion or(Criterion... parts) {
+        return joined(WhereFilter.Operation.OR, parts);
     }
 
-    public static Criterion and(Criterion... children) {
-        Log.d(TAG, "Criterion and() children.length=" + children.length);
-        return new Criterion(children[0].columnName, WhereFilter.Operation.AND, combineValues(children), children);
+    /** Satisfied only when all of these are. */
+    public static Criterion and(Criterion... parts) {
+        return joined(WhereFilter.Operation.AND, parts);
     }
 
-    private static String[] combineValues(Criterion... children) {
-        LinkedList<String> values = new LinkedList<>();
-        for (Criterion c : children) {
-            values.addAll(Arrays.asList(c.getValues()));
+    private static Criterion joined(WhereFilter.Operation how, Criterion... parts) {
+        List<String> values = new ArrayList<>();
+        for (Criterion part : parts) {
+            values.addAll(Arrays.asList(part.getValues()));
         }
-        String[] ret = new String[values.size()];
-        return values.toArray(ret);
+        // The column of the first part stands for the whole: a filter holds one
+        // condition per column, and a joined condition has to answer for one.
+        return new Criterion(parts[0].columnName, how,
+                values.toArray(new String[0]), parts);
     }
-    
+
+    // ----------------------------------------------------------- what it is
+
     public final String columnName;
     public final WhereFilter.Operation operation;
     private final String[] values;
     private final Criterion[] children;
 
     public Criterion(String columnName, WhereFilter.Operation operation, String... values) {
-        this.columnName = columnName;
-        this.operation = operation;
-        this.values = values;
-        this.children = new Criterion[0];
+        this(columnName, operation, values, new Criterion[0]);
     }
 
-    public Criterion(String columnName, WhereFilter.Operation operation, String[] values, Criterion... children) {
+    public Criterion(String columnName, WhereFilter.Operation operation,
+                     String[] values, Criterion... children) {
         this.columnName = columnName;
         this.operation = operation;
-        this.values = values;
-        this.children = children;
+        this.values = values == null ? new String[0] : values;
+        this.children = children == null ? new Criterion[0] : children;
     }
 
     public boolean isNull() {
         return operation == WhereFilter.Operation.ISNULL;
-    }
-    
-    @Deprecated // todo.mb: not used, can be removed
-    public Expression toWhereExpression() {
-        switch (operation) {
-            case EQ:
-                return Expressions.eq(columnName, getLongValue1());
-            case GT:
-                return Expressions.gt(columnName, getLongValue1());
-            case GTE:
-                return Expressions.gte(columnName, getLongValue1());
-            case LT:
-                return Expressions.lt(columnName, getLongValue1());
-            case LTE:
-                return Expressions.lte(columnName, getLongValue1());
-            case BTW:
-                return Expressions.btw(columnName, getLongValue1(), getLongValue2());
-            case LIKE:
-                return Expressions.like(columnName, getStringValue());
-        }
-        throw new IllegalArgumentException();
-    }
-
-    public JsonArray toJsonArray() {
-        return gson.toJsonTree(this).getAsJsonArray();
-    }
-
-    public String toStringExtra() {
-        return toJsonArray().toString();
-    }
-
-    public static Criterion fromJsonArray(JsonArray array) {
-        return gson.fromJson(array, criterionType);
-    }
-
-    public static Criterion fromStringExtra(String extra) {
-        Log.d(TAG, "fromStringExtra: " + extra);
-        return fromJsonArray(JsonParser.parseString(extra).getAsJsonArray());
     }
 
     public String[] getValues() {
@@ -175,6 +153,10 @@ public class Criterion {
 
     public Criterion[] getChildren() {
         return children;
+    }
+
+    public int size() {
+        return values.length;
     }
 
     public String getStringValue() {
@@ -193,53 +175,78 @@ public class Criterion {
         return values.length > 1 ? Long.parseLong(values[1]) : -1;
     }
 
+    // -------------------------------------------------------------- as a query
+
+    /**
+     * The fragment of SQL this condition contributes, with question marks where
+     * the values go.
+     */
     public String getSelection() {
         if (operation == WhereFilter.Operation.TAG) {
+            // A marker asks nothing: "1" is true of every row.
             return "1";
         }
-
-        if (operation == WhereFilter.Operation.AND || operation == WhereFilter.Operation.OR)
-        {
-            String[] childSelection = new String[children.length];
-            for (int i = 0; i< children.length; ++i) {
-                childSelection[i] = children[i].getSelection();
+        if (operation == WhereFilter.Operation.AND || operation == WhereFilter.Operation.OR) {
+            String[] parts = new String[children.length];
+            for (int i = 0; i < children.length; i++) {
+                parts[i] = children[i].getSelection();
             }
-            return "(" + String.join(" " + operation.getOp(0) + " ", childSelection) + ")";
+            return "(" + String.join(" " + operation.getOp(0) + " ", parts) + ")";
         }
 
-        String exp = columnName + " " + operation.getOp(getSelectionArgs().length);
-        if (operation.getGroupOp() != null && getValues().length > operation.getValsPerGroup()) {
-            int groupNum = getValues().length / operation.getValsPerGroup();
-            String groupDelim = " " + operation.getGroupOp() + " ";
-            return  "(" + StringUtil.generateSeparated(exp, groupDelim, groupNum) + ")";
+        String fragment = columnName + " " + operation.getOp(getSelectionArgs().length);
+        String joinWith = operation.getGroupOp();
+        int perGroup = operation.getValsPerGroup();
+        if (joinWith == null || perGroup <= 0 || values.length <= perGroup) {
+            return fragment;
         }
-        return exp;
+        // More values than the operation takes at once - a "between" given four
+        // dates, say - so the fragment is repeated once per group and the
+        // groups are joined.
+        int groups = values.length / perGroup;
+        StringBuilder repeated = new StringBuilder("(").append(fragment);
+        for (int i = 1; i < groups; i++) {
+            repeated.append(' ').append(joinWith).append(' ').append(fragment);
+        }
+        return repeated.append(')').toString();
     }
 
-    public int size() {
-        return values != null ? values.length : 0;
-    }
-
+    /** The values that fill the question marks, in the order they appear. */
     public String[] getSelectionArgs() {
         if (operation == WhereFilter.Operation.TAG) {
             return new String[0];
         }
-
-        if (children.length > 0) {
-            LinkedList<String> args = new LinkedList<>();
-            for (Criterion c : children) {
-                args.addAll(Arrays.asList(c.getSelectionArgs()));
-            }
-            String[] ret = new String[args.size()];
-            ret = args.toArray(ret);
-            return ret;
+        if (children.length == 0) {
+            return values;
         }
-        return values;
+        List<String> args = new ArrayList<>();
+        for (Criterion child : children) {
+            args.addAll(Arrays.asList(child.getSelectionArgs()));
+        }
+        return args.toArray(new String[0]);
     }
 
+    // ------------------------------------------------------------- as writing
+
+    public JsonArray toJsonArray() {
+        return GSON.toJsonTree(this).getAsJsonArray();
+    }
+
+    public String toStringExtra() {
+        return toJsonArray().toString();
+    }
+
+    public static Criterion fromJsonArray(JsonArray array) {
+        return GSON.fromJson(array, Criterion.class);
+    }
+
+    public static Criterion fromStringExtra(String extra) {
+        return fromJsonArray(JsonParser.parseString(extra).getAsJsonArray());
+    }
+
+    /** Hands this one condition to another screen, under a title of its own. */
     public void toIntent(String title, Intent intent) {
         intent.putExtra(WhereFilter.TITLE_EXTRA, title);
         intent.putExtra(WhereFilter.FILTER_EXTRA, new String[]{toStringExtra()});
     }
-
 }
