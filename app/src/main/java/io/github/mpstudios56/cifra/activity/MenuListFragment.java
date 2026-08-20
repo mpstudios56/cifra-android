@@ -71,6 +71,8 @@ public class MenuListFragment extends ListFragment {
             return WindowInsetsCompat.CONSUMED;
         });
 
+        requireActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), goBack);
         showTopLevel();
     }
 
@@ -81,10 +83,11 @@ public class MenuListFragment extends ListFragment {
      * only thing in the app that still did; they are pages now, sliding in from
      * the right over the menu and going back with the phone's own back gesture.
      */
-    private io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] subEntries;
+    private Object[] subEntries;
 
     private void showTopLevel() {
         subEntries = null;
+        goBack.setEnabled(false);
         SummaryEntityListAdapter adapter =
                 new SummaryEntityListAdapter(getContext(), MenuListItem.values());
         adapter.setOnPicked(position -> MenuListItem.values()[position].call(this));
@@ -93,21 +96,27 @@ public class MenuListFragment extends ListFragment {
     }
 
     /** Asked by an entry of the menu that has a list of its own behind it. */
-    public static void openSubMenu(androidx.fragment.app.Fragment from, int titleId,
-                                   io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] entries) {
+    public static void openSubMenu(androidx.fragment.app.Fragment from, int titleId, Object[] rows) {
         if (from instanceof MenuListFragment) {
-            ((MenuListFragment) from).showSubMenu(titleId, entries);
+            ((MenuListFragment) from).showSubMenu(titleId, rows);
         }
     }
 
-    private void showSubMenu(int titleId,
-                             io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>[] entries) {
-        subEntries = entries;
-        SummaryEntityListAdapter adapter = new SummaryEntityListAdapter(getContext(), entries);
-        adapter.setOnPicked(position -> entries[position].execute(this));
-        setListAdapter(adapter);
+    private void showSubMenu(int titleId, Object[] rows) {
+        subEntries = rows;
+        setListAdapter(new io.github.mpstudios56.cifra.adapter.SubMenuAdapter(
+                getContext(), rows, this::run));
         setTitleRow(titleId);
-        slideIn();
+        goBack.setEnabled(true);
+    }
+
+    /** Does what an entry of a page says to do. */
+    @SuppressWarnings("unchecked")
+    private void run(Object row) {
+        if (row instanceof io.github.mpstudios56.cifra.utils.ExecutableEntityEnum) {
+            ((io.github.mpstudios56.cifra.utils.ExecutableEntityEnum<androidx.fragment.app.Fragment>) row)
+                    .execute(this);
+        }
     }
 
     /** The name of the list one is standing in, with the way back beside it. */
@@ -125,28 +134,25 @@ public class MenuListFragment extends ListFragment {
         header.findViewById(R.id.sub_menu_back).setOnClickListener(v -> showTopLevel());
     }
 
-    private void slideIn() {
-        View list = getView() == null ? null : getView().findViewById(android.R.id.list);
-        if (list == null) {
-            return;
-        }
-        list.setTranslationX(list.getWidth() > 0 ? list.getWidth() * 0.25f : 200f);
-        list.animate().translationX(0f).setDuration(180).start();
-    }
-
-    /** The phone's own way back closes the list before leaving the menu. */
-    public boolean onBackPressedHere() {
-        if (subEntries == null) {
-            return false;
-        }
-        showTopLevel();
-        return true;
-    }
+    /**
+     * The way back out of a page opened over the menu.
+     * <p>
+     * Registered with the screen rather than taken over from the activity:
+     * taking it over stopped the phone's own back working at all, which left
+     * the app with no way out but being closed by hand.
+     */
+    private final androidx.activity.OnBackPressedCallback goBack =
+            new androidx.activity.OnBackPressedCallback(false) {
+                @Override
+                public void handleOnBackPressed() {
+                    showTopLevel();
+                }
+            };
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         if (subEntries != null) {
-            subEntries[position].execute(this);
+            run(subEntries[position]);
         } else {
             MenuListItem.values()[position].call(this);
         }

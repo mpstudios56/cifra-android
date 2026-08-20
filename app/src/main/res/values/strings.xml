@@ -1704,4 +1704,13 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <item>PORTRAIT</item>
     <item>LANDSCAPE</item>
   </string-array>
+  <string name="backup_online">Online backup</string>
+  <string name="backup_online_summary">Send a copy to Drive or Dropbox, and bring it back</string>
+  <string name="section_local_backup">On this phone</string>
+  <string name="section_app_settings">The app’s own settings</string>
+  <string name="section_from_other_apps">From another app</string>
+  <string name="section_csv">CSV</string>
+  <string name="section_qif">QIF</string>
+  <string name="section_automatic">Read automatically</string>
+  <string name="google_drive">Google Drive</string>
 </resources>

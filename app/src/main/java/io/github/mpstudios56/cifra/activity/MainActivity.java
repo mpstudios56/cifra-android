@@ -508,23 +508,6 @@ public class MainActivity extends AppCompatActivity {
 
     /** Down to the first movement ever written down. */
     /** Up to the newest movement, at the top of the list. */
-    /**
-     * The way back closes an open sub-list before leaving the app.
-     * <p>
-     * Backup and import open a page over the menu; the phone's back gesture
-     * should take one out of that page first, the way it would from any other
-     * screen, instead of closing Cifra outright.
-     */
-    @Override
-    public void onBackPressed() {
-        for (Fragment f : getSupportFragmentManager().getFragments()) {
-            if (f instanceof MenuListFragment && f.isVisible()
-                    && ((MenuListFragment) f).onBackPressedHere()) {
-                return;
-            }
-        }
-        super.onBackPressed();
-    }
 
     /**
      * Keeps every tab label on one line.

@@ -59,27 +59,13 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_CURRENCIES(R.string.menu_currencies, R.string.menu_currencies_summary, R.drawable.ic_action_money) {
         @Override
         public void call(Fragment fragment) {
-            EnumUtils.showPickOneDialog(fragment.getContext(), R.string.menu_currencies,
-                    CurrencyEntities.values(), fragment);
+            MenuListFragment.openSubMenu(fragment, R.string.menu_currencies, currencyPage());
         }
     },
     MENU_ENTITIES(R.string.menu_records, R.string.menu_records_summary, R.drawable.drawer_action_entities) {
         @Override
         public void call(Fragment fragment) {
-            final MenuEntities[] entities = MenuEntities.values();
-            ListAdapter adapter = EnumUtils.createEntityEnumAdapter(fragment.getContext(), entities);
-            final AlertDialog d = new AlertDialog.Builder(fragment.getContext())
-                    .setAdapter(adapter, (dialog, which) -> {
-                        dialog.dismiss();
-                        MenuEntities e = entities[which];
-                        if (e.getPermissions() == null
-                                || !RequestPermission.isRequestingPermissions(fragment.getContext(), e.getPermissions())) {
-                            fragment.startActivity(new Intent(fragment.getContext(), e.getActivityClass()));
-                        }
-                    })
-                    .create();
-            d.setTitle(R.string.menu_records);
-            d.show();
+            MenuListFragment.openSubMenu(fragment, R.string.menu_records, entitiesPage());
         }
     },
     MENU_BACKUP_RESTORE(R.string.menu_backup_security, R.string.menu_backup_security_summary, R.drawable.actionbar_db_backup) {
@@ -88,15 +74,26 @@ public enum MenuListItem implements SummaryEntityEnum {
             // A page of its own, sliding in over the menu, rather than a box
             // dropped on top of it: everything else opened from this list is a
             // screen, and this was the odd one out.
-            MenuListFragment.openSubMenu(fragment, R.string.menu_backup_security,
-                    BackupRestoreEntities.values());
+            MenuListFragment.openSubMenu(fragment, R.string.menu_backup_security, backupPage());
+        }
+    },
+    /**
+     * The two services a backup can be sent to, on a page of their own.
+     * <p>
+     * They used to sit in the middle of the backup list, between the settings
+     * and the file, which made that list fifteen rows long and buried the two
+     * things one does most often.
+     */
+    MENU_BACKUP_ONLINE(R.string.backup_online, R.string.backup_online_summary, R.drawable.ic_menu_cloud) {
+        @Override
+        public void call(Fragment fragment) {
+            MenuListFragment.openSubMenu(fragment, R.string.backup_online, onlineBackupPage());
         }
     },
     MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Fragment fragment) {
-            MenuListFragment.openSubMenu(fragment, R.string.import_export,
-                    ImportExportEntities.values());
+            MenuListFragment.openSubMenu(fragment, R.string.import_export, importExportPage());
         }
     },
     MENU_SHARING(R.string.sharing, R.string.sharing_summary, R.drawable.category_family) {
@@ -190,7 +187,7 @@ public enum MenuListItem implements SummaryEntityEnum {
         new BackupExportTask(fragment.getContext(), d, true).execute();
     }
 
-    private enum MenuEntities implements EntityEnum {
+    enum MenuEntities implements ExecutableEntityEnum<Fragment> {
 
         SMS_TEMPLATES(R.string.sms_templates, R.drawable.ic_action_sms, SmsDragListActivity.class, BIND_NOTIFICATION_LISTENER_SERVICE),
         PAYEES(R.string.payees, R.drawable.ic_action_users, PayeeListActivity.class),
@@ -230,10 +227,18 @@ public enum MenuListItem implements SummaryEntityEnum {
         public String[] getPermissions() {
             return permissions;
         }
+
+        @Override
+        public void execute(Fragment fragment) {
+            if (permissions == null
+                    || !RequestPermission.isRequestingPermissions(fragment.getContext(), permissions)) {
+                fragment.startActivity(new Intent(fragment.getContext(), actitivyClass));
+            }
+        }
     }
 
     /** Currencies and the rates between them: one subject, two screens. */
-    private enum CurrencyEntities implements ExecutableEntityEnum<Fragment> {
+    enum CurrencyEntities implements ExecutableEntityEnum<Fragment> {
 
         CURRENCIES(R.string.currencies, R.drawable.ic_action_money) {
             @Override
@@ -527,4 +532,66 @@ public enum MenuListItem implements SummaryEntityEnum {
         }
     }
 
+
+    // ------------------------------------------------------------- the pages
+    //
+    // A page is a list of rows: a string id stands for a heading, anything else
+    // is an entry. Written here rather than in the screen that shows them,
+    // because what belongs with what is a question about the menu.
+
+    static Object[] backupPage() {
+        return new Object[]{
+                R.string.protection,
+                BackupRestoreEntities.MENU_SECURITY,
+                R.string.section_local_backup,
+                BackupRestoreEntities.MENU_BACKUP_SETTINGS,
+                BackupRestoreEntities.MENU_BACKUP,
+                BackupRestoreEntities.MENU_RESTORE,
+                BackupRestoreEntities.MENU_BACKUP_TO,
+                R.string.section_app_settings,
+                BackupRestoreEntities.MENU_EXPORT_SETTINGS,
+                BackupRestoreEntities.MENU_IMPORT_SETTINGS,
+        };
+    }
+
+    static Object[] onlineBackupPage() {
+        return new Object[]{
+                R.string.google_drive,
+                BackupRestoreEntities.GOOGLE_DRIVE_BACKUP,
+                BackupRestoreEntities.GOOGLE_DRIVE_RESTORE,
+                R.string.dropbox,
+                BackupRestoreEntities.DROPBOX_BACKUP,
+                BackupRestoreEntities.DROPBOX_RESTORE,
+        };
+    }
+
+    static Object[] importExportPage() {
+        return new Object[]{
+                R.string.section_from_other_apps,
+                ImportExportEntities.CSV_IMPORT_OTHER_APP,
+                R.string.section_csv,
+                ImportExportEntities.CSV_EXPORT,
+                ImportExportEntities.CSV_IMPORT,
+                R.string.section_qif,
+                ImportExportEntities.QIF_EXPORT,
+                ImportExportEntities.QIF_IMPORT,
+        };
+    }
+
+    static Object[] currencyPage() {
+        return new Object[]{
+                CurrencyEntities.CURRENCIES,
+                CurrencyEntities.EXCHANGE_RATES,
+        };
+    }
+
+    static Object[] entitiesPage() {
+        return new Object[]{
+                MenuEntities.PAYEES,
+                MenuEntities.PROJECTS,
+                MenuEntities.LOCATIONS,
+                R.string.section_automatic,
+                MenuEntities.SMS_TEMPLATES,
+        };
+    }
 }

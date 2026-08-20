@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The heading of a group inside a page of the menu.
+  The same bar of colour the settings use, so a page opened from the menu reads
+  the way the settings read.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="6dp">
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/preference_group_mark" />
+
+    <TextView
+        android:id="@+id/section_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="#FF4CAF7D"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>

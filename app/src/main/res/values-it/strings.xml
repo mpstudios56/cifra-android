@@ -1584,4 +1584,13 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
     <item>Sempre in verticale</item>
     <item>Sempre in orizzontale</item>
   </string-array>
+  <string name="backup_online">Backup online</string>
+  <string name="backup_online_summary">Manda una copia su Drive o Dropbox, e la riporta indietro</string>
+  <string name="section_local_backup">Su questo telefono</string>
+  <string name="section_app_settings">Impostazioni dell’app</string>
+  <string name="section_from_other_apps">Da un’altra app</string>
+  <string name="section_csv">CSV</string>
+  <string name="section_qif">QIF</string>
+  <string name="section_automatic">Lettura automatica</string>
+  <string name="google_drive">Google Drive</string>
 </resources>
