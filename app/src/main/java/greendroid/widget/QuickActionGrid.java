@@ -98,12 +98,18 @@ public class QuickActionGrid extends QuickActionWidget {
     protected void onMeasureAndLayout(Rect anchorRect, View contentView) {
 
         //contentView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
-        // The ring is given nearly the whole width of the screen instead of
-        // only what its contents ask for. Four words share that width, and the
-        // longest of them - "Trasferimento" - was breaking in two inside a
-        // bubble that had left half the screen empty beside it.
-        int margin = Math.round(16 * contentView.getResources().getDisplayMetrics().density);
+        // As wide as its entries need and no wider. Left to ask for what its
+        // contents wanted, the words broke in two; given the whole screen, two
+        // buttons sat in a bubble the width of the phone. So: room enough for
+        // each entry, up to the width of the screen.
+        float density = contentView.getResources().getDisplayMetrics().density;
+        int margin = Math.round(16 * density);
+        int roomPerEntry = Math.round(104 * density);
+        int columns = mGridView.getNumColumns();
         int width = getScreenWidth() - 2 * margin;
+        if (columns > 0) {
+            width = Math.min(width, columns * roomPerEntry);
+        }
         setWidth(width);
         contentView.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                 ViewGroup.LayoutParams.WRAP_CONTENT);
