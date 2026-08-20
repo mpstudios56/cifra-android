@@ -1,23 +1,25 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.recur;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import io.github.mpstudios56.cifra.R;
 import io.github.mpstudios56.cifra.activity.ActivityLayout;
 import io.github.mpstudios56.cifra.activity.ActivityLayoutListener;
@@ -29,746 +31,766 @@ import io.github.mpstudios56.cifra.utils.LocalizableEnum;
 import io.github.mpstudios56.cifra.utils.Utils;
 import io.github.mpstudios56.cifra.view.NodeInflater;
 
-import java.text.ParseException;
-import java.util.*;
-
+/**
+ * The panels of the repetition screen.
+ * <p>
+ * Each way of repeating asks for different things - a number of days, a set of
+ * weekdays, a day of the month - so each has a panel of its own. This makes the
+ * one that matches what has been chosen, and keeps the small vocabulary the
+ * panels share: the names under which their answers are written down, and the
+ * lists they offer.
+ * <p>
+ * Every panel writes its answers as one line of the form
+ * {@code NAME:key@value#key@value#}, which is what ends up in the movement's
+ * row in the database.
+ */
 public class RecurrenceViewFactory {
 
-	private final RecurrenceActivity activity;
-	
-	public RecurrenceViewFactory(RecurrenceActivity activity) {
-		this.activity = activity;
-	}
-	
-	public RecurrenceView create(RecurrencePattern p) {
-		switch (p.frequency) {
-		case DAILY:
-			return new DailyView();
-		case WEEKLY:
-			return new WeeklyView();
-		case MONTHLY:
-			return new MonthlyView(p.params);
-//		case SEMI_MONTHLY:
-//			return new SemiMonthlyView();
-		case GEEKY:
-			return new GeekyView();
-		default:
-			return null;
-		}		
-	}
-	
-	public RecurrenceView create(RecurrenceUntil r) {
-		switch (r) {
-		case EXACTLY_TIMES:
-			return new ExactlyTimesView();
-		case STOPS_ON_DATE:
-			return new StopsOnDateView();
-		default:
-			return null;
-		}		
-	}
+    /** The names the answers are written under. */
+    public static final String P_INTERVAL = "interval";
+    public static final String P_DAYS = "days";
+    public static final String P_COUNT = "count";
+    public static final String P_DATE = "date";
+    public static final String P_MONTHLY_PATTERN = "monthly_pattern";
+    public static final String P_MONTHLY_PATTERN_PARAMS = "monthly_pattern_params";
 
-	public static HashMap<String, String> parseState(String state) {
-		if (state == null) {
-			return new HashMap<String, String>();
-		}
-		HashMap<String, String> map = new HashMap<String, String>();
-		String[] a = state.split("#");
-		for (String s : a) {
-			String[] p = s.split("@");
-			if (p.length == 2) {
-				map.put(p[0], p[1]);
-			}
-		}
-		return map;
-	}
-	
-	abstract class AbstractView implements RecurrenceView, ActivityLayoutListener {
-		
-		private final LocalizableEnum r;
-		protected final ActivityLayout x;
-		
-		public AbstractView(LocalizableEnum r) {
-			this.r = r;
-			LayoutInflater layoutInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			NodeInflater nodeInflater = new NodeInflater(layoutInflater);
-			this.x = new ActivityLayout(nodeInflater, this);
-		}
-		
-		@Override
-		public String stateToString() {
-			StringBuilder sb = new StringBuilder();
-			sb.append(r.name()).append(":");
-			HashMap<String, String> state = new HashMap<String, String>();
-			stateToMap(state);
-			for (Map.Entry<String, String> e : state.entrySet()) {
-				sb.append(e.getKey()).append("@").append(e.getValue()).append("#");
-			}
-			return sb.toString();
-		}
-		
-		@Override
-		public void stateFromString(String state) {
-			HashMap<String, String> map = parseState(state);
-			stateFromMap(map);
-		}
+    /** Separates one answer from the next, and a name from its value. */
+    private static final String BETWEEN_ANSWERS = "#";
+    private static final String BETWEEN_NAME_AND_VALUE = "@";
 
-		@Override
-		public abstract boolean validateState();
-		
-		protected abstract void stateToMap(HashMap<String, String> state);
+    /** Where the panels for choosing a day by its place are numbered from. */
+    private static final int PLACE_PICKER = 200;
+    /** Where the panels for choosing the kind of monthly rule are numbered from. */
+    private static final int KIND_PICKER = 100;
 
-		protected abstract void stateFromMap(HashMap<String, String> state);
-		
-		@Override
-		public void onSelected(int id, List<? extends MultiChoiceItem> items) {
-		}
+    private final RecurrenceActivity activity;
 
-		@Override
-		public void onSelectedId(int id, long selectedId) {
-		}
+    public RecurrenceViewFactory(RecurrenceActivity activity) {
+        this.activity = activity;
+    }
 
-		@Override
-		public void onSelectedPos(int id, int selectedPos) {
-		}
+    /** The panel that asks what a repetition of this kind needs to know. */
+    public RecurrenceView create(RecurrencePattern pattern) {
+        switch (pattern.frequency) {
+            case DAILY:
+                return new DailyView();
+            case WEEKLY:
+                return new WeeklyView();
+            case MONTHLY:
+                return new MonthlyView(pattern.params);
+            case GEEKY:
+                return new GeekyView();
+            default:
+                return null;
+        }
+    }
 
-		@Override
-		public void onClick(View v) {
-			int id = v.getId();
-			onClick(v, id);
-		}
+    /** The panel that asks when the repetition stops, where it stops at all. */
+    public RecurrenceView create(RecurrenceUntil until) {
+        switch (until) {
+            case EXACTLY_TIMES:
+                return new ExactlyTimesView();
+            case STOPS_ON_DATE:
+                return new StopsOnDateView();
+            default:
+                return null;
+        }
+    }
 
-		protected abstract void onClick(View v, int id);	
-		
-	}
+    /** Reads a written line back into the answers it holds. */
+    public static HashMap<String, String> parseState(String written) {
+        HashMap<String, String> answers = new HashMap<>();
+        if (written == null) {
+            return answers;
+        }
+        for (String one : written.split(BETWEEN_ANSWERS)) {
+            String[] halves = one.split(BETWEEN_NAME_AND_VALUE);
+            if (halves.length == 2) {
+                answers.put(halves[0], halves[1]);
+            }
+        }
+        return answers;
+    }
 
-	public static final String P_INTERVAL = "interval";
-	public static final String P_DAYS = "days";
-	public static final String P_COUNT = "count";
-	public static final String P_DATE = "date";
-	public static final String P_MONTHLY_PATTERN = "monthly_pattern";
-	public static final String P_MONTHLY_PATTERN_PARAMS = "monthly_pattern_params";
-	
-	// ******************************************************************
-	// DAILY
-	// ******************************************************************
-	class GeekyView extends AbstractView {		
-					
-		private final EditText geekyEditText = new EditText(activity);
-		
-		public GeekyView() {
-			super(RecurrenceFrequency.GEEKY);
-			geekyEditText.setText("FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13");
-			geekyEditText.setMinLines(3);
-			geekyEditText.setMaxLines(5);
-		}
-		
-		@Override
-		public void createNodes(LinearLayout layout) {
-			removeAllViewsFromParent(geekyEditText);
-			x.addEditNode(layout, R.string.recur_rrule, geekyEditText);
-		}
+    // ------------------------------------------------------ what every panel does
 
-		@Override
-		protected void onClick(View v, int id) {
-		}
+    /**
+     * The part every panel has in common: drawing itself into the screen,
+     * writing its answers down, and reading them back.
+     */
+    abstract class AbstractView implements RecurrenceView, ActivityLayoutListener {
 
-		@Override
-		public boolean validateState() {
-			if (Utils.isEmpty(geekyEditText)) {
-				geekyEditText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			return true;
-		}
+        private final LocalizableEnum kind;
+        /** Draws the rows - a label with a field or a list beside it. */
+        protected final ActivityLayout x;
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			state.put(P_INTERVAL, geekyEditText.getText().toString().toUpperCase());
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-            String interval = state.get(P_INTERVAL);
-			geekyEditText.setText(interval != null ? interval.toUpperCase() : "");
-		}
+        AbstractView(LocalizableEnum kind) {
+            this.kind = kind;
+            LayoutInflater inflater = (LayoutInflater)
+                    activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.x = new ActivityLayout(new NodeInflater(inflater), this);
+        }
 
-	}
+        @Override
+        public String stateToString() {
+            HashMap<String, String> answers = new HashMap<>();
+            stateToMap(answers);
+            StringBuilder written = new StringBuilder(kind.name()).append(':');
+            for (Map.Entry<String, String> answer : answers.entrySet()) {
+                written.append(answer.getKey())
+                        .append(BETWEEN_NAME_AND_VALUE)
+                        .append(answer.getValue())
+                        .append(BETWEEN_ANSWERS);
+            }
+            return written.toString();
+        }
 
-	// ******************************************************************
-	// DAILY
-	// ******************************************************************
-	class DailyView extends AbstractView {		
-					
-		private final EditText repeatDaysEditText = numericEditText(activity);
-		
-		public DailyView() {
-			super(RecurrenceFrequency.DAILY);
-			repeatDaysEditText.setText("1");
-		}
-		
-		@Override
-		public void createNodes(LinearLayout layout) {
-			removeAllViewsFromParent(repeatDaysEditText);
-			x.addEditNode(layout, R.string.recur_interval_every_x_day, repeatDaysEditText);
-		}
+        @Override
+        public void stateFromString(String written) {
+            stateFromMap(parseState(written));
+        }
 
-		@Override
-		protected void onClick(View v, int id) {
-		}
+        @Override
+        public abstract boolean validateState();
 
-		@Override
-		public boolean validateState() {
-			if (Utils.isEmpty(repeatDaysEditText)) {
-				repeatDaysEditText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			return true;
-		}
+        protected abstract void stateToMap(HashMap<String, String> answers);
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			state.put(P_INTERVAL, repeatDaysEditText.getText().toString());
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-			repeatDaysEditText.setText(state.get(P_INTERVAL));
-		}
+        protected abstract void stateFromMap(HashMap<String, String> answers);
 
-	}
+        /** Complains on the field and refuses, when it has been left empty. */
+        protected boolean insist(EditText field) {
+            if (Utils.isEmpty(field)) {
+                field.setError(activity.getString(R.string.specify_value));
+                return false;
+            }
+            return true;
+        }
 
-	// ******************************************************************
-	// WEEKLY
-	// ******************************************************************
-	enum DayOfWeek implements LocalizableEnum {
-		MON(R.id.dayMon, R.string.day_mon, "MO"), 
-		TUE(R.id.dayTue, R.string.day_tue, "TU"), 
-		WED(R.id.dayWed, R.string.day_wed, "WE"), 
-		THR(R.id.dayThr, R.string.day_thr, "TH"), 
-		FRI(R.id.dayFri, R.string.day_fri, "FR"), 
-		SAT(R.id.daySat, R.string.day_sat, "SA"),
-		SUN(R.id.daySun, R.string.day_sun, "SU"); 
-		
-		public final int checkboxId;
-		public final int titleId;
-		public final String rfcName;
-		
-		private DayOfWeek(int checkboxId, int titleId, String rfcName) {
-			this.checkboxId = checkboxId;
-			this.titleId = titleId;
-			this.rfcName = rfcName;
-		}
+        @Override
+        public void onSelected(int id, List<? extends MultiChoiceItem> items) {
+        }
 
-		@Override
-		public int getTitleId() {
-			return titleId;
-		}
-		
-	}
-	
-	class DayOfWeekItem implements MultiChoiceItem {
+        @Override
+        public void onSelectedId(int id, long selectedId) {
+        }
 
-		public final DayOfWeek d;
-		private final long id;		
-		private final String title;
-		private boolean checked;
-		
-		public DayOfWeekItem(DayOfWeek d) {
-			this.d = d;
-			this.id = d.checkboxId;
-			this.title = activity.getString(d.titleId);
-		}
+        @Override
+        public void onSelectedPos(int id, int selectedPos) {
+        }
 
-		@Override
-		public long getId() {
-			return id;
-		}
+        @Override
+        public void onClick(View v) {
+            onClick(v, v.getId());
+        }
 
-		@Override
-		public String getTitle() {
-			return title;
-		}
+        protected abstract void onClick(View v, int id);
+    }
 
-		@Override
-		public boolean isChecked() {
-			return checked;
-		}
+    // ------------------------------------------------------------------- daily
 
-		@Override
-		public void setChecked(boolean checked) {
-			this.checked = checked;
-		}
-		
-	}
+    /** Every so many days. */
+    class DailyView extends AbstractView {
 
-	class WeeklyView extends AbstractView {		
-			
-		private final EditText repeatWeeksEditText = numericEditText(activity);
-		private TextView daysOfWeekText;
-		
-		private EnumSet<DayOfWeek> days = EnumSet.allOf(DayOfWeek.class);
-		
-		public WeeklyView() {
-			super(RecurrenceFrequency.WEEKLY);
-			repeatWeeksEditText.setText("1");
-			days.remove(DayOfWeek.SAT);
-			days.remove(DayOfWeek.SUN);
-		}
-		
-		private void updateDaysOfWeekText() {
-			daysOfWeekText.setText(daysToString());			
-			daysOfWeekText.setError(null);
-		}
+        private final EditText everyDays = numericEditText(activity);
 
-		private String daysToString() {
-			StringBuilder sb = new StringBuilder();
-			for (DayOfWeek d : days) {
-				if (sb.length() > 0) {
-					sb.append(", ");
-				}
-				sb.append(activity.getString(d.titleId));
-			}
-			if (sb.length() == 0) {
-				sb.append(activity.getString(R.string.no_recur));
-			}
-			return sb.toString();
-		}
+        DailyView() {
+            super(RecurrenceFrequency.DAILY);
+            everyDays.setText("1");
+        }
 
-		@Override
-		public void createNodes(LinearLayout layout) {
-			removeAllViewsFromParent(repeatWeeksEditText);
-			x.addEditNode(layout, R.string.recur_interval_every_x_week, repeatWeeksEditText);
-			daysOfWeekText = x.addListNode(layout, R.id.recurrence_pattern, R.string.recurrence_weekly_days, daysToString());
-		}
+        @Override
+        public void createNodes(LinearLayout layout) {
+            removeAllViewsFromParent(everyDays);
+            x.addEditNode(layout, R.string.recur_interval_every_x_day, everyDays);
+        }
 
-		@Override
-		protected void onClick(View v, int id) {
-			if (id == R.id.recurrence_pattern) {
-				ArrayList<MultiChoiceItem> items = new ArrayList<MultiChoiceItem>();
-				for (DayOfWeek d : DayOfWeek.values()) {
-					DayOfWeekItem i = new DayOfWeekItem(d);
-					i.setChecked(days.contains(d));
-					items.add(i);
-				}
-				x.selectMultiChoice(activity, R.id.recurrence_pattern, R.string.recur_interval_every_x_week, items);
-			}
-		}
-		
-		@Override
-		public void onSelected(int id, List<? extends MultiChoiceItem> items) {
-			if (id == R.id.recurrence_pattern) {
-				days.clear();
-				for (MultiChoiceItem i : items) {
-					DayOfWeekItem di = (DayOfWeekItem)i;
-					if (di.isChecked()) {
-						days.add(di.d);
-					}
-				}
-				updateDaysOfWeekText();
-			}
-		}
+        @Override
+        protected void onClick(View v, int id) {
+        }
 
-		@Override
-		public boolean validateState() {
-			if (Utils.isEmpty(repeatWeeksEditText)) {
-				repeatWeeksEditText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			if (days.isEmpty()) {
-				daysOfWeekText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			return true;
-		}
+        @Override
+        public boolean validateState() {
+            return insist(everyDays);
+        }
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			state.put(P_INTERVAL, repeatWeeksEditText.getText().toString());
-			StringBuilder sb = new StringBuilder();
-			for (DayOfWeek d : days) {
-				if (sb.length() > 0) {
-					sb.append(",");
-				}
-				sb.append(d.name());
-			}
-			state.put(P_DAYS, sb.toString());
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-			repeatWeeksEditText.setText(state.get(P_INTERVAL));
-			String s = state.get(P_DAYS);
-			String[] a = s.split(",");
-			days.clear();
-			for (String d : a) {
-				days.add(DayOfWeek.valueOf(d));
-			}
-		}
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            answers.put(P_INTERVAL, everyDays.getText().toString());
+        }
 
-	}
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            everyDays.setText(answers.get(P_INTERVAL));
+        }
+    }
 
-	// ******************************************************************
-	// MONTHLY	
-	// ******************************************************************
-	public enum MonthlyPattern implements LocalizableEnum {
-		EVERY_NTH_DAY(R.string.recurrence_monthly_every_nth_day), 
-		SPECIFIC_DAY(R.string.recurrence_monthly_specific_day);
+    // ------------------------------------------------------------------ weekly
 
-		private final int titleId;
-		
-		MonthlyPattern(int titleId) {
-			this.titleId = titleId;
-		}
-		
-		@Override
-		public int getTitleId() {
-			return titleId;
-		}
-		
-	}
-	
-	public enum SpecificDayPrefix implements LocalizableEnum {
-		FIRST(R.string.first), SECOND(R.string.second), 
-		THIRD(R.string.third), FOURTH(R.string.fourth), 
-		LAST(R.string.last);
+    /** The days of the week, each with its box on screen and its name in the rule. */
+    enum DayOfWeek implements LocalizableEnum {
+        MON(R.id.dayMon, R.string.day_mon, "MO"),
+        TUE(R.id.dayTue, R.string.day_tue, "TU"),
+        WED(R.id.dayWed, R.string.day_wed, "WE"),
+        THR(R.id.dayThr, R.string.day_thr, "TH"),
+        FRI(R.id.dayFri, R.string.day_fri, "FR"),
+        SAT(R.id.daySat, R.string.day_sat, "SA"),
+        SUN(R.id.daySun, R.string.day_sun, "SU");
 
-		private final int titleId;
-		
-		SpecificDayPrefix(int titleId) {
-			this.titleId = titleId;
-		}
-		
-		@Override
-		public int getTitleId() {
-			return titleId;
-		}		
-	}
-	
-	public enum SpecificDayPostfix implements LocalizableEnum {
-		DAY(R.string.day), 
-		WEEKDAY(R.string.weekday), 
-		WEEKEND_DAY(R.string.weekend_day), 
-		SUNDAY(R.string.sunday),
-		MONDAY(R.string.monday),
-		TUESDAY(R.string.tuesday),
-		WEDNESDAY(R.string.wednesday),
-		THURSDAY(R.string.thursday),
-		FRIDAY(R.string.friday),
-		SATURDAY(R.string.saturday);
+        public final int checkboxId;
+        public final int titleId;
+        /** How the calendar standard names this day. */
+        public final String rfcName;
 
-		private final int titleId;
-		
-		SpecificDayPostfix(int titleId) {
-			this.titleId = titleId;
-		}
-		
-		@Override
-		public int getTitleId() {
-			return titleId;
-		}		
-	}
-	
-	private static final int[] DAY_TITLES = {R.string.recur_interval_semi_monthly_1, R.string.recur_interval_semi_monthly_2}; 
-	
-	abstract class AbstractMonthlyView extends AbstractView {		
-		
-		private int num;
-		public final MonthlyPattern[] pattern;
-		public final SpecificDayPrefix[] prefix;
-		public final SpecificDayPostfix[] postfix;
-		
-		private final EditText repeatMonthsEditText = numericEditText(activity);
-		private final EditText[] everyNthDayEditText;
-		private final TextView[] patternText;
-		private final TextView[] specificDayText;
-		
-		public AbstractMonthlyView(RecurrenceFrequency frequency, int num) {
-			super(frequency);
-			this.num = num;
-			pattern = new MonthlyPattern[num];
-			for (int i=0; i<num; i++) {
-				pattern[i] = MonthlyPattern.EVERY_NTH_DAY;
-			}			
-			prefix = new SpecificDayPrefix[num];
-			for (int i=0; i<num; i++) {
-				prefix[i] = SpecificDayPrefix.FIRST;
-			}
-			postfix = new SpecificDayPostfix[num];
-			for (int i=0; i<num; i++) {
-				postfix[i] = SpecificDayPostfix.DAY;
-			}
-			everyNthDayEditText = new EditText[num];
-			for (int i=0; i<num; i++) {
-				everyNthDayEditText[i] = numericEditText(activity);
-			}
-			specificDayText = new TextView[num];
-			patternText = new TextView[num];
-			repeatMonthsEditText.setText("1");
-		}
-		
-		@Override
-		public void createNodes(LinearLayout layout) {
-			int num = this.num;
-			for (int i=0; i<num; i++) {
-				if (num > 1) {
-					x.addTitleNodeNoDivider(layout, DAY_TITLES[i]);
-				}
-				patternText[i] = x.addListNode(layout, 100+i, R.string.recurrence_monthly_pattern, activity.getString(pattern[i].titleId));
-				switch (pattern[i]) {
-				case EVERY_NTH_DAY:
-					removeAllViewsFromParent(everyNthDayEditText[i]);
-					x.addEditNode(layout, R.string.recurrence_monthly_every_nth_day, everyNthDayEditText[i]);
-					everyNthDayEditText[i].setText("15");
-					break;
-				case SPECIFIC_DAY:
-					specificDayText[i] = x.addListNode(layout, 200+i, R.string.recurrence_monthly_specific_day, specificDayStr(i));
-					break;
-				}				
-			}
-			removeAllViewsFromParent(repeatMonthsEditText);
-			x.addEditNode(layout, R.string.recur_interval_every_x_month, repeatMonthsEditText);
-		}
-		
-		private String specificDayStr(int i) {
-			return activity.getString(prefix[i].titleId)+" "+activity.getString(postfix[i].titleId);
-		}
+        DayOfWeek(int checkboxId, int titleId, String rfcName) {
+            this.checkboxId = checkboxId;
+            this.titleId = titleId;
+            this.rfcName = rfcName;
+        }
 
-		@Override
-		protected void onClick(View v, int id) {
-			if (id > 199) {
-				int k = id-200;
-				String[] prefixes = EnumUtils.getLocalizedValues(activity, SpecificDayPrefix.values());
-				String[] postfixes = EnumUtils.getLocalizedValues(activity, SpecificDayPostfix.values());
-				int prefixesLength = prefixes.length;
-				int postfixesLength = postfixes.length;
-				String[] items = new String[prefixesLength*postfixesLength];
-				for (int i=0; i<prefixesLength; i++) {
-					for (int j=0; j<postfixesLength; j++) {
-						items[i*postfixesLength+j] = prefixes[i]+" "+postfixes[j];
-					}
-				}
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_dropdown_item, items);
-				int selected = prefix[k].ordinal()*postfixesLength+postfix[k].ordinal();
-				x.selectPosition(activity, id, R.string.recurrence_period, adapter, selected);				
-			} else {
-				int k = id-100;
-				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(activity, MonthlyPattern.values());
-				x.selectPosition(activity, id, R.string.recurrence_period, adapter, pattern[k].ordinal());				
-			}
-		}
+        @Override
+        public int getTitleId() {
+            return titleId;
+        }
+    }
 
-		@Override
-		public void onSelectedPos(int id, int selectedPos) {
-			if (id > 199) {
-				int k = id-200;
-				SpecificDayPrefix[] prefixes = SpecificDayPrefix.values();
-				SpecificDayPostfix[] postfixes = SpecificDayPostfix.values();
-				int postfixesLength = postfixes.length;
-				int selectedPrefix = selectedPos/postfixesLength;
-				int selectedPostfix = selectedPos - selectedPrefix*postfixesLength;
-				prefix[k] = prefixes[selectedPrefix];
-				postfix[k] = postfixes[selectedPostfix];
-				specificDayText[k].setText(specificDayStr(k));
-			} else {
-				int k = id-100;
-				pattern[k] = MonthlyPattern.values()[selectedPos];
-				activity.createNodes();				
-			}
-		}
+    /** One day of the week as a line that can be ticked. */
+    class DayOfWeekItem implements MultiChoiceItem {
 
-		@Override
-		public boolean validateState() {
-			int num = this.num;
-			for (int i=0; i<num; i++) {
-				if (pattern[i] == MonthlyPattern.EVERY_NTH_DAY) {
-					if (Utils.isEmpty(everyNthDayEditText[i])) {
-						everyNthDayEditText[i].setError(activity.getString(R.string.specify_value));
-						return false;
-					}				
-				}
-			}
-			if (Utils.isEmpty(repeatMonthsEditText)) {
-				repeatMonthsEditText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			return true;
-		}
+        public final DayOfWeek d;
+        private final String title;
+        private boolean checked;
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			state.put(P_INTERVAL, repeatMonthsEditText.getText().toString());
-			state.put(P_COUNT, String.valueOf(num));
-			for (int i=0; i<num; i++) {			
-				String pfx = "_"+i;
-				state.put(P_MONTHLY_PATTERN+pfx, pattern[i].name());
-				switch (pattern[i]) {
-				case EVERY_NTH_DAY:
-					state.put(P_MONTHLY_PATTERN_PARAMS+pfx, everyNthDayEditText[i].getText().toString());				
-					break;
-				case SPECIFIC_DAY:
-					state.put(P_MONTHLY_PATTERN_PARAMS+pfx, prefix[i].name()+"-"+postfix[i].name());				
-					break;
-				}
-			}
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-			repeatMonthsEditText.setText(state.get(P_INTERVAL));
-			num = Integer.parseInt(state.get(P_COUNT));
-			for (int i=0; i<num; i++) {
-				String pfx = "_"+i;
-				pattern[i] = MonthlyPattern.valueOf(state.get(P_MONTHLY_PATTERN+pfx));
-				patternText[i].setText(pattern[i].titleId);
-				switch (pattern[i]) {
-				case EVERY_NTH_DAY:
-					everyNthDayEditText[i].setText(state.get(P_MONTHLY_PATTERN_PARAMS+pfx));
-					break;
-				case SPECIFIC_DAY:
-					String s = state.get(P_MONTHLY_PATTERN_PARAMS+pfx);
-					String[] a = s.split("-");
-					prefix[i] = SpecificDayPrefix.valueOf(a[0]);
-					postfix[i] = SpecificDayPostfix.valueOf(a[1]);
-					specificDayText[i].setText(specificDayStr(i));
-					break;
-				}
-			}
-		}
+        DayOfWeekItem(DayOfWeek d) {
+            this.d = d;
+            this.title = activity.getString(d.titleId);
+        }
 
-	}
+        @Override
+        public long getId() {
+            return d.checkboxId;
+        }
 
-	class MonthlyView extends AbstractMonthlyView {
+        @Override
+        public String getTitle() {
+            return title;
+        }
 
-		public MonthlyView(String state) {
-			super(RecurrenceFrequency.MONTHLY, 1);
-			HashMap<String, String> map = parseState(state);
-			if (!map.isEmpty()) {
-				pattern[0] = MonthlyPattern.valueOf(map.get(P_MONTHLY_PATTERN+"_0"));	
-			}
-		}
-		
-	}
-	
-	// ******************************************************************
-	// SEMI-MONTHLY	
-	// ******************************************************************
+        @Override
+        public boolean isChecked() {
+            return checked;
+        }
 
-//	class SemiMonthlyView extends AbstractMonthlyView {
-//
-//		public SemiMonthlyView() {
-//			super(RecurrenceFrequency.SEMI_MONTHLY, 2);
-//		}
-//		
-//	}
+        @Override
+        public void setChecked(boolean checked) {
+            this.checked = checked;
+        }
+    }
 
-	// EXACTLY_TIMES
-	class ExactlyTimesView extends AbstractView {		
-		
-		private final EditText countEditText = numericEditText(activity);
-		
-		public ExactlyTimesView() {
-			super(RecurrenceUntil.EXACTLY_TIMES);
-			countEditText.setText("10");
-		}
-		
-		@Override
-		public void createNodes(LinearLayout layout) {
-			removeAllViewsFromParent(countEditText);
-			x.addEditNode(layout, R.string.recur_exactly_n_times, countEditText);
-		}
+    /** Every so many weeks, on the days ticked. */
+    class WeeklyView extends AbstractView {
 
-		@Override
-		protected void onClick(View v, int id) {
-		}
+        private final EditText everyWeeks = numericEditText(activity);
+        private TextView chosenDaysText;
+        private final EnumSet<DayOfWeek> chosenDays = EnumSet.allOf(DayOfWeek.class);
 
-		@Override
-		public boolean validateState() {
-			if (Utils.isEmpty(countEditText)) {
-				countEditText.setError(activity.getString(R.string.specify_value));
-				return false;
-			}
-			return true;
-		}
+        WeeklyView() {
+            super(RecurrenceFrequency.WEEKLY);
+            everyWeeks.setText("1");
+            // Monday to Friday to begin with: most things that repeat weekly
+            // are working days.
+            chosenDays.remove(DayOfWeek.SAT);
+            chosenDays.remove(DayOfWeek.SUN);
+        }
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			state.put(P_COUNT, countEditText.getText().toString());
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-			countEditText.setText(state.get(P_COUNT));
-		}
+        private String daysToString() {
+            StringBuilder said = new StringBuilder();
+            for (DayOfWeek d : chosenDays) {
+                if (said.length() > 0) {
+                    said.append(", ");
+                }
+                said.append(activity.getString(d.titleId));
+            }
+            return said.length() > 0 ? said.toString() : activity.getString(R.string.no_recur);
+        }
 
-	}
+        @Override
+        public void createNodes(LinearLayout layout) {
+            removeAllViewsFromParent(everyWeeks);
+            x.addEditNode(layout, R.string.recur_interval_every_x_week, everyWeeks);
+            chosenDaysText = x.addListNode(layout, R.id.recurrence_pattern,
+                    R.string.recurrence_weekly_days, daysToString());
+        }
 
-	// STOPS_ON_DATE
-	class StopsOnDateView extends AbstractView {		
-		
-		private TextView onDateText;
-		private final Calendar c = Calendar.getInstance();
-		
-		public StopsOnDateView() {
-			super(RecurrenceUntil.STOPS_ON_DATE);
-			DateUtils.startOfDay(c);
-			c.add(Calendar.MONTH, 6);
-		}
-		
-		@Override
-		public void createNodes(LinearLayout layout) {
-			onDateText = x.addInfoNode(layout, R.id.date, R.string.recur_repeat_stops_on, 
-					DateUtils.getMediumDateFormat(activity).format(c.getTime()));
-		}
+        @Override
+        protected void onClick(View v, int id) {
+            if (id != R.id.recurrence_pattern) {
+                return;
+            }
+            List<MultiChoiceItem> items = new ArrayList<>();
+            for (DayOfWeek d : DayOfWeek.values()) {
+                DayOfWeekItem item = new DayOfWeekItem(d);
+                item.setChecked(chosenDays.contains(d));
+                items.add(item);
+            }
+            x.selectMultiChoice(activity, R.id.recurrence_pattern,
+                    R.string.recur_interval_every_x_week, items);
+        }
 
-		@Override
-		protected void onClick(View v, int id) {
-			new DatePickerDialog(activity,
-					(view, year, monthOfYear, dayOfMonth) -> {
-						c.set(Calendar.YEAR, year);
-						c.set(Calendar.MONTH, monthOfYear);
-						c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-						onDateText.setText(DateUtils.getMediumDateFormat(activity).format(c.getTime()));
-					}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-		}
+        @Override
+        public void onSelected(int id, List<? extends MultiChoiceItem> items) {
+            if (id != R.id.recurrence_pattern) {
+                return;
+            }
+            chosenDays.clear();
+            for (MultiChoiceItem item : items) {
+                if (item.isChecked()) {
+                    chosenDays.add(((DayOfWeekItem) item).d);
+                }
+            }
+            chosenDaysText.setText(daysToString());
+            chosenDaysText.setError(null);
+        }
 
-		@Override
-		public boolean validateState() {
-			return true;
-		}
+        @Override
+        public boolean validateState() {
+            if (!insist(everyWeeks)) {
+                return false;
+            }
+            if (chosenDays.isEmpty()) {
+                chosenDaysText.setError(activity.getString(R.string.specify_value));
+                return false;
+            }
+            return true;
+        }
 
-		@Override
-		protected void stateToMap(HashMap<String, String> state) {
-			DateUtils.startOfDay(c);
-			state.put(P_DATE, DateUtils.FORMAT_DATE_RFC_2445.format(c.getTime()));
-		}
-		
-		@Override
-		protected void stateFromMap(HashMap<String, String> state) {
-			Date d;
-			try {
-				d = DateUtils.FORMAT_DATE_RFC_2445.parse(state.get(P_DATE));
-			} catch (ParseException e) {
-				throw new IllegalArgumentException(state.get(P_DATE));
-			}
-			c.setTime(d);
-			DateUtils.startOfDay(c);
-			onDateText.setText(DateUtils.getMediumDateFormat(activity).format(c.getTime()));
-		}
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            answers.put(P_INTERVAL, everyWeeks.getText().toString());
+            StringBuilder days = new StringBuilder();
+            for (DayOfWeek d : chosenDays) {
+                if (days.length() > 0) {
+                    days.append(',');
+                }
+                days.append(d.name());
+            }
+            answers.put(P_DAYS, days.toString());
+        }
 
-	}
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            everyWeeks.setText(answers.get(P_INTERVAL));
+            chosenDays.clear();
+            for (String d : answers.get(P_DAYS).split(",")) {
+                chosenDays.add(DayOfWeek.valueOf(d));
+            }
+        }
+    }
 
-	private static EditText numericEditText(Context context) {
-		EditText et = new EditText(context);
-		et.setInputType(InputType.TYPE_CLASS_NUMBER);
-		return et;
-		
-	}
+    // ----------------------------------------------------------------- monthly
 
-	public void removeAllViewsFromParent(View v) {
-		if (v.getParent() != null) {
-			((ViewGroup)v.getParent()).removeAllViews();
-		}
-	}
+    /** The two ways a monthly repetition can name its day. */
+    public enum MonthlyPattern implements LocalizableEnum {
+        EVERY_NTH_DAY(R.string.recurrence_monthly_every_nth_day),
+        SPECIFIC_DAY(R.string.recurrence_monthly_specific_day);
 
+        private final int titleId;
+
+        MonthlyPattern(int titleId) {
+            this.titleId = titleId;
+        }
+
+        @Override
+        public int getTitleId() {
+            return titleId;
+        }
+    }
+
+    /** Which one: the first, the second... or the last. */
+    public enum SpecificDayPrefix implements LocalizableEnum {
+        FIRST(R.string.first),
+        SECOND(R.string.second),
+        THIRD(R.string.third),
+        FOURTH(R.string.fourth),
+        LAST(R.string.last);
+
+        private final int titleId;
+
+        SpecificDayPrefix(int titleId) {
+            this.titleId = titleId;
+        }
+
+        @Override
+        public int getTitleId() {
+            return titleId;
+        }
+    }
+
+    /**
+     * Of what: a day, a working day, a weekend day, or a named day of the week.
+     * <p>
+     * The order matters - the three general ones come first, and the seven
+     * named days follow in the order the calendar standard uses.
+     */
+    public enum SpecificDayPostfix implements LocalizableEnum {
+        DAY(R.string.day),
+        WEEKDAY(R.string.weekday),
+        WEEKEND_DAY(R.string.weekend_day),
+        SUNDAY(R.string.sunday),
+        MONDAY(R.string.monday),
+        TUESDAY(R.string.tuesday),
+        WEDNESDAY(R.string.wednesday),
+        THURSDAY(R.string.thursday),
+        FRIDAY(R.string.friday),
+        SATURDAY(R.string.saturday);
+
+        private final int titleId;
+
+        SpecificDayPostfix(int titleId) {
+            this.titleId = titleId;
+        }
+
+        @Override
+        public int getTitleId() {
+            return titleId;
+        }
+    }
+
+    /** Titles used when a panel asks about two days in the same month. */
+    private static final int[] DAY_TITLES = {
+            R.string.recur_interval_semi_monthly_1,
+            R.string.recur_interval_semi_monthly_2};
+
+    /**
+     * Every so many months, on a day named in one of two ways - and possibly on
+     * more than one day of the same month.
+     */
+    abstract class AbstractMonthlyView extends AbstractView {
+
+        /** How many days of the month this panel asks about. */
+        private int days;
+
+        public final MonthlyPattern[] pattern;
+        public final SpecificDayPrefix[] prefix;
+        public final SpecificDayPostfix[] postfix;
+
+        private final EditText everyMonths = numericEditText(activity);
+        private final EditText[] dayOfMonth;
+        private final TextView[] patternText;
+        private final TextView[] specificDayText;
+
+        AbstractMonthlyView(RecurrenceFrequency frequency, int days) {
+            super(frequency);
+            this.days = days;
+            pattern = new MonthlyPattern[days];
+            prefix = new SpecificDayPrefix[days];
+            postfix = new SpecificDayPostfix[days];
+            dayOfMonth = new EditText[days];
+            for (int i = 0; i < days; i++) {
+                pattern[i] = MonthlyPattern.EVERY_NTH_DAY;
+                prefix[i] = SpecificDayPrefix.FIRST;
+                postfix[i] = SpecificDayPostfix.DAY;
+                dayOfMonth[i] = numericEditText(activity);
+            }
+            patternText = new TextView[days];
+            specificDayText = new TextView[days];
+            everyMonths.setText("1");
+        }
+
+        @Override
+        public void createNodes(LinearLayout layout) {
+            for (int i = 0; i < days; i++) {
+                if (days > 1) {
+                    x.addTitleNodeNoDivider(layout, DAY_TITLES[i]);
+                }
+                patternText[i] = x.addListNode(layout, KIND_PICKER + i,
+                        R.string.recurrence_monthly_pattern,
+                        activity.getString(pattern[i].titleId));
+                if (pattern[i] == MonthlyPattern.EVERY_NTH_DAY) {
+                    removeAllViewsFromParent(dayOfMonth[i]);
+                    x.addEditNode(layout, R.string.recurrence_monthly_every_nth_day, dayOfMonth[i]);
+                    dayOfMonth[i].setText("15");
+                } else {
+                    specificDayText[i] = x.addListNode(layout, PLACE_PICKER + i,
+                            R.string.recurrence_monthly_specific_day, specificDay(i));
+                }
+            }
+            removeAllViewsFromParent(everyMonths);
+            x.addEditNode(layout, R.string.recur_interval_every_x_month, everyMonths);
+        }
+
+        private String specificDay(int i) {
+            return activity.getString(prefix[i].titleId) + " " + activity.getString(postfix[i].titleId);
+        }
+
+        @Override
+        protected void onClick(View v, int id) {
+            if (id >= PLACE_PICKER) {
+                offerPlaces(id, id - PLACE_PICKER);
+            } else {
+                offerKinds(id, id - KIND_PICKER);
+            }
+        }
+
+        /** "First day", "second Tuesday", "last working day" - every combination. */
+        private void offerPlaces(int id, int which) {
+            String[] places = EnumUtils.getLocalizedValues(activity, SpecificDayPrefix.values());
+            String[] kinds = EnumUtils.getLocalizedValues(activity, SpecificDayPostfix.values());
+            String[] items = new String[places.length * kinds.length];
+            for (int i = 0; i < places.length; i++) {
+                for (int j = 0; j < kinds.length; j++) {
+                    items[i * kinds.length + j] = places[i] + " " + kinds[j];
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(activity,
+                    android.R.layout.simple_spinner_dropdown_item, items);
+            int standingAt = prefix[which].ordinal() * kinds.length + postfix[which].ordinal();
+            x.selectPosition(activity, id, R.string.recurrence_period, adapter, standingAt);
+        }
+
+        private void offerKinds(int id, int which) {
+            ArrayAdapter<String> adapter =
+                    EnumUtils.createDropDownAdapter(activity, MonthlyPattern.values());
+            x.selectPosition(activity, id, R.string.recurrence_period, adapter,
+                    pattern[which].ordinal());
+        }
+
+        @Override
+        public void onSelectedPos(int id, int selectedPos) {
+            if (id >= PLACE_PICKER) {
+                int which = id - PLACE_PICKER;
+                int kinds = SpecificDayPostfix.values().length;
+                prefix[which] = SpecificDayPrefix.values()[selectedPos / kinds];
+                postfix[which] = SpecificDayPostfix.values()[selectedPos % kinds];
+                specificDayText[which].setText(specificDay(which));
+            } else {
+                int which = id - KIND_PICKER;
+                pattern[which] = MonthlyPattern.values()[selectedPos];
+                // The other kind asks for something else entirely, so the panel
+                // is drawn again from scratch.
+                activity.createNodes();
+            }
+        }
+
+        @Override
+        public boolean validateState() {
+            for (int i = 0; i < days; i++) {
+                if (pattern[i] == MonthlyPattern.EVERY_NTH_DAY && !insist(dayOfMonth[i])) {
+                    return false;
+                }
+            }
+            return insist(everyMonths);
+        }
+
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            answers.put(P_INTERVAL, everyMonths.getText().toString());
+            answers.put(P_COUNT, String.valueOf(days));
+            for (int i = 0; i < days; i++) {
+                String which = "_" + i;
+                answers.put(P_MONTHLY_PATTERN + which, pattern[i].name());
+                answers.put(P_MONTHLY_PATTERN_PARAMS + which,
+                        pattern[i] == MonthlyPattern.EVERY_NTH_DAY
+                                ? dayOfMonth[i].getText().toString()
+                                : prefix[i].name() + "-" + postfix[i].name());
+            }
+        }
+
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            everyMonths.setText(answers.get(P_INTERVAL));
+            days = Integer.parseInt(answers.get(P_COUNT));
+            for (int i = 0; i < days; i++) {
+                String which = "_" + i;
+                pattern[i] = MonthlyPattern.valueOf(answers.get(P_MONTHLY_PATTERN + which));
+                patternText[i].setText(pattern[i].titleId);
+                String chosen = answers.get(P_MONTHLY_PATTERN_PARAMS + which);
+                if (pattern[i] == MonthlyPattern.EVERY_NTH_DAY) {
+                    dayOfMonth[i].setText(chosen);
+                } else {
+                    String[] halves = chosen.split("-");
+                    prefix[i] = SpecificDayPrefix.valueOf(halves[0]);
+                    postfix[i] = SpecificDayPostfix.valueOf(halves[1]);
+                    specificDayText[i].setText(specificDay(i));
+                }
+            }
+        }
+    }
+
+    /** One day a month. */
+    class MonthlyView extends AbstractMonthlyView {
+
+        MonthlyView(String written) {
+            super(RecurrenceFrequency.MONTHLY, 1);
+            HashMap<String, String> answers = parseState(written);
+            if (!answers.isEmpty()) {
+                pattern[0] = MonthlyPattern.valueOf(answers.get(P_MONTHLY_PATTERN + "_0"));
+            }
+        }
+    }
+
+    // -------------------------------------------------------- the way out
+
+    /**
+     * The rule written out by hand, for everything the panels above cannot say.
+     */
+    class GeekyView extends AbstractView {
+
+        private final EditText rule = new EditText(activity);
+
+        GeekyView() {
+            super(RecurrenceFrequency.GEEKY);
+            rule.setText("FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13");
+            rule.setMinLines(3);
+            rule.setMaxLines(5);
+        }
+
+        @Override
+        public void createNodes(LinearLayout layout) {
+            removeAllViewsFromParent(rule);
+            x.addEditNode(layout, R.string.recur_rrule, rule);
+        }
+
+        @Override
+        protected void onClick(View v, int id) {
+        }
+
+        @Override
+        public boolean validateState() {
+            return insist(rule);
+        }
+
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            answers.put(P_INTERVAL, rule.getText().toString().toUpperCase());
+        }
+
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            String written = answers.get(P_INTERVAL);
+            rule.setText(written != null ? written.toUpperCase() : "");
+        }
+    }
+
+    // ------------------------------------------------------- when it stops
+
+    /** After so many times. */
+    class ExactlyTimesView extends AbstractView {
+
+        private final EditText howManyTimes = numericEditText(activity);
+
+        ExactlyTimesView() {
+            super(RecurrenceUntil.EXACTLY_TIMES);
+            howManyTimes.setText("10");
+        }
+
+        @Override
+        public void createNodes(LinearLayout layout) {
+            removeAllViewsFromParent(howManyTimes);
+            x.addEditNode(layout, R.string.recur_exactly_n_times, howManyTimes);
+        }
+
+        @Override
+        protected void onClick(View v, int id) {
+        }
+
+        @Override
+        public boolean validateState() {
+            return insist(howManyTimes);
+        }
+
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            answers.put(P_COUNT, howManyTimes.getText().toString());
+        }
+
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            howManyTimes.setText(answers.get(P_COUNT));
+        }
+    }
+
+    /** On a chosen day. */
+    class StopsOnDateView extends AbstractView {
+
+        private TextView lastDayText;
+        private final Calendar lastDay = Calendar.getInstance();
+
+        StopsOnDateView() {
+            super(RecurrenceUntil.STOPS_ON_DATE);
+            // Six months out, so the field opens on something plausible rather
+            // than on today, which would mean stopping at once.
+            DateUtils.startOfDay(lastDay);
+            lastDay.add(Calendar.MONTH, 6);
+        }
+
+        @Override
+        public void createNodes(LinearLayout layout) {
+            lastDayText = x.addInfoNode(layout, R.id.date, R.string.recur_repeat_stops_on, written());
+        }
+
+        private String written() {
+            return DateUtils.getMediumDateFormat(activity).format(lastDay.getTime());
+        }
+
+        @Override
+        protected void onClick(View v, int id) {
+            new DatePickerDialog(activity,
+                    (picker, year, month, day) -> {
+                        lastDay.set(Calendar.YEAR, year);
+                        lastDay.set(Calendar.MONTH, month);
+                        lastDay.set(Calendar.DAY_OF_MONTH, day);
+                        lastDayText.setText(written());
+                    },
+                    lastDay.get(Calendar.YEAR),
+                    lastDay.get(Calendar.MONTH),
+                    lastDay.get(Calendar.DAY_OF_MONTH)).show();
+        }
+
+        @Override
+        public boolean validateState() {
+            return true;
+        }
+
+        @Override
+        protected void stateToMap(HashMap<String, String> answers) {
+            DateUtils.startOfDay(lastDay);
+            answers.put(P_DATE, DateUtils.FORMAT_DATE_RFC_2445.format(lastDay.getTime()));
+        }
+
+        @Override
+        protected void stateFromMap(HashMap<String, String> answers) {
+            String chosen = answers.get(P_DATE);
+            Date date;
+            try {
+                date = DateUtils.FORMAT_DATE_RFC_2445.parse(chosen);
+            } catch (ParseException unreadable) {
+                throw new IllegalArgumentException(chosen);
+            }
+            lastDay.setTime(date);
+            DateUtils.startOfDay(lastDay);
+            lastDayText.setText(written());
+        }
+    }
+
+    // ----------------------------------------------------------------- helpers
+
+    /** A field that only takes figures. */
+    private static EditText numericEditText(Context context) {
+        EditText field = new EditText(context);
+        field.setInputType(InputType.TYPE_CLASS_NUMBER);
+        return field;
+    }
+
+    /**
+     * Takes a field out of wherever it was last put.
+     * <p>
+     * The panels are drawn again whenever a choice changes, and the same field
+     * objects are reused; a view still attached to its old row cannot be added
+     * to a new one.
+     */
+    public void removeAllViewsFromParent(View v) {
+        if (v.getParent() != null) {
+            ((ViewGroup) v.getParent()).removeAllViews();
+        }
+    }
 }
