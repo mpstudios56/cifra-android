@@ -748,15 +748,28 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         // What is written down for days still to come. It was a line in the
         // menu, three screens away from the ring where everything else that
         // makes a movement already lives.
-        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(),
-                R.drawable.ic_widget_scheduled, R.string.scheduled_transactions));
-        // All of them side by side: four ways of writing a movement down are
-        // one choice, and a choice reads better in a row than in a block.
-        addButtonActionGrid.setNumColumns(addTemplateToAddButton() ? 4 : 3);
+        if (addScheduledToAddButton()) {
+            addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(),
+                    R.drawable.ic_widget_scheduled, R.string.scheduled_transactions));
+        }
+        // All of them side by side: the ways of writing a movement down are one
+        // choice, and a choice reads better in a row than in a block.
+        int ways = 2 + (addTemplateToAddButton() ? 1 : 0) + (addScheduledToAddButton() ? 1 : 0);
+        addButtonActionGrid.setNumColumns(ways);
         addButtonActionGrid.setOnQuickActionClickListener(addButtonActionListener);
     }
 
     protected boolean addTemplateToAddButton() {
+        return true;
+    }
+
+    /**
+     * Whether the ring offers a scheduled movement.
+     * <p>
+     * Not on the lists that are themselves templates or scheduled movements: a
+     * list does not offer the way to itself.
+     */
+    protected boolean addScheduledToAddButton() {
         return true;
     }
 

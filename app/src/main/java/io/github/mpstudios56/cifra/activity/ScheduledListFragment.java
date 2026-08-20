@@ -127,4 +127,16 @@ public class ScheduledListFragment extends BlotterFragment {
     protected boolean filterButtonFilters() {
         return false;
     }
+
+    /** A list of these does not offer the way to itself. */
+    @Override
+    protected boolean addScheduledToAddButton() {
+        return false;
+    }
+
+    /** Nor the way to the templates, which are a list of their own. */
+    @Override
+    protected boolean addTemplateToAddButton() {
+        return false;
+    }
 }

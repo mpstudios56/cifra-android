@@ -211,4 +211,10 @@ public class TemplatesListFragment extends BlotterFragment {
     protected boolean filterButtonFilters() {
         return false;
     }
+
+    /** A list of these does not offer the way to itself. */
+    @Override
+    protected boolean addScheduledToAddButton() {
+        return false;
+    }
 }
