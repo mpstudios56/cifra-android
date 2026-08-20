@@ -54,13 +54,6 @@
             android:key="auto_backup_reminder_enabled"
             android:summary="@string/auto_backup_reminder_enabled_summary"
             android:title="@string/auto_backup_reminder_enabled" />
-        <SwitchPreferenceCompat
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="false"
-            android:key="backup_newlines"
-            android:summary="@string/backup_newlines_summary"
-            android:title="@string/backup_newlines" />
     </PreferenceCategory>
 
     <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/dropbox">

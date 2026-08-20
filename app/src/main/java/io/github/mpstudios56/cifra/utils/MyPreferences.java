@@ -751,8 +751,16 @@ public class MyPreferences {
 		edit().putBoolean("auto_backup_enabled", enabled).apply();
 	}
 
+	/**
+	 * Whether a line break inside a note survives a backup.
+	 * <p>
+	 * It was a switch in the settings, which asked somebody to decide how a
+	 * file they will never open should be written. It is answered here, the way
+	 * it has always been answered by default: a line break inside a note
+	 * becomes a space, and the file stays a file anyone can read.
+	 */
 	public static boolean isBackupNewlines() {
-		return getBoolean("backup_newlines", false);
+		return false;
 	}
 
 	public static int getAutoBackupTime() {
