@@ -467,7 +467,7 @@
   <string name="expired">(expirat)</string>
   <string name="pending">(în aşteptare)</string>
   <string name="system_attribute_delete_after_expired">Şterge după expirare</string>
-  <string name="no_transaction_found">Nu s-a găsit nici o tranzacţie, reporniţi Financisto...</string>
+  <string name="no_transaction_found">Nu s-a găsit nici o tranzacţie, reporniţi Cifra...</string>
   <string name="include_credit">Include credite</string>
   <string name="include_credit_summary">Include credite (venituri sau returnări) în totalul bugetului</string>
   <string name="enable_widget">Activează widget-ul</string>
@@ -615,9 +615,9 @@
   <string name="quick_menu_transaction_enabled_summary">Activare meniu o-apasare în Operaţiuni</string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">Autorizare</string>
-  <string name="dropbox_authorize_summary">Allow Financisto to upload files to your Dropbox</string>
+  <string name="dropbox_authorize_summary">Allow Cifra to upload files to your Dropbox</string>
   <string name="dropbox_unlink">Anulare legătură</string>
-  <string name="dropbox_unlink_summary">Prevent Financisto from uploading files to your Dropbox</string>
+  <string name="dropbox_unlink_summary">Prevent Cifra from uploading files to your Dropbox</string>
   <string name="dropbox_upload_backup">Încarcă backup-uri</string>
   <string name="dropbox_upload_backup_summary">Upload database backups to Dropbox</string>
   <string name="dropbox_upload_autobackup">Upload Auto-backups</string>

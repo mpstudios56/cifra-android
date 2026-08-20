@@ -97,13 +97,13 @@
             app:singleLineTitle="false"
             android:summary="@string/transaction_screen_summary"
             android:title="@string/transaction_screen"
-            app:fragment="tw.tib.financisto.preference.TransactionPreferencesFragment" />
+            app:fragment="io.github.mpstudios56.cifra.preference.TransactionPreferencesFragment" />
         <Preference
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
             android:summary="@string/blotter_screen_summary"
             android:title="@string/blotter_screen"
-            app:fragment="tw.tib.financisto.preference.BlotterPreferencesFragment" />
+            app:fragment="io.github.mpstudios56.cifra.preference.BlotterPreferencesFragment" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"
@@ -126,7 +126,7 @@
             app:singleLineTitle="false"
             android:summary="@string/accounts_list_screen_summary"
             android:title="@string/accounts_list_screen"
-            app:fragment="tw.tib.financisto.preference.AccountPreferencesFragment" />
+            app:fragment="io.github.mpstudios56.cifra.preference.AccountPreferencesFragment" />
     </PreferenceCategory>
 
     <!--

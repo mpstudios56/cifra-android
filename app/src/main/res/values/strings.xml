@@ -629,7 +629,7 @@
     <string name="expired">(expired)</string>
     <string name="pending">(pending)</string>
     <string name="system_attribute_delete_after_expired">Delete after expired</string>
-    <string name="no_transaction_found">No transaction found, please restart Financisto…</string>
+    <string name="no_transaction_found">No transaction found, please restart Cifra…</string>
     <string name="include_credit">Include credits</string>
     <string name="include_credit_summary">Include credits (income or returns) into budget total</string>
     <string name="enable_widget">Enable widget</string>
@@ -895,10 +895,10 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
 
     <string name="dropbox">Dropbox</string>
     <string name="dropbox_authorize">Authorize</string>
-    <string name="dropbox_authorize_summary">Allow Financisto to upload files to your Dropbox</string>
+    <string name="dropbox_authorize_summary">Allow Cifra to upload files to your Dropbox</string>
     <string name="dropbox_authorized">Authorized with Dropbox</string>
     <string name="dropbox_unlink">Unlink</string>
-    <string name="dropbox_unlink_summary">Prevent Financisto from uploading files to your Dropbox</string>
+    <string name="dropbox_unlink_summary">Prevent Cifra from uploading files to your Dropbox</string>
     <string name="dropbox_upload_backup">Upload Backups</string>
     <string name="dropbox_upload_backup_summary">Upload database backups to Dropbox</string>
     <string name="dropbox_upload_autobackup">Upload Auto-backups</string>
@@ -1027,7 +1027,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="open_calculator_for_template_transactions">Open Calculator</string>
     <string name="open_calculator_for_template_transactions_summary">Open Calculator for transactions created from template</string>
 
-    <string name="installed_on_sd_card_warning">Scheduled transactions might NOT work as expected when Financisto installed on SD card. Please move it to phone memory.</string>
+    <string name="installed_on_sd_card_warning">Scheduled transactions might NOT work as expected when Cifra installed on SD card. Please move it to phone memory.</string>
 
     <string name="planner">Planner</string>
 
@@ -1066,7 +1066,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="google_drive_sign_out_summary">Sign out to choose another account</string>
     <string name="google_drive_permission_requested">Permission requested</string>
     <string name="google_drive_permission_requested_for_account">for account %s</string>
-    <string name="google_drive_permission_required">Please authorize Financisto to access your Google Drive then try again…</string>
+    <string name="google_drive_permission_required">Please authorize Cifra to access your Google Drive then try again…</string>
     <string name="google_drive_loading_files">Loading files from Google Drive…</string>
     <string name="google_drive_account_required">Please specify your Google Drive account in the Preferences then try again…</string>
     <string name="google_drive_signed_in_as">Signed in as %s</string>
@@ -1098,7 +1098,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="restore_database_online_dropbox">Dropbox Restore</string>
     <string name="backup_database_dropbox_inprogress">Backing up database…</string>
 
-    <string name="request_permissions_title">Financisto requires a few permissions to be granted manually.</string>
+    <string name="request_permissions_title">Cifra requires a few permissions to be granted manually.</string>
     <string name="request_permissions_description">Please grant the required permissions below, then return back to the previous screen and repeat the operation. Permissions can be revoked in the system Settings -> App Permissions.</string>
     <string name="request_permissions_storage_title">Storage</string>
     <string name="request_permissions_storage_description">Required to read and write backup files from/to the external storage.</string>
@@ -1166,7 +1166,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="pref_google_wallet_transaction_status">Status of transaction created from Google Wallet notification: %s</string>
     <string name="new_wallet_transaction_text">New transaction added from Google Wallet</string>
     <string name="new_wallet_transaction_title">Google Wallet transaction</string>
-    <string name="google_wallet_error_log">No Financisto account matches the Google Wallet card `%s`. Name an account the same as the card, or put the card\'s last 4 digits in the account card number field.</string>
+    <string name="google_wallet_error_log">No Cifra account matches the Google Wallet card `%s`. Name an account the same as the card, or put the card\'s last 4 digits in the account card number field.</string>
 
     <string name="card_issuer_default">Default</string>
     <string name="electronic_payment_type">Payment type</string>
@@ -1229,7 +1229,7 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
     <string name="set_focus_on_amount_field">Set focus on amount field</string>
     <string name="set_focus_on_amount_field_summary">Automatically set focus on amount field for new transactions</string>
 
-    <string name="notification_channel_name">Financisto</string>
+    <string name="notification_channel_name">Cifra</string>
     <string name="confirm_create_entity">Create "%s" ?</string>
 
     <string name="transaction_show_in_account_blotter">Show in account blotter</string>

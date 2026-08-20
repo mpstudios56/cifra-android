@@ -1,0 +1,190 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * <p/>
+ * Contributors:
+ * Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.service;
+
+import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.JobIntentService;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.activity.AccountWidget;
+import io.github.mpstudios56.cifra.activity.MassOpActivity;
+import io.github.mpstudios56.cifra.blotter.BlotterFilter;
+import io.github.mpstudios56.cifra.filter.WhereFilter;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.model.Transaction;
+import io.github.mpstudios56.cifra.model.TransactionInfo;
+import io.github.mpstudios56.cifra.model.TransactionStatus;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+import io.github.mpstudios56.cifra.utils.NotificationUtils;
+
+import static io.github.mpstudios56.cifra.utils.MyPreferences.getSmsTransactionStatus;
+import static io.github.mpstudios56.cifra.utils.MyPreferences.shouldSaveSmsToTransactionNote;
+
+public class FinancistoService extends JobIntentService {
+    public static final int JOB_ID = 1000;
+
+    public static final String ACTION_SCHEDULE_ALL = "io.github.mpstudios56.cifra.SCHEDULE_ALL";
+    public static final String ACTION_NEW_TRANSACTION_SMS = "io.github.mpstudios56.cifra.NEW_TRANSACTON_SMS";
+    public static final String SMS_TRANSACTION_NUMBER = "SMS_TRANSACTION_NUMBER";
+    public static final String SMS_TRANSACTION_BODY = "SMS_TRANSACTION_BODY";
+    public static final String ACTION_NEW_TRANSACTION_WALLET = "io.github.mpstudios56.cifra.NEW_TRANSACTION_WALLET";
+    public static final String WALLET_TRANSACTION_TITLE = "WALLET_TRANSACTION_TITLE";
+    public static final String WALLET_TRANSACTION_TEXT = "WALLET_TRANSACTION_TEXT";
+
+    private static final int RESTORED_NOTIFICATION_ID = 0;
+
+    private DatabaseAdapter db;
+    private RecurrenceScheduler scheduler;
+    private SmsTransactionProcessor smsProcessor;
+    private GoogleWalletTransactionProcessor walletProcessor;
+    private IntentTransactionProcessor intentTransactionProcessor;
+
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, FinancistoService.class, JOB_ID, work);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        db = new DatabaseAdapter(this);
+        db.open();
+        scheduler = new RecurrenceScheduler(db);
+        smsProcessor = new SmsTransactionProcessor(db);
+        walletProcessor = new GoogleWalletTransactionProcessor(db);
+        intentTransactionProcessor = new IntentTransactionProcessor(db);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (db != null) {
+            db.close();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onHandleWork(@NonNull Intent intent) {
+        final String action = intent.getAction();
+        if (action != null) {
+            switch (action) {
+                case ACTION_SCHEDULE_ALL:
+                    scheduleAll();
+                    break;
+                case ACTION_NEW_TRANSACTION_SMS:
+                    processSmsTransaction(intent);
+                    break;
+                case ACTION_NEW_TRANSACTION_WALLET:
+                    processWalletTransaction(intent);
+                    break;
+            }
+        }
+    }
+
+    private void processSmsTransaction(Intent intent) {
+        String number = intent.getStringExtra(SMS_TRANSACTION_NUMBER);
+        String body = intent.getStringExtra(SMS_TRANSACTION_BODY);
+        if (number != null && body != null) {
+            Transaction t = smsProcessor.createTransactionBySms(this, number, body, getSmsTransactionStatus(),
+                    shouldSaveSmsToTransactionNote());
+            if (t != null) {
+                TransactionInfo transactionInfo = db.getTransactionInfo(t.id);
+                Notification notification = createSmsTransactionNotification(transactionInfo, number);
+                NotificationUtils.notifyUser(this, notification, (int) t.id);
+                AccountWidget.updateWidgets(this);
+            }
+        }
+    }
+
+    private void processWalletTransaction(Intent intent) {
+        String title = intent.getStringExtra(WALLET_TRANSACTION_TITLE);
+        String text = intent.getStringExtra(WALLET_TRANSACTION_TEXT);
+        if (title == null) title = "";
+        if (text == null) text = "";
+        String notificationText = (title + " " + text).trim();
+
+        Transaction t = null;
+        GoogleWalletNotificationParser.ParsedPayment payment =
+                GoogleWalletNotificationParser.parse(title, text);
+        if (payment != null) {
+            t = walletProcessor.createTransaction(this, payment, notificationText,
+                    MyPreferences.getGoogleWalletTransactionStatus(), shouldSaveSmsToTransactionNote());
+        }
+        if (t == null) {
+            // fall back to user-defined notification templates matched by title
+            t = smsProcessor.createTransactionBySms(this, title, notificationText,
+                    getSmsTransactionStatus(), shouldSaveSmsToTransactionNote());
+        }
+        if (t != null) {
+            TransactionInfo transactionInfo = db.getTransactionInfo(t.id);
+            Notification notification = createWalletTransactionNotification(transactionInfo);
+            NotificationUtils.notifyUser(this, notification, (int) t.id);
+            AccountWidget.updateWidgets(this);
+        }
+    }
+
+    private void scheduleAll() {
+        int restoredTransactionsCount = scheduler.scheduleAll(this);
+        if (restoredTransactionsCount > 0) {
+            NotificationUtils.notifyUser(this, createRestoredNotification(restoredTransactionsCount), RESTORED_NOTIFICATION_ID);
+        }
+    }
+
+    private Notification createRestoredNotification(int count) {
+        long when = System.currentTimeMillis();
+        String text = getString(R.string.scheduled_transactions_have_been_restored, count);
+        String contentTitle = getString(R.string.scheduled_transactions_restored);
+
+        Intent notificationIntent = new Intent(this, MassOpActivity.class);
+        WhereFilter filter = new WhereFilter("");
+        filter.eq(BlotterFilter.STATUS, TransactionStatus.RS.name());
+        filter.toIntent(notificationIntent);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        return new NotificationCompat.Builder(this, NotificationChannelService.TRANSACTIONS_CHANNEL)
+                .setContentIntent(contentIntent)
+                .setSmallIcon(R.mipmap.a_icon_notify)
+                .setWhen(when)
+                .setTicker(text)
+                .setContentText(text)
+                .setContentTitle(contentTitle)
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .build();
+    }
+
+    private Notification createSmsTransactionNotification(TransactionInfo t, String number) {
+        String tickerText = getString(R.string.new_sms_transaction_text, number);
+        String contentTitle = getString(R.string.new_sms_transaction_title, number);
+        String text = t.getNotificationContentText(this);
+
+        return NotificationUtils.generateNotification(this, t, tickerText, contentTitle, text);
+    }
+
+    private Notification createWalletTransactionNotification(TransactionInfo t) {
+        String tickerText = getString(R.string.new_wallet_transaction_text);
+        String contentTitle = getString(R.string.new_wallet_transaction_title);
+        String text = t.getNotificationContentText(this);
+
+        return NotificationUtils.generateNotification(this, t, tickerText, contentTitle, text);
+    }
+
+}

@@ -1,0 +1,225 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.report;
+
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import io.github.mpstudios56.cifra.activity.BlotterActivity;
+import io.github.mpstudios56.cifra.blotter.BlotterFilter;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseHelper;
+import io.github.mpstudios56.cifra.db.DatabaseHelper.ReportColumns;
+import io.github.mpstudios56.cifra.db.TransactionsTotalCalculator;
+import io.github.mpstudios56.cifra.db.UnableToCalculateRateException;
+import io.github.mpstudios56.cifra.filter.Criterion;
+import io.github.mpstudios56.cifra.filter.WhereFilter;
+import io.github.mpstudios56.cifra.graph.Amount;
+import io.github.mpstudios56.cifra.graph.GraphStyle;
+import io.github.mpstudios56.cifra.graph.GraphUnit;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.model.Total;
+import io.github.mpstudios56.cifra.model.TotalError;
+import io.github.mpstudios56.cifra.rates.ExchangeRateProvider;
+
+public abstract class Report {
+    private static final String TAG = "Report";
+
+    public final GraphStyle style;
+    public final ReportType reportType;
+
+    protected final Context context;
+    protected final Currency currency;
+
+    public final boolean allowFilterSplit;
+
+    protected IncomeExpense incomeExpense = IncomeExpense.BOTH;
+
+    public Report(ReportType reportType, Context context, Currency currency, boolean allowFilterSplit) {
+        this.reportType = reportType;
+        this.context = context;
+        this.style = new GraphStyle.Builder(context).build();
+        this.currency = currency;
+        this.allowFilterSplit = allowFilterSplit;
+    }
+
+     public Report(ReportType reportType, Context context, Currency currency) {
+        this(reportType, context, currency, true);
+     }
+
+    public void setIncomeExpense(IncomeExpense incomeExpense) {
+        this.incomeExpense = incomeExpense;
+    }
+
+    protected String alterName(long id, String name) {
+        return name;
+    }
+
+    public abstract ReportData getReport(DatabaseAdapter db, WhereFilter filter);
+
+    public ReportData getReportForChart(DatabaseAdapter db, WhereFilter filter) {
+        return getReport(db, filter);
+    }
+
+    protected ReportData queryReport(DatabaseAdapter db, String table, WhereFilter filter) {
+        Cursor c = db.db().query(table, DatabaseHelper.ReportColumns.NORMAL_PROJECTION,
+                filter.getSelection(), filter.getSelectionArgs(), null, null, "_id");
+        ArrayList<GraphUnit> units = getUnitsFromCursor(db, c);
+        Total total = calculateTotal(units);
+        return new ReportData(units, total);
+    }
+
+    protected ArrayList<GraphUnit> getUnitsFromCursor(DatabaseAdapter db, Cursor c) {
+        try {
+            ExchangeRateProvider rates = db.getHistoryRates();
+            ArrayList<GraphUnit> units = new ArrayList<GraphUnit>();
+            GraphUnit u = null;
+            long lastId = -1;
+            // getColumnIndex compares strings on every call; inside the loop that is three
+            // wasted lookups per row, and reports often have thousands of rows — resolve once
+            int isTransferIdx = c.getColumnIndex(ReportColumns.IS_TRANSFER);
+            int nameIdx = c.getColumnIndex(ReportColumns.NAME);
+            int datetimeIdx = c.getColumnIndex(ReportColumns.DATETIME);
+            while (c.moveToNext()) {
+                long id = getId(c);
+                long isTransfer = c.getLong(isTransferIdx);
+                if (id != lastId) {
+                    if (u != null) {
+                        units.add(u);
+                    }
+                    String name = c.getString(nameIdx);
+                    u = new GraphUnit(id, alterName(id, name), currency, style);
+                    lastId = id;
+                }
+                BigDecimal amount;
+                try {
+                    amount = TransactionsTotalCalculator.getAmountFromCursor(db, c, currency, rates, datetimeIdx);
+                } catch (UnableToCalculateRateException e) {
+                    amount = BigDecimal.ZERO;
+                    u.error = TotalError.atDateRateError(e.fromCurrency, e.datetime);
+                }
+                u.addAmount(amount, false);
+            }
+            if (u != null) {
+                units.add(u);
+            }
+            for (GraphUnit unit : units) {
+                unit.flatten(incomeExpense);
+            }
+            removeEmptyUnits(units);
+            Collections.sort(units);
+            return units;
+        } finally {
+            c.close();
+        }
+    }
+
+    private void removeEmptyUnits(ArrayList<GraphUnit> units) {
+        Iterator<GraphUnit> unit = units.iterator();
+        while (unit.hasNext()) {
+            GraphUnit u = unit.next();
+            if (u.maxAmount == 0) {
+                unit.remove();
+            }
+        }
+    }
+
+    protected Total calculateTotal(List<? extends GraphUnit> units) {
+        Total total = new Total(currency, true);
+        for (GraphUnit u : units) {
+            for (Amount a : u) {
+                if (u.error != null) {
+                    return new Total(currency, u.error);
+                }
+                long amount = a.amount;
+                if (amount > 0) {
+                    total.amount += amount;
+                } else {
+                    total.balance += amount;
+                }
+            }
+        }
+        return total;
+    }
+
+    /** Set on the list a chart opens, where the years are not drawn. */
+    public static final String FROM_REPORT = "from_report";
+
+    protected long getId(Cursor c) {
+        return c.getLong(0);
+    }
+
+    public Intent createActivityIntent(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
+        WhereFilter filter = WhereFilter.empty();
+        Criterion c = parentFilter.get(BlotterFilter.DATETIME);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = parentFilter.get(BlotterFilter.CATEGORY_LEFT);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = parentFilter.get(BlotterFilter.PROJECT_ID);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = parentFilter.get(BlotterFilter.PAYEE_ID);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = parentFilter.get(ReportColumns.IS_TRANSFER);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = getCriteriaForId(db, id);
+        if (c != null) {
+            filter.put(c);
+        }
+        filter.eq("from_account_is_include_into_totals", "1");
+        // Match the v_report_* views: report figures exclude transactions on accounts
+        // not included into reports, so the drill-down blotter must filter them too
+        // (it goes through v_blotter/v_all_transactions, single rows without mirrors —
+        // filtering the from side is enough)
+        filter.eq("from_account_is_include_into_reports", "1");
+        Intent intent = new Intent(context, getBlotterActivityClass());
+        filter.toIntent(intent);
+        // Reached from a chart: the same list, but the years are not marked out
+        // in it, so there is nothing there to fold.
+        intent.putExtra(FROM_REPORT, true);
+        return intent;
+    }
+
+    protected abstract Criterion getCriteriaForId(DatabaseAdapter db, long id);
+
+    protected Class<? extends AppCompatActivity> getBlotterActivityClass() {
+        return BlotterActivity.class;
+    }
+
+    protected void cleanupFilter(WhereFilter filter) {
+        // fixing a bug with saving incorrect filter fot this report have to remove it here
+        filter.remove("left");
+        filter.remove("right");
+    }
+
+    public boolean shouldDisplayTotal() {
+        return true;
+    }
+
+}

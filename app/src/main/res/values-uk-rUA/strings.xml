@@ -560,7 +560,7 @@
     <string name="expired">(прострочено)</string>
     <string name="pending">(очікує)</string>
     <string name="system_attribute_delete_after_expired">Видалити після закінчення терміну дії</string>
-    <string name="no_transaction_found">Немає транзакції, потрібно перезавантажити Financisto…</string>
+    <string name="no_transaction_found">Немає транзакції, потрібно перезавантажити Cifra…</string>
     <string name="include_credit">Включити прибуток</string>
     <string name="include_credit_summary">Включати доходи (надходження або прибутки) до загального бюджету</string>
     <string name="enable_widget">Увімкнути віджет</string>
@@ -791,10 +791,10 @@
 
     <string name="dropbox">Dropbox</string>
     <string name="dropbox_authorize">Авторизація</string>
-    <string name="dropbox_authorize_summary">Дозволити Financisto вивантажувати файли до вашого Dropbox</string>
+    <string name="dropbox_authorize_summary">Дозволити Cifra вивантажувати файли до вашого Dropbox</string>
     <string name="dropbox_authorized">Авторизація у Dropbox</string>
     <string name="dropbox_unlink">Від\'єднати</string>
-    <string name="dropbox_unlink_summary">Заборонити Financisto вивантажувати файли до вашого Dropbox </string>
+    <string name="dropbox_unlink_summary">Заборонити Cifra вивантажувати файли до вашого Dropbox </string>
     <string name="dropbox_upload_backup">Вивантажувати резервні копії</string>
     <string name="dropbox_upload_backup_summary">Вивантажити резервні копії до Dropbox</string>
     <string name="dropbox_upload_autobackup">Вивантажувати автоматично копії</string>
@@ -1052,7 +1052,7 @@
     <string name="pref_google_wallet_transaction_status">Статус транзакції, створеної зі сповіщення Google Wallet: %s</string>
     <string name="new_wallet_transaction_text">Нова транзакція додана з Google Wallet</string>
     <string name="new_wallet_transaction_title">Транзакція Google Wallet</string>
-    <string name="google_wallet_error_log">Жоден рахунок Financisto не відповідає картці Google Wallet `%s`. Назвіть рахунок так само, як картка, або вкажіть останні 4 цифри картки в полі номера картки рахунку.</string>
+    <string name="google_wallet_error_log">Жоден рахунок Cifra не відповідає картці Google Wallet `%s`. Назвіть рахунок так само, як картка, або вкажіть останні 4 цифри картки в полі номера картки рахунку.</string>
     <string name="sms_tpl_list_category_payee_project_name">%1$s, %2$s, %3$s</string>
 
     <string name="card_issuer_default">За замовчуванням</string>
@@ -1112,7 +1112,7 @@
     <string name="set_focus_on_amount_field">Встановіть фокус у поле суми</string>
     <string name="set_focus_on_amount_field_summary">Автоматично встановлювати фокус у поле суми для нових транзакцій</string>
 
-    <string name="notification_channel_name">Financisto</string>
+    <string name="notification_channel_name">Cifra</string>
     <string name="confirm_create_entity">Створити "%s" ?</string>
 
     <string name="transaction_show_in_account_blotter">Показати в журналі рахунку</string>

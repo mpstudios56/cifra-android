@@ -544,7 +544,7 @@
     <string name="expired">(просрочено)</string>
     <string name="pending">(в ожидании)</string>
     <string name="system_attribute_delete_after_expired">Удалить после истечения</string>
-    <string name="no_transaction_found">Транзакия не найдена, перезагрузите Financisto…</string>
+    <string name="no_transaction_found">Транзакия не найдена, перезагрузите Cifra…</string>
     <string name="include_credit">Включить приход</string>
     <string name="include_credit_summary">Включить приход в общую сумму бюджета</string>
     <string name="enable_widget">Разрешить виджет</string>
@@ -756,10 +756,10 @@
 
     <string name="dropbox">Резервная копия в Dropbox</string>
     <string name="dropbox_authorize">Авторизация</string>
-    <string name="dropbox_authorize_summary">Разрешить Financisto загружать файлы в ваш Dropbox</string>
+    <string name="dropbox_authorize_summary">Разрешить Cifra загружать файлы в ваш Dropbox</string>
     <string name="dropbox_authorized">Авторизовано в Dropbox</string>
     <string name="dropbox_unlink">Отключить</string>
-    <string name="dropbox_unlink_summary">Запретить Financisto загружать файлы в ваш Dropbox</string>
+    <string name="dropbox_unlink_summary">Запретить Cifra загружать файлы в ваш Dropbox</string>
     <string name="dropbox_upload_backup">Выгружать копии базы</string>
     <string name="dropbox_upload_backup_summary">Выгружать копии базы в Dropbox</string>
     <string name="dropbox_upload_autobackup">Выгружать авт. копии</string>
@@ -878,7 +878,7 @@
     <string name="open_calculator_for_template_transactions">Калькулятор</string>
     <string name="open_calculator_for_template_transactions_summary">Открывать калькулятор для транзакций, созданных по шаблону</string>
 
-    <string name="installed_on_sd_card_warning">Запланированные транзакции могут НЕ работать должным образом, если Financisto установлен на SD-карту. Пожалуйста, переместите его в память телефона.</string>
+    <string name="installed_on_sd_card_warning">Запланированные транзакции могут НЕ работать должным образом, если Cifra установлен на SD-карту. Пожалуйста, переместите его в память телефона.</string>
 
     <string name="planner">Планировщик</string>
 
@@ -916,7 +916,7 @@
     <string name="google_drive_sign_out_summary">Выйти из учётной записи, чтобы выбрать другую учётную запись</string>
     <string name="google_drive_permission_requested">Требуется разрешение</string>
     <string name="google_drive_permission_requested_for_account">для счёта %s</string>
-    <string name="google_drive_permission_required">Разрешите Financisto доступ к вашему Google Диску и повторите попытку…</string>
+    <string name="google_drive_permission_required">Разрешите Cifra доступ к вашему Google Диску и повторите попытку…</string>
     <string name="google_drive_loading_files">Загрузка файлов из Google Диск…</string>
     <string name="google_drive_account_required">Укажите свою учётную запись Google Диска в Настройках и повторите попытку…</string>
     <string name="google_drive_signed_in_as">Выполнен вход как %s</string>
@@ -944,7 +944,7 @@
     <string name="restore_database_online_dropbox">Восстановление из Dropbox</string>
     <string name="backup_database_dropbox_inprogress">Копирование базы…</string>
 
-    <string name="request_permissions_title">Financisto требует, чтобы некоторые разрешения были предоставлены вручную.</string>
+    <string name="request_permissions_title">Cifra требует, чтобы некоторые разрешения были предоставлены вручную.</string>
     <string name="request_permissions_description">Предоставьте необходимые разрешения ниже, затем вернитесь к предыдущему экрану и повторите операцию. Разрешения можно отозвать в настройках системы -> Приложения -> Разрешения</string>
     <string name="request_permissions_storage_title">Хранилище</string>
     <string name="request_permissions_storage_description">Требуется для чтения и записи файлов резервных копий с/на внешнее хранилище.</string>
@@ -1058,7 +1058,7 @@
     <string name="set_focus_on_amount_field">Фокус на поле суммы</string>
     <string name="set_focus_on_amount_field_summary">Автоматически устанавливать фокус на поле суммы для новых транзакций</string>
 
-    <string name="notification_channel_name">Financisto</string>
+    <string name="notification_channel_name">Cifra</string>
     <string name="confirm_create_entity">Создать %s?</string>
 
     <string name="transaction_show_in_account_blotter">Показать в журнале счёта</string>

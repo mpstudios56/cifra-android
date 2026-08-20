@@ -27,7 +27,7 @@
             android:key="pin_protection"
             android:summary="@string/pin_protection_summary"
             android:title="@string/pin_protection" />
-        <tw.tib.financisto.preference.PinPreference
+        <io.github.mpstudios56.cifra.preference.PinPreference
             app:singleLineTitle="false"
             android:dependency="pin_protection"
             android:dialogLayout="@layout/lock"

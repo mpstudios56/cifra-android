@@ -1,0 +1,55 @@
+/*
+ * Copyright (c) 2012 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ */
+
+package io.github.mpstudios56.cifra.utils;
+
+import android.content.Context;
+
+import io.github.mpstudios56.cifra.Application;
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.model.Account;
+
+import java.util.List;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: denis.solonenko
+ * Date: 8/16/12 7:55 PM
+ */
+public class IntegrityCheckRunningBalance implements IntegrityCheck {
+
+    private final Context context;
+
+    public IntegrityCheckRunningBalance(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public Result check() {
+        if (isRunningBalanceBroken()) {
+            return new Result(Level.ERROR, context.getString(R.string.integrity_error));
+        } else {
+            return Result.OK;
+        }
+    }
+
+    private boolean isRunningBalanceBroken() {
+        DatabaseAdapter db = new DatabaseAdapter(Application.getInstance());
+        List<Account> accounts = db.getAllAccountsList();
+        for (Account account : accounts) {
+            long totalFromAccount = account.totalAmount;
+            long totalFromRunningBalance = db.getLastRunningBalanceForAccount(account);
+            if (totalFromAccount != totalFromRunningBalance) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+}

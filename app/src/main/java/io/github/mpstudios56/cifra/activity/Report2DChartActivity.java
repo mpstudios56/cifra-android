@@ -1,0 +1,905 @@
+package io.github.mpstudios56.cifra.activity;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseHelper;
+import io.github.mpstudios56.cifra.filter.Criterion;
+import io.github.mpstudios56.cifra.filter.DateTimeCriterion;
+import io.github.mpstudios56.cifra.filter.WhereFilter;
+import io.github.mpstudios56.cifra.graph.Report2DChart;
+import io.github.mpstudios56.cifra.graph.Report2DPoint;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.model.PeriodValue;
+import io.github.mpstudios56.cifra.model.ReportDataByPeriod;
+import io.github.mpstudios56.cifra.report.AccountBalanceByPeriodReport;
+import io.github.mpstudios56.cifra.report.AccountByPeriodReport;
+import io.github.mpstudios56.cifra.report.CategoryByPeriodReport;
+import io.github.mpstudios56.cifra.report.LocationByPeriodReport;
+import io.github.mpstudios56.cifra.report.PayeeByPeriodReport;
+import io.github.mpstudios56.cifra.report.ProjectByPeriodReport;
+import io.github.mpstudios56.cifra.report.ReportType;
+import io.github.mpstudios56.cifra.report.TotalBalanceByPeriodReport;
+import io.github.mpstudios56.cifra.utils.CurrencyCache;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+import io.github.mpstudios56.cifra.utils.PinProtection;
+import io.github.mpstudios56.cifra.utils.Privacy;
+import io.github.mpstudios56.cifra.utils.Utils;
+
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+/**
+ * Activity to display 2D Reports.
+ *
+ * @author Abdsandryk
+ */
+public class Report2DChartActivity extends Activity implements OnChartValueSelectedListener {
+    private static final String TAG = "Report2DChartActivity";
+    /** The app's own green, the same one the save buttons are painted in. */
+    private static final int LINE = 0xFF45B87E;
+
+    // activity result identifier to get results back
+    public static final int REPORT_PREFERENCES = 1;
+
+    // Data to display
+    private Report2DChart reportData;
+    private DatabaseAdapter db;
+
+    private int[] periods;
+    private int selectedPeriod;
+    private Currency currency;
+    private Calendar startPeriod;
+    private ReportType reportType;
+    private MyPreferences.ReportAggregateUnit aggregateUnit;
+
+    private LineChart chart;
+    private List<Entry> vals;
+    private LineDataSet ds;
+    private ArrayList<ILineDataSet> dss;
+
+    private TextView pointDate;
+    private TextView pointAmount;
+
+    private int positive;
+    private int negative;
+
+    /** The mean, in the figures under the chart. Quiet: it is a reference, not a result. */
+    public static final int meanColor = 0xFF8FA6C4;
+
+    // array of string report preferences to identify changes
+    String[] initialPrefs;
+
+    // boolean to check if preferred currency is set
+    private boolean prefCurNotSet = false;
+    // boolean to check if preferred period is set
+    private boolean prefPerNotSet = false;
+
+    private PeriodValue currentPoint = null;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(MyPreferences.switchLocale(base));
+    }
+
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        // initialize activity
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.report_2d);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.report_base), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    | WindowInsetsCompat.Type.statusBars()
+                    | WindowInsetsCompat.Type.captionBar());
+            var lp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            lp.topMargin = insets.top;
+            lp.bottomMargin = insets.bottom;
+            v.setLayoutParams(lp);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        // get report type
+        Intent intent = getIntent();
+        if (intent != null) {
+            reportType = ReportType.valueOf(intent.getStringExtra(Report2DChart.REPORT_TYPE));
+        }
+
+        String[] r = getResources().getStringArray(R.array.report_reference_period_values);
+        periods = new int[r.length];
+        for (int i=0; i<r.length; ++i) {
+            periods[i] = Integer.parseInt(r[i]);
+        }
+
+        init();
+    }
+
+    private int selectPeriodFromLength(int months) {
+        for (int i=0; i<periods.length; ++i) {
+            if (periods[i] == months) return i;
+        }
+        if (months > 0) return (periods.length - 1);
+        return 0;
+    }
+
+    /**
+     * Initialize activity.
+     */
+    private void init() {
+        // database adapter to query data
+        db = new DatabaseAdapter(this);
+        db.open();
+
+        // get report preferences to display chart
+        // Reference Currency
+        currency = getReferenceCurrency();
+        // Period of Reference
+        int periodLength = getPeriodOfReference();
+        selectedPeriod = selectPeriodFromLength(periodLength);
+        aggregateUnit = MyPreferences.getReportAggregateUnit();
+
+        // check report preferences for reference month different of current month
+        setStartPeriod(periodLength);
+
+        boolean built = false;
+        switch (reportType) {
+            case BY_ACCOUNT_BY_PERIOD:
+                reportData = new AccountByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case BY_CATEGORY_BY_PERIOD:
+                reportData = new CategoryByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case BY_PAYEE_BY_PERIOD:
+                reportData = new PayeeByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case BY_LOCATION_BY_PERIOD:
+                reportData = new LocationByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case BY_PROJECT_BY_PERIOD:
+                reportData = new ProjectByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case BY_ACCOUNT_BALANCE_BY_PERIOD:
+                findViewById(R.id.report_sum_result).setVisibility(View.INVISIBLE);
+                findViewById(R.id.report_sum_label).setVisibility(View.INVISIBLE);
+                reportData = new AccountBalanceByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+            case TOTAL_BALANCE_BY_PERIOD:
+                findViewById(R.id.report_sum_result).setVisibility(View.INVISIBLE);
+                findViewById(R.id.report_sum_label).setVisibility(View.INVISIBLE);
+                reportData = new TotalBalanceByPeriodReport(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                break;
+
+        }
+
+        initChart();
+
+        if (reportData.hasFilter()) {
+            refreshView();
+            built = true;
+        } else {
+            //  There is no <location, project or category> available for filtering data.
+            alertNoFilter(reportData.getNoFilterMessage(this));
+            adjustLabels();
+        }
+
+        if (built && (prefCurNotSet || prefPerNotSet)) {
+            alertPreferencesNotSet(prefCurNotSet, prefPerNotSet);
+        }
+
+        // previous filter button
+        ImageButton bPrevious = (ImageButton) findViewById(R.id.bt_filter_previous);
+        bPrevious.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (reportData.previousFilter()) {
+                    refreshView();
+                }
+            }
+        });
+
+        // next filter button
+        ImageButton bNext = (ImageButton) findViewById(R.id.bt_filter_next);
+        bNext.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (reportData.nextFilter()) {
+                    refreshView();
+                }
+            }
+        });
+
+        TextView reportFilterName = findViewById(R.id.report_filter_name);
+        reportFilterName.setOnClickListener((v) -> {
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(new ArrayAdapter<>(this,
+                                    android.R.layout.simple_list_item_activated_1,
+                                    android.R.id.text1,
+                                    reportData.getFilterItemTitles()),
+                            reportData.getSelectedFilter(),
+                            (dialog, which) -> {
+                                dialog.cancel();
+                                if (reportData.selectFilter(which)) {
+                                    refreshView();
+                                }
+                            })
+                    .setTitle(reportData.getFilterItemTypeName())
+                    .show();
+        });
+
+        // search transactions
+        ImageButton bViewTransactions = findViewById(R.id.bt_view_transactions);
+        bViewTransactions.setOnClickListener((view) -> {
+            if (currentPoint == null) return;
+            WhereFilter filter = WhereFilter.empty();
+            // get the current selected filter from report
+            filter.put(reportData.getCriteria());
+            // current selected point's timeframe
+            Calendar timeframe = currentPoint.getTimeframe();
+            Calendar end = (Calendar) timeframe.clone();
+            switch (aggregateUnit) {
+                case WEEK -> {
+                    end.add(Calendar.DATE, 7);
+                }
+                case MONTH -> {
+                    end.add(Calendar.MONTH, 1);
+                }
+                case YEAR, FISCAL_YEAR -> {
+                    end.add(Calendar.YEAR, 1);
+                }
+            }
+            end.add(Calendar.DAY_OF_MONTH, -1);
+            filter.put(new DateTimeCriterion(timeframe.getTimeInMillis(),
+                    io.github.mpstudios56.cifra.datetime.DateUtils.endOfDay(end).getTimeInMillis()));
+            filter.put(Criterion.eq(DatabaseHelper.ReportColumns.IS_TRANSFER, "0"));
+            Intent intent = new Intent(this, BlotterActivity.class);
+            filter.toIntent(intent);
+            startActivity(intent);
+        });
+
+        // prefs
+        ImageButton bPrefs = (ImageButton) findViewById(R.id.bt_preferences);
+        bPrefs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showPreferences();
+            }
+        });
+
+        // period length
+        findViewById(R.id.report_period).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // pop up options to choose the period
+                changePeriodLength(selectedPeriod);
+            }
+        });
+        findViewById(R.id.report_period).setFocusable(true);
+
+        findViewById(R.id.report_unit).setOnClickListener(v -> changeAggregateUnit());
+        findViewById(R.id.report_currency).setOnClickListener(v -> changeCurrency());
+        showChartControls();
+
+        pointDate = findViewById(R.id.point_date);
+        pointAmount = findViewById(R.id.point_amount);
+
+        positive = getResources().getColor(R.color.positive_amount);
+        negative = getResources().getColor(R.color.negative_amount);
+    }
+
+    private void initChart() {
+        chart = findViewById(R.id.report_2d_chart);
+
+        chart.setBackgroundColor(Color.TRANSPARENT);
+        chart.setExtraOffsets(8f, 12f, 12f, 8f);
+        chart.setNoDataTextColor(0x99FFFFFF);
+        chart.setTouchEnabled(true);
+        chart.setOnChartValueSelectedListener(this);
+        // The library writes "Description Label" in the corner unless told not
+        // to, and it had been showing on every one of these charts.
+        chart.getDescription().setEnabled(false);
+
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        chart.setPinchZoom(true);
+
+        // Grid lines quiet enough to read the line over, and no frame around
+        // the whole thing: a box drawn round a chart adds nothing but a box.
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setTextColor(0x99FFFFFF);
+        yAxis.setTextSize(11f);
+        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        yAxis.setGridColor(0x1AFFFFFF);
+        yAxis.setGridLineWidth(1f);
+        yAxis.setDrawAxisLine(false);
+        yAxis.setLabelCount(5, false);
+        // With the figures off, the scale up the side would give the whole
+        // thing away - the shape of the line can stay, the numbers cannot.
+        if (Privacy.isHidden()) {
+            yAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return "•••";
+                }
+            });
+        }
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                // Written at the scale being looked at. Weeks labelled by month
+                // alone gave "Mar Mar Mar Apr Apr", which names nothing; years
+                // labelled by month would name the wrong thing entirely.
+                int flags;
+                switch (aggregateUnit) {
+                    case WEEK -> flags = DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_NO_YEAR;
+                    case YEAR, FISCAL_YEAR -> flags =
+                            DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_NO_MONTH_DAY;
+                    default -> flags =
+                            DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_NO_MONTH_DAY;
+                }
+                return DateUtils.formatDateTime(Report2DChartActivity.this, (long) value, flags);
+            }
+        });
+        xAxis.setTextColor(0x99FFFFFF);
+        xAxis.setTextSize(11f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        // No vertical rules: the dates below the line already say where each
+        // point sits, and a grid in both directions turns it into graph paper.
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+        // The first and last dates sit at the very edges, where half of them
+        // would otherwise be drawn off the side of the chart.
+        xAxis.setAvoidFirstLastClipping(true);
+
+        chart.getAxisRight().setEnabled(false);
+
+        chart.getLegend().setEnabled(false);
+        chart.setDrawGridBackground(false);
+
+        vals = new ArrayList<>();
+
+        ds = new LineDataSet(vals, "");
+
+        // The app's own green, thick enough to be the subject of the screen,
+        // with the area under it filled: the shape of the year is easier to see
+        // as a mass than as a wire. Yellow on black was the old library default
+        // and looked like a heart monitor.
+        ds.setColor(LINE);
+        ds.setLineWidth(2.5f);
+        ds.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        ds.setDrawFilled(true);
+        ds.setFillColor(LINE);
+        ds.setFillAlpha(48);
+        ds.setDrawCircles(true);
+        ds.setCircleColor(LINE);
+        ds.setCircleRadius(3.5f);
+        ds.setCircleHoleColor(0xFF101010);
+        ds.setCircleHoleRadius(1.8f);
+        ds.setDrawValues(false);
+        ds.setHighLightColor(0xFFF4EFE4);
+        ds.setHighlightLineWidth(1f);
+        ds.enableDashedHighlightLine(8f, 6f, 0f);
+
+        dss = new ArrayList<>();
+        dss.add(ds);
+
+        chart.setData(new LineData(dss));
+    }
+
+    /**
+     * Display a message when preferences not set to alert the use of default values.
+     *
+     * @param isCurrency Inform if currency is not set on report preferences.
+     * @param isPeriod   Inform if period is not set on report preferences.
+     */
+    private void alertPreferencesNotSet(boolean isCurrency, boolean isPeriod) {
+        // display message: preferences not set
+        String message = "";
+        if (isCurrency) {
+            if (isPeriod) {
+                // neither currency neither period is set
+                message = getResources().getString(R.string.report_preferences_not_set);
+            } else {
+                // only currency not set
+                message = getResources().getString(R.string.currency_not_set);
+            }
+        } else {
+            if (isPeriod) {
+                // only period not set
+                message = getResources().getString(R.string.period_not_set);
+            }
+        }
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(R.string.reports);
+        dlgAlert.setPositiveButton(R.string.ok, null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
+
+    /**
+     * Alert message to warn that there is no filter available (no category, no project, no account or no location)
+     *
+     * @param message Message warning the lack of filters by report type.
+     */
+    private void alertNoFilter(String message) {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(R.string.reports);
+        dlgAlert.setPositiveButton(R.string.ok, null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
+
+    /**
+     * Display a list of period length options to redefine period, rebuild data and refresh view.
+     *
+     * @param previousPeriod The previous selected period to check if data changed, rebuild data and refresh view.
+     */
+    private void changePeriodLength(final int previousPeriod) {
+        final Context context = this;
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.report_reference_period)
+                .setSingleChoiceItems(
+                        new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1,
+                                android.R.id.text1,
+                                getResources().getStringArray(R.array.report_reference_period_entities)),
+                        selectedPeriod,
+                        (dialog, which) -> {
+                            dialog.cancel();
+                            selectedPeriod = which;
+                            processPeriodLengthChange(previousPeriod, true);
+                        })
+                .show();
+    }
+
+    /**
+     * What the three buttons above the chart are set to.
+     * <p>
+     * Written out rather than left as icons: "12 mesi", "Mese", "EUR" says
+     * what the line is showing without anyone having to tap anything to find
+     * out, which is the point of moving them out of the settings.
+     */
+    private void showChartControls() {
+        ((Button) findViewById(R.id.report_unit)).setText(unitName(aggregateUnit));
+        ((Button) findViewById(R.id.report_currency))
+                .setText(currency != null ? currency.name : "");
+    }
+
+    private String unitName(MyPreferences.ReportAggregateUnit unit) {
+        String[] names = getResources().getStringArray(R.array.report_aggregate_unit_entities);
+        String[] values = getResources().getStringArray(R.array.report_aggregate_unit_values);
+        for (int i = 0; i < values.length && i < names.length; i++) {
+            if (values[i].equals(unit.name())) {
+                return names[i];
+            }
+        }
+        return unit.name();
+    }
+
+    /** Weeks, months, years: how finely the same stretch of time is cut up. */
+    private void changeAggregateUnit() {
+        String[] names = getResources().getStringArray(R.array.report_aggregate_unit_entities);
+        String[] values = getResources().getStringArray(R.array.report_aggregate_unit_values);
+        int selected = 0;
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equals(aggregateUnit.name())) {
+                selected = i;
+            }
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.report_aggregate_unit)
+                .setSingleChoiceItems(names, selected, (dialog, which) -> {
+                    dialog.cancel();
+                    aggregateUnit = MyPreferences.ReportAggregateUnit.valueOf(values[which]);
+                    // Kept in the settings too, so the two places never disagree
+                    // about what the report is doing.
+                    MyPreferences.setReportAggregateUnit(values[which]);
+                    rebuildForControls();
+                })
+                .show();
+    }
+
+    /** Which money the figures are converted into before being added up. */
+    private void changeCurrency() {
+        List<Currency> all = new ArrayList<>(CurrencyCache.getAllCurrencies());
+        if (all.isEmpty()) {
+            return;
+        }
+        String[] names = new String[all.size()];
+        int selected = 0;
+        for (int i = 0; i < all.size(); i++) {
+            names[i] = all.get(i).name + "  " + all.get(i).title;
+            if (currency != null && all.get(i).id == currency.id) {
+                selected = i;
+            }
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.currency)
+                .setSingleChoiceItems(names, selected, (dialog, which) -> {
+                    dialog.cancel();
+                    currency = all.get(which);
+                    MyPreferences.setReferenceCurrency(currency.title);
+                    rebuildForControls();
+                })
+                .show();
+    }
+
+    private void rebuildForControls() {
+        reportData.rebuild(this, db, startPeriod, getPeriodOfReference(), currency, aggregateUnit);
+        showChartControls();
+        refreshView();
+    }
+
+    /**
+     * Process the period length change
+     *
+     * @param previousPeriod The selected period length before changing
+     * @param refresh        True if requires refresh, false if refresh will be processed later
+     */
+    private void processPeriodLengthChange(int previousPeriod, boolean refresh) {
+        if (previousPeriod != selectedPeriod) {
+            reportData.changePeriodLength(getPeriodOfReference());
+            setStartPeriod(periods[selectedPeriod]);
+            reportData.changeStartPeriod(startPeriod);
+            if (refresh) refreshView();
+        }
+    }
+
+    /**
+     * Update the view reflecting data changes
+     */
+    private void refreshView() {
+        // onValueSelected uses currency formatting so it need to be set here
+        currency = reportData.getCurrency();
+        // set data to plot
+        if (reportData.hasDataToPlot()) {
+            findViewById(R.id.report_empty).setVisibility(View.GONE);
+
+            chart.setVisibility(View.VISIBLE);
+
+            vals.clear();
+            for (Report2DPoint p : reportData.getPoints()) {
+                PeriodValue v = p.getPointData();
+                // x value is 32-bit floating point, on recent timestamps the step size is 131.072 seconds
+                // so sometimes it will become 1~2 minutes earlier in the previous month when converting to float
+                // we are only using the month part, so add 86400*1000*14 ms to shift it to middle of month
+                // 2026-07 adjust to 43200*1000 since we added a week aggregate length
+                vals.add(new Entry(v.getTimeframeTimeInMillis() + 43200_000f, (float) v.getValue() / 100.0f, v));
+            }
+
+            // One label per point, placed on the points themselves. Left to
+            // pick its own, the axis spaced the labels evenly across the range
+            // and two of them landed inside the same month, so the same month
+            // name was written twice with nothing between the two.
+            chart.getXAxis().setLabelCount(Math.min(vals.size(), 7), true);
+
+            ds.notifyDataSetChanged();
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+            chart.invalidate();
+
+            if (chart.valuesToHighlight()) {
+                Highlight[] highlights = chart.getHighlighted();
+                Entry entry = chart.getData().getEntryForHighlight(highlights[0]);
+                onValueSelected(entry, highlights[0]);
+            }
+        } else {
+            findViewById(R.id.report_empty).setVisibility(View.VISIBLE);
+            findViewById(R.id.report_2d_chart).setVisibility(View.GONE);
+            onNothingSelected();
+        }
+        // adjust report 2D user interface elements
+        adjustLabels();
+        fillStatistics();
+    }
+
+    /**
+     * Adjust labels after changing report parameters
+     */
+    private void adjustLabels() {
+        // Filter name
+        ((TextView) findViewById(R.id.report_filter_name)).setText(reportData.getFilterName());
+        // Period
+        ((TextView) findViewById(R.id.report_period)).setText(reportData.getPeriodLengthString(this));
+    }
+
+    /**
+     * Fill statistics panel based on report data
+     */
+    private void fillStatistics() {
+        boolean considerNull = MyPreferences.considerNullResultsInReport();
+        ReportDataByPeriod data = reportData.getDataBuilder();
+        Double max = 0.0;
+        Double min = 0.0;
+        Double mean = 0.0;
+        Double meanWithSign = 0.0;
+        Double sum = 0.0;
+        if (data != null) {
+            sum = data.getSum();
+            if (considerNull) {
+                max = data.getMaxValue();
+                min = data.getMinValue();
+                mean = meanWithSign = data.getMean();
+                if ((min * max >= 0)) {
+                    // absolute calculation (all points over the x axis)
+                    max = data.getAbsoluteMaxValue();
+                    min = data.getAbsoluteMinValue();
+                    mean = Math.abs(mean);
+                    sum = Math.abs(sum);
+                }
+            } else {
+                // exclude impact of null values in statistics
+                max = data.getMaxExcludingNulls();
+                min = data.getMinExcludingNulls();
+                mean = meanWithSign = data.getMeanExcludingNulls();
+                if ((min * max >= 0)) {
+                    // absolute calculation (all points over the x axis)
+                    max = data.getAbsoluteMaxExcludingNulls();
+                    min = data.getAbsoluteMinExcludingNulls();
+                    mean = Math.abs(mean);
+                    sum = Math.abs(sum);
+                }
+            }
+        }
+        // chart limits
+        ((TextView) findViewById(R.id.report_max_result)).setText(Utils.amountToString(reportData.getCurrency(), max.longValue()));
+        ((TextView) findViewById(R.id.report_min_result)).setText(Utils.amountToString(reportData.getCurrency(), min.longValue()));
+        // sum and mean
+        ((TextView) findViewById(R.id.report_mean_result)).setText(Utils.amountToString(reportData.getCurrency(), mean.longValue()));
+        ((TextView) findViewById(R.id.report_mean_result)).setTextColor(meanColor);
+        ((TextView) findViewById(R.id.report_sum_result)).setText(Utils.amountToString(reportData.getCurrency(), sum.longValue()));
+
+        // mean line
+        // A hairline, dashed, in the quietest colour on the screen: the mean is
+        // a reference to glance at, not a second line competing with the one the
+        // chart is about. Solid and blue it read as a second measurement.
+        LimitLine ll = new LimitLine(meanWithSign.floatValue() / 100.0f, getString(R.string.mean_line_label));
+        ll.setTextColor(0x99FFFFFF);
+        ll.setLineColor(0x66FFFFFF);
+        ll.setLineWidth(1.0f);
+        ll.enableDashedLine(8f, 6f, 0f);
+        ll.setTextSize(10f);
+        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+
+        chart.getAxisLeft().removeAllLimitLines();
+        chart.getAxisLeft().addLimitLine(ll);
+    }
+
+    /**
+     * Gets the reference currency registered on preferences or, if not registered, gets the default currency.
+     *
+     * @return The currency registered as a reference to display chart reports or the default currency if not configured yet.
+     */
+    private Currency getReferenceCurrency() {
+        Currency c = MyPreferences.getReferenceCurrency();
+        if (c == null) {
+            prefCurNotSet = true;
+            Collection<Currency> currencies = CurrencyCache.getAllCurrencies();
+            if (currencies != null && currencies.size() > 0) {
+                for (Currency currency : currencies) {
+                    if (currency.isDefault) {
+                        c = currency;
+                        break;
+                    }
+                }
+                if (c == null) {
+                    c = getNewDefaultCurrency();
+                }
+            } else {
+                c = getNewDefaultCurrency();
+            }
+        }
+        return c;
+    }
+
+    /**
+     * Gets default currency when currency is not set in report preferences.
+     *
+     * @return Default currency
+     */
+    private Currency getNewDefaultCurrency() {
+        return Currency.defaultCurrency();
+    }
+
+    private void showPreferences() {
+        // save preferences status before call report preferences activity
+        initialPrefs = MyPreferences.getReportPreferences();
+        // call report preferences activity asking for result when closed
+        Intent intent = new Intent(this, ReportPreferencesActivity2.class);
+        startActivityForResult(intent, REPORT_PREFERENCES);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // See which child activity is calling us back.
+        if (initialPrefs != null) {
+            boolean changed = preferencesChanged(initialPrefs, MyPreferences.getReportPreferences());
+            if (changed) {
+                // rebuild data
+                int periodLength = getPeriodOfReference();
+                reportData.rebuild(this, db, startPeriod, periodLength, currency, aggregateUnit);
+                refreshView();
+            }
+        }
+    }
+
+    /**
+     * Check if preferences changed
+     *
+     * @param initial Preferences status before call Report Preferences Activity.
+     * @param actual  Current preferences status.
+     * @return True if preferences changed, false otherwise.
+     */
+    private boolean preferencesChanged(String[] initial, String[] actual) {
+        boolean changed = false;
+        // general report preferences
+        // 0 reference currency
+        if (!initial[0].equals(actual[0])) {
+            // set reference currency
+            currency = getReferenceCurrency();
+            changed = true;
+        }
+        // 1 period of reference
+        if (!initial[1].equals(actual[1])) {
+            // change period length to the one set in report preferences
+            int refPeriodLength = getPeriodOfReference();
+            int previousPeriod = selectedPeriod;
+            selectedPeriod = selectPeriodFromLength(refPeriodLength);
+            processPeriodLengthChange(previousPeriod, false);
+            changed = true;
+        }
+        // 2 reference month
+        if (!initial[2].equals(actual[2])) {
+            setStartPeriod(periods[selectedPeriod]);
+            changed = true;
+        }
+        // 3 consider nulls in statistics (affects statistics only > recalculate)
+        if (!initial[3].equals(actual[3])) {
+            // affects statistics only - recalculate
+            changed = true;
+        }
+        // 4 include <no filter> (rebuild will regenerate the filter Ids list)
+        if (!initial[4].equals(actual[4])) {
+            // the change will be processed in rebuild
+            changed = true;
+        }
+        // 5 aggregate unit
+        if (!initial[7].equals(actual[7])) {
+            aggregateUnit = MyPreferences.getReportAggregateUnit();
+            changed = true;
+        }
+
+        if (reportType == ReportType.BY_CATEGORY_BY_PERIOD) {
+            // include sub categories in list (rebuild will regenerate the filter Ids list)
+            if (!initial[5].equals(actual[5])) {
+                // the change will be processed in rebuild
+                changed = true;
+            }
+            // add sub categories result to root categories result (affects statistics only > recalculate)
+            if (!initial[6].equals(actual[6])) changed = true;
+        }
+        return changed;
+    }
+
+    /**
+     * Set the start period based on given period length and reference month registered in report preferences.
+     * Start period = Reference Month - periodLength months
+     *
+     * @param periodLength The number of months to be represented in the 2D report.
+     */
+    private void setStartPeriod(int periodLength) {
+        int refMonth = MyPreferences.getReferenceMonth();
+        Calendar now = Calendar.getInstance();
+        startPeriod = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), 1);
+        if (refMonth != 0) {
+            startPeriod.add(Calendar.MONTH, refMonth);
+        }
+
+        if (periodLength != -1) {
+            // move to start period (reference month - <periodLength> months)
+            startPeriod.add(Calendar.MONTH, (-1) * periodLength + 1);
+        }
+        else {
+            // use earliest transaction time as start period
+            startPeriod = Calendar.getInstance();
+            startPeriod.setTimeInMillis(db.getEarliestTransactionTimestamp());
+            startPeriod.set(Calendar.DAY_OF_MONTH, 1);
+        }
+    }
+
+    /**
+     * Get the period of reference set in report preferences.
+     *
+     * @return The number of months to be represented in the 2D report.
+     */
+    private int getPeriodOfReference() {
+        int periodLength = MyPreferences.getPeriodOfReference();
+        if (periodLength == 0) {
+            periodLength = ReportDataByPeriod.DEFAULT_PERIOD;
+            prefPerNotSet = true;
+        }
+        if (periodLength == -1) {
+            Calendar start = Calendar.getInstance();
+            Calendar now = Calendar.getInstance();
+
+            start.setTimeInMillis(db.getEarliestTransactionTimestamp());
+            start.set(Calendar.DAY_OF_MONTH, 1);
+
+            periodLength = (now.get(Calendar.YEAR) * 12 + now.get(Calendar.MONTH))
+                    - (start.get(Calendar.YEAR) * 12 + start.get(Calendar.MONTH)) + 1;
+        }
+        return periodLength;
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PinProtection.lock(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PinProtection.unlock(this);
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        currentPoint = (PeriodValue) e.getData();
+        pointDate.setText(DateUtils.formatDateTime(this, (long) e.getX(),
+                aggregateUnit == MyPreferences.ReportAggregateUnit.WEEK ? 0 : DateUtils.FORMAT_NO_MONTH_DAY));
+        pointAmount.setText(Utils.amountToString(currency, (long) (e.getY() * 100)));
+        pointAmount.setTextColor(e.getY() >= 0 ? positive : negative);
+    }
+
+    @Override
+    public void onNothingSelected() {
+        if (pointDate != null) pointDate.setText("");
+        if (pointAmount != null) pointAmount.setText("");
+    }
+}

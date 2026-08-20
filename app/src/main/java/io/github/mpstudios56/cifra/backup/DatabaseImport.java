@@ -1,0 +1,242 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.backup;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.util.Log;
+import com.dropbox.core.util.IOUtil;
+
+import io.github.mpstudios56.cifra.export.drive.GoogleDriveFileInfo;
+import io.github.mpstudios56.cifra.export.drive.GoogleDriveRESTClient;
+import io.github.mpstudios56.cifra.db.Database;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseSchemaEvolution;
+import io.github.mpstudios56.cifra.export.dropbox.Dropbox;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.GZIPInputStream;
+
+import static io.github.mpstudios56.cifra.backup.Backup.RESTORE_SCRIPTS;
+import static io.github.mpstudios56.cifra.backup.Backup.tableHasOrder;
+import static io.github.mpstudios56.cifra.db.DatabaseHelper.ATTRIBUTES_TABLE;
+import static io.github.mpstudios56.cifra.db.DatabaseHelper.LOCATIONS_TABLE;
+import static io.github.mpstudios56.cifra.orb.EntityManager.DEF_SORT_COL;
+
+public class DatabaseImport extends FullDatabaseImport {
+
+    private final DatabaseSchemaEvolution schemaEvolution;
+    private final InputStream backupStream;
+    private final boolean backupNewlines;
+
+    public static DatabaseImport createFromFileBackup(Context context, DatabaseAdapter dbAdapter, Uri backupFileUri) throws FileNotFoundException {
+        InputStream inputStream = context.getContentResolver().openInputStream(backupFileUri);
+        return new DatabaseImport(context, dbAdapter, inputStream);
+    }
+
+    /** The sample data that ships with the app, offered by the welcome screen. */
+    public static DatabaseImport createFromAsset(Context context, DatabaseAdapter dbAdapter, String assetName)
+            throws IOException {
+        return new DatabaseImport(context, dbAdapter, context.getAssets().open(assetName));
+    }
+
+    public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter db, GoogleDriveRESTClient googleDriveRESTClient, GoogleDriveFileInfo backupFile)
+            throws Exception {
+        InputStream inputStream = googleDriveRESTClient.getFileAsStream(backupFile.id);
+        InputStream in = new GZIPInputStream(inputStream);
+        return new DatabaseImport(context, db, in);
+    }
+
+    public static DatabaseImport createFromDropboxBackup(Context context, DatabaseAdapter dbAdapter, Dropbox dropbox, String backupFile)
+            throws Exception {
+        InputStream inputStream = dropbox.getBackupFileAsStream(backupFile);
+        InputStream in = new GZIPInputStream(inputStream);
+        return new DatabaseImport(context, dbAdapter, in);
+    }
+
+    private DatabaseImport(Context context, DatabaseAdapter dbAdapter, InputStream backupStream) {
+        super(context, dbAdapter);
+        this.schemaEvolution = new DatabaseSchemaEvolution(context, Database.DATABASE_NAME, null, Database.DATABASE_VERSION);
+        this.backupStream = backupStream;
+        this.backupNewlines = MyPreferences.isBackupNewlines();
+    }
+
+    @Override
+    protected void restoreDatabase() throws IOException {
+        InputStream s = decompressStream(backupStream);
+        InputStreamReader isr = new InputStreamReader(s, "UTF-8");
+        BufferedReader br = new BufferedReader(isr, 65535);
+        try {
+            recoverDatabase(br);
+            runRestoreAlterscripts();
+            ensureHomeCurrency();
+        } finally {
+            IOUtil.closeInput(br);
+        }
+    }
+
+    /** See {@link io.github.mpstudios56.cifra.db.HomeCurrency}: without it every total reads "N/A". */
+    private void ensureHomeCurrency() {
+        io.github.mpstudios56.cifra.db.HomeCurrency.ensure(db);
+    }
+
+    private InputStream decompressStream(InputStream input) throws IOException {
+        PushbackInputStream pb = new PushbackInputStream(input, 2);
+        byte[] bytes = new byte[2];
+        pb.read(bytes);
+        pb.unread(bytes);
+        int head = ((int) bytes[0] & 0xff) | ((bytes[1] << 8) & 0xff00);
+        if (GZIPInputStream.GZIP_MAGIC == head)
+            return new GZIPInputStream(pb);
+        else
+            return pb;
+    }
+
+    private void recoverDatabase(BufferedReader br) throws IOException {
+        boolean insideEntity = false;
+        ContentValues values = new ContentValues();
+        String line;
+        String tableName = null;
+        long rowNum = 0;
+        var sb = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            if (line.startsWith("$")) {
+                if ("$$".equals(line)) {
+                    if (tableName != null && values.size() > 0) {
+                        if (shouldRestoreTable(tableName)) {
+                            cleanupValues(tableName, values);
+                            if (values.size() > 0) {
+                                // if old dump format - then just adding sequential default order
+                                if (tableHasOrder(tableName) && !values.containsKey(DEF_SORT_COL)) {
+                                    values.put(DEF_SORT_COL, ++rowNum);
+                                }
+                                db.insert(tableName, null, values);
+                            }
+                        }
+                        tableName = null;
+                        insideEntity = false;
+
+                    }
+                } else {
+                    int i = line.indexOf(":");
+                    if (i > 0) {
+                        tableName = line.substring(i + 1);
+                        insideEntity = true;
+                        values.clear();
+                    }
+                }
+            } else {
+                if (insideEntity) {
+                    int i = line.indexOf(":");
+                    if (i > 0) {
+                        String columnName = line.substring(0, i);
+                        String value = backupNewlines ? unescape(sb, line.substring(i + 1)) : line.substring(i + 1);
+                        values.put(columnName, value);
+                    }
+                }
+            }
+        }
+    }
+
+    private static String unescape(StringBuilder sb, String value) {
+        sb.setLength(0);
+        int l = value.length();
+        int m = l - 1;
+        for (int i=0; i<l; ++i) {
+            char c = value.charAt(i);
+            switch (c) {
+                case '\\' -> {
+                    if (i<m) {
+                        i++;
+                        char d = value.charAt(i);
+                        switch (d) {
+                            case 'n' -> sb.append("\n");
+                            case '\\' -> sb.append("\\");
+                            default -> sb.append(d);
+                        }
+                    }
+                    else {
+                        sb.append(c);
+                    }
+                }
+                default -> sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    private void runRestoreAlterscripts() throws IOException {
+        for (String script : RESTORE_SCRIPTS) {
+            schemaEvolution.runAlterScript(db, script);
+        }
+    }
+
+    private boolean shouldRestoreTable(String tableName) {
+        return true;
+    }
+
+    private void cleanupValues(String tableName, ContentValues values) {
+        // remove system entities
+        Integer id = values.getAsInteger("_id");
+        if (id != null && id <= 0) {
+            Log.w("Financisto", "Removing system entity: " + values);
+            values.clear();
+            return;
+        }
+        // fix columns
+        values.remove("updated_on");
+        values.remove("remote_key");
+        if (LOCATIONS_TABLE.equals(tableName)) {
+            if (values.containsKey("name")) {
+                values.put("title", values.getAsString("name"));
+            }
+        } else if (ATTRIBUTES_TABLE.equals(tableName)) {
+            if (values.containsKey("name")) {
+                values.put("title", values.getAsString("name"));
+                values.remove("name");
+            }
+        }
+        // remove unknown columns
+        String sql = "select * from " + tableName + " WHERE 1=0";
+        try (Cursor c = db.rawQuery(sql, null)) {
+            final String[] columnNames = c.getColumnNames();
+            removeUnknownColumns(values, columnNames, tableName);
+        }
+
+        /*
+        if ("account".equals(tableName)) {
+            values.remove("sort_order");
+            String type = values.getAsString("type");
+            if ("PAYPAL".equals(type)) {
+                values.put("type", AccountType.ELECTRONIC.name());
+                values.put("card_issuer", ElectronicPaymentType.PAYPAL.name());
+            }
+        }
+        */
+    }
+
+    private void removeUnknownColumns(ContentValues values, String[] columnNames, String tableName) {
+        Set<String> possibleKeys = new HashSet<>(Arrays.asList(columnNames));
+        Set<String> keys = new HashSet<>(values.keySet());
+        for (String key : keys) {
+            if (!possibleKeys.contains(key)) {
+                values.remove(key);
+                Log.i(getClass().getSimpleName(), "Removing "+key+" from backup values for "+tableName);
+            }
+        }
+    }
+}

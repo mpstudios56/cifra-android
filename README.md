@@ -1,6 +1,6 @@
 # Financisto Holo
 
-Get it on Google Play: https://play.google.com/store/apps/details?id=tw.tib.financisto
+Get it on Google Play: https://play.google.com/store/apps/details?id=io.github.mpstudios56.cifra
 
 Please see https://github.com/dsolonenko/financisto for latest development by 
 orginal author.

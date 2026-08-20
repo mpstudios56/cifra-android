@@ -24,7 +24,7 @@
             android:key="auto_backup_enabled"
             android:summary="@string/auto_backup_enabled_summary"
             android:title="@string/auto_backup_enabled" />
-        <tw.tib.financisto.preference.TimePreference
+        <io.github.mpstudios56.cifra.preference.TimePreference
             app:singleLineTitle="false"
             android:dependency="auto_backup_enabled"
             android:key="auto_backup_time"

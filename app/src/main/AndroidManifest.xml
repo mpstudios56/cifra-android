@@ -11,7 +11,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="tw.tib.financisto"
+	package="io.github.mpstudios56.cifra"
 	android:versionName="2.1.5" android:versionCode="23"
     android:installLocation="internalOnly">
 
@@ -151,7 +151,7 @@
 			android:taskAffinity=".TransactionActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<action android:name="tw.tib.financisto.NEW_TRANSACTION" />
+				<action android:name="io.github.mpstudios56.cifra.NEW_TRANSACTION" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
@@ -163,7 +163,7 @@
 			android:taskAffinity=".TransferActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<action android:name="tw.tib.financisto.NEW_TRANSFER" />
+				<action android:name="io.github.mpstudios56.cifra.NEW_TRANSFER" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>

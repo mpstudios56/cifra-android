@@ -8,8 +8,8 @@
         android:shortcutLongLabel="@string/transaction_title">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetPackage="tw.tib.financisto"
-            android:targetClass="tw.tib.financisto.activity.TransactionActivity" />
+            android:targetPackage="io.github.mpstudios56.cifra"
+            android:targetClass="io.github.mpstudios56.cifra.activity.TransactionActivity" />
     </shortcut>
     <shortcut
         android:shortcutId="transfer"
@@ -19,8 +19,8 @@
         android:shortcutLongLabel="@string/transfer_title">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetPackage="tw.tib.financisto"
-            android:targetClass="tw.tib.financisto.activity.TransferActivity" />
+            android:targetPackage="io.github.mpstudios56.cifra"
+            android:targetClass="io.github.mpstudios56.cifra.activity.TransferActivity" />
     </shortcut>
     <shortcut
         android:shortcutId="template"
@@ -30,7 +30,7 @@
         android:shortcutLongLabel="@string/new_from_template">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetPackage="tw.tib.financisto"
-            android:targetClass="tw.tib.financisto.activity.SelectTemplateActivity" />
+            android:targetPackage="io.github.mpstudios56.cifra"
+            android:targetClass="io.github.mpstudios56.cifra.activity.SelectTemplateActivity" />
     </shortcut>
 </shortcuts>

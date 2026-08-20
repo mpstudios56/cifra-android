@@ -15,7 +15,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <tw.tib.financisto.widget.NumberPickerButton
+    <io.github.mpstudios56.cifra.widget.NumberPickerButton
         android:id="@+id/increment"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -36,7 +36,7 @@
         android:textColor="#FFF4EFE4"
         android:textSize="30sp" />
 
-    <tw.tib.financisto.widget.NumberPickerButton
+    <io.github.mpstudios56.cifra.widget.NumberPickerButton
         android:id="@+id/decrement"
         android:layout_width="match_parent"
         android:layout_height="42dp"

@@ -467,7 +467,7 @@
   <string name="expired">(vençut)</string>
   <string name="pending">(pendent)</string>
   <string name="system_attribute_delete_after_expired">Eliminar al venciment</string>
-  <string name="no_transaction_found">Cap transacció localitzada. Si us plau, reinicialitza Financisto...</string>
+  <string name="no_transaction_found">Cap transacció localitzada. Si us plau, reinicialitza Cifra...</string>
   <string name="include_credit">Incloure Abonaments</string>
   <string name="include_credit_summary">Incloure els abonaments (ingressos o retorns) al còmput de la dotació pressupostària</string>
   <string name="enable_widget">Activar Widget</string>
@@ -615,9 +615,9 @@
   <string name="quick_menu_transaction_enabled_summary">Activar menú d\'un toc a Registres</string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">Autoritzar</string>
-  <string name="dropbox_authorize_summary">Permet Financisto carregar arxius al seu Dropbox</string>
+  <string name="dropbox_authorize_summary">Permet Cifra carregar arxius al seu Dropbox</string>
   <string name="dropbox_unlink">Desenllaça</string>
-  <string name="dropbox_unlink_summary">Impedir Financisto de carregar arxius al seu Dropbox</string>
+  <string name="dropbox_unlink_summary">Impedir Cifra de carregar arxius al seu Dropbox</string>
   <string name="dropbox_upload_backup">Carregar còpies de seguretat</string>
   <string name="dropbox_upload_backup_summary">Carregar còpies de seguretat de base de dades a Dropbox</string>
   <string name="dropbox_upload_autobackup">Carregar còpies de seguretat automàtica</string>

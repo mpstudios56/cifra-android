@@ -1,0 +1,56 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.activity;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
+import android.widget.ListAdapter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
+
+import io.github.mpstudios56.cifra.adapter.TransactionsListAdapter;
+import io.github.mpstudios56.cifra.blotter.BlotterTotalCalculationTask;
+import io.github.mpstudios56.cifra.blotter.TotalCalculationTask;
+import io.github.mpstudios56.cifra.filter.WhereFilter;
+
+public class SplitsBlotterFragment extends BlotterFragment {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bFilter.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected Cursor loadInBackground() {
+        new Handler(Looper.getMainLooper()).post(()-> {
+            calculateTotals(blotterFilter);
+        });
+        return db.getBlotterForAccountWithSplits(blotterFilter);
+    }
+
+    @Override
+    protected ListAdapter createAdapter(Context context, Cursor cursor) {
+        return new TransactionsListAdapter(context, db, cursor);
+    }
+
+    @Override
+    protected TotalCalculationTask createTotalCalculationTask(WhereFilter filter) {
+        return new BlotterTotalCalculationTask(getContext(), db, filter, totalText);
+    }
+
+}

@@ -1,0 +1,164 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.adapter;
+
+import static io.github.mpstudios56.cifra.model.Project.NO_PROJECT_ID;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.text.format.DateUtils;
+import android.view.View;
+
+import java.util.Calendar;
+
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseHelper.BlotterColumns;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.utils.CurrencyCache;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+import io.github.mpstudios56.cifra.utils.Utils;
+
+public class TransactionsListAdapter extends BlotterListAdapter {
+
+    private final int dateColor;
+    private final int projectColor;
+    private final boolean showProject;
+
+    public TransactionsListAdapter(Context context, DatabaseAdapter db, Cursor c) {
+        super(context, db, c);
+        Resources r = context.getResources();
+
+        this.dateColor = r.getColor(R.color.transaction_date);
+        this.projectColor = r.getColor(R.color.project_color);
+        this.showProject = MyPreferences.isShowProjectInBlotter();
+    }
+
+    @Override
+    protected void bindView(BlotterViewHolder v, Context context, Cursor cursor) {
+        long transactionId = cursor.getLong(BlotterColumns._id.ordinal());
+        boolean highlightUnedited = false;
+        if (this.highlightCopiedUnedited) {
+            long lastEditTimestamp = copiedUneditedTransactions.get(transactionId);
+            if (lastEditTimestamp != 0) {
+                if (listAdapterTimestamp - lastEditTimestamp < 86400_000) {
+                    highlightUnedited = true;
+                }
+                else {
+                    copiedUneditedTransactions.remove(transactionId);
+                }
+            }
+        }
+        if (highlightUnedited || transactionId == highlightTransactionId) {
+            v.layout.setBackgroundColor(highlightBackgroundColor);
+        }
+        else {
+            v.layout.setBackgroundColor(0);
+        }
+
+        long toAccountId = cursor.getLong(BlotterColumns.to_account_id.ordinal());
+        String payee = cursor.getString(BlotterColumns.payee.ordinal());
+        String note = cursor.getString(BlotterColumns.note.ordinal());
+        String transfer = null;
+        long locationId = cursor.getLong(BlotterColumns.location_id.ordinal());
+        String location = "";
+        if (locationId > 0) {
+            location = cursor.getString(BlotterColumns.location.ordinal());
+        }
+        String toAccount = cursor.getString(BlotterColumns.to_account_title.ordinal());
+        long fromAmount = cursor.getLong(BlotterColumns.from_amount.ordinal());
+        if (toAccountId > 0) {
+            v.topView.setText(R.string.transfer);
+            if (fromAmount > 0) {
+                transfer = toAccount+" \u00BB";
+            } else {
+                transfer = "\u00AB "+toAccount;
+            }
+        } else {
+            String title = cursor.getString(BlotterColumns.from_account_title.ordinal());
+            v.topView.setText(title);
+            v.centerView.setTextColor(Color.WHITE);
+        }
+
+        long categoryId = cursor.getLong(BlotterColumns.category_id.ordinal());
+        String category = "";
+        if (categoryId != 0) {
+            category = cursor.getString(BlotterColumns.category_title.ordinal());
+        }
+        CharSequence text = transactionTitleUtils.generateTransactionTitle(toAccountId > 0, payee, transfer, note, location, categoryId, category);
+        v.centerView.setText(text);
+        sb.setLength(0);
+
+        long projectId = cursor.getLong(BlotterColumns.project_id.ordinal());
+
+        if (projectId == NO_PROJECT_ID || showProject == false) {
+            v.top2View.setVisibility(View.INVISIBLE);
+        }
+        else {
+            v.top2View.setVisibility(View.VISIBLE);
+            v.top2View.setTextColor(projectColor);
+            v.top2View.setText(cursor.getString(BlotterColumns.project.ordinal()));
+        }
+
+        long currencyId = cursor.getLong(BlotterColumns.from_account_currency_id.ordinal());
+        Currency c = CurrencyCache.getCurrency(currencyId);
+        long originalCurrencyId = cursor.getLong(BlotterColumns.original_currency_id.ordinal());
+        if (originalCurrencyId > 0) {
+            Currency originalCurrency = CurrencyCache.getCurrency(originalCurrencyId);
+            long originalAmount = cursor.getLong(BlotterColumns.original_from_amount.ordinal());
+            u.setAmountText(sb, v.rightCenterView, originalCurrency, originalAmount, c, fromAmount, true);
+        } else {
+            u.setAmountText(v.rightCenterView, c, fromAmount, true);
+        }
+        if (fromAmount > 0) {
+            v.iconView.setImageDrawable(icBlotterIncome);
+            v.iconView.setColorFilter(u.positiveColor);
+        } else if (fromAmount < 0) {
+            v.iconView.setImageDrawable(icBlotterExpense);
+            v.iconView.setColorFilter(u.negativeColor);
+        }
+
+        long date = cursor.getLong(BlotterColumns.datetime.ordinal());
+        v.bottomView.setText(DateUtils.formatDateTime(context, date,
+                DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_SHOW_WEEKDAY|DateUtils.FORMAT_ABBREV_WEEKDAY|DateUtils.FORMAT_SHOW_TIME|DateUtils.FORMAT_ABBREV_MONTH));
+        if (date > System.currentTimeMillis()) {
+            u.setFutureTextColor(v.bottomView);
+        } else {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(date);
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            if (colorizeWeekend() && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
+                v.bottomView.setTextColor(weekendColour());
+            } else {
+                v.bottomView.setTextColor(dateColor);
+            }
+        }
+
+        if (v.iconView2 != null) {
+            long parentId = cursor.getLong(BlotterColumns.parent_id.ordinal());
+            if (parentId == 0) {
+                v.iconView2.setVisibility(View.INVISIBLE);
+            } else {
+                v.iconView2.setVisibility(View.VISIBLE);
+                v.iconView2.setImageDrawable(icBlotterSplit);
+                v.iconView2.setColorFilter(u.splitColor);
+            }
+        }
+
+        long balance = cursor.getLong(BlotterColumns.from_account_balance.ordinal());
+        v.rightView.setText(Utils.amountToString(c, balance, false));
+        removeRightViewIfNeeded(v);
+        setIndicatorColor(v, cursor);
+    }
+
+}

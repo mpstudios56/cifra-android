@@ -1,0 +1,521 @@
+/*
+ * This program is made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ */
+package io.github.mpstudios56.cifra.activity;
+
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.sync.SyncEngine;
+import io.github.mpstudios56.cifra.utils.CategoryIcon;
+import io.github.mpstudios56.cifra.utils.Identity;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+import io.github.mpstudios56.cifra.utils.PinProtection;
+
+/**
+ * Keeping one ledger between two people.
+ * <p>
+ * A screen of its own rather than a group of settings. Buried among forty
+ * switches nobody would find it, and it is not a preference in any case: it is
+ * a thing the app does, and things the app does live in the menu.
+ * <p>
+ * Who the two people are, where their phones meet, and the record of what each
+ * of them changed. Opening it runs a round of the exchange, because somebody
+ * who came here to see whether the other person's spending has arrived should
+ * not have to ask for it.
+ */
+public class SharingActivity extends AppCompatActivity {
+
+    private static final String TAG = "SharingActivity";
+    private static final int PICK_FOLDER = 1;
+
+    private DatabaseAdapter db;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sharing);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        setTitle(R.string.sharing);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        askAboutNotificationsOnce();
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sharing_base), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        findViewById(R.id.sharing_me).setOnClickListener(v ->
+                IdentityDialog.show(this, Identity.MINE, this::show));
+        findViewById(R.id.sharing_log).setOnClickListener(v ->
+                startActivity(new Intent(this, ChangeLogActivity.class)));
+        findViewById(R.id.sharing_folder).setOnClickListener(v -> pickFolder());
+        findViewById(R.id.sharing_people).setOnClickListener(v -> showPeople());
+        findViewById(R.id.sharing_people_add).setOnClickListener(v -> askPerson(null));
+        findViewById(R.id.sharing_now).setOnClickListener(v -> {
+            // Nothing to exchange through yet: send them where the answer is
+            // rather than doing nothing and saying nothing.
+            if (MyPreferences.getSyncFolder().isEmpty()) {
+                pickFolder();
+            } else {
+                sync(true);
+            }
+        });
+        findViewById(R.id.sharing_duplicates).setOnClickListener(v ->
+                startActivity(new Intent(this, DuplicatesActivity.class)));
+        findViewById(R.id.sharing_merge).setOnClickListener(v ->
+                startActivity(new Intent(this, MergeActivity.class)));
+        findViewById(R.id.sharing_what).setOnClickListener(v ->
+                startActivity(new Intent(this, SharePickerActivity.class)));
+
+        db = new DatabaseAdapter(this);
+        db.open();
+        show();
+        // A round on opening: somebody who came here to see whether the other
+        // person's spending has arrived should not have to ask for it.
+        sync(false);
+    }
+
+    /**
+     * One round, off the main thread. The folder is somebody else's storage
+     * provider with a cloud behind it, and it takes as long as it takes.
+     */
+    private void sync(boolean saySo) {
+        Button button = findViewById(R.id.sharing_now);
+        button.setEnabled(false);
+        button.setText(R.string.sharing_running);
+        new Thread(() -> {
+            SyncEngine.Result result = SyncEngine.run(this, db);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                button.setEnabled(true);
+                button.setText(R.string.sharing_now);
+                show();
+                if (saySo || result.received > 0) {
+                    Toast.makeText(this, message(result), Toast.LENGTH_LONG).show();
+                }
+            });
+        }).start();
+    }
+
+    private String message(SyncEngine.Result result) {
+        if (!result.ran) {
+            return getString(R.string.sharing_no_folder);
+        }
+        if (!result.skipped.isEmpty()) {
+            return getString(R.string.sharing_skipped, result.skipped.get(0));
+        }
+        return result.received > 0
+                ? getString(R.string.sharing_received, result.received)
+                : getString(R.string.sharing_nothing_new);
+    }
+
+    /**
+     * Picks the folder the two phones will meet in.
+     * <p>
+     * Any folder: the app has no idea whether it is on Drive, on Dropbox or on
+     * the phone itself, and does not need one. What it needs is that whatever
+     * keeps that folder in step is already installed and already working, which
+     * is a thing the person choosing knows and the app cannot check.
+     */
+    private void pickFolder() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(intent, PICK_FOLDER);
+        } catch (Exception e) {
+            Toast.makeText(this, R.string.sharing_folder_failed, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != PICK_FOLDER || resultCode != RESULT_OK || data == null
+                || data.getData() == null) {
+            return;
+        }
+        Uri folder = data.getData();
+        try {
+            // Held on to across restarts: without this the address still reads
+            // back but opening anything in it fails, weeks later, silently.
+            getContentResolver().takePersistableUriPermission(folder,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        } catch (Exception e) {
+            Log.e(TAG, "could not keep hold of " + folder, e);
+        }
+        MyPreferences.setSyncFolder(folder.toString());
+        show();
+    }
+
+    /** The last part of the address, which is what somebody called the folder. */
+    private String folderName(String uri) {
+        try {
+            String decoded = Uri.decode(uri);
+            int cut = Math.max(decoded.lastIndexOf('/'), decoded.lastIndexOf(':'));
+            return cut >= 0 && cut < decoded.length() - 1 ? decoded.substring(cut + 1) : decoded;
+        } catch (Exception e) {
+            return uri;
+        }
+    }
+
+    private void show() {
+        show(Identity.mine(this), R.id.sharing_me_name, R.id.sharing_me_dot,
+                0, R.string.sharing_me_empty);
+
+        String folder = MyPreferences.getSyncFolder();
+        ((TextView) findViewById(R.id.sharing_folder_value)).setText(folder.isEmpty()
+                ? getString(R.string.sharing_folder_empty)
+                : getString(R.string.sharing_folder_chosen, folderName(folder)));
+
+        // Only the accounts. Everything shared is marked in the same table -
+        // the categories, payees and places a shared account uses are adopted
+        // by themselves - so counting the lot said "14 conti condivisi" for one
+        // account with thirteen labels behind it.
+        int chosen = io.github.mpstudios56.cifra.sync.SharedThings.shared(
+                db.db(), io.github.mpstudios56.cifra.sync.SharedThings.ACCOUNT).size();
+        ((TextView) findViewById(R.id.sharing_what_value)).setText(chosen == 0
+                ? getString(R.string.share_what_none)
+                : getString(R.string.share_what_some, chosen));
+
+        int waiting = io.github.mpstudios56.cifra.sync.Duplicates.waiting(db.db());
+        ((TextView) findViewById(R.id.sharing_duplicates_value)).setText(waiting == 0
+                ? getString(R.string.duplicates_none_short)
+                : getString(R.string.duplicates_waiting, waiting));
+
+        long last = MyPreferences.getSyncLastRun();
+        ((TextView) findViewById(R.id.sharing_last)).setText(last == 0
+                ? getString(R.string.sharing_never)
+                : getString(R.string.sharing_last, android.text.format.DateFormat
+                        .getTimeFormat(this).format(new java.util.Date(last))));
+        java.util.List<io.github.mpstudios56.cifra.sync.People.Person> people =
+                io.github.mpstudios56.cifra.sync.People.all(db.db());
+        StringBuilder who = new StringBuilder();
+        for (io.github.mpstudios56.cifra.sync.People.Person p : people) {
+            if (who.length() > 0) who.append(", ");
+            who.append(p.label());
+        }
+        ((TextView) findViewById(R.id.sharing_people_value)).setText(people.isEmpty()
+                ? getString(R.string.sharing_people_none_yet)
+                : getResources().getQuantityString(
+                        R.plurals.sharing_people_count, people.size(), people.size()));
+        drawPeople(people);
+
+        TextView file = findViewById(R.id.sharing_file);
+        file.setText(getString(R.string.sharing_file_is, io.github.mpstudios56.cifra.sync.SyncFolder.nameFor(
+                MyPreferences.getSyncAuthor(), MyPreferences.getSyncDeviceId())));
+
+        // The button stays, whatever is missing. Hiding it left a screen that
+        // looked as though half the app had not been installed, when all that
+        // was wrong was a folder nobody had chosen yet - and there was nothing
+        // on screen saying so.
+        Button now = findViewById(R.id.sharing_now);
+        now.setVisibility(View.VISIBLE);
+        now.setText(folder.isEmpty() ? R.string.sharing_choose_folder_first : R.string.sharing_now);
+        findViewById(R.id.sharing_last).setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+        file.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * Who is in the group, and how they got there.
+     * <p>
+     * Nobody is typed in. Every phone writes a file called after its owner, so
+     * one round of exchange is enough to learn who else is in the folder and
+     * what to call them. This screen only shows the result - and says so, since
+     * otherwise the obvious question is where the button to add somebody is.
+     */
+    /**
+     * A row for each person: their colour, their symbol, their name, the code
+     * shared with them, and on the right how many accounts are held with them.
+     * Tapping one opens the bubble - colour and symbol, or remove.
+     * <p>
+     * The code is shown and never edited. It is what pairs two phones, and
+     * changing it here would quietly cut the pair without the other side
+     * knowing: whoever wants a different code removes the person and adds them
+     * again, which is the same work and says what it does.
+     */
+    private void drawPeople(java.util.List<io.github.mpstudios56.cifra.sync.People.Person> people) {
+        android.widget.LinearLayout list = findViewById(R.id.sharing_people_list);
+        list.removeAllViews();
+        float density = getResources().getDisplayMetrics().density;
+        int pad = Math.round(16 * density);
+        for (io.github.mpstudios56.cifra.sync.People.Person person : people) {
+            android.widget.LinearLayout row = new android.widget.LinearLayout(this);
+            row.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            row.setPadding(pad, pad / 2, pad, pad / 2);
+
+            View dot = new View(this);
+            int size = Math.round(14 * density);
+            android.widget.LinearLayout.LayoutParams dotLp =
+                    new android.widget.LinearLayout.LayoutParams(size, size);
+            dotLp.rightMargin = pad / 2;
+            dot.setLayoutParams(dotLp);
+            dot.setBackgroundResource(R.drawable.dot);
+            dot.getBackground().setTint(person.colour == 0
+                    ? Identity.COLOURS[(list.getChildCount() + 1) % Identity.COLOURS.length]
+                    : person.colour);
+            row.addView(dot);
+
+            android.widget.LinearLayout words = new android.widget.LinearLayout(this);
+            words.setOrientation(android.widget.LinearLayout.VERTICAL);
+            words.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
+                    0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            TextView name = new TextView(this);
+            name.setText(person.label());
+            name.setTextAppearance(R.style.ListPrimary);
+            TextView code = new TextView(this);
+            code.setText(getString(R.string.sharing_person_code_is, person.mark));
+            code.setAlpha(0.7f);
+            code.setTextSize(12.5f);
+            words.addView(name);
+            words.addView(code);
+            row.addView(words);
+
+            // On the right, how many accounts are held with this person.
+            TextView held = new TextView(this);
+            held.setText(String.valueOf(
+                    io.github.mpstudios56.cifra.sync.People.accountsWith(db.db(), person.mark)));
+            held.setAlpha(0.6f);
+            held.setTextSize(17f);
+            row.addView(held);
+
+            row.setOnClickListener(v -> bubbleFor(person, v));
+            list.addView(row);
+        }
+    }
+
+    /** Colour and symbol, or remove. Not the code: that pairs the two phones. */
+    private void bubbleFor(io.github.mpstudios56.cifra.sync.People.Person person, View anchor) {
+        java.util.List<io.github.mpstudios56.cifra.utils.MenuItemInfo> items = new java.util.ArrayList<>();
+        items.add(new io.github.mpstudios56.cifra.utils.MenuItemInfo(1, R.string.sharing_person_look,
+                R.drawable.palette));
+        items.add(new io.github.mpstudios56.cifra.utils.MenuItemInfo(2, R.string.delete,
+                R.drawable.ic_menu_delete));
+        RowMenu.show(this, anchor, items, which -> {
+            if (which == 1) {
+                askPerson(person);
+            } else {
+                io.github.mpstudios56.cifra.sync.People.forget(db.db(), person.mark);
+                show();
+            }
+        });
+    }
+
+    private void showPeople() {
+        java.util.List<io.github.mpstudios56.cifra.sync.People.Person> people =
+                io.github.mpstudios56.cifra.sync.People.all(db.db());
+        String[] rows = new String[people.size() + 1];
+        for (int k = 0; k < people.size(); k++) {
+            io.github.mpstudios56.cifra.sync.People.Person p = people.get(k);
+            int held = io.github.mpstudios56.cifra.sync.People.accountsWith(db.db(), p.mark);
+            rows[k] = p.label() + "  (" + p.mark + ")"
+                    + System.lineSeparator()
+                    + getResources().getQuantityString(R.plurals.sharing_person_accounts, held, held);
+        }
+        rows[people.size()] = getString(R.string.sharing_person_add);
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.sharing_people)
+                .setItems(rows, (d, which) -> {
+                    if (which == people.size()) {
+                        askPerson(null);
+                    } else {
+                        askPerson(people.get(which));
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    /**
+     * A person and the code shared with them.
+     * <p>
+     * The same code has to be written on their phone against this phone's
+     * owner: that pair of entries is what makes the pair. Nothing checks it -
+     * there is nothing to check it against - so if the exchange stays empty the
+     * first thing to compare is the two codes.
+     */
+    private void askPerson(io.github.mpstudios56.cifra.sync.People.Person existing) {
+        final android.widget.EditText name = new android.widget.EditText(this);
+        name.setSingleLine(true);
+        name.setHint(R.string.sharing_person_name);
+        final android.widget.EditText code = new android.widget.EditText(this);
+        code.setSingleLine(true);
+        code.setHint(R.string.sharing_person_code);
+        if (existing != null) {
+            name.setText(existing.name);
+            code.setText(existing.mark);
+            // What pairs the two phones. Changing it here would cut the pair
+            // without the other side knowing.
+            code.setEnabled(false);
+            code.setAlpha(0.5f);
+        }
+        android.widget.LinearLayout box = new android.widget.LinearLayout(this);
+        box.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int pad = Math.round(16 * getResources().getDisplayMetrics().density);
+        box.setPadding(pad, pad / 2, pad, 0);
+        box.addView(name);
+        box.addView(code);
+
+        // The colour, chosen here rather than on a screen of its own: it is one
+        // of three things about a person and the other two are on this dialog.
+        final int[] chosenColour = {existing != null && existing.colour != 0
+                ? existing.colour : Identity.COLOURS[0]};
+        android.widget.LinearLayout swatches = new android.widget.LinearLayout(this);
+        swatches.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        swatches.setPadding(0, pad, 0, 0);
+        for (int colour : Identity.COLOURS) {
+            View dot = new View(this);
+            android.widget.LinearLayout.LayoutParams lp =
+                    new android.widget.LinearLayout.LayoutParams(
+                            Math.round(30 * getResources().getDisplayMetrics().density),
+                            Math.round(30 * getResources().getDisplayMetrics().density));
+            lp.rightMargin = pad / 2;
+            dot.setLayoutParams(lp);
+            dot.setBackgroundResource(R.drawable.dot);
+            dot.getBackground().setTint(colour);
+            dot.setAlpha(colour == chosenColour[0] ? 1f : 0.35f);
+            dot.setOnClickListener(v -> {
+                chosenColour[0] = colour;
+                for (int k = 0; k < swatches.getChildCount(); k++) {
+                    swatches.getChildAt(k).setAlpha(
+                            Identity.COLOURS[k] == colour ? 1f : 0.35f);
+                }
+            });
+            swatches.addView(dot);
+        }
+        box.addView(swatches);
+
+
+        android.app.AlertDialog.Builder b = new android.app.AlertDialog.Builder(this)
+                .setTitle(existing == null ? R.string.sharing_person_add : R.string.sharing_people)
+                .setMessage(R.string.sharing_person_why)
+                .setView(box)
+                .setPositiveButton(R.string.ok, (d, w) -> {
+                    if (existing != null) {
+                        io.github.mpstudios56.cifra.sync.People.forget(db.db(), existing.mark);
+                    }
+                    io.github.mpstudios56.cifra.sync.People.seen(db.db(),
+                            code.getText().toString(), name.getText().toString(),
+                            chosenColour[0]);
+                    show();
+                })
+                .setNegativeButton(R.string.cancel, null);
+        if (existing != null) {
+            b.setNeutralButton(R.string.delete, (d, w) -> {
+                io.github.mpstudios56.cifra.sync.People.forget(db.db(), existing.mark);
+                show();
+            });
+        }
+        b.show();
+    }
+
+    private void show(Identity identity, int nameId, int dotId, int iconId, int emptyId) {
+        TextView name = findViewById(nameId);
+        name.setText(identity.name.isEmpty() ? getString(emptyId) : identity.name);
+        name.setAlpha(identity.name.isEmpty() ? 0.6f : 1f);
+
+        findViewById(dotId).getBackground().setTint(identity.colour);
+
+        ImageView icon = iconId == 0 ? null : findViewById(iconId);
+        if (icon == null) {
+            return;
+        }
+        CategoryIcon chosen = CategoryIcon.parse(identity.icon);
+        icon.setVisibility(chosen == null ? View.GONE : View.VISIBLE);
+        if (chosen != null) {
+            icon.setImageResource(chosen.iconId);
+            icon.setImageTintList(ColorStateList.valueOf(identity.colour));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (db != null) {
+            db.close();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PinProtection.lock(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PinProtection.unlock(this);
+        if (db != null) {
+            // Coming back from the picker, the count has changed.
+            show();
+        }
+    }
+
+    /**
+     * Asks, the first time this screen is opened, to be allowed to send a
+     * notification.
+     * <p>
+     * A round of sharing can leave a payment to review or two labels to merge,
+     * and those wait on a screen nobody opens without a reason to. The phone
+     * grants nothing by default since Android 13, so without asking here the
+     * notice would be written and never shown - which is worse than not
+     * writing it. Asked once: refused is an answer.
+     */
+    private void askAboutNotificationsOnce() {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+        android.content.SharedPreferences prefs =
+                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("sharing_notifications_asked", false)) {
+            return;
+        }
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.POST_NOTIFICATIONS)
+                == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        prefs.edit().putBoolean("sharing_notifications_asked", true).apply();
+        // Written down for the permissions screen as well: once the phone has
+        // put the question, saying no is final, and that screen has to send
+        // whoever changes their mind to the settings instead of asking again.
+        RequestPermissionActivity.rememberAsked(this,
+                android.Manifest.permission.POST_NOTIFICATIONS);
+        androidx.core.app.ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 0);
+    }
+
+}

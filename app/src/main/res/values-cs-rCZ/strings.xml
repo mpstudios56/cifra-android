@@ -505,7 +505,7 @@
   <string name="expired">(vypršelo)</string>
   <string name="pending">(nevyřešeno)</string>
   <string name="system_attribute_delete_after_expired">Po dokončení smazat</string>
-  <string name="no_transaction_found">Nebyla nalezena žádná transakce, restartujte Financisto..</string>
+  <string name="no_transaction_found">Nebyla nalezena žádná transakce, restartujte Cifra..</string>
   <string name="include_credit">Včetně kreditů</string>
   <string name="include_credit_summary">Zahrnout úvěry (příjmy nebo výnosy) do celkového rozpočtu</string>
   <string name="enable_widget">Povolit widget</string>
@@ -805,7 +805,7 @@
   <string name="show_is_ccard_payment_summary">Zobrazit zaškrtávací políčko pro označení plateb kreditní kartou</string>
   <string name="open_calculator_for_template_transactions">Otevřít kalkulačku</string>
   <string name="open_calculator_for_template_transactions_summary">Otevřít kalkulačku pro transakce vytvořené ze šablony</string>
-  <string name="installed_on_sd_card_warning">Naplánované transakce nemusí fungovat podle očekávání, pokud je aplikace Financisto nainstalována na kartě SD. Přesuňte ji prosím do paměti telefonu.</string>  
+  <string name="installed_on_sd_card_warning">Naplánované transakce nemusí fungovat podle očekávání, pokud je aplikace Cifra nainstalována na kartě SD. Přesuňte ji prosím do paměti telefonu.</string>  
   <string name="planner">Plánování</string>  
   <string name="period_tomorrow">Zítra</string>
   <string name="period_next_week">Příští týden</string>
@@ -838,7 +838,7 @@
     <string name="google_drive_sign_out_summary">Odhlásit se a vybrat jiný účet</string>
     <string name="google_drive_permission_requested">Vyžádané povolení</string>
     <string name="google_drive_permission_requested_for_account">pro účet %s</string>
-    <string name="google_drive_permission_required">Povolte pro Financisto přístup k vašemu Disku Google a zkuste to znovu.…</string>
+    <string name="google_drive_permission_required">Povolte pro Cifra přístup k vašemu Disku Google a zkuste to znovu.…</string>
     <string name="google_drive_loading_files">Načítání souborů z Disku Google…</string>
     <string name="google_drive_account_required">V Nastavení zadejte svůj účet na Disku Google a zkuste to znovu.…</string>
     <string name="google_drive_signed_in_as">Přihlášen jako %s</string>
@@ -868,7 +868,7 @@
     <string name="backup_database_online_dropbox">Zálohovat na Dropbox</string>
     <string name="restore_database_online_dropbox">Obnovit z Dropbox</string>
     <string name="backup_database_dropbox_inprogress">Zálohování databází…</string>
-	<string name="request_permissions_title">Aplikace Financisto vyžaduje manuální přidělení několika oprávnění.</string>
+	<string name="request_permissions_title">Aplikace Cifra vyžaduje manuální přidělení několika oprávnění.</string>
     <string name="request_permissions_description">Udělte požadovaná oprávnění níže, poté se vraťte na předchozí obrazovku a operaci zopakujte. Oprávnění lze zrušit v systému Nastavení -> Oprávnění aplikací.</string>
     <string name="request_permissions_storage_title">Úložiště</string>
     <string name="request_permissions_storage_description">Nutné pro čtení a zápis záložních souborů z/do externího úložiště.</string>
@@ -974,7 +974,7 @@
     <string name="try_fingerprint_again">Zkuste znovu biometrii</string>
     <string name="set_focus_on_amount_field">Nastavení zaměření na pole částky</string>
     <string name="set_focus_on_amount_field_summary">Automatické nastavení zaměření na pole částky pro nové transakce</string>
-    <string name="notification_channel_name">Financisto</string>
+    <string name="notification_channel_name">Cifra</string>
     <string name="confirm_create_entity">Vytvořit "%s" ?</string>
     <string name="transaction_show_in_account_blotter">Zobrazit v účtu záznamníku</string>
     <string name="invalid_rrule">Neplatné pravidlo RR: %s</string>

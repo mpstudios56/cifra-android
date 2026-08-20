@@ -502,7 +502,7 @@
   <string name="expired">(scaduto)</string>
   <string name="pending">(in attesa)</string>
   <string name="system_attribute_delete_after_expired">Elimina dopo la scadenza</string>
-  <string name="no_transaction_found">Nessuna transazione trovata, riavvia Financisto...</string>
+  <string name="no_transaction_found">Nessuna transazione trovata, riavvia Cifra...</string>
   <string name="include_credit">Includi crediti</string>
   <string name="include_credit_summary">Includi crediti (entranti o di ritorno) nel budget totale</string>
   <string name="enable_widget">Abilita widget</string>
@@ -654,9 +654,9 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="quick_menu_transaction_enabled_summary">Abilita menu rapido nel registro </string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">Autorizzare</string>
-  <string name="dropbox_authorize_summary">Permetti a Financisto di caricare i file sul tuo Dropbox</string>
+  <string name="dropbox_authorize_summary">Permetti a Cifra di caricare i file sul tuo Dropbox</string>
   <string name="dropbox_unlink">Scollegare</string>
-  <string name="dropbox_unlink_summary">Impedisci a Financisto di caricare i file sul tuo Dropbox</string>
+  <string name="dropbox_unlink_summary">Impedisci a Cifra di caricare i file sul tuo Dropbox</string>
   <string name="dropbox_upload_backup">Carica i backup</string>
   <string name="dropbox_upload_backup_summary">Carica i backup dei database su Dropbox</string>
   <string name="dropbox_upload_autobackup">Carica i backup automatici</string>

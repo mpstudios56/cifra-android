@@ -1,0 +1,442 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.filter;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.util.Log;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import io.github.mpstudios56.cifra.activity.DateFilterActivity;
+import io.github.mpstudios56.cifra.blotter.BlotterFilter;
+import io.github.mpstudios56.cifra.datetime.PeriodType;
+import io.github.mpstudios56.cifra.utils.ArrUtils;
+import io.github.mpstudios56.cifra.utils.StringUtil;
+import io.github.mpstudios56.cifra.orb.Expression;
+import io.github.mpstudios56.cifra.orb.Expressions;
+
+import static io.github.mpstudios56.cifra.orb.EntityManager.DEF_SORT_COL;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
+
+public class WhereFilter {
+	private static Gson gson = new GsonBuilder()
+			.registerTypeAdapter(Criterion.class, new CriterionAdapter())
+			.registerTypeAdapter(DateTimeCriterion.class, new DateTimeCriterionAdapter())
+			.create();
+
+	private static final String TAG = "WhereFilter";
+
+	public static final String TITLE_EXTRA = "title";
+	public static final String FILTER_EXTRA = "filter";
+	public static final String SORT_ORDER_EXTRA = DEF_SORT_COL;
+
+	public static final String FILTER_TITLE_PREF = "filterTitle";
+	public static final String FILTER_LENGTH_PREF = "filterLength";
+	public static final String FILTER_CRITERIA_PREF = "filterCriteria";
+	public static final String FILTER_SORT_ORDER_PREF = "filterSortOrder";
+
+	public static final String TAG_AS_IS = "__tag_as_is"; // signal Total Details activity to not filter excluded transactions
+
+	private final String title;
+	private final LinkedList<Criterion> criteria = new LinkedList<>();
+	private final LinkedList<String> sorts = new LinkedList<>();
+
+	public WhereFilter(String title) {
+		this.title = title;
+	}
+
+	public synchronized WhereFilter eq(Criterion c) {
+		criteria.add(c);
+		return this;
+	}
+
+	public synchronized WhereFilter eq(String column, String value) {
+		criteria.add(Criterion.eq(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter neq(String column, String value) {
+		criteria.add(Criterion.neq(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter btw(String column, String value1, String value2) {
+		criteria.add(Criterion.btw(column, value1, value2));
+		return this;
+	}
+
+	public synchronized WhereFilter gt(String column, String value) {
+		criteria.add(Criterion.gt(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter gte(String column, String value) {
+		criteria.add(Criterion.gte(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter lt(String column, String value) {
+		criteria.add(Criterion.lt(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter lte(String column, String value) {
+		criteria.add(Criterion.lte(column, value));
+		return this;
+	}
+
+	public synchronized WhereFilter isNull(String column) {
+		criteria.add(Criterion.isNull(column));
+		return this;
+	}
+
+	public synchronized WhereFilter asc(String column) {
+		sorts.add(column+" asc");
+		return this;
+	}
+
+	public synchronized WhereFilter desc(String column) {
+		sorts.add(column+" desc");
+		return this;
+	}
+
+	public synchronized WhereFilter contains(String column, String text){
+		criteria.add(Criterion.like(column, String.format("%%%s%%", text)));
+		return this;
+	}
+
+	private String getSelection(List<Criterion> criteria) {
+		StringBuilder sb = new StringBuilder();
+		Log.d(TAG, "getSelection:");
+		for (Criterion c : criteria) {
+			Log.d(TAG, " " + c.toStringExtra());
+			Log.d(TAG, "     " + String.join(", ", c.getSelection()));
+			if (sb.length() > 0) {
+				sb.append(" AND ");
+			}
+			sb.append(c.getSelection());
+		}
+		return sb.toString().trim();
+	}
+
+	private String[] getSelectionArgs(List<Criterion> criteria) {
+		String[] args = new String[0];
+		Log.d(TAG, "getSelectionArgs:");
+		for (Criterion c : criteria) {
+			Log.d(TAG, " " + c.toStringExtra());
+			Log.d(TAG, "     " + String.join(", ", c.getSelectionArgs()));
+			args = ArrUtils.joinArrays(args, c.getSelectionArgs());
+		}
+		return args;
+	}
+
+	public synchronized Criterion get(String name) {
+		for (Criterion c : criteria) {
+			String column = c.columnName;
+			if (name.equals(column)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public DateTimeCriterion getDateTime() {
+		return (DateTimeCriterion)get(BlotterFilter.DATETIME);
+	}
+
+	public synchronized Criterion put(Criterion criterion) {
+		for (int i = 0; i< this.criteria.size(); i++) {
+			Criterion c = this.criteria.get(i);
+			if (criterion.columnName.equals(c.columnName)) {
+				this.criteria.set(i, criterion);
+				return c;
+			}
+		}
+		this.criteria.add(criterion);
+		return null;
+	}
+
+	public synchronized Criterion remove(String name) {
+		for (Iterator<Criterion> i = criteria.iterator(); i.hasNext();) {
+			Criterion c = i.next();
+			if (name.equals(c.columnName)) {
+				i.remove();
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public synchronized void clear() {
+		criteria.clear();
+		sorts.clear();
+	}
+
+	public static WhereFilter copyOf(WhereFilter filter) {
+		synchronized (filter) {
+			WhereFilter f = new WhereFilter(filter.title);
+			f.criteria.addAll(filter.criteria);
+			f.sorts.addAll(filter.sorts);
+			return f;
+		}
+	}
+
+	public static WhereFilter empty() {
+		return new WhereFilter("");
+	}
+
+	public synchronized Expression toWhereExpression() {
+		int count = criteria.size();
+		Expression[] ee = new Expression[count];
+		for (int i=0; i<count; i++) {
+			ee[i] = criteria.get(i).toWhereExpression();
+		}
+		return Expressions.and(ee);
+	}
+
+	public synchronized void toBundle(Bundle bundle) {
+		String[] extras = new String[criteria.size()];
+		for (int i=0; i<extras.length; i++) {
+			extras[i] = criteria.get(i).toStringExtra();
+			Log.d(TAG, "extras " + i + ": " + extras[i]);
+		}
+		bundle.putString(TITLE_EXTRA, title);
+		bundle.putStringArray(FILTER_EXTRA, extras);
+		bundle.putString(SORT_ORDER_EXTRA, getSortOrder());
+	}
+
+	public static WhereFilter fromBundle(Bundle bundle) {
+		String title = bundle.getString(TITLE_EXTRA);
+		WhereFilter filter = new WhereFilter(title);
+		try {
+			synchronized (filter) {
+				String[] a = bundle.getStringArray(FILTER_EXTRA);
+				if (a != null) {
+					for (String s : a) {
+						filter.put(Criterion.fromStringExtra(s));
+					}
+				}
+				String sortOrder = bundle.getString(SORT_ORDER_EXTRA);
+				if (sortOrder != null) {
+					String[] orders = sortOrder.split(",");
+					if (orders != null && orders.length > 0) {
+						filter.sorts.addAll(Arrays.asList(orders));
+					}
+				}
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "fromBundle", e);
+			return WhereFilter.empty();
+		}
+		return filter;
+	}
+
+	public void toIntent(Intent intent) {
+		Bundle bundle = intent.getExtras();
+		if (bundle == null) bundle = new Bundle();
+		toBundle(bundle);
+		intent.replaceExtras(bundle);
+	}
+
+	public static WhereFilter fromIntent(Intent intent) {
+		Bundle bundle = intent.getExtras();
+		if (bundle == null) bundle = new Bundle();
+		return fromBundle(bundle);
+	}
+
+	public synchronized String getSortOrder() {
+		StringBuilder sb = new StringBuilder();
+		for (String o : sorts) {
+			if (sb.length() > 0) {
+				sb.append(",");
+			}
+			sb.append(o);
+		}
+		return sb.toString();
+	}
+
+	public synchronized void resetSort() {
+		sorts.clear();
+	}
+
+	public synchronized void toSharedPreferences(SharedPreferences preferences) {
+		Editor e = preferences.edit();
+		int count = criteria.size();
+		e.putString(FILTER_TITLE_PREF, title);
+		e.putInt(FILTER_LENGTH_PREF, count);
+		for (int i=0; i<count; i++) {
+			e.putString(FILTER_CRITERIA_PREF+i, criteria.get(i).toStringExtra());
+		}
+		e.putString(FILTER_SORT_ORDER_PREF, getSortOrder());
+		e.commit();
+	}
+
+	public static WhereFilter fromSharedPreferences(SharedPreferences preferences) {
+		String title = preferences.getString(FILTER_TITLE_PREF, "");
+		WhereFilter filter = new WhereFilter(title);
+		try {
+			synchronized (filter) {
+				int count = preferences.getInt(FILTER_LENGTH_PREF, 0);
+				if (count > 0) {
+					for (int i = 0; i < count; i++) {
+						String criteria = preferences.getString(FILTER_CRITERIA_PREF + i, "");
+						if (criteria.length() > 0) {
+							filter.put(Criterion.fromStringExtra(criteria));
+						}
+					}
+				}
+				String sortOrder = preferences.getString(FILTER_SORT_ORDER_PREF, "");
+				String[] orders = sortOrder.split(",");
+				if (orders != null && orders.length > 0) {
+					filter.sorts.addAll(Arrays.asList(orders));
+				}
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "fromSharedPreferences", e);
+			return WhereFilter.empty();
+		}
+		return filter;
+	}
+
+	public synchronized String toJsonString() {
+		return gson.toJsonTree(this).toString();
+	}
+
+	public static WhereFilter fromJsonString(String json) {
+		return gson.fromJson(JsonParser.parseString(json), WhereFilter.class);
+	}
+
+	public synchronized String getSelection() {
+		String ret = getSelection(criteria);
+		Log.d("WhereFilter", "getSelection=" + ret);
+		return ret;
+	}
+
+	public synchronized String[] getSelectionArgs() {
+		String[] ret = getSelectionArgs(criteria);
+		Log.d("WhereFilter", "getSelectionArgs=" + String.join(",", ret));
+		return ret;
+	}
+
+	public long getAccountId() {
+		Criterion c = get(BlotterFilter.FROM_ACCOUNT_ID);
+		return c != null ? c.getLongValue1() : -1;
+	}
+
+	public long getBudgetId() {
+		Criterion c = get(BlotterFilter.BUDGET_ID);
+		return c != null ? c.getLongValue1() : -1;
+	}
+
+	public int getIsTemplate() {
+		Criterion c = get(BlotterFilter.IS_TEMPLATE);
+		return c != null ? c.getIntValue() : 0;
+	}
+
+	public boolean isTemplate() {
+		Criterion c = get(BlotterFilter.IS_TEMPLATE);
+		return c != null && c.getLongValue1() == 1;
+	}
+
+	public boolean isSchedule() {
+		Criterion c = get(BlotterFilter.IS_TEMPLATE);
+		return c != null && c.getLongValue1() == 2;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public synchronized boolean isEmpty() {
+		return criteria.isEmpty();
+	}
+
+	public enum Operation {
+		RAW(""), EQ("=?"), NEQ("!=?"), GT(">?"), GTE(">=?"), LT("<?"), LTE("<=?"), BTW("BETWEEN ? AND ?", "OR", 2),
+		IN("IN (?)") {
+			@Override
+			public String getOp(int operands) {
+				return super.getOp(operands).replace("?", StringUtil.generateSeparated("?", ",", operands));
+			}
+		},
+		ISNULL("is NULL"), LIKE("LIKE ?"), OR("OR"), AND("AND"), TAG("");
+
+		private final String op;
+		private final String groupOp;
+		private final int valsPerGroup;
+
+		Operation(String op) {
+			this(op, null, 1);
+		}
+
+		Operation(String op, String groupOp, int valsPerGroup) {
+			this.op = op;
+			this.groupOp = groupOp;
+			this.valsPerGroup = valsPerGroup;
+		}
+
+		public String getOp(int ignore) {
+			return op;
+		}
+
+		public String getGroupOp() {
+			return groupOp;
+		}
+
+		public int getValsPerGroup() {
+			return valsPerGroup;
+		}
+	}
+
+	public static class Splits {
+		public static final int DEFAULT = 0;
+		public static final int ALL = 1;
+		public static final int SUMMARY_ONLY = 2;
+		public static final int CHILDREN_ONLY = 3;
+	}
+
+	public void clearDateTime() {
+		remove(BlotterFilter.DATETIME);
+	}
+
+	public void recalculatePeriod() {
+		DateTimeCriterion c = getDateTime();
+		if (c != null) {
+			PeriodType t = c.getPeriod().type;
+			if (t != PeriodType.CUSTOM) {
+				put(new DateTimeCriterion(t));
+			}
+		}
+	}
+
+	public static DateTimeCriterion dateTimeFromIntent(Intent data) {
+		String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
+		PeriodType p = PeriodType.valueOf(periodType);
+		if (PeriodType.CUSTOM == p) {
+			long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
+			long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
+			return new DateTimeCriterion(periodFrom, periodTo);
+		} else {
+			return new DateTimeCriterion(p);
+		}
+
+	}
+
+}

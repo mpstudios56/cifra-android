@@ -127,7 +127,7 @@
       reads as a fault rather than as an invitation to drag; here every one of
       them is whole and in plain sight, "Altre" last among them.
     -->
-    <tw.tib.financisto.view.FlowLayout
+    <io.github.mpstudios56.cifra.view.FlowLayout
         android:id="@+id/quick_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

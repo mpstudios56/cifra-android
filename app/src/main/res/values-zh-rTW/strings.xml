@@ -538,7 +538,7 @@
   <string name="expired">(過期)</string>
   <string name="pending">(擱置)</string>
   <string name="system_attribute_delete_after_expired">過期後自動刪除</string>
-  <string name="no_transaction_found">查無交易，請重新啟動 Financisto</string>
+  <string name="no_transaction_found">查無交易，請重新啟動 Cifra</string>
   <string name="include_credit">包含增額</string>
   <string name="include_credit_summary">將增額(收入或退款)加入預算總額</string>
   <string name="enable_widget">啟用小工具</string>
@@ -758,10 +758,10 @@
   <string name="quick_menu_transaction_duplicate_keep_date_time_summary">明細畫面快速選單顯示「複製保留日期時間」按鈕</string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">授權</string>
-  <string name="dropbox_authorize_summary">允許 Financisto 上傳檔案到您的 Dropbox</string>
+  <string name="dropbox_authorize_summary">允許 Cifra 上傳檔案到您的 Dropbox</string>
   <string name="dropbox_authorized">已獲得 Dropbox 授權</string>
   <string name="dropbox_unlink">解除連結</string>
-  <string name="dropbox_unlink_summary">防止 Financisto 上傳檔案到您的 Dropbox</string>
+  <string name="dropbox_unlink_summary">防止 Cifra 上傳檔案到您的 Dropbox</string>
   <string name="dropbox_upload_backup">上傳備份</string>
   <string name="dropbox_upload_backup_summary">將資料庫備份檔上傳到 Dropbox</string>
   <string name="dropbox_upload_autobackup">上傳自動備份</string>
@@ -860,7 +860,7 @@
   <string name="permissions">權限</string>
   <string name="permissions_summary">檢視需要手動許可的權限</string>
 
-  <string name="request_permissions_title">Financisto 有些功能需要您賦予權限才能運作。</string>
+  <string name="request_permissions_title">Cifra 有些功能需要您賦予權限才能運作。</string>
   <string name="request_permissions_description">請在下面賦予權限，然後回到前一個畫面再操作一次。您可從 設定 -> 系統 -> 應用程式 收回權限。</string>
   <string name="request_permissions_camera_title">相機</string>
   <string name="request_permissions_camera_description">拍照以附加到交易紀錄。</string>

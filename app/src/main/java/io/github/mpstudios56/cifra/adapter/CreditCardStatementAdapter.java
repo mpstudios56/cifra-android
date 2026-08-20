@@ -1,0 +1,298 @@
+package io.github.mpstudios56.cifra.adapter;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.TextPaint;
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.model.TransactionInfo;
+import io.github.mpstudios56.cifra.utils.Utils;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import static io.github.mpstudios56.cifra.utils.MonthlyViewPlanner.*;
+
+public class CreditCardStatementAdapter extends BaseAdapter implements Filterable {
+
+    private final Context context;
+    private final int layout;
+    private final List<TransactionInfo> transactions;
+
+    private final Utils u;
+    private final Currency currency;
+    private final long account;
+
+    private final int scheduledStyle = Typeface.ITALIC;
+    private final int scheduledColor;
+    private final int futureColor;
+    private final int negativeColor;
+    private final int normalStyle = Typeface.NORMAL;
+    private final int normalColor = Color.LTGRAY;
+    private final LayoutInflater inflater;
+
+    private boolean isStatementPreview = false;
+
+    private LinearLayout.LayoutParams dateLayoutParams;
+    private LinearLayout.LayoutParams wrapContent;
+
+    /**
+     * Create an adapter to display the expenses list of a credit card bill.
+     *
+     * @param context The context.
+     * @param layout  The layout id.
+     * @param cur     The credit card base currency.
+     */
+    public CreditCardStatementAdapter(Context context, int layout, List<TransactionInfo> transactions, Currency cur, long account) {
+        this.context = context;
+        this.layout = layout;
+        this.transactions = transactions;
+        this.u = new Utils(context);
+        this.currency = cur;
+        this.account = account;
+        this.futureColor = context.getResources().getColor(R.color.future_color);
+        this.scheduledColor = context.getResources().getColor(R.color.scheduled);
+        this.negativeColor = context.getResources().getColor(R.color.negative_amount);
+        this.inflater = LayoutInflater.from(context);
+    }
+
+    public boolean isStatementPreview() {
+        return isStatementPreview;
+    }
+
+    public void setStatementPreview(boolean isStatementPreview) {
+        this.isStatementPreview = isStatementPreview;
+    }
+
+    @Override
+    public int getCount() {
+        return transactions.size();
+    }
+
+    @Override
+    public TransactionInfo getItem(int i) {
+        return transactions.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return getItem(i).id;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        if (view == null) {
+            view = newView(viewGroup);
+        }
+        Holder h = (Holder) view.getTag();
+        updateListItem(h, i);
+        return view;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public View newView(ViewGroup parent) {
+        View v = inflater.inflate(layout, parent, false);
+        Holder h = new Holder(v);
+        v.setTag(h);
+        return v;
+    }
+
+    private void measureDateWidth(TextView v) {
+        float maxDateWidth = 0;
+        TextPaint p = v.getPaint();
+        for (TransactionInfo t : transactions) {
+            if (isHeader(t)) continue;
+            maxDateWidth = Math.max(maxDateWidth, p.measureText(DateUtils.formatDateTime(context,
+                    t.dateTime, DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_NUMERIC_DATE) + "-"));
+        }
+        dateLayoutParams = new LinearLayout.LayoutParams((int)maxDateWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        wrapContent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    private void updateListItem(Holder h, int i) {
+        TransactionInfo t = getItem(i);
+
+        if (dateLayoutParams == null) measureDateWidth(h.dateText);
+
+        if (isHeader(t)) {
+            drawGroupTitle(context.getResources().getString(getHeaderTitle(t)), h);
+            return;
+        }
+
+        // get amount of expense
+        long value = t.fromAmount;
+        // to consider correct value from transfers
+        if (t.isTransfer() && t.toAccount.id == account) {
+            value = t.toAmount;
+        }
+
+        // is scheduled?
+        boolean isScheduled = t.isScheduled();
+
+        // get columns values or needed parameters
+        long date = t.dateTime;
+        String note = t.note;
+        String desc = "";
+        boolean future = date > Calendar.getInstance().getTimeInMillis();
+
+        /*
+               * Set description:
+               * a) if location is set, format description considering location
+               *    - "Location (Note)"
+               * b) otherwise, show description as note
+               *    - "Note"
+               */
+        // What it was, on the first line: whoever it was paid to, or failing
+        // that the category it went under, or failing that the note. The bits
+        // that are left go underneath, small, and only if there are any.
+        if (t.payee != null && t.payee.id > 0) {
+            desc = t.payee.title;
+        } else if (t.category != null && t.category.id > 0) {
+            desc = t.category.title;
+        } else {
+            desc = note == null ? "" : note;
+        }
+        StringBuilder rest = new StringBuilder();
+        if (t.category != null && t.category.id > 0 && !t.category.title.equals(desc)) {
+            rest.append(t.category.title);
+        }
+        if (t.location != null && t.location.id > 0) {
+            if (rest.length() > 0) rest.append(" · ");
+            rest.append(t.location.title);
+        }
+        if (note != null && note.length() > 0 && !note.equals(desc)) {
+            if (rest.length() > 0) rest.append(" · ");
+            rest.append(note);
+        }
+        String under = rest.toString();
+
+        // set expenses date, description and value to the respective columns
+        TextView dateText = h.dateText;
+        TextView descText = h.descText;
+        TextView valueText = h.valueText;
+
+        dateText.setLayoutParams(dateLayoutParams);
+        dateText.setText(DateUtils.formatDateTime(context, date,
+                DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_NUMERIC_DATE) + " ");
+        descText.setText(desc);
+        if (h.descText2 != null) {
+            h.descText2.setText(under);
+            h.descText2.setVisibility(under.isEmpty() ? View.GONE : View.VISIBLE);
+        }
+        if (isStatementPreview) {
+            u.setAmountText(valueText, currency, (-1) * value, false);
+        } else {
+            u.setAmountText(valueText, currency, value, false);
+        }
+
+        dateText.setBackground(null);
+        descText.setBackground(null);
+        valueText.setBackground(null);
+
+        // set style
+        if (isScheduled) {
+            dateText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);
+            descText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);
+            valueText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);
+            dateText.setTextColor(scheduledColor);
+            descText.setTextColor(scheduledColor);
+            valueText.setTextColor(scheduledColor);
+        } else {
+            dateText.setTypeface(Typeface.defaultFromStyle(normalStyle), normalStyle);
+            descText.setTypeface(Typeface.defaultFromStyle(normalStyle), normalStyle);
+            valueText.setTypeface(Typeface.defaultFromStyle(normalStyle), normalStyle);
+
+            // set color
+            if (future) {
+                // future expenses
+                dateText.setTextColor(futureColor);
+                descText.setTextColor(futureColor);
+                valueText.setTextColor(futureColor);
+            } else {
+                // normal
+                dateText.setTextColor(normalColor);
+                descText.setTextColor(normalColor);
+                // display colored negative values in month preview, but not in bill preview
+                if (value < 0 && !isStatementPreview) valueText.setTextColor(negativeColor);
+                else valueText.setTextColor(normalColor);
+            }
+        }
+    }
+
+    private int getHeaderTitle(TransactionInfo t) {
+        if (t == CREDITS_HEADER) {
+            return R.string.header_credits;
+        } else if (t == EXPENSES_HEADER) {
+            return R.string.header_expenses;
+        } else {
+            return R.string.header_payments;
+        }
+    }
+
+    private boolean isHeader(TransactionInfo t) {
+        return t == CREDITS_HEADER || t == EXPENSES_HEADER || t == PAYMENTS_HEADER;
+    }
+
+    private void drawGroupTitle(String title, Holder h) {
+        TextView dateText = h.dateText;
+        TextView descText = h.descText;
+        TextView valueText = h.valueText;
+        dateText.setLayoutParams(wrapContent);
+        dateText.setText("");
+        descText.setText(title);
+        if (h.descText2 != null) {
+            h.descText2.setVisibility(android.view.View.GONE);
+        }
+        valueText.setText("");
+        dateText.setBackgroundColor(Color.DKGRAY);
+        descText.setBackgroundColor(Color.DKGRAY);
+        valueText.setBackgroundColor(Color.DKGRAY);
+        descText.setTypeface(Typeface.defaultFromStyle(normalStyle), normalStyle);
+        descText.setTextColor(normalColor);
+    }
+
+    /**
+     * TODO denis.solonenko: use locale specific DateFormat
+     * Return the string for date in the following format: dd/MM/yy.
+     *
+     * @param date Time in milliseconds.
+     * @return The string representing the given time in the format dd/MM/yy.
+     */
+    private String getDate(long date) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(date);
+        int d = cal.get(Calendar.DAY_OF_MONTH);
+        int m = cal.get(Calendar.MONTH) + 1;
+        int y = cal.get(Calendar.YEAR);
+        return (d < 10 ? "0" + d : d) + "/" + (m < 10 ? "0" + m : m) + "/" + (y - 2000);
+    }
+
+    private static class Holder {
+        private final TextView dateText;
+        private final TextView descText;
+        private final TextView descText2;
+        private final TextView valueText;
+
+        public Holder(View v) {
+            dateText = (TextView) v.findViewById(R.id.list_date);
+            descText = (TextView) v.findViewById(R.id.list_note);
+            descText2 = (TextView) v.findViewById(R.id.list_note2);
+            valueText = (TextView) v.findViewById(R.id.list_value);
+        }
+    }
+}

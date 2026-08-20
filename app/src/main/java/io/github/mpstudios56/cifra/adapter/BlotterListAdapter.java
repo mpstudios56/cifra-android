@@ -1,0 +1,623 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package io.github.mpstudios56.cifra.adapter;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ResourceCursorAdapter;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
+import io.github.mpstudios56.cifra.Application;
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseHelper.BlotterColumns;
+import static io.github.mpstudios56.cifra.model.Category.isSplit;
+import static io.github.mpstudios56.cifra.model.Project.NO_PROJECT_ID;
+
+import com.google.common.primitives.Longs;
+
+import io.github.mpstudios56.cifra.model.CategoryEntity;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.model.TransactionStatus;
+import io.github.mpstudios56.cifra.recur.Recurrence;
+import io.github.mpstudios56.cifra.utils.CategoryIcons;
+import io.github.mpstudios56.cifra.utils.Identity;
+import io.github.mpstudios56.cifra.utils.CurrencyCache;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+
+import io.github.mpstudios56.cifra.utils.TransactionTitleUtils;
+import io.github.mpstudios56.cifra.utils.Utils;
+
+public class BlotterListAdapter extends ResourceCursorAdapter {
+    private static final String TAG = "BlotterListAdapter";
+
+    private final Date dt = new Date();
+
+    protected final StringBuilder sb = new StringBuilder();
+    protected final Drawable icBlotterIncome;
+    protected final Drawable icBlotterExpense;
+    protected final Drawable icBlotterTransfer;
+    protected final Drawable icBlotterSplit;
+    protected final Utils u;
+    protected final DatabaseAdapter db;
+    protected final TransactionTitleUtils transactionTitleUtils;
+    private final int colors[];
+
+    private final int projectColor;
+
+    private final int pendingBackgroundColor;
+    private final int clearedBackgroundColor;
+    private final int reconciledBackgroundColor;
+    protected final int highlightBackgroundColor;
+
+    private boolean allChecked = true;
+    private final HashMap<Long, Boolean> checkedItems = new HashMap<Long, Boolean>();
+
+    private final boolean showRunningBalance;
+    private final boolean showProject;
+    /**
+     * Whether weekends are written in their own colour, asked when one is drawn.
+     * <p>
+     * Read once when the list was built it went stale exactly as the colour
+     * did: turning the setting off left the colour on the screen until Android
+     * happened to throw the screen away.
+     */
+    protected boolean colorizeWeekend() {
+        return MyPreferences.isColorizeWeekendDate();
+    }
+    /**
+     * The colour chosen for Saturday and Sunday, read when a weekend is drawn.
+     * <p>
+     * Read once when the list was built, it never changed: this screen keeps
+     * its adapter between visits, so a colour chosen in the settings arrived
+     * only if Android happened to throw the whole screen away. Reading it at
+     * the moment of use costs a lookup in a map already in memory.
+     */
+    protected int weekendColour() {
+        return MyPreferences.getWeekendColour();
+    }
+    private final boolean showTimeOfDay;
+
+    protected final boolean highlightCopiedUnedited;
+    protected final Long2LongOpenHashMap copiedUneditedTransactions;
+    protected final long listAdapterTimestamp;
+
+    protected long highlightTransactionId = -1;
+
+    public BlotterListAdapter(Context context, DatabaseAdapter db, Cursor c) {
+        this(context, db, R.layout.blotter_list_item, c, false);
+    }
+
+    public BlotterListAdapter(Context context, DatabaseAdapter db, int layoutId, Cursor c) {
+        this(context, db, layoutId, c, false);
+    }
+
+    public BlotterListAdapter(Context context, DatabaseAdapter db, int layoutId, Cursor c, boolean autoRequery) {
+        super(context, layoutId, c, autoRequery);
+        this.icBlotterIncome = context.getResources().getDrawable(R.drawable.ic_action_arrow_left_bottom);
+        this.icBlotterExpense = context.getResources().getDrawable(R.drawable.ic_action_arrow_right_top);
+        this.icBlotterTransfer = context.getResources().getDrawable(R.drawable.ic_action_arrow_top_down);
+        this.icBlotterSplit = context.getResources().getDrawable(R.drawable.ic_action_share);
+        this.u = new Utils(context);
+        this.colors = Utils.getTransactionStatusColors(context);
+        this.projectColor = context.getResources().getColor(R.color.project_color);
+        this.pendingBackgroundColor = context.getResources().getColor(R.color.pending_transaction_background);
+        this.clearedBackgroundColor = context.getResources().getColor(R.color.cleared_transaction_background);
+        this.reconciledBackgroundColor = context.getResources().getColor(R.color.reconciled_transaction_background);
+        this.highlightBackgroundColor = context.getResources().getColor(R.color.highlight_background);
+        this.showRunningBalance = MyPreferences.isShowRunningBalance();
+        this.showProject = MyPreferences.isShowProjectInBlotter();
+        this.showTimeOfDay = MyPreferences.isBlotterShowTimeOfDay();
+        this.highlightCopiedUnedited = MyPreferences.isHighlightCopiedUneditedTransactions();
+        this.copiedUneditedTransactions = Application.getCopiedUneditedTransactions();
+        this.listAdapterTimestamp = System.currentTimeMillis();
+        this.transactionTitleUtils = new TransactionTitleUtils(context, MyPreferences.isColorizeBlotterItem());
+        this.db = db;
+    }
+
+    protected boolean isShowRunningBalance() {
+        return showRunningBalance;
+    }
+
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = super.newView(context, cursor, parent);
+        createHolder(view);
+        return view;
+    }
+
+    private void createHolder(View view) {
+        BlotterViewHolder h = new BlotterViewHolder(view);
+        view.setTag(h);
+    }
+
+    /** Told when somebody folds a year away. */
+    public interface OnYearFolded {
+        void folded(int year);
+    }
+
+    private OnYearFolded onYearFolded;
+    private java.util.Set<Integer> foldedYears = java.util.Collections.emptySet();
+
+    /**
+     * Whether this list is one of movements in time. Templates and scheduled
+     * entries are not: they have no year worth drawing a line across.
+     */
+    private boolean yearsWanted = false;
+
+    public void showYears(boolean wanted) {
+        this.yearsWanted = wanted;
+    }
+
+    public void setYearFolding(java.util.Set<Integer> folded, OnYearFolded listener) {
+        this.foldedYears = folded == null ? java.util.Collections.emptySet() : folded;
+        this.onYearFolded = listener;
+    }
+
+    /** The year a row belongs to, or zero when it has no date. */
+    private int yearAt(Cursor cursor, int position) {
+        if (position < 0 || position >= cursor.getCount()) {
+            return 0;
+        }
+        int was = cursor.getPosition();
+        try {
+            if (!cursor.moveToPosition(position)) {
+                return 0;
+            }
+            long when = cursor.getLong(BlotterColumns.datetime.ordinal());
+            java.util.Calendar c = java.util.Calendar.getInstance();
+            c.setTimeInMillis(when);
+            return c.get(java.util.Calendar.YEAR);
+        } catch (Exception e) {
+            return 0;
+        } finally {
+            cursor.moveToPosition(was);
+        }
+    }
+
+    /**
+     * Puts the year line above the first movement of each year, and hides the
+     * rows of a year that has been folded away.
+     * <p>
+     * Folding is done by giving the row nothing to show rather than by leaving
+     * it out of the query: the line that folded it has to stay, or there would
+     * be no way of asking for it back.
+     */
+    private void markYear(View view, Cursor cursor) {
+        TextView divider = view.findViewById(R.id.year_divider);
+        View body = view.findViewById(R.id.layout);
+        if (divider == null || body == null) {
+            return;
+        }
+        if (!yearsWanted) {
+            divider.setVisibility(View.GONE);
+            body.setVisibility(View.VISIBLE);
+            return;
+        }
+        int position = cursor.getPosition();
+        final int year = yearAt(cursor, position);
+        int before = yearAt(cursor, position - 1);
+        boolean first = year != 0 && year != before;
+
+        boolean folded = foldedYears.contains(year);
+        body.setVisibility(folded ? View.GONE : View.VISIBLE);
+        if (folded) {
+            // The row is only holding the line up; nothing of the movement on
+            // it should be read as being there.
+            view.setBackgroundColor(0);
+        }
+
+        if (!first) {
+            divider.setVisibility(View.GONE);
+            return;
+        }
+        divider.setVisibility(View.VISIBLE);
+        // Open, the arrow points down at what is below it; closed, it becomes a
+        // full stop - there is nothing under it to point at.
+        String below = folded ? "\u2022" : "\u25be";
+        divider.setText(before == 0
+                ? below + "  " + year
+                : "\u25b4  " + before + "   \u2022   " + year + "  " + below);
+        divider.setOnClickListener(v -> {
+            if (onYearFolded != null) {
+                onYearFolded.folded(year);
+            }
+        });
+    }
+
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        // A row is a reused view, and a row that was dragged aside carries the
+        // marks of it - contents pushed off to one side, faded out, an animation
+        // still running. Cleared here, on the way in, so that whatever this row
+        // is about to show starts from nothing: the empty bands left in the list
+        // after a swipe were rows wearing somebody else's gesture.
+        io.github.mpstudios56.cifra.view.SwipeOnRows.clean(view);
+        markYear(view, cursor);
+        final BlotterViewHolder v = (BlotterViewHolder) view.getTag();
+        bindView(v, context, cursor);
+    }
+
+    protected void bindView(final BlotterViewHolder v, Context context, Cursor cursor) {
+        long toAccountId = cursor.getLong(BlotterColumns.to_account_id.ordinal());
+        int isTemplate = cursor.getInt(BlotterColumns.is_template.ordinal());
+        TextView noteView = isTemplate == 1 ? v.bottomView : v.centerView;
+//        long t1, t2 = 0, t3, t4;
+//        t1 = System.nanoTime();
+        long transactionId = cursor.getLong(BlotterColumns._id.ordinal());
+        boolean highlightUnedited = false;
+        if (this.highlightCopiedUnedited) {
+            long lastEditTimestamp = copiedUneditedTransactions.get(transactionId);
+            if (lastEditTimestamp != 0) {
+                if (listAdapterTimestamp - lastEditTimestamp < 86400_000) {
+                    highlightUnedited = true;
+                }
+                else {
+                    copiedUneditedTransactions.remove(transactionId);
+                }
+            }
+        }
+        if (highlightUnedited || transactionId == highlightTransactionId) {
+            v.layout.setBackgroundColor(highlightBackgroundColor);
+        }
+        else {
+            v.layout.setBackgroundColor(0);
+        }
+
+        if (v.categoryIcon != null) {
+            // Transfers carry a category too - the setting that puts it on the
+            // transfer screen is on out of the box - so they get their symbol like
+            // anything else.
+            CategoryIcons.show(v.categoryIcon, v.categoryIconText,
+                    cursor.getString(BlotterColumns.category_icon.ordinal()),
+                    cursor.getString(BlotterColumns.category_accent_color.ordinal()));
+        }
+
+        if (v.authorMark != null) {
+            // Nothing at all until somebody is sharing: on one phone every
+            // movement is the reader's, and a mark that is always there marks
+            // nothing.
+            boolean theirs = !Identity.isMine(
+                    cursor.getString(BlotterColumns.created_by.ordinal()));
+            v.authorMark.setVisibility(theirs ? View.VISIBLE : View.GONE);
+            if (theirs) {
+                v.authorMark.getBackground().setTint(colourOfAuthor(
+                        cursor.getString(BlotterColumns.created_by.ordinal())));
+            }
+        }
+
+        if (v.iconView2 != null) {
+            long parentId = cursor.getLong(BlotterColumns.parent_id.ordinal());
+            if (parentId == 0) {
+                v.iconView2.setVisibility(View.INVISIBLE);
+            } else {
+                v.iconView2.setVisibility(View.VISIBLE);
+                v.iconView2.setImageDrawable(icBlotterSplit);
+                v.iconView2.setColorFilter(u.splitColor);
+            }
+        }
+
+        if (toAccountId > 0) {
+            v.topView.setText(R.string.transfer);
+
+            String fromAccountTitle = cursor.getString(BlotterColumns.from_account_title.ordinal());
+            String toAccountTitle = cursor.getString(BlotterColumns.to_account_title.ordinal());
+            String note = cursor.getString(BlotterColumns.note.ordinal());
+            long categoryId = cursor.getLong(BlotterColumns.category_id.ordinal());
+            String category = getCategoryTitle(cursor, categoryId);
+
+            CharSequence text = transactionTitleUtils.generateTransactionTitle(true,
+                    null, u.getTransferTitleText(fromAccountTitle, toAccountTitle), note,
+                    null, categoryId, category);
+            noteView.setText(text);
+            noteView.setTextColor(Color.WHITE);
+
+            long fromCurrencyId = cursor.getLong(BlotterColumns.from_account_currency_id.ordinal());
+            Currency fromCurrency = CurrencyCache.getCurrency(fromCurrencyId);
+            long toCurrencyId = cursor.getLong(BlotterColumns.to_account_currency_id.ordinal());
+            Currency toCurrency = CurrencyCache.getCurrency(toCurrencyId);
+
+            long fromAmount = cursor.getLong(BlotterColumns.from_amount.ordinal());
+            long toAmount = cursor.getLong(BlotterColumns.to_amount.ordinal());
+            long fromBalance = cursor.getLong(BlotterColumns.from_account_balance.ordinal());
+            long toBalance = cursor.getLong(BlotterColumns.to_account_balance.ordinal());
+            u.setTransferAmountText(v.rightCenterView, fromCurrency, fromAmount, toCurrency, toAmount);
+            if (v.rightView != null) {
+                u.setTransferBalanceText(v.rightView, fromCurrency, fromBalance, toCurrency, toBalance);
+            }
+            v.iconView.setImageDrawable(icBlotterTransfer);
+            v.iconView.setColorFilter(u.transferColor);
+        } else {
+            String fromAccountTitle = cursor.getString(BlotterColumns.from_account_title.ordinal());
+            v.topView.setText(fromAccountTitle);
+            setTransactionTitleText(cursor, noteView);
+            sb.setLength(0);
+            long fromCurrencyId = cursor.getLong(BlotterColumns.from_account_currency_id.ordinal());
+            Currency fromCurrency = CurrencyCache.getCurrency(fromCurrencyId);
+            long amount = cursor.getLong(BlotterColumns.from_amount.ordinal());
+            long originalCurrencyId = cursor.getLong(BlotterColumns.original_currency_id.ordinal());
+            if (originalCurrencyId > 0) {
+                Currency originalCurrency = CurrencyCache.getCurrency(originalCurrencyId);
+                long originalAmount = cursor.getLong(BlotterColumns.original_from_amount.ordinal());
+                u.setAmountText(sb, v.rightCenterView, originalCurrency, originalAmount, fromCurrency, amount, true);
+            } else {
+                u.setAmountText(sb, v.rightCenterView, fromCurrency, amount, true);
+            }
+            long categoryId = cursor.getLong(BlotterColumns.category_id.ordinal());
+            if (isSplit(categoryId)) {
+                v.iconView.setImageDrawable(icBlotterSplit);
+                v.iconView.setColorFilter(u.splitColor);
+            } else if (amount == 0) {
+                int categoryType = cursor.getInt(BlotterColumns.category_type.ordinal());
+                if (categoryType == CategoryEntity.TYPE_INCOME) {
+                    v.iconView.setImageDrawable(icBlotterIncome);
+                    v.iconView.setColorFilter(u.positiveColor);
+                } else if (categoryType == CategoryEntity.TYPE_EXPENSE) {
+                    v.iconView.setImageDrawable(icBlotterExpense);
+                    v.iconView.setColorFilter(u.negativeColor);
+                }
+            } else {
+                if (amount > 0) {
+                    v.iconView.setImageDrawable(icBlotterIncome);
+                    v.iconView.setColorFilter(u.positiveColor);
+                } else if (amount < 0) {
+                    v.iconView.setImageDrawable(icBlotterExpense);
+                    v.iconView.setColorFilter(u.negativeColor);
+                }
+            }
+
+//            long t6 = System.nanoTime();
+//            Log.d(getClass().getSimpleName(), "bindView iconView " + (t6 - t5) / 1000 + " us");
+
+            if (v.rightView != null) {
+                long balance = cursor.getLong(BlotterColumns.from_account_balance.ordinal());
+                v.rightView.setText(Utils.amountToString(fromCurrency, balance, false));
+            }
+        }
+
+        if (v.top2View != null) {
+            long projectId = cursor.getLong(BlotterColumns.project_id.ordinal());
+            if (projectId == NO_PROJECT_ID || showProject == false) {
+                v.top2View.setVisibility(View.INVISIBLE);
+            } else {
+                v.top2View.setVisibility(View.VISIBLE);
+                v.top2View.setTextColor(projectColor);
+                v.top2View.setText(cursor.getString(BlotterColumns.project.ordinal()));
+            }
+        }
+
+        setIndicatorColor(v, cursor);
+        if (isTemplate == 1) {
+            String templateName = cursor.getString(BlotterColumns.template_name.ordinal());
+            if (templateName == null || templateName.trim().isEmpty()) {
+                // An unnamed template left the big line empty and showed only the
+                // note underneath, which made this list look written in a smaller
+                // hand than the ledger it mirrors.
+                v.centerView.setText(v.bottomView.getText());
+                v.bottomView.setText("");
+            } else {
+                v.centerView.setText(templateName);
+            }
+        } else {
+            String recurrence = cursor.getString(BlotterColumns.recurrence.ordinal());
+            if (isTemplate == 2 && recurrence != null) {
+                Recurrence r = Recurrence.parse(recurrence);
+                v.bottomView.setText(r.toInfoString(context));
+                v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
+            } else {
+                long date = cursor.getLong(BlotterColumns.datetime.ordinal());
+                dt.setTime(date);
+                int dateTimeFlags = DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_SHOW_WEEKDAY|DateUtils.FORMAT_ABBREV_WEEKDAY|DateUtils.FORMAT_ABBREV_MONTH;
+                if (showTimeOfDay) {
+                    dateTimeFlags |= DateUtils.FORMAT_SHOW_TIME;
+                }
+                String t = DateUtils.formatDateTime(context, dt.getTime(), dateTimeFlags);
+                v.bottomView.setText(t);
+
+                if (isTemplate == 0 && date > System.currentTimeMillis()) {
+                    u.setFutureTextColor(v.bottomView);
+                } else {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(date);
+                    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                    if (colorizeWeekend() && (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY)) {
+                        v.bottomView.setTextColor(weekendColour());
+                    } else {
+                        v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
+                    }
+                }
+            }
+        }
+        removeRightViewIfNeeded(v);
+        if (v.checkBox != null) {
+            //final long parent = cursor.getLong(BlotterColumns.parent_id.ordinal());
+            //final long id = parent > 0 ? parent : cursor.getLong(BlotterColumns._id.ordinal());
+            final long id = cursor.getLong(BlotterColumns._id.ordinal());
+            v.checkBox.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    updateCheckedState(id, allChecked ^ v.checkBox.isChecked());
+                }
+            });
+            boolean isChecked = getCheckedState(id);
+            v.checkBox.setChecked(isChecked);
+        }
+    }
+
+    private void setTransactionTitleText(Cursor cursor, TextView noteView) {
+        sb.setLength(0);
+        String payee = cursor.getString(BlotterColumns.payee.ordinal());
+        String note = cursor.getString(BlotterColumns.note.ordinal());
+        long locationId = cursor.getLong(BlotterColumns.location_id.ordinal());
+        String location = getLocationTitle(cursor, locationId);
+        long categoryId = cursor.getLong(BlotterColumns.category_id.ordinal());
+        String category = getCategoryTitle(cursor, categoryId);
+        CharSequence text = transactionTitleUtils.generateTransactionTitle(false, payee, null, note, location, categoryId, category);
+        noteView.setText(text);
+        noteView.setTextColor(Color.WHITE);
+    }
+
+    private String getCategoryTitle(Cursor cursor, long categoryId) {
+        String category = "";
+        if (categoryId != 0) {
+            category = cursor.getString(BlotterColumns.category_title.ordinal());
+        }
+        return category;
+    }
+
+    private String getLocationTitle(Cursor cursor, long locationId) {
+        String location = "";
+        if (locationId > 0) {
+            location = cursor.getString(BlotterColumns.location.ordinal());
+        }
+        return location;
+    }
+
+    void removeRightViewIfNeeded(BlotterViewHolder v) {
+        if (v.rightView != null && !isShowRunningBalance()) {
+            v.rightView.setVisibility(View.GONE);
+        }
+    }
+
+    void setIndicatorColor(BlotterViewHolder v, Cursor cursor) {
+        TransactionStatus status = TransactionStatus.valueOf(cursor.getString(BlotterColumns.status.ordinal()));
+        v.indicator.setBackgroundColor(colors[status.ordinal()]);
+    }
+
+    private boolean getCheckedState(long id) {
+        return checkedItems.get(id) == null == allChecked;
+    }
+
+    private void updateCheckedState(long id, boolean checked) {
+        if (checked) {
+            checkedItems.put(id, true);
+        } else {
+            checkedItems.remove(id);
+        }
+    }
+
+    public int getCheckedCount() {
+        return allChecked ? getCount() - checkedItems.size() : checkedItems.size();
+    }
+
+    public void checkAll() {
+        allChecked = true;
+        checkedItems.clear();
+        notifyDataSetInvalidated();
+    }
+
+    public void uncheckAll() {
+        allChecked = false;
+        checkedItems.clear();
+        notifyDataSetInvalidated();
+    }
+
+    /**
+     * The colour of whoever wrote a movement, by the code it is signed with.
+     * <p>
+     * Read once for the whole screen rather than once per row, and it is a
+     * colour per person now: it used to be the colour of "the other person",
+     * one identity from when sharing was between two, so every movement from
+     * anybody came out the same amber.
+     */
+    private java.util.Map<String, Integer> authorColours;
+
+    private int colourOfAuthor(String createdBy) {
+        if (authorColours == null) {
+            authorColours = new java.util.HashMap<>();
+            for (io.github.mpstudios56.cifra.sync.People.Person p
+                    : io.github.mpstudios56.cifra.sync.People.all(db.db())) {
+                if (p.colour != 0) {
+                    authorColours.put(p.mark, p.colour);
+                }
+            }
+        }
+        Integer colour = createdBy == null ? null : authorColours.get(createdBy);
+        return colour == null ? Identity.COLOURS[1] : colour;
+    }
+
+    public static class BlotterViewHolder {
+
+        public final View layout;
+        public final TextView indicator;
+        public final TextView topView;
+        public final TextView top2View;
+        public final TextView centerView;
+        public final TextView bottomView;
+        public final TextView rightCenterView;
+        public final TextView rightView;
+        public final ImageView iconView;
+        public final ImageView iconView2;
+        /** The category's symbol at the head of the row, and its typed-text twin. */
+        public final ImageView categoryIcon;
+        public final TextView categoryIconText;
+        /** Shown, in the other person's colour, on the movements they wrote. */
+        public final View authorMark;
+        public final CheckBox checkBox;
+
+        public BlotterViewHolder(View view) {
+            layout = view.findViewById(R.id.layout);
+            indicator = view.findViewById(R.id.indicator);
+            topView = view.findViewById(R.id.top);
+            top2View = view.findViewById(R.id.top2);
+            centerView = view.findViewById(R.id.center);
+            bottomView = view.findViewById(R.id.bottom);
+            rightCenterView = view.findViewById(R.id.right_center);
+            rightView = view.findViewById(R.id.right);
+            iconView = view.findViewById(R.id.right_top);
+            iconView2 = view.findViewById(R.id.right_top_2);
+            categoryIcon = view.findViewById(R.id.category_icon);
+            categoryIconText = view.findViewById(R.id.category_icon_text);
+            authorMark = view.findViewById(R.id.author_mark);
+            checkBox = view.findViewById(R.id.cb);
+        }
+
+    }
+
+    public long[] getAllCheckedIds() {
+        int checkedCount = getCheckedCount();
+        var ids = new HashSet<Long>();
+        if (allChecked) {
+            int count = getCount();
+            boolean addAll = count == checkedCount;
+            for (int i = 0; i < count; i++) {
+                long id = getItemId(i);
+                boolean checked = addAll || getCheckedState(id);
+                if (checked) {
+                    ids.add(id);
+                }
+            }
+        } else {
+            ids.addAll(checkedItems.keySet());
+        }
+        return Longs.toArray(ids);
+    }
+
+    public void setHighlightTransactionId(long id) {
+        highlightTransactionId = id;
+    }
+}

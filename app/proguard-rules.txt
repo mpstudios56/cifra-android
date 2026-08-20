@@ -67,6 +67,6 @@
 -keep class com.google.gson.reflect.TypeToken { *; }
 -keep class * extends com.google.gson.reflect.TypeToken
 
--keep class tw.tib.financisto.preference.** { *; }
+-keep class io.github.mpstudios56.cifra.preference.** { *; }
 
 -dontwarn edu.umd.cs.findbugs.annotations.SuppressFBWarnings

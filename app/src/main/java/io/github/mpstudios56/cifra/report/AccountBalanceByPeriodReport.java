@@ -1,0 +1,104 @@
+package io.github.mpstudios56.cifra.report;
+
+import static java.lang.String.format;
+import static io.github.mpstudios56.cifra.db.DatabaseHelper.V_BLOTTER_FOR_ACCOUNT_WITH_SPLITS;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
+import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.db.DatabaseAdapter;
+import io.github.mpstudios56.cifra.db.DatabaseHelper;
+import io.github.mpstudios56.cifra.graph.Report2DChart;
+import io.github.mpstudios56.cifra.model.Account;
+import io.github.mpstudios56.cifra.model.Currency;
+import io.github.mpstudios56.cifra.model.ReportDataByPeriod;
+import io.github.mpstudios56.cifra.utils.CurrencyCache;
+import io.github.mpstudios56.cifra.utils.MyPreferences;
+
+public class AccountBalanceByPeriodReport extends Report2DChart {
+    private static final String TAG = "AcctBalanceReport";
+
+    public AccountBalanceByPeriodReport(Context context, DatabaseAdapter em, Calendar startPeriod, int periodLength, Currency currency, MyPreferences.ReportAggregateUnit aggregateUnit) {
+        super(context, em, startPeriod, periodLength, currency, aggregateUnit);
+    }
+
+    @Override
+    public String getNoFilterMessage(Context context) {
+        return context.getString(R.string.report_no_account);
+    }
+
+    @Override
+    public List<Report2DChart> getChildrenCharts() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public int getFilterItemTypeName() {
+        return R.string.account;
+    }
+
+    @Override
+    public String getFilterName() {
+        if (filterTitles.size()>0) {
+            return filterTitles.get(currentFilterOrder);
+        } else {
+            return context.getString(R.string.no_account);
+        }
+    }
+
+    @Override
+    protected void createFilter() {
+        columnFilter = DatabaseHelper.TransactionColumns.from_account_id.name();
+
+        filterIds = new ArrayList<>();
+        filterTitles = new ArrayList<>();
+        currentFilterOrder = 0;
+        List<Account> accounts = em.getAllAccountsList();
+        for (Account a: accounts) {
+            if (!a.isIncludeIntoReports) continue;   // excluded from reports, no chart entry
+            filterIds.add(a.id);
+            filterTitles.add(a.title);
+        }
+    }
+
+    @Override
+    public Currency getCurrency() {
+        if (filterIds.size() > 0) {
+            return em.getAccount(filterIds.get(currentFilterOrder)).currency;
+        }
+        else {
+            return CurrencyCache.getHomeCurrency();
+        }
+    }
+
+    @Override
+    protected ReportDataByPeriod createDataBuilder() {
+        return new ReportDataByPeriod(context, startPeriod, periodLength, currency, columnFilter,
+                filterIds.get(currentFilterOrder), em, ReportDataByPeriod.ValueAggregation.LAST, false, false, aggregateUnit) {
+            @Override
+            protected Cursor queryData(SQLiteDatabase db, String filterColumn, String where, String[] args) {
+                Log.d(TAG, format("filterColumn:%s where:%s args:%s", filterColumn, where, Arrays.toString(args)));
+
+                Cursor r = db.query(V_BLOTTER_FOR_ACCOUNT_WITH_SPLITS,
+                        new String[]{
+                                filterColumn,
+                                DatabaseHelper.BlotterColumns.from_account_balance.name(),
+                                DatabaseHelper.BlotterColumns.datetime.name()
+                        },
+                        where, args, null, null,
+                        DatabaseHelper.BlotterColumns.datetime.name());
+                Log.d(TAG, "result count=" + r.getCount());
+                return r;
+            }
+        };
+    }
+}

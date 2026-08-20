@@ -466,7 +466,7 @@
   <string name="expired">(przeterminowany)</string>
   <string name="pending">(oczekujący)</string>
   <string name="system_attribute_delete_after_expired">Usuń po przeterminowaniu</string>
-  <string name="no_transaction_found">Nie znaleziono transakcji, proszę uruchom ponownie Financisto...</string>
+  <string name="no_transaction_found">Nie znaleziono transakcji, proszę uruchom ponownie Cifra...</string>
   <string name="include_credit">Uwzględnij kredyty</string>
   <string name="include_credit_summary">Uwzględnij kredyty (dochody lub zwroty) w podsumowaniu budżetu</string>
   <string name="enable_widget">Włącz widżet</string>
@@ -614,9 +614,9 @@
   <string name="quick_menu_transaction_enabled_summary">Włącz szybkie menu na liście operacji</string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">Autoryzuj</string>
-  <string name="dropbox_authorize_summary">Pozwól Financisto na wysyłanie plików do Dropbox</string>
+  <string name="dropbox_authorize_summary">Pozwól Cifra na wysyłanie plików do Dropbox</string>
   <string name="dropbox_unlink">Rozłącz</string>
-  <string name="dropbox_unlink_summary">Nie pozwalaj Financisto na wysyłanie plików do Dropbox</string>
+  <string name="dropbox_unlink_summary">Nie pozwalaj Cifra na wysyłanie plików do Dropbox</string>
   <string name="dropbox_upload_backup">Wysyłaj kopie zapasowe</string>
   <string name="dropbox_upload_backup_summary">Wysyłaj kopie zapasowe do Dropbox</string>
   <string name="dropbox_upload_autobackup">Wysyłaj automatyczne kopie</string>

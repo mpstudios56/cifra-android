@@ -34,7 +34,7 @@ if (hasReleaseKey) {
 }
 
 android {
-    namespace = 'tw.tib.financisto'
+    namespace = 'io.github.mpstudios56.cifra'
     compileSdk = 36
 
     defaultConfig {
@@ -43,7 +43,7 @@ android {
         targetSdkVersion 36
         multiDexEnabled = true
 
-        testApplicationId "tw.tib.financisto.test"
+        testApplicationId "io.github.mpstudios56.cifra.test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -51,7 +51,7 @@ android {
                 argument "androidManifestFile", "$projectDir/src/main/AndroidManifest.xml".toString()
                 argument "logLevel", "TRACE"
                 argument "logAppenderConsole", "true"
-                argument "eventBusIndex", "tw.tib.financisto.MyEventBusIndex"
+                argument "eventBusIndex", "io.github.mpstudios56.cifra.MyEventBusIndex"
             }
         }
     }

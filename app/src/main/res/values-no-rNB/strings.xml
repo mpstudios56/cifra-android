@@ -466,7 +466,7 @@
   <string name="expired">(utløpt)</string>
   <string name="pending">(ventende)</string>
   <string name="system_attribute_delete_after_expired">slett etter utløpt</string>
-  <string name="no_transaction_found">Ingen transaksjoner funnet, vennligst restart Financisto...</string>
+  <string name="no_transaction_found">Ingen transaksjoner funnet, vennligst restart Cifra...</string>
   <string name="include_credit">Inkluder kreditt</string>
   <string name="include_credit_summary">Inkluder kreditt (inntekt eller overskudd) inn i budsjett totalen.</string>
   <string name="enable_widget">Aktiver widget</string>
@@ -614,9 +614,9 @@
   <string name="quick_menu_transaction_enabled_summary">Enable one-tap menu in the Blotter</string>
   <string name="dropbox">Dropbox</string>
   <string name="dropbox_authorize">Godkjenne</string>
-  <string name="dropbox_authorize_summary">Allow Financisto to upload files to your Dropbox</string>
+  <string name="dropbox_authorize_summary">Allow Cifra to upload files to your Dropbox</string>
   <string name="dropbox_unlink">Unlink</string>
-  <string name="dropbox_unlink_summary">Prevent Financisto from uploading files to your Dropbox</string>
+  <string name="dropbox_unlink_summary">Prevent Cifra from uploading files to your Dropbox</string>
   <string name="dropbox_upload_backup">Upload Backups</string>
   <string name="dropbox_upload_backup_summary">Upload database backups to Dropbox</string>
   <string name="dropbox_upload_autobackup">Upload Auto-backups</string>
