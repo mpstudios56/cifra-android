@@ -1157,7 +1157,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             ((BlotterListAdapter) adapter).showYears(movements);
             if (movements) {
                 wireYearFolding((BlotterListAdapter) adapter);
-                checkFoldedYearsSurvived(cursor);
             }
             }
         }
@@ -1578,71 +1577,7 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
 
 
     /** The years folded away, for as long as this screen is open. */
-    /**
-     * Which years are closed.
-     * <p>
-     * Kept in writing rather than in memory: somebody closes twenty years,
-     * opens the two they are working in, and expects to find exactly that when
-     * they come back - not the whole ledger open again because they had walked
-     * over to the accounts for a moment.
-     */
     private final java.util.Set<Integer> foldedYears = new java.util.HashSet<>();
-
-    /** Where the choice is written, one note per list. */
-    private String foldedYearsKey() {
-        return "folded_years_" + (mainBlotter ? "main" : String.valueOf(blotterFilter.getAccountId()));
-    }
-
-    private void rememberFoldedYears() {
-        if (getContext() == null) {
-            return;
-        }
-        // Year and marker together. Writing down the year alone was what broke
-        // it: on the next opening the year was left out of the question with
-        // nothing kept visible, so it vanished with no line to touch and no way
-        // back.
-        java.util.Set<String> scritti = new java.util.HashSet<>();
-        for (Integer year : foldedYears) {
-            Long segno = foldMarker.get(year);
-            scritti.add(year + "|" + (segno == null ? 0L : segno));
-        }
-        getContext().getSharedPreferences(getClass().getName(), 0).edit()
-                .putStringSet(foldedYearsKey(), scritti).apply();
-    }
-
-    private void recallFoldedYears() {
-        if (getContext() == null || foldedYearsRecalled) {
-            return;
-        }
-        foldedYearsRecalled = true;
-        java.util.Set<String> scritti = getContext()
-                .getSharedPreferences(getClass().getName(), 0)
-                .getStringSet(foldedYearsKey(), null);
-        if (scritti == null) {
-            return;
-        }
-        for (String riga : scritti) {
-            try {
-                int taglio = riga.indexOf('|');
-                if (taglio < 0) {
-                    // Scritto dalla versione precedente, senza segnalibro: si
-                    // lascia perdere, perche' senza segnalibro l'anno sparisce.
-                    continue;
-                }
-                int year = Integer.parseInt(riga.substring(0, taglio));
-                long segno = Long.parseLong(riga.substring(taglio + 1));
-                if (segno == 0) {
-                    continue;
-                }
-                foldedYears.add(year);
-                foldMarker.put(year, segno);
-            } catch (NumberFormatException storto) {
-                // una riga scritta male non deve impedire di leggere le altre
-            }
-        }
-    }
-
-    private boolean foldedYearsRecalled = false;
     /**
      * The one movement of each folded year that stays in the list.
      * <p>
@@ -1657,15 +1592,12 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     private final java.util.Map<Integer, Long> foldMarker = new java.util.HashMap<>();
 
     private void wireYearFolding(BlotterListAdapter a) {
-        recallFoldedYears();
         a.setYearFolding(foldedYears, year -> {
             if (foldedYears.remove(year)) {
                 foldMarker.remove(year);
-                rememberFoldedYears();
             } else {
                 foldedYears.add(year);
                 foldMarker.put(year, newestOf(year, a));
-                rememberFoldedYears();
             }
             recreateCursor();
             if (getActivity() != null) {
@@ -1699,43 +1631,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
             c.moveToPosition(was);
         }
         return 0;
-    }
-
-    /**
-     * Checks that every closed year still has its line on screen.
-     * <p>
-     * The marker is a movement, and a movement can be deleted or filtered out.
-     * When that happens the year would be left out of the question with nothing
-     * to touch, so it is opened again rather than disappearing.
-     */
-    private void checkFoldedYearsSurvived(Cursor c) {
-        if (foldedYears.isEmpty() || c == null || c.isClosed()) {
-            return;
-        }
-        java.util.Set<Integer> visti = new java.util.HashSet<>();
-        int was = c.getPosition();
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        for (int i = 0; i < c.getCount(); i++) {
-            if (!c.moveToPosition(i)) {
-                break;
-            }
-            cal.setTimeInMillis(c.getLong(DatabaseHelper.BlotterColumns.datetime.ordinal()));
-            visti.add(cal.get(java.util.Calendar.YEAR));
-        }
-        c.moveToPosition(was);
-        boolean cambiato = false;
-        for (java.util.Iterator<Integer> i = foldedYears.iterator(); i.hasNext(); ) {
-            Integer year = i.next();
-            if (!visti.contains(year)) {
-                i.remove();
-                foldMarker.remove(year);
-                cambiato = true;
-            }
-        }
-        if (cambiato) {
-            rememberFoldedYears();
-            recreateCursor();
-        }
     }
 
     /** Adds to the question the years that are not to be answered. */
@@ -1798,7 +1693,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         if (!years.isEmpty() && foldedYears.containsAll(years)) {
             foldedYears.clear();
             foldMarker.clear();
-            rememberFoldedYears();
         } else {
             for (Integer year : years) {
                 if (!foldedYears.contains(year)) {
@@ -1807,7 +1701,6 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
                 }
             }
         }
-        rememberFoldedYears();
         recreateCursor();
         if (getActivity() != null) {
             TodayButton.showYearsClosed(getActivity(), !foldedYears.isEmpty());
