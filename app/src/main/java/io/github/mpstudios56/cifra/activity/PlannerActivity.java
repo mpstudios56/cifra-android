@@ -69,6 +69,12 @@ public class PlannerActivity extends AbstractListActivity<TransactionList> {
 
         totalText = (TextView)findViewById(R.id.total);
         filterText = (TextView)findViewById(R.id.period);
+        ImageButton bScheduled = (ImageButton) findViewById(R.id.bScheduled);
+        if (bScheduled != null) {
+            bScheduled.setOnClickListener(view ->
+                    startActivity(new Intent(this, ScheduledListActivity.class)));
+        }
+
         ImageButton bPeriod = (ImageButton) findViewById(R.id.bPeriod);
         if (bPeriod != null) {
             bPeriod.setOnClickListener(view -> {

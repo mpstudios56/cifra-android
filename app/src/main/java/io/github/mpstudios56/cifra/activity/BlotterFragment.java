@@ -747,6 +747,11 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
         } else {
             addButtonActionGrid.setNumColumns(2);
         }
+        // What is written down for days still to come. It was a line in the
+        // menu, three screens away from the ring where everything else that
+        // makes a movement already lives.
+        addButtonActionGrid.addQuickAction(new MyQuickAction(getContext(),
+                R.drawable.ic_widget_scheduled, R.string.scheduled_transactions));
         addButtonActionGrid.setOnQuickActionClickListener(addButtonActionListener);
     }
 
@@ -755,6 +760,10 @@ public class BlotterFragment extends AbstractListFragment<Cursor> implements Blo
     }
 
     private QuickActionWidget.OnQuickActionClickListener addButtonActionListener = (widget, position, action) -> {
+        if (((MyQuickAction) action).titleId == R.string.scheduled_transactions) {
+            startActivity(new Intent(getContext(), ScheduledListActivity.class));
+            return;
+        }
         switch (position) {
             case 0:
                 addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);

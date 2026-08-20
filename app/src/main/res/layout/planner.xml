@@ -24,6 +24,13 @@
 		  The period is the whole question here - how far ahead one is looking -
 		  so it is asked directly, instead of being one line inside the filters.
 		-->
+		<!--
+		  The movements written down for days still to come: the list this
+		  screen is a forecast of.
+		-->
+		<ImageButton android:id="@+id/bScheduled" style="@style/BottomBarButton"
+			android:src="@drawable/ic_widget_scheduled"/>
+
 		<ImageButton android:id="@+id/bPeriod" style="@style/BottomBarButton"
 			android:src="@drawable/ic_today"/>
 
