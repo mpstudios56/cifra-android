@@ -137,13 +137,6 @@
             android:key="google_drive_sign_out"
             android:summary="@string/google_drive_sign_out_summary"
             android:title="@string/google_drive_sign_out" />
-        <EditTextPreference
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
-            android:defaultValue="Cifra"
-            android:key="google_drive_backup_folder"
-            android:summary="@string/backup_folder_summary"
-            android:title="@string/backup_folder" />
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:singleLineTitle="false"

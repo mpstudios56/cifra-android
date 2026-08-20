@@ -110,12 +110,11 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
             signOutGoogleAccount();
             return true;
         });
-        screen.findPreference("google_drive_backup_folder")
-                .setOnPreferenceChangeListener((preference, newValue) -> {
-                    new GoogleDriveAuthorizeFolderTask(getActivity(),
-                            (String) newValue, REQUEST_AUTHORIZATION).execute();
-                    return true;
-                });
+        // The folder is no longer named by hand: the app makes one called
+        // Cifra the first time it needs it. With the permission it asks for -
+        // only the files it creates itself - it cannot see the rest of the
+        // Drive, so there was never a list of folders to choose from, and a
+        // field asking for a name one could only guess wrong.
 
         updateGoogleDriveSignIn(GoogleSignIn.getLastSignedInAccount(context));
         linkToDropbox();
