@@ -379,9 +379,23 @@ public class RecurrenceViewFactory {
         @Override
         protected void stateFromMap(HashMap<String, String> answers) {
             everyWeeks.setText(answers.get(P_INTERVAL));
+            String written = answers.get(P_DAYS);
+            if (written == null || written.isEmpty()) {
+                // Nothing written down: what is on screen is left as it is,
+                // rather than emptied.
+                return;
+            }
             chosenDays.clear();
-            for (String d : answers.get(P_DAYS).split(",")) {
+            for (String d : written.split(",")) {
                 chosenDays.add(DayOfWeek.valueOf(d));
+            }
+            // The row is drawn before the answers are read back, so it is
+            // still showing the days this panel opens with. Without this it
+            // says "lunedi, martedi, mercoledi, giovedi, venerdi" over a
+            // choice of two - the screen telling the opposite of the truth.
+            if (chosenDaysText != null) {
+                chosenDaysText.setText(daysToString());
+                chosenDaysText.setError(null);
             }
         }
     }
