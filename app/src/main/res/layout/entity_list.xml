@@ -15,11 +15,30 @@
     a:orientation="vertical"
     a:id="@+id/entity_list">
 
-    <EditText a:layout_width="match_parent"
-        a:layout_height="wrap_content"
+    <!--
+      The box that narrows the list as one types. It carried an English line
+      left in by whoever wrote it, and the platform’s blue underline - the
+      only blue in the app.
+    -->
+    <EditText
         a:id="@+id/searchFilter"
-        a:textAppearance="?android:attr/textAppearanceLarge"
-        a:hint="Type name..."/> <!-- todo.mb -->
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:layout_marginStart="12dp"
+        a:layout_marginTop="8dp"
+        a:layout_marginEnd="12dp"
+        a:layout_marginBottom="4dp"
+        a:background="@drawable/field_background"
+        a:hint="@string/search_hint"
+        a:inputType="text"
+        a:maxLines="1"
+        a:paddingStart="14dp"
+        a:paddingTop="12dp"
+        a:paddingEnd="14dp"
+        a:paddingBottom="12dp"
+        a:textColor="#FFF4EFE4"
+        a:textColorHint="#8CF4EFE4"
+        a:textSize="16sp" />
     
     <ListView
         a:id="@android:id/list"
