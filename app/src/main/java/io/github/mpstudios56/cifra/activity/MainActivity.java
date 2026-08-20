@@ -268,6 +268,15 @@ public class MainActivity extends AppCompatActivity {
         if (wanted.equals(visibleTabs)) {
             return;
         }
+        // The strip cannot be rebuilt from inside the very layout pass that is
+        // placing its pages: the drafts screen asks for this from onResume,
+        // which happens while the pager is still measuring itself, and Android
+        // refuses. Asked again a moment later, when the pass is over.
+        if (viewPager.isFakeDragging() || viewPager.getScrollState() != ViewPager2.SCROLL_STATE_IDLE
+                || isPagerBusy()) {
+            viewPager.post(this::refreshTabs);
+            return;
+        }
         String current = visibleTabs.isEmpty() ? null
                 : visibleTabs.get(Math.min(viewPager.getCurrentItem(), visibleTabs.size() - 1)).tag;
         visibleTabs = wanted;
@@ -510,6 +519,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    /** Whether the pager is in the middle of placing or scrolling its pages. */
+    private boolean isPagerBusy() {
+        View child = viewPager.getChildAt(0);
+        return child instanceof androidx.recyclerview.widget.RecyclerView
+                && ((androidx.recyclerview.widget.RecyclerView) child).isComputingLayout();
     }
 
     /** The list of movements in front, when there is one. */
