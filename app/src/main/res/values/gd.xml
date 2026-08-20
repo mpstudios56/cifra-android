@@ -32,11 +32,16 @@
     <style name="GreenDroid.Widget.QuickAction.Item">
         <item name="android:drawablePadding">8dp</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingLeft">2dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:textSize">12sp</item>
+        <!--
+          Small enough that the longest word in the ring - "Trasferimento" -
+          stands on one line even when four of them share the width. A label
+          that breaks in two makes the ring look like a table.
+        -->
+        <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFF4EFE4</item>
     </style>
     <!--
