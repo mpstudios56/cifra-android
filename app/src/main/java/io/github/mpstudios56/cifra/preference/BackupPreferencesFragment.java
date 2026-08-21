@@ -148,9 +148,19 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         }
     }
 
+    /**
+     * Chooses the account, and asks for Drive in the same breath.
+     * <p>
+     * It used to ask only for the address: the account was chosen, nobody was
+     * ever asked whether the app could put anything in Drive, and every attempt
+     * after that came back "not authorised" - a refusal for a permission that
+     * had never been requested.
+     */
     private void chooseAccount() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestScopes(new com.google.android.gms.common.api.Scope(
+                        com.google.api.services.drive.DriveScopes.DRIVE_FILE))
                 .build();
         startActivityForResult(GoogleSignIn.getClient(getContext(), gso).getSignInIntent(), CHOOSE_ACCOUNT);
     }
