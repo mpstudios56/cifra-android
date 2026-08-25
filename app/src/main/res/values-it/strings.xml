@@ -1058,7 +1058,7 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
   <string name="include_tx_status">Includi lo stato del movimento</string>
   <string name="installed_on_sd_card_warning">Le transazioni programmate potrebbero non funzionare se l\'app è installata sulla scheda SD. Spostala nella memoria del telefono.</string>
   <string name="integrity_error_message">%s%n(Tocca per chiudere questo messaggio)</string>
-  <string name="integrity_fix_summary">Rifà i saldi dei conti e i totali progressivi partendo dai movimenti stessi. Serve quando un saldo non torna con la somma delle sue righe, cosa che capita di solito dopo un ripristino o un’importazione. Nessun movimento viene eliminato né modificato.</string>
+  <string name="integrity_fix_summary">Rifà i saldi e i totali partendo dai movimenti, senza modificarne nessuno. Serve dopo un ripristino o un’importazione</string>
   <string name="invalid_rrule">Regola di ricorrenza non valida: %s</string>
   <string name="is_included_into_reports">Includi nei report</string>
   <string name="is_included_into_reports_summary">Includi nei report le transazioni di questo conto</string>

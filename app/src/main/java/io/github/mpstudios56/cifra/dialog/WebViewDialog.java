@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.dialog;
 
 import android.app.Activity;
@@ -15,42 +5,65 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.view.ContextThemeWrapper;
+import android.graphics.Color;
 import android.webkit.WebView;
 
 import io.github.mpstudios56.cifra.R;
+import io.github.mpstudios56.cifra.utils.LocalisedAsset;
 import io.github.mpstudios56.cifra.utils.Utils;
 
+/**
+ * What is new in this version, shown once after it has been installed.
+ * <p>
+ * The version last seen is kept beside the screen that shows it, so the page
+ * appears on the first opening after an update and never again - and never at
+ * all on a first install, where a list of changes to something one has not used
+ * yet says nothing.
+ */
 public class WebViewDialog {
 
-	public static String checkVersionAndShowWhatsNewIfNeeded(Activity activity) {
-		try {
-			PackageInfo info = Utils.getPackageInfo(activity);
-			SharedPreferences preferences = activity.getPreferences(0); 
-			int newVersionCode = info.versionCode;
-			int oldVersionCode = preferences.getInt("versionCode", -1);
-			if (newVersionCode > oldVersionCode) {
-				preferences.edit().putInt("versionCode", newVersionCode).commit();
-				showWhatsNew(activity);
-			}
-			return "v. "+info.versionName;
-		} catch(Exception ex) { 
-			return "Free";
-		}
-	}
-	
-	public static void showWhatsNew(Context context) {
-		showHTMDialog(context, "whatsnew.htm", R.string.whats_new);
-	}
+    private static final String LAST_VERSION_SEEN = "versionCode";
 
-	private static void showHTMDialog(Context context, String fileName, int dialogTitleResId) {
-		WebView webView = new WebView(context);
-		webView.loadUrl(io.github.mpstudios56.cifra.utils.LocalisedAsset.url(context, fileName));
-		new AlertDialog.Builder(context)
-			.setView(webView)
-			.setTitle(dialogTitleResId)
-			.setPositiveButton(R.string.ok, null)
-			.show();		
-	}
+    private WebViewDialog() {
+    }
 
+    /**
+     * Shows the page if this version has not been seen before.
+     *
+     * @return the version, ready to be put on screen
+     */
+    public static String checkVersionAndShowWhatsNewIfNeeded(Activity activity) {
+        try {
+            PackageInfo installed = Utils.getPackageInfo(activity);
+            SharedPreferences seen = activity.getPreferences(0);
+            if (installed.versionCode > seen.getInt(LAST_VERSION_SEEN, -1)) {
+                // Written down before the page is shown, not after: a page
+                // dismissed by turning the phone would otherwise come back at
+                // every opening.
+                seen.edit().putInt(LAST_VERSION_SEEN, installed.versionCode).apply();
+                showWhatsNew(activity);
+            }
+            return "v. " + installed.versionName;
+        } catch (Exception noPackage) {
+            return "";
+        }
+    }
+
+    public static void showWhatsNew(Context context) {
+        show(context, "whatsnew.htm", R.string.whats_new);
+    }
+
+    private static void show(Context context, String page, int title) {
+        WebView view = new WebView(context);
+        // Painted dark before anything is loaded: a web view starts white, and
+        // the flash of a white sheet was visible for as long as the page took.
+        view.setBackgroundColor(Color.parseColor("#141414"));
+        view.loadDataWithBaseURL("file:///android_asset/",
+                LocalisedAsset.readStyled(context, page), "text/html", "UTF-8", null);
+        new AlertDialog.Builder(context)
+                .setView(view)
+                .setTitle(title)
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
 }

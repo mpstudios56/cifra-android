@@ -77,7 +77,10 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 	}
 
 	protected void initLocationSelector(LinearLayout layout) {
-		locationSelector = new LocationSelector<>(this, db, x, 0, R.id.location_clear, R.string.current_location);
+		// "Nessun filtro", like every other empty row: this one said "current
+		// location", which is not what is set - nothing is - and reads as a
+		// filter that has been applied.
+		locationSelector = new LocationSelector<>(this, db, x, 0, R.id.location_clear, R.string.no_filter);
 		locationSelector.setFetchAllEntities(true);
 		locationSelector.setEnableCreate(false);
 		locationSelector.initMultiSelect();
@@ -105,19 +108,24 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 	 */
 	protected TextView asFilterRow(TextView data) {
 		if (data == null) return null;
-		TextView label = null;
-		View up = data;
-		for (int i = 0; i < 3 && label == null; i++) {
-			if (!(up.getParent() instanceof View)) break;
-			up = (View) up.getParent();
-			label = up.findViewById(R.id.label);
-		}
+
+		// The whole row is kept on the answer as its tag by whoever built it,
+		// which is a surer handle than climbing the tree: these four rows come
+		// from three different layouts.
+		View row = data.getTag() instanceof View ? (View) data.getTag() : null;
+		TextView label = row != null ? row.findViewById(R.id.label) : null;
 		if (label != null) {
 			label.setTextColor(0xFFF4EFE4);
 			label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 		}
 		data.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 		data.setTextColor(NOT_SET);
+
+		// The button at the head of these four rows stays. It pushes them in
+		// from the edge while the other six begin where the frame does, which
+		// is the eyesore - but it is the way to the full list, and on a row set
+		// to search first it is the only way. Taking it away tidied the screen
+		// by removing a door.
 		return data;
 	}
 

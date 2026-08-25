@@ -58,6 +58,39 @@ public class LocalisedAsset {
         return text.toString().replace("{version}", version(context));
     }
 
+    /**
+     * The same page, dressed like the rest of the app.
+     * <p>
+     * These pages are HTML shown in a web view, and a web view with no
+     * stylesheet draws what a browser drew in 1995: black on white, in an app
+     * that is dark everywhere else. The page arrived as a white sheet with the
+     * app's own dark frame around it.
+     * <p>
+     * The look is put on here rather than written into each file: there is one
+     * of these per language, and a colour changed in twenty places is a colour
+     * that will be wrong in one of them.
+     */
+    public static String readStyled(Context context, String name) {
+        return "<html><head><meta name=\"viewport\" "
+                + "content=\"width=device-width, initial-scale=1\"><style>"
+                + "body{background:#141414;color:#F4EFE4;"
+                + "font-family:sans-serif;font-size:15px;line-height:1.5;"
+                + "margin:0;padding:4px 10px 16px 10px;}"
+                + "h1,h2,h3{color:#4CAF7D;font-weight:600;line-height:1.25;}"
+                + "h1{font-size:22px;margin:16px 0 8px;}"
+                + "h2{font-size:20px;margin:18px 0 8px;}"
+                + "h3{font-size:16px;margin:16px 0 6px;}"
+                + "p{margin:8px 0;}"
+                + "b,strong{color:#FFFFFF;}"
+                + "a{color:#4CAF7D;}"
+                + "ul,ol{margin:8px 0;padding-left:20px;}"
+                + "li{margin:6px 0;}"
+                // Long addresses used to push the page sideways, so that the
+                // text had to be dragged left and right to be read.
+                + "*{word-wrap:break-word;overflow-wrap:break-word;}"
+                + "</style></head><body>" + read(context, name) + "</body></html>";
+    }
+
     private static String version(Context context) {
         try {
             return context.getPackageManager()

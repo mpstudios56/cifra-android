@@ -80,6 +80,9 @@ public class AboutActivity extends AppCompatActivity {
                 WebView webView = new WebView(parent.getContext());
                 webView.setLayoutParams(new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // Dark before anything is loaded: a web view starts white, and
+                // the flash of it was visible on every page turn.
+                webView.setBackgroundColor(android.graphics.Color.parseColor("#141414"));
                 return new ViewHolder(webView);
             }
 
@@ -91,11 +94,13 @@ public class AboutActivity extends AppCompatActivity {
                         // Loaded as text rather than by address, so the version can be
                         // written into it: a page kept as a file cannot know it.
                         vh.webView.loadDataWithBaseURL("file:///android_asset/",
-                                LocalisedAsset.read(vh.webView.getContext(), "about.htm"),
+                                LocalisedAsset.readStyled(vh.webView.getContext(), "about.htm"),
                                 "text/html", "UTF-8", null);
                         break;
                     case 1:
-                        vh.webView.loadUrl(LocalisedAsset.url(vh.webView.getContext(), "whatsnew.htm"));
+                        vh.webView.loadDataWithBaseURL("file:///android_asset/",
+                                LocalisedAsset.readStyled(vh.webView.getContext(), "whatsnew.htm"),
+                                "text/html", "UTF-8", null);
                         webView = vh.webView;
                         webView.setWebViewClient(new WebViewClient() {
                             @Override
