@@ -89,18 +89,6 @@ public enum MenuListItem implements SummaryEntityEnum {
      * and the file, which made that list fifteen rows long and buried the two
      * things one does most often.
      */
-    /**
-     * What the app reads on its own from other apps' notifications, and the
-     * rules it reads by.
-     */
-    MENU_AUTO_READ(R.string.auto_read_notifications, R.string.auto_read_notifications_summary,
-            R.drawable.ic_menu_auto_read) {
-        @Override
-        public void call(Fragment fragment) {
-            openSettingsScreen(fragment,
-                    "io.github.mpstudios56.cifra.preference.AutoReadPreferencesFragment");
-        }
-    },
     MENU_BACKUP_ONLINE(R.string.backup_online, R.string.backup_online_summary, R.drawable.ic_menu_cloud) {
         @Override
         public void call(Fragment fragment) {
@@ -114,6 +102,18 @@ public enum MenuListItem implements SummaryEntityEnum {
             Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
             intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_IMPORT_EXPORT);
             fragment.startActivity(intent);
+        }
+    },
+    /**
+     * What the app reads on its own from other apps' notifications, and the
+     * rules it reads by.
+     */
+    MENU_AUTO_READ(R.string.auto_read_notifications, R.string.auto_read_notifications_summary,
+            R.drawable.ic_menu_auto_read) {
+        @Override
+        public void call(Fragment fragment) {
+            openSettingsScreen(fragment,
+                    "io.github.mpstudios56.cifra.preference.AutoReadPreferencesFragment");
         }
     },
     MENU_SHARING(R.string.sharing, R.string.sharing_summary, R.drawable.category_family) {
