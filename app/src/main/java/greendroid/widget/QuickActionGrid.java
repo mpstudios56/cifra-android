@@ -104,7 +104,12 @@ public class QuickActionGrid extends QuickActionWidget {
         // each entry, up to the width of the screen.
         float density = contentView.getResources().getDisplayMetrics().density;
         int margin = Math.round(16 * density);
-        int roomPerEntry = Math.round(104 * density);
+        // Room for one entry. At a hundred and four the four-entry ring came to
+        // more than the width of the screen, so it was cut back to the screen
+        // and drawn edge to edge - a bubble as wide as the phone for four
+        // buttons. Eighty leaves four of them comfortably inside it, and the
+        // words shrink to fit rather than the bubble growing to hold them.
+        int roomPerEntry = Math.round(80 * density);
         // How many entries there are, which is the only thing known for
         // certain at this moment: the grid is asked how many columns it will
         // lay out, and before it has been laid out even once it answers "work

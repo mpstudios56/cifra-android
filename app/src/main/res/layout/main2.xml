@@ -12,10 +12,17 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!--
+      One height, always. Left to measure itself the strip came out taller with
+      four tabs than with six, which is the opposite of what anybody expects and
+      made the bar jump about as tabs were switched on and off in the settings.
+      Seventy-two is what a row of symbols with a word under each of them takes,
+      and what it took when every tab was on show.
+    -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabIconTint="@color/tab_icon"
