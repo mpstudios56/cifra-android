@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,7 +65,7 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 		payeeSelector.setFetchAllEntities(true);
 		payeeSelector.setEnableCreate(false);
 		payeeSelector.initMultiSelect();
-		payee = payeeSelector.createNode(layout);
+		payee = asFilterRow(payeeSelector.createNode(layout));
 	}
 
 	protected void initProjectSelector(LinearLayout layout) {
@@ -72,7 +73,7 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 		projectSelector.setFetchAllEntities(true);
 		projectSelector.setEnableCreate(false);
 		projectSelector.initMultiSelect();
-		project = projectSelector.createNode(layout);
+		project = asFilterRow(projectSelector.createNode(layout));
 	}
 
 	protected void initLocationSelector(LinearLayout layout) {
@@ -80,14 +81,44 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 		locationSelector.setFetchAllEntities(true);
 		locationSelector.setEnableCreate(false);
 		locationSelector.initMultiSelect();
-		location = locationSelector.createNode(layout);
+		location = asFilterRow(locationSelector.createNode(layout));
 	}
 
 	protected void initCategorySelector(LinearLayout layout) {
 		categorySelector = new CategorySelector<>(this, db, x);
 		categorySelector.setListener(this);
 		categorySelector.initMultiSelect();
-		categoryTxt = categorySelector.createNode(layout, FILTER);
+		categoryTxt = asFilterRow(categorySelector.createNode(layout, FILTER));
+	}
+
+	/**
+	 * Category, payee, project and place are built by the same code that builds
+	 * them in the movement editor, and there the field is a small caption over a
+	 * large answer - which is right when one is writing a movement down and
+	 * wrong on a screen of eight questions, where the questions are what one
+	 * reads. The other filter rows already put the field first, in a readable
+	 * size, with the answer smaller underneath; these four were left behind and
+	 * looked like they came from a different app.
+	 * <p>
+	 * Done here rather than in the layout, because the layout is the editor's
+	 * too and the editor is correct as it stands.
+	 */
+	protected TextView asFilterRow(TextView data) {
+		if (data == null) return null;
+		TextView label = null;
+		View up = data;
+		for (int i = 0; i < 3 && label == null; i++) {
+			if (!(up.getParent() instanceof View)) break;
+			up = (View) up.getParent();
+			label = up.findViewById(R.id.label);
+		}
+		if (label != null) {
+			label.setTextColor(0xFFF4EFE4);
+			label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+		}
+		data.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+		data.setTextColor(NOT_SET);
+		return data;
 	}
 
 	protected void clear(String criteria, TextView textView) {
@@ -258,6 +289,9 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 
 			categorySelector.updateCheckedEntities(catIds);
 			categorySelector.fillCategoryInUI();
+			// Amber like the others when it holds something: the category row
+			// went through its own code and never picked up the colour.
+			if (categoryTxt != null) showMinusButton(categoryTxt);
 		}
 	}
 
