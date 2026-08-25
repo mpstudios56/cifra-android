@@ -350,14 +350,21 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 		throw new UnsupportedOperationException(filterCriteriaName + ": titles not implemented");
 	}
 
+	/** What a row set to something looks like: its answer picked out in amber. */
+	private static final int SET = 0xFFE8C349;
+	/** And what an empty one looks like: quiet, so the eye goes past it. */
+	private static final int NOT_SET = 0x8CF4EFE4;
+
 	protected void showMinusButton(TextView textView) {
 		ImageView v = findMinusButton(textView);
 		v.setVisibility(View.VISIBLE);
+		textView.setTextColor(SET);
 	}
 
 	protected void hideMinusButton(TextView textView) {
 		ImageView v = findMinusButton(textView);
 		v.setVisibility(View.GONE);
+		textView.setTextColor(NOT_SET);
 	}
 
 	protected ImageView findMinusButton(TextView textView) {

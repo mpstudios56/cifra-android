@@ -19,15 +19,24 @@
 		android:layout_height="wrap_content" android:layout_marginLeft="8dip"
 		android:layout_marginTop="3dip" android:layout_marginBottom="3dip"
 		android:layout_weight="1" android:duplicateParentState="true">
+		<!--
+		  The field first, in the size of something meant to be read; what has
+		  been set for it underneath, smaller. It used to be the other way
+		  round: eight rows all shouting "Nessun filtro" over the names of the
+		  things they were about, in a size one had to squint at.
+		-->
 		<TextView android:id="@+id/label" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:singleLine="true"
-			android:ellipsize="marquee" android:fadingEdge="horizontal"
+			android:ellipsize="end"
 			android:duplicateParentState="true"
-			style="@style/Caption" />
+			android:textColor="#FFF4EFE4"
+			android:textSize="16sp" />
 		<TextView android:id="@+id/data" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_below="@+id/label"
-			android:layout_alignLeft="@+id/label" android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textColor="@android:color/primary_text_dark"
+			android:layout_alignLeft="@+id/label"
+			android:layout_marginTop="1dp"
+			android:textColor="#8CF4EFE4"
+			android:textSize="13sp"
 			android:maxLines="2" android:duplicateParentState="true" />
 	</RelativeLayout>
 	<ImageView android:id="@+id/more"
