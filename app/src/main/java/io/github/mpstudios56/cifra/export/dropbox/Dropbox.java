@@ -142,19 +142,39 @@ public class Dropbox {
         }
     }
 
+    /**
+     * The app's own folder on Dropbox, made by Dropbox itself the first time
+     * something is written into it.
+     * <p>
+     * Named after the app, so the published version and the two test builds do
+     * not write into each other: they share one key with Dropbox, and without
+     * this they would share one heap of files.
+     */
+    private String ownFolder() {
+        return "/" + context.getString(R.string.app_name);
+    }
+
     public FileMetadata uploadBackupFile(Uri uri) throws Exception {
-        return uploadFile(uri, "/");
+        return uploadFile(uri, ownFolder() + "/");
     }
 
     public FileMetadata uploadPictureFile(Uri uri) throws Exception {
-        return uploadFile(uri, PICTURES_DIR + "/");
+        return uploadFile(uri, ownFolder() + PICTURES_DIR + "/");
     }
 
     List<String> listFiles() throws Exception {
         if (authSession()) {
             try {
                 List<String> files = new ArrayList<String>();
-                ListFolderResult listFolderResult = dropboxClient.files().listFolder("");
+                // Nothing has been sent yet, so the folder is not there yet:
+                // an empty list, not an error about a missing folder.
+                ListFolderResult listFolderResult;
+                try {
+                    listFolderResult = dropboxClient.files().listFolder(ownFolder());
+                } catch (Exception notThereYet) {
+                    Log.i(TAG, "no backups on Dropbox yet: " + notThereYet);
+                    return new ArrayList<>();
+                }
                 for (Metadata metadata : listFolderResult.getEntries()) {
                     String name = metadata.getName();
                     if (name.endsWith(".backup")) {
@@ -191,13 +211,13 @@ public class Dropbox {
     }
 
     public InputStream getBackupFileAsStream(String backupFileName) throws Exception {
-        return getFileAsStream(backupFileName, "/");
+        return getFileAsStream(backupFileName, ownFolder() + "/");
     }
 
     public DbxDownloader<FileMetadata> getPictureFile(String fileName) {
         if (authSession()) {
             try {
-                return dropboxClient.files().downloadBuilder(PICTURES_DIR + "/" + fileName).start();
+                return dropboxClient.files().downloadBuilder(ownFolder() + PICTURES_DIR + "/" + fileName).start();
             } catch (Exception e) {
                 Log.e(TAG, "get picture file error", e);
                 return null;

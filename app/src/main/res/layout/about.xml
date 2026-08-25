@@ -38,8 +38,11 @@
         android:background="?attr/colorPrimary"
         app:tabGravity="fill"
         app:tabInlineLabel="false"
+        app:tabIndicatorColor="@color/tab_selected"
         app:tabMaxWidth="0dp"
         app:tabPaddingEnd="1dp"
         app:tabPaddingStart="1dp"
-        app:tabTextAppearance="@style/TabLabel" />
+        app:tabSelectedTextColor="@color/tab_selected"
+        app:tabTextColor="@color/tab_resting"
+        app:tabTextAppearance="@style/TabLabelWords" />
 </LinearLayout>

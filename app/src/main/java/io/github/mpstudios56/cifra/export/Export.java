@@ -57,9 +57,7 @@ public abstract class Export {
         if (folder == null || !folder.startsWith("content://")) {
             return exportToPlainFolder(folder);
         }
-        Uri backupFolderUri = Uri.parse(folder);
-        String backupFolderId = DocumentsContract.getTreeDocumentId(backupFolderUri);
-        Uri dirUri = DocumentsContract.buildDocumentUriUsingTree(backupFolderUri, backupFolderId);
+        Uri dirUri = ownFolderIn(context, Uri.parse(folder));
         Uri backupFileUri = DocumentsContract.createDocument(context.getContentResolver(),
                     dirUri, Export.BACKUP_MIME_TYPE, generateFilename());
         OutputStream outputStream = context.getContentResolver().openOutputStream(backupFileUri);
@@ -87,7 +85,10 @@ public abstract class Export {
     private Uri exportToPlainFolder(String path) throws Exception {
         java.io.File dir = (path == null || path.isEmpty())
                 ? context.getExternalFilesDir(BACKUP_DIRECTORY_NAME)
-                : new java.io.File(path);
+                // Its own folder here too, so a plain path behaves like a
+                // picked one and the copies do not sit loose among whatever
+                // else is in there.
+                : new java.io.File(path, ownFolderName(context));
         if (dir == null) {
             throw new IOException("no place to write the backup to");
         }
@@ -142,6 +143,45 @@ public abstract class Export {
     protected abstract void writeFooter(BufferedWriter bw) throws IOException;
 
     protected abstract String getExtension();
+
+    /**
+     * The name of the folder the app keeps its own copies in.
+     * <p>
+     * The app's own name, which differs between the published app and the two
+     * test builds - so three installations pointed at the same place on the
+     * same phone keep three sets of copies apart, and one cannot restore over
+     * another by accident.
+     */
+    public static String ownFolderName(Context context) {
+        return context.getString(R.string.app_name);
+    }
+
+    /**
+     * The app's own folder inside the one that was chosen, made if it is not
+     * there yet.
+     * <p>
+     * What somebody picks is a place - Documents, a folder on the SD card, one
+     * belonging to another service - and the app makes its own folder inside
+     * it. Before, the copies were written loose into whatever was picked, so
+     * choosing Documents meant a hundred backup files among the documents.
+     *
+     * @return the folder to write into, or the one that was chosen if its own
+     *         cannot be made
+     */
+    public static Uri ownFolderIn(Context context, Uri chosenTree) throws Exception {
+        String treeId = DocumentsContract.getTreeDocumentId(chosenTree);
+        Uri chosen = DocumentsContract.buildDocumentUriUsingTree(chosenTree, treeId);
+        DocumentFile parent = DocumentFile.fromTreeUri(context, chosen);
+        if (parent == null) {
+            return chosen;
+        }
+        String name = ownFolderName(context);
+        DocumentFile own = parent.findFile(name);
+        if (own == null || !own.isDirectory()) {
+            own = parent.createDirectory(name);
+        }
+        return own != null ? own.getUri() : chosen;
+    }
 
     public static String getBackupFolder(Context context) {
         String backupFolderUri = MyPreferences.getDatabaseBackupFolder();

@@ -44,4 +44,13 @@
          else in this app: it was the one surface left white, with black
          icons on it, and it read as a piece of another program. -->
     <color name="quick_action_surface">#FF2B2B2B</color>
+
+    <!--
+      The tab one is standing on. A brighter green than the app's own, because
+      it has to be seen at a glance in a bar of five, at the size of a word
+      under an icon.
+    -->
+    <color name="tab_selected">#FF3FDD86</color>
+    <!-- The others: legible, and not competing with it. -->
+    <color name="tab_resting">#8CF4EFE4</color>
 </resources>

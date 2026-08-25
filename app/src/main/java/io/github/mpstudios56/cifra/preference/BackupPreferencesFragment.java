@@ -218,8 +218,11 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
 
     private void setCurrentDatabaseBackupFolder() {
         Preference p = getPreferenceScreen().findPreference("database_backup_folder");
+        // The place that was picked, and under it the folder the app makes for
+        // itself: what is shown has to be where the copies actually land.
         p.setSummary(getString(R.string.database_backup_folder_summary,
-                Uri.parse(getDatabaseBackupFolder()).getLastPathSegment()));
+                Uri.parse(getDatabaseBackupFolder()).getLastPathSegment()
+                        + "/" + Export.ownFolderName(getContext())));
     }
 
     @Override

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The symbol over a tab takes the same green as the word under it: lit on the
+  tab one is standing on, quiet on the others. Without this the word changed
+  colour and the symbol above it did not, so half of each tab answered.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/tab_selected" android:state_selected="true" />
+    <item android:color="@color/tab_resting" />
+</selector>

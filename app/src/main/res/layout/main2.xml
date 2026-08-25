@@ -18,6 +18,11 @@
         android:layout_height="wrap_content"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
+        app:tabIconTint="@color/tab_icon"
+        app:tabIndicatorColor="@color/tab_selected"
+        app:tabSelectedTextColor="@color/tab_selected"
+        app:tabTextColor="@color/tab_resting"
+
         app:tabTextAppearance="@style/TabLabel"
         app:tabInlineLabel="false"
         app:tabPaddingStart="1dp"

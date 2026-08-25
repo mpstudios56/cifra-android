@@ -98,7 +98,10 @@ public class LocalisedAsset {
                 + "h3{font-size:16px;margin:16px 0 6px;}"
                 + "p{margin:8px 0;}"
                 + "b,strong{color:#FFFFFF;}"
-                + "a{color:#4CAF7D;}"
+                // A link stays blue. Green is the app's own colour, used for what
+                // it says about itself; blue is what the whole world has meant
+                // by "this can be followed" since there were pages to follow.
+                + "a{color:#6BB6FF;}"
                 + "ul,ol{margin:8px 0;padding-left:20px;}"
                 + "li{margin:6px 0;}"
                 // The licence holds blocks typed out with fixed spacing, which

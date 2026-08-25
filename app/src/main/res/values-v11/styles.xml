@@ -74,6 +74,17 @@
     </style>
 
     <style name="AppThemeCompat" parent="@style/Theme.AppCompat.NoActionBar">
+        <!--
+          Everything Android draws for itself in its own colour - the ticks, the
+          switches, the writing cursor, the line under a field being typed in -
+          took the electric blue it comes with, in an app that is green
+          everywhere a person put a colour. Said once here rather than fought
+          with field by field.
+        -->
+        <item name="colorAccent">#FF4CAF7D</item>
+        <item name="colorControlActivated">#FF4CAF7D</item>
+        <item name="colorControlHighlight">#26FFFFFF</item>
+        <item name="android:textColorHighlight">#4D4CAF7D</item>
         <item name="android:alertDialogTheme">@android:style/Theme.Material.Dialog.Alert</item>
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:buttonStyle">@android:style/Widget.Holo.Light.Button</item>

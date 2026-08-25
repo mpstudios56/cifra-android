@@ -210,6 +210,16 @@
 		<item name="android:textAllCaps">false</item>
 	</style>
 
+	<!--
+	  For a bar of words with no icons over them - Informazioni, Novita,
+	  Licenza. Nine points is the size a word takes when it has to sit under a
+	  symbol; on its own line it is simply small.
+	-->
+	<style name="TabLabelWords" parent="android:TextAppearance.Small">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textAllCaps">false</item>
+	</style>
+
 	<style name="ListPrimary" parent="android:TextAppearance.Medium">
 		<item name="android:textSize">16sp</item>
 	</style>
