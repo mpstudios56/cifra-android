@@ -1,24 +1,20 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.model;
 
-
+/**
+ * Something that can be ticked in a list of many.
+ * <p>
+ * Payees, projects, places and categories are all offered the same way when a
+ * filter asks for several at once, and the dialog that offers them does not
+ * need to know which of them it is holding: a name to show, a number to give
+ * back, and whether the tick is in.
+ */
 public interface MultiChoiceItem {
 
-	public long getId();
-	
-	public String getTitle();
-	
-	public boolean isChecked();
-	
-	public void setChecked(boolean checked);
-	
+    long getId();
+
+    String getTitle();
+
+    boolean isChecked();
+
+    void setChecked(boolean checked);
 }

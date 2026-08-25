@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2013 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
-
 package io.github.mpstudios56.cifra.utils;
 
 import android.content.Context;
@@ -13,17 +5,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created with IntelliJ IDEA.
- * User: dsolonenko
- * Date: 9/13/13
- * Time: 1:33 AM
+ * Whether there is any point trying to reach the network.
+ * <p>
+ * Asked before fetching rates or sending a copy to a service: failing straight
+ * away with a word about it is kinder than a request that hangs until it gives
+ * up on its own.
+ * <p>
+ * A connection still being made counts as one. By the time the request is
+ * actually sent it will usually be up, and refusing on a connection that is a
+ * moment from ready would send somebody looking for a fault that is not there.
  */
 public class NetworkUtils {
 
-    public static boolean isOnline(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnectedOrConnecting();
+    private NetworkUtils() {
     }
 
+    public static boolean isOnline(Context context) {
+        ConnectivityManager connectivity =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity == null) {
+            return false;
+        }
+        NetworkInfo network = connectivity.getActiveNetworkInfo();
+        return network != null && network.isAvailable() && network.isConnectedOrConnecting();
+    }
 }
