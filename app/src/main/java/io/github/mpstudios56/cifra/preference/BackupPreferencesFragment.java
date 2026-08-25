@@ -231,19 +231,36 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         // chose, and the screen sat there. The reason Google gives is said out
         // loud instead.
         if (requestCode == CHOOSE_ACCOUNT && resultCode != RESULT_OK) {
+            int code = -1;
             String why;
             try {
                 GoogleSignIn.getSignedInAccountFromIntent(data)
                         .getResult(com.google.android.gms.common.api.ApiException.class);
-                why = "annullato";
+                why = null;
             } catch (com.google.android.gms.common.api.ApiException refused) {
-                why = "codice " + refused.getStatusCode() + " - " + refused.getMessage();
+                code = refused.getStatusCode();
+                why = "codice " + code + " - " + refused.getMessage();
             } catch (Exception other) {
                 why = String.valueOf(other.getMessage());
             }
+            if (why == null) {
+                // Nothing went wrong; whoever opened the picker closed it again.
+                return;
+            }
             android.util.Log.e("Cifra", "Google sign-in refused: " + why);
-            Toast.makeText(getContext(), getString(R.string.google_drive_error) + ": " + why,
-                    Toast.LENGTH_LONG).show();
+            // A refusal used to flash past in a message that blamed the
+            // settings of whoever was reading it. Google's own code stays on
+            // screen until it is dismissed, and code 10 - the one that means
+            // Google does not recognise this build of the app - says so in
+            // words, because no setting on this phone can mend it.
+            String said = code == com.google.android.gms.common.api.CommonStatusCodes.DEVELOPER_ERROR
+                    ? getString(R.string.google_drive_unknown_app)
+                    : getString(R.string.google_drive_refused_reason, why);
+            new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                    .setTitle(R.string.google_drive_refused)
+                    .setMessage(said)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
             return;
         }
 

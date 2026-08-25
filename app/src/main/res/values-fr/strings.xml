@@ -1583,4 +1583,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
     <string name="sms_templates_summary">Les règles qui font d’une notification une opération</string>
     <string name="section_lists">Listes</string>
     <string name="no_entities_yet">Aucun pour l’instant</string>
+    <string name="google_drive_refused">Google a refusé la connexion</string>
+    <string name="google_drive_refused_reason">Google n’a pas autorisé la connexion du compte : %s</string>
+    <string name="google_drive_unknown_app">Google ne reconnaît pas cette version de Cifra et ne la laisse pas atteindre Drive (code 10). Ce n’est pas votre compte : l’empreinte de signature de l’application publiée doit être enregistrée chez Google.</string>
 </resources>

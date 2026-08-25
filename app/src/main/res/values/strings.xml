@@ -1721,4 +1721,7 @@ Any folder the picker offers will do, including one belonging to OneDrive, Nextc
   <string name="sms_templates_summary">The rules that turn a notification into a movement</string>
     <string name="section_lists">Lists</string>
     <string name="no_entities_yet">None yet</string>
+    <string name="google_drive_refused">Google refused the connection</string>
+    <string name="google_drive_refused_reason">Google did not allow the account to be connected: %s</string>
+    <string name="google_drive_unknown_app">Google does not recognise this build of Cifra, so it will not let it reach Drive (code 10). Nothing on this phone can mend it, and it is not about your account: the signing fingerprint of the published app has to be registered with Google. Backing up to a file and to Dropbox is unaffected.</string>
 </resources>

@@ -1583,4 +1583,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
     <string name="sms_templates_summary">Die Regeln, nach denen aus einer Benachrichtigung eine Buchung wird</string>
     <string name="section_lists">Listen</string>
     <string name="no_entities_yet">Noch keine</string>
+    <string name="google_drive_refused">Google hat die Verbindung abgelehnt</string>
+    <string name="google_drive_refused_reason">Google hat das Verbinden des Kontos nicht zugelassen: %s</string>
+    <string name="google_drive_unknown_app">Google erkennt diese Ausgabe von Cifra nicht und lässt sie nicht an Drive (Code 10). Es liegt nicht am Konto: der Signatur-Fingerabdruck der veröffentlichten App muss bei Google eingetragen sein.</string>
 </resources>

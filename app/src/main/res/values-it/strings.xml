@@ -1601,4 +1601,7 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
   <string name="sms_templates_summary">Le regole che trasformano una notifica in un movimento</string>
     <string name="section_lists">Elenchi</string>
     <string name="no_entities_yet">Nessuno ancora</string>
+    <string name="google_drive_refused">Google ha rifiutato il collegamento</string>
+    <string name="google_drive_refused_reason">Google non ha consentito di collegare l’account: %s</string>
+    <string name="google_drive_unknown_app">Google non riconosce questa copia di Cifra e non le lascia raggiungere Drive (codice 10). Non dipende dal tuo account e non c’è impostazione del telefono che possa rimediare: va registrata presso Google l’impronta della firma con cui l’app è stata pubblicata. Il backup su file e su Dropbox non è toccato.</string>
 </resources>
