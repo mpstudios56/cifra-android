@@ -1,41 +1,43 @@
-/*******************************************************************************
- * Copyright (c) 2010 Denis Solonenko.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     Denis Solonenko - initial API and implementation
- ******************************************************************************/
 package io.github.mpstudios56.cifra.graph;
 
 import io.github.mpstudios56.cifra.model.Currency;
 import io.github.mpstudios56.cifra.utils.Utils;
 
-
+/**
+ * One bar on a report: a sum of money, and the room its figure takes up.
+ * <p>
+ * The two measurements are filled in by whoever draws it. The text has to be
+ * measured before the bars can be laid out - the widest figure decides where
+ * every bar has to stop - so the answer is kept here rather than worked out
+ * again for each row.
+ */
 public class Amount implements Comparable<Amount> {
-	
-	public final Currency currency;
-	public final long amount;
 
-	public int amountTextWidth;
-	public int amountTextHeight;
+    public final Currency currency;
+    public final long amount;
 
-	public Amount(Currency currency, long amount) {
-		this.currency = currency;
-		this.amount = amount;
-	}
-	
-	public String getAmountText() {
-		return Utils.amountToString(currency, amount, true);
-	}
+    /** Room taken by the figure once drawn, filled in by the widget. */
+    public int amountTextWidth;
+    public int amountTextHeight;
 
-    @Override
-    public int compareTo(Amount that) {
-        long thisAmount = Math.abs(this.amount);
-        long thatAmount = Math.abs(that.amount);
-        return thisAmount == thatAmount ? 0 : (thisAmount > thatAmount ? -1 : 1);
+    public Amount(Currency currency, long amount) {
+        this.currency = currency;
+        this.amount = amount;
     }
 
+    public String getAmountText() {
+        return Utils.amountToString(currency, amount, true);
+    }
+
+    /**
+     * Largest first, and by size rather than by sign.
+     * <p>
+     * A report puts its longest bar at the top, and five hundred spent counts
+     * as much as five hundred earned: what is being ranked is how much moved,
+     * not which way it went.
+     */
+    @Override
+    public int compareTo(Amount that) {
+        return Long.compare(Math.abs(that.amount), Math.abs(this.amount));
+    }
 }
