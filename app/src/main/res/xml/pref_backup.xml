@@ -71,6 +71,29 @@
             android:title="@string/backup_database_to" />
     </PreferenceCategory>
 
+    <!--
+      The settings themselves, written to a file and read back: not the
+      movements, but how the app is set up. Somebody changing phone wants both,
+      and this half of it went missing when this screen was rebuilt.
+    -->
+    <PreferenceCategory
+        android:key="cat_app_settings"
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/section_app_settings">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_export_settings"
+            android:title="@string/export_settings" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="do_import_settings"
+            android:title="@string/import_settings" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:key="cat_dropbox" android:layout="@layout/preference_category_bullet" android:title="@string/dropbox">
         <Preference
             app:iconSpaceReserved="false"

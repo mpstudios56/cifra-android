@@ -1595,4 +1595,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="google_drive">Google Drive</string>
   <string name="section_period">Periodo</string>
   <string name="section_currencies_rates">Valute e cambi</string>
+  <string name="auto_read_notifications">Lettura automatica notifiche</string>
+  <string name="auto_read_notifications_summary">Cosa Cifra legge da sola dalle notifiche di altre app</string>
+  <string name="section_rules">Regole di lettura</string>
+  <string name="sms_templates_summary">Le regole che trasformano una notifica in un movimento</string>
 </resources>

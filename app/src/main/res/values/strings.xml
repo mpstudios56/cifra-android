@@ -1715,4 +1715,8 @@ Any folder the system picker offers works, including one belonging to OneDrive, 
   <string name="google_drive">Google Drive</string>
   <string name="section_period">Period</string>
   <string name="section_currencies_rates">Currencies and rates</string>
+  <string name="auto_read_notifications">Reading notifications</string>
+  <string name="auto_read_notifications_summary">What Cifra reads by itself from other apps</string>
+  <string name="section_rules">Rules</string>
+  <string name="sms_templates_summary">The rules that turn a notification into a movement</string>
 </resources>

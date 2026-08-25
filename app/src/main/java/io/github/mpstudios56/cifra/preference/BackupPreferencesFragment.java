@@ -250,6 +250,15 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         if (resultCode != RESULT_OK) return;
         Context context = getContext();
         switch (requestCode) {
+            case IMPORT_SETTINGS:
+                if (data != null && data.getData() != null) {
+                    android.app.ProgressDialog d = android.app.ProgressDialog.show(context, null,
+                            getString(R.string.import_settings_inprogress), true);
+                    new io.github.mpstudios56.cifra.export.SettingsImportTask(getActivity(), d)
+                            .execute(data.getData());
+                }
+                break;
+
             case RESTORE_DATABASE:
                 if (data != null && data.getData() != null) {
                     android.app.ProgressDialog d = android.app.ProgressDialog.show(context, null,
@@ -311,6 +320,8 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         onClick("do_backup", () -> io.github.mpstudios56.cifra.activity.MenuListItem.backupNow(this));
         onClick("do_restore", this::chooseBackupToRestore);
         onClick("do_backup_to", () -> io.github.mpstudios56.cifra.activity.MenuListItem.backupTo(this));
+        onClick("do_export_settings", this::exportSettings);
+        onClick("do_import_settings", this::chooseSettingsToImport);
         onClick("do_drive_backup", this::driveBackup);
         onClick("do_drive_restore", this::driveRestore);
         onClick("do_dropbox_backup", this::dropboxBackup);
@@ -362,6 +373,32 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
     // -------------------------------------------- making one and bringing it back
 
     private static final int RESTORE_DATABASE = 103;
+    private static final int IMPORT_SETTINGS = 104;
+
+    /**
+     * The settings written out to a file beside the backups.
+     * <p>
+     * A copy of the movements says what has happened; this says how the app was
+     * set up to record it. Changing phone wants both.
+     */
+    private void exportSettings() {
+        if (!io.github.mpstudios56.cifra.activity.MenuListItem
+                .checkBackupFolderConfigured(getContext())) {
+            return;
+        }
+        android.app.ProgressDialog d = android.app.ProgressDialog.show(getContext(), null,
+                getString(R.string.export_settings_inprogress), true);
+        new io.github.mpstudios56.cifra.export.SettingsExportTask(getContext(), d).execute();
+    }
+
+    private void chooseSettingsToImport() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI,
+                Export.getBackupFolder(getContext()));
+        startActivityForResult(intent, IMPORT_SETTINGS);
+    }
 
     private void chooseBackupToRestore() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);

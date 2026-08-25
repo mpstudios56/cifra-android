@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  What Cifra reads on its own, from the notifications other apps put on the
+  screen: a payment announced by a bank, a card, a wallet.
+
+  It used to be a section in the middle of the general settings, with the rules
+  it reads by three screens away in another list. One subject, one screen.
+-->
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/pref_group_notifications">
+
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="LAST_TX"
+            android:entries="@array/account_list_date_types"
+            android:entryValues="@array/account_list_date_type_values"
+            android:key="account_list_date_type"
+            android:summary="@string/account_list_date_summary"
+            android:title="@string/account_list_date" />
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="SORT_ORDER_ASC"
+            android:entries="@array/sort_accounts_entities"
+            android:entryValues="@array/sort_accounts_values"
+            android:key="sort_accounts"
+            android:summary="@string/sort_accounts_summary"
+            android:title="@string/sort_accounts" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="false"
+            android:key="hide_closed_accounts"
+            android:summary="@string/hide_closed_accounts_summary"
+            android:title="@string/hide_closed_accounts" />
+    </PreferenceCategory>
+
+    <!--
+      These four still work. The SMS permission is gone, but the notification
+      listener falls back to the same templates and reads the same two settings,
+      so hiding them would take away the only control over a live feature.
+    -->
+    <PreferenceCategory android:layout="@layout/preference_category_bullet" android:title="@string/pref_group_notifications">
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="false"
+            android:key="google_wallet_transaction"
+            android:summary="@string/pref_google_wallet_transaction_summary"
+            android:title="@string/pref_google_wallet_transaction_title" />
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="PN"
+            android:dependency="google_wallet_transaction"
+            android:entries="@array/pref_transaction_statuses"
+            android:entryValues="@array/pref_transaction_status_values"
+            android:key="google_wallet_transaction_status"
+            android:summary="@string/pref_google_wallet_transaction_status"
+            android:title="@string/pref_tpl_transaction_status_title" />
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="PN"
+            android:entries="@array/pref_transaction_statuses"
+            android:entryValues="@array/pref_transaction_status_values"
+            android:key="sms_transaction_status"
+            android:summary="@string/pref_tpl_transaction_status"
+            android:title="@string/pref_tpl_transaction_status_title" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:defaultValue="true"
+            android:key="sms_transaction_note"
+            android:summary="@string/pref_tpl_adding_to_note"
+            android:title="@string/pref_tpl_adding_to_note_title" />
+        </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/section_rules">
+
+        <!-- The rules that say how a notification becomes a movement. -->
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_sms_templates"
+            android:summary="@string/sms_templates_summary"
+            android:title="@string/sms_templates" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
