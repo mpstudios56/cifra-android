@@ -36,6 +36,8 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 
     public static final String TRANSACTION_TABLE = "transactions";
     public static final String ACCOUNT_TABLE = "account";
+    /** Headings written among the accounts, to gather them in groups. */
+    public static final String ACCOUNT_SEPARATOR_TABLE = "account_separator";
     public static final String CURRENCY_TABLE = "currency";
     public static final String CATEGORY_TABLE = "category";
     public static final String BUDGET_TABLE = "budget";

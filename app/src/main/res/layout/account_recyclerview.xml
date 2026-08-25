@@ -66,6 +66,18 @@
             android:contentDescription="@string/main_accounts"
             android:src="@drawable/ic_main_accounts" />
 
+        <!--
+          A heading written into the list, to gather the accounts under it.
+          Before the backup button, because it is about the list itself; the
+          button that folds the groups away lives in the column on the right,
+          with the eye and the numbers.
+        -->
+        <ImageButton
+            android:id="@+id/bAddSeparator"
+            style="@style/BottomBarButton"
+            android:contentDescription="@string/account_separator_add"
+            android:src="@drawable/page_header" />
+
         <ImageButton
             android:id="@+id/bMenu"
             style="@style/BottomBarButton"
@@ -75,21 +87,6 @@
             android:id="@+id/bSearch"
             style="@style/BottomBarButton"
             android:src="@android:drawable/ic_menu_search" />
-
-        <ImageButton
-            android:id="@+id/bAddSeparator"
-            style="@style/BottomBarButton"
-            android:src="@drawable/page_header"
-            android:layout_marginLeft="32dp"
-            android:visibility="gone"
-            app:tint="@color/button_tint" />
-
-        <ImageButton
-            android:id="@+id/bReorder"
-            style="@style/BottomBarButton"
-            android:src="@drawable/height"
-            android:visibility="gone"
-            app:tint="@color/button_tint" />
 
         <include layout="@layout/total_text" />
     </LinearLayout>

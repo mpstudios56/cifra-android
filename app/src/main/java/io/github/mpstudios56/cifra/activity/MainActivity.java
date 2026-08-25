@@ -560,6 +560,16 @@ public class MainActivity extends AppCompatActivity {
      * Asked by the button in the navigation bar, answered by the accounts
      * screen itself, which is the only one that knows what it is showing.
      */
+    /** Folds every group of accounts away, or brings them all back. */
+    public void foldAccountGroups() {
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f instanceof AccountRecyclerFragment && f.isAdded()) {
+                ((AccountRecyclerFragment) f).foldEveryGroup();
+                return;
+            }
+        }
+    }
+
     public void toggleAccountSortOrder() {
         for (Fragment f : getSupportFragmentManager().getFragments()) {
             if (f instanceof AccountRecyclerFragment && f.isAdded()) {

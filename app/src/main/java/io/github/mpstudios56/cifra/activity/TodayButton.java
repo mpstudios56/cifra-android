@@ -42,6 +42,7 @@ public class TodayButton {
         attachOldest(activity, content);
         attachTop(activity, content);
         attachFold(activity, content);
+        attachSeparatorFold(activity, content);
         attachSort(activity, content);
         View already = content.findViewById(R.id.today_button);
         if (already != null) {
@@ -179,6 +180,11 @@ public class TodayButton {
                 one.setVisibility(movements ? View.VISIBLE : View.GONE);
             }
         }
+        // The groups of accounts are a question only the accounts screen asks.
+        View groups = activity.findViewById(R.id.separator_fold_button);
+        if (groups != null) {
+            groups.setVisibility(View.GONE);
+        }
         // The order of the accounts is a question only the accounts screen asks.
         View sort = activity.findViewById(R.id.sort_button);
         if (sort != null) {
@@ -220,6 +226,7 @@ public class TodayButton {
         View oldest = activity.findViewById(R.id.oldest_button);
         View today = activity.findViewById(R.id.today_button);
         View fold = activity.findViewById(R.id.fold_button);
+        View groups = activity.findViewById(R.id.separator_fold_button);
         View sort = activity.findViewById(R.id.sort_button);
         View top = activity.findViewById(R.id.top_button);
         // Above the navigation keys, wherever the screen has not already made
@@ -237,7 +244,7 @@ public class TodayButton {
         }
         int step = SIZE_DP + 8;
         int at = FIRST_BOTTOM_DP;
-        for (View button : new View[]{eye, sort, oldest, fold, today, top}) {
+        for (View button : new View[]{eye, groups, sort, oldest, fold, today, top}) {
             if (button == null || button.getVisibility() != View.VISIBLE) {
                 continue;
             }
@@ -289,7 +296,8 @@ public class TodayButton {
             CLOCK.removeCallbacks(pending);
         }
         final java.util.List<View> column = new java.util.ArrayList<>();
-        for (int id : new int[]{R.id.privacy_button, R.id.sort_button, R.id.oldest_button,
+        for (int id : new int[]{R.id.privacy_button, R.id.separator_fold_button,
+                R.id.sort_button, R.id.oldest_button,
                 R.id.fold_button, R.id.today_button, R.id.top_button}) {
             View one = content.findViewById(id);
             if (one != null && one.getVisibility() == View.VISIBLE) {
@@ -415,6 +423,59 @@ public class TodayButton {
         });
         button.setVisibility(View.GONE);
         content.addView(button);
+    }
+
+    /**
+     * Folds every group of accounts away, and brings them all back.
+     * <p>
+     * Its own button rather than the one that folds years: they sit on
+     * different screens and mean different things, and one button that changes
+     * its meaning with the tab is a button one learns twice.
+     */
+    private static void attachSeparatorFold(Activity activity, ViewGroup content) {
+        if (content.findViewById(R.id.separator_fold_button) != null) {
+            return;
+        }
+        ImageButton button = new ImageButton(activity);
+        button.setId(R.id.separator_fold_button);
+        button.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+        button.setContentDescription(activity.getString(R.string.account_separator_fold_all));
+        int pad = dp(activity, 10);
+        button.setPadding(pad, pad, pad, pad);
+        button.setBackgroundResource(R.drawable.privacy_button_idle);
+        button.setImageResource(R.drawable.ic_fold_years);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                dp(activity, SIZE_DP), dp(activity, SIZE_DP));
+        lp.gravity = Gravity.END | Gravity.BOTTOM;
+        lp.rightMargin = dp(activity, EDGE_DP);
+        button.setLayoutParams(lp);
+        button.setElevation(dp(activity, 6));
+        button.setOnClickListener(v -> {
+            wakeAll(button);
+            if (activity instanceof MainActivity) {
+                ((MainActivity) activity).foldAccountGroups();
+            }
+        });
+        button.setVisibility(View.GONE);
+        content.addView(button);
+    }
+
+    /** Whether this screen has groups of accounts to fold at all. */
+    public static void showSeparatorFold(Activity activity, boolean wanted) {
+        View button = activity.findViewById(R.id.separator_fold_button);
+        if (button != null) {
+            button.setVisibility(wanted ? View.VISIBLE : View.GONE);
+            stack(activity);
+        }
+    }
+
+    /** The mark says what a touch would do: draw them in, or push them out. */
+    public static void showGroupsFolded(Activity activity, boolean folded) {
+        View button = activity.findViewById(R.id.separator_fold_button);
+        if (button instanceof ImageButton) {
+            ((ImageButton) button).setImageResource(
+                    folded ? R.drawable.ic_unfold_years : R.drawable.ic_fold_years);
+        }
     }
 
     /** The order button lights up while the numbers are on show. */

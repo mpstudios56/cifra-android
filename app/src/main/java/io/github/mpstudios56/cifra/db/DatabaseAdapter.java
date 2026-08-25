@@ -33,6 +33,7 @@ import io.github.mpstudios56.cifra.utils.MyPreferences;
 import io.github.mpstudios56.cifra.utils.StringUtil;
 import io.github.mpstudios56.cifra.utils.Utils;
 import io.github.mpstudios56.cifra.model.Account;
+import io.github.mpstudios56.cifra.model.AccountSeparator;
 import io.github.mpstudios56.cifra.model.Attribute;
 import io.github.mpstudios56.cifra.model.Budget;
 import io.github.mpstudios56.cifra.model.Category;
@@ -2294,5 +2295,70 @@ public class DatabaseAdapter extends MyEntityManager {
         t.note = note;
         insertOrUpdate(t);
     }
-}
 
+    // ------------------------------------- the headings among the accounts
+    //
+    // Kept in a table of their own and read by hand rather than through the
+    // usual mapping: they are three columns and a name, and they have none of
+    // what every entity here is assumed to have - no active flag, no place in
+    // any total, nothing pointing at them.
+
+    /** All of them, by the account each one stands above. */
+    public java.util.Map<Long, AccountSeparator> getAccountSeparators() {
+        java.util.Map<Long, AccountSeparator> byAccount = new java.util.LinkedHashMap<>();
+        try (Cursor c = db().query(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE,
+                new String[]{"_id", "title", "before_account_id", "is_folded"},
+                null, null, null, null, "_id asc")) {
+            while (c.moveToNext()) {
+                AccountSeparator separator = new AccountSeparator();
+                separator.id = c.getLong(0);
+                separator.title = c.getString(1);
+                separator.beforeAccountId = c.getLong(2);
+                separator.folded = c.getInt(3) != 0;
+                byAccount.put(separator.beforeAccountId, separator);
+            }
+        }
+        return byAccount;
+    }
+
+    /** @return the heading's number, given to it now if it had none */
+    public long saveAccountSeparator(AccountSeparator separator) {
+        ContentValues values = new ContentValues();
+        values.put("title", separator.title);
+        values.put("before_account_id", separator.beforeAccountId);
+        values.put("is_folded", separator.folded ? 1 : 0);
+        if (separator.id == AccountSeparator.NEW) {
+            separator.id = db().insert(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, null, values);
+        } else {
+            db().update(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, values, "_id=?",
+                    new String[]{String.valueOf(separator.id)});
+        }
+        return separator.id;
+    }
+
+    /**
+     * Takes a heading away.
+     * <p>
+     * Nothing else goes with it: the accounts under it were never held by it,
+     * they merely followed it, and they stay where they are - gathered under
+     * whatever heading now comes before them, or under none.
+     */
+    public void deleteAccountSeparator(long id) {
+        db().delete(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, "_id=?",
+                new String[]{String.valueOf(id)});
+    }
+
+    public void setAccountSeparatorFolded(long id, boolean folded) {
+        ContentValues values = new ContentValues();
+        values.put("is_folded", folded ? 1 : 0);
+        db().update(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, values, "_id=?",
+                new String[]{String.valueOf(id)});
+    }
+
+    /** Folds or unfolds the lot, for the button that does it in one go. */
+    public void setAllAccountSeparatorsFolded(boolean folded) {
+        ContentValues values = new ContentValues();
+        values.put("is_folded", folded ? 1 : 0);
+        db().update(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, values, null, null);
+    }
+}

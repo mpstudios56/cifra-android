@@ -24,6 +24,7 @@ import io.github.mpstudios56.cifra.adapter.dragndrop.ItemTouchHelperViewHolder;
 import io.github.mpstudios56.cifra.datetime.DateUtils;
 import io.github.mpstudios56.cifra.db.DatabaseHelper;
 import io.github.mpstudios56.cifra.model.Account;
+import io.github.mpstudios56.cifra.model.AccountSeparator;
 import io.github.mpstudios56.cifra.model.AccountType;
 import io.github.mpstudios56.cifra.model.CardIssuer;
 import io.github.mpstudios56.cifra.model.ElectronicPaymentType;
@@ -32,9 +33,13 @@ import io.github.mpstudios56.cifra.utils.AccountIcon;
 import io.github.mpstudios56.cifra.utils.Utils;
 import io.github.mpstudios56.cifra.orb.EntityManager;
 
-public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecyclerAdapter.ViewHolder>
+public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ItemTouchHelperAdapter
 {
+    /** An account. */
+    private static final int ROW_ACCOUNT = 0;
+    /** A heading gathering the accounts under it. */
+    private static final int ROW_SEPARATOR = 1;
     public static final String TAG = "AccountRecyclerAdapter";
 
     protected final Context context;
@@ -62,6 +67,73 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         this.sharedColours = colours == null ? java.util.Collections.emptyMap() : colours;
     }
 
+    /**
+     * What the list shows, in order.
+     * <p>
+     * An entry is either a place in the cursor - an account - or a heading. The
+     * accounts of a folded group are not in here at all: folding is done by
+     * building the list without them, which is simpler to be sure of than
+     * hiding rows that are still counted.
+     */
+    private final java.util.List<Object> rows = new java.util.ArrayList<>();
+
+    /** Headings by the account each one stands above. */
+    private java.util.Map<Long, AccountSeparator> separators = java.util.Collections.emptyMap();
+
+    private OnSeparatorAction onSeparatorAction;
+
+    /** What the screen wants to happen when a heading is touched. */
+    public interface OnSeparatorAction {
+        void onSeparatorClicked(AccountSeparator separator);
+
+        void onSeparatorHeldDown(AccountSeparator separator);
+    }
+
+    public void setOnSeparatorAction(OnSeparatorAction action) {
+        this.onSeparatorAction = action;
+    }
+
+    /**
+     * Hands over the headings and works out what the list is made of.
+     * <p>
+     * The cursor is walked once: before each account, the heading fastened to
+     * it if there is one; and while a heading is folded, the accounts that
+     * follow it are left out until the next heading opens the list again.
+     */
+    public void setSeparators(java.util.Map<Long, AccountSeparator> separators) {
+        this.separators = separators != null ? separators : java.util.Collections.emptyMap();
+        rebuildRows();
+    }
+
+    private void rebuildRows() {
+        rows.clear();
+        AccountSeparator folding = null;
+        int counted = 0;
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            long accountId = cursor.getLong(DatabaseHelper.BlotterColumns._id.ordinal());
+            AccountSeparator heading = separators.get(accountId);
+            if (heading != null) {
+                // A heading closes the group before it and opens its own.
+                if (folding != null) {
+                    folding.hidden = counted;
+                }
+                rows.add(heading);
+                folding = heading.folded ? heading : null;
+                counted = 0;
+            }
+            if (folding != null) {
+                counted++;
+                continue;
+            }
+            rows.add(i);
+        }
+        if (folding != null) {
+            folding.hidden = counted;
+        }
+        notifyDataSetChanged();
+    }
+
     public AccountRecyclerAdapter(Context context, Cursor c, boolean showSortOrder, View.OnClickListener onClickListener,
                                   View.OnLongClickListener onLongClickListener) {
         this.u = new Utils(context);
@@ -73,26 +145,56 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
         this.cursor = c;
         this.onClickListener = onClickListener;
         this.onLongClickListener = onLongClickListener;
+        rebuildRows();
     }
 
     @Override
     public long getItemId(int position) {
-        cursor.moveToPosition(position);
+        Object row = rows.get(position);
+        if (row instanceof AccountSeparator) {
+            // Below zero, where no account's number can reach: the two kinds of
+            // row share one list and must not be mistaken for each other.
+            return -1 - ((AccountSeparator) row).id;
+        }
+        cursor.moveToPosition((Integer) row);
         return cursor.getLong(DatabaseHelper.BlotterColumns._id.ordinal());
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return rows.get(position) instanceof AccountSeparator ? ROW_SEPARATOR : ROW_ACCOUNT;
+    }
+
+    @Override
     public int getItemCount() {
-        return cursor.getCount();
+        return rows.size();
     }
 
     @NonNull
     @Override
-    public AccountRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         created++;
         Log.d(TAG, "onCreateViewHolder " + created);
+        if (viewType == ROW_SEPARATOR) {
+            return new SeparatorViewHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.account_separator_item, parent, false));
+        }
         View view = LayoutInflater.from(context).inflate(R.layout.account_list_item, parent, false);
         return new AccountRecyclerAdapter.ViewHolder(view, this.onClickListener, this.onLongClickListener);
+    }
+
+    /** A heading: the words, how many are folded under it, and the mark. */
+    public static class SeparatorViewHolder extends RecyclerView.ViewHolder {
+        final TextView title;
+        final TextView count;
+        final ImageView fold;
+
+        SeparatorViewHolder(View v) {
+            super(v);
+            title = v.findViewById(R.id.separator_title);
+            count = v.findViewById(R.id.separator_count);
+            fold = v.findViewById(R.id.separator_fold);
+        }
     }
 
     /**
@@ -130,12 +232,42 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<AccountRecycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder v, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Object row = rows.get(position);
+        if (row instanceof AccountSeparator) {
+            bindSeparator((SeparatorViewHolder) holder, (AccountSeparator) row);
+            return;
+        }
+        bindAccount((ViewHolder) holder, (Integer) row);
+    }
+
+    private void bindSeparator(SeparatorViewHolder v, AccountSeparator separator) {
+        v.title.setText(separator.title);
+        // How many are put away, said only while they are: a count beside an
+        // open group would be a number nobody asked for.
+        v.count.setText(separator.folded && separator.hidden > 0
+                ? String.valueOf(separator.hidden) : "");
+        v.fold.setImageResource(separator.folded
+                ? R.drawable.ic_unfold_years : R.drawable.ic_fold_years);
+        v.itemView.setOnClickListener(x -> {
+            if (onSeparatorAction != null) {
+                onSeparatorAction.onSeparatorClicked(separator);
+            }
+        });
+        v.itemView.setOnLongClickListener(x -> {
+            if (onSeparatorAction != null) {
+                onSeparatorAction.onSeparatorHeldDown(separator);
+            }
+            return true;
+        });
+    }
+
+    private void bindAccount(@NonNull ViewHolder v, int cursorPosition) {
         v.used++;
         Log.d(TAG, "onBindViewHolder used " + v.used);
         long t0 = System.nanoTime();
 
-        cursor.moveToPosition(position);
+        cursor.moveToPosition(cursorPosition);
 
         Account a = EntityManager.loadFromCursor(cursor, Account.class);
 

@@ -120,5 +120,7 @@
 	<item name="newest_button" type="id" />
 	<item name="top_button" type="id" />
 	<item name="fold_button" type="id" />
+	<!-- Folds the groups of accounts away, in the column with the eye. -->
+	<item name="separator_fold_button" type="id" />
 	<item name="sort_button" type="id" />
 </resources>

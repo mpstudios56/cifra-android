@@ -45,6 +45,7 @@ import io.github.mpstudios56.cifra.db.DatabaseAdapter;
 import io.github.mpstudios56.cifra.dialog.AccountInfoDialog;
 import io.github.mpstudios56.cifra.filter.Criterion;
 import io.github.mpstudios56.cifra.model.Account;
+import io.github.mpstudios56.cifra.model.AccountSeparator;
 import io.github.mpstudios56.cifra.model.Total;
 import io.github.mpstudios56.cifra.utils.IntegrityCheckAutobackup;
 import io.github.mpstudios56.cifra.utils.MenuItemInfo;
@@ -182,6 +183,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         }
 
         setupMainAccountsButton(view);
+        setupSeparatorButtons(view);
 
         // The order of the accounts is asked from the navigation bar now, where
         // the other buttons that change how a list is read already live.
@@ -253,6 +255,123 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                     }
                     showMainMark(button);
                     recreateCursor();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create());
+    }
+
+    /**
+     * The button that writes a heading into the list.
+     * <p>
+     * A heading is fastened to an account and stands above it, so making one is
+     * two answers: what it is called, and where it begins. Asked in that order,
+     * because the name is the part somebody has already decided.
+     */
+    private void setupSeparatorButtons(View view) {
+        ImageButton add = view.findViewById(R.id.bAddSeparator);
+        if (add != null) {
+            add.setOnClickListener(v -> askForSeparatorName(null));
+        }
+    }
+
+    /**
+     * Folds every group away, or opens them all.
+     * <p>
+     * One touch does whichever is not already the case: with anything open it
+     * closes the lot, and with everything closed it opens them.
+     */
+    public void foldEveryGroup() {
+        boolean fold = anySeparatorOpen();
+        db.setAllAccountSeparatorsFolded(fold);
+        if (getActivity() != null) {
+            TodayButton.showGroupsFolded(getActivity(), fold);
+        }
+        recreateCursor();
+    }
+
+    private boolean anySeparatorOpen() {
+        for (AccountSeparator s : db.getAccountSeparators().values()) {
+            if (!s.folded) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param existing the heading being renamed, or null when making a new one
+     */
+    private void askForSeparatorName(final AccountSeparator existing) {
+        final android.widget.EditText field = new android.widget.EditText(getContext());
+        field.setSingleLine(true);
+        field.setHint(R.string.account_separator_name_hint);
+        if (existing != null) {
+            field.setText(existing.title);
+            field.setSelection(field.getText().length());
+        }
+        int pad = Math.round(20 * getResources().getDisplayMetrics().density);
+        android.widget.FrameLayout box = new android.widget.FrameLayout(getContext());
+        box.setPadding(pad, pad / 2, pad, 0);
+        box.addView(field);
+
+        DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+                getContext(), R.style.CifraChoiceDialog)
+                .setTitle(existing == null
+                        ? R.string.account_separator_add : R.string.account_separator_rename)
+                .setView(box)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    String name = field.getText().toString().trim();
+                    if (name.isEmpty()) {
+                        return;
+                    }
+                    if (existing != null) {
+                        existing.title = name;
+                        db.saveAccountSeparator(existing);
+                        recreateCursor();
+                    } else {
+                        askWhereTheSeparatorBegins(name);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create());
+    }
+
+    /** Which account the heading stands above - that is, where its group starts. */
+    private void askWhereTheSeparatorBegins(final String name) {
+        final List<Account> accounts = db.getAllAccountsList();
+        if (accounts.isEmpty()) {
+            return;
+        }
+        final String[] titles = new String[accounts.size()];
+        for (int i = 0; i < accounts.size(); i++) {
+            titles[i] = accounts.get(i).title;
+        }
+        DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+                getContext(), R.style.CifraChoiceDialog)
+                .setTitle(R.string.account_separator_before)
+                .setItems(titles, (dialog, which) -> {
+                    db.saveAccountSeparator(
+                            new AccountSeparator(name, accounts.get(which).id));
+                    recreateCursor();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create());
+    }
+
+    /** Held down: rename it, or take it away. */
+    private void askWhatToDoWithSeparator(final AccountSeparator separator) {
+        DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+                getContext(), R.style.CifraChoiceDialog)
+                .setTitle(separator.title)
+                .setItems(new String[]{
+                        getString(R.string.account_separator_rename),
+                        getString(R.string.account_separator_delete)}, (dialog, which) -> {
+                    if (which == 0) {
+                        askForSeparatorName(separator);
+                    } else {
+                        db.deleteAccountSeparator(separator.id);
+                        recreateCursor();
+                    }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .create());
@@ -432,6 +551,29 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
             prepareAccountActionGrid();
             accountActionGrid.show(longClickedView);
             return true;
+        });
+        java.util.Map<Long, io.github.mpstudios56.cifra.model.AccountSeparator> headings =
+                db.getAccountSeparators();
+        a.setSeparators(headings);
+        if (getActivity() != null) {
+            // The button belongs on this screen only while there is something
+            // to fold: with no headings written there are no groups.
+            TodayButton.showSeparatorFold(getActivity(), !headings.isEmpty());
+            TodayButton.showGroupsFolded(getActivity(), !anySeparatorOpen());
+        }
+        a.setOnSeparatorAction(new io.github.mpstudios56.cifra.adapter.AccountRecyclerAdapter.OnSeparatorAction() {
+            @Override
+            public void onSeparatorClicked(AccountSeparator separator) {
+                // A tap folds the group away, or brings it back.
+                separator.folded = !separator.folded;
+                db.setAccountSeparatorFolded(separator.id, separator.folded);
+                recreateCursor();
+            }
+
+            @Override
+            public void onSeparatorHeldDown(AccountSeparator separator) {
+                askWhatToDoWithSeparator(separator);
+            }
         });
         if (cursor.getCount() == 0) {
             emptyText.setVisibility(View.VISIBLE);
