@@ -463,9 +463,18 @@ public class TodayButton {
     /** Whether this screen has groups of accounts to fold at all. */
     public static void showSeparatorFold(Activity activity, boolean wanted) {
         View button = activity.findViewById(R.id.separator_fold_button);
-        if (button != null) {
-            button.setVisibility(wanted ? View.VISIBLE : View.GONE);
-            stack(activity);
+        if (button == null) {
+            return;
+        }
+        boolean wasHidden = button.getVisibility() != View.VISIBLE;
+        button.setVisibility(wanted ? View.VISIBLE : View.GONE);
+        stack(activity);
+        if (wanted && wasHidden) {
+            // Woken with the rest of the column, so it withdraws when they do.
+            // Turned on after the others had been woken, it kept no clock of
+            // its own and stayed out at full strength beside a row of buttons
+            // that had already drawn back.
+            wakeAll(button);
         }
     }
 

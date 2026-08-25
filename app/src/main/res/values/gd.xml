@@ -40,13 +40,14 @@
         <item name="android:textColor">#FFF4EFE4</item>
     </style>
     <!--
-      Room for two lines under the symbol. One line at 14sp cut every label
-      longer than a word in half - 'Segna contabilizz...' - which left the grid
-      readable only to somebody who already knew what was in it.
+      A symbol and one line under it, and no more. The hundred and twelve here
+      was room for two lines at fourteen points, from before the labels learned
+      to size themselves - and it was the height, not the width, that made the
+      ring under the plus look like a slab.
     -->
     <style name="GreenDroid.Widget.QuickAction.Grid.Item" parent="@style/GreenDroid.Widget.QuickAction.Item">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">112dp</item>
+        <item name="android:layout_height">78dp</item>
     </style>
 
     <style name="GreenDroid.Animation" />

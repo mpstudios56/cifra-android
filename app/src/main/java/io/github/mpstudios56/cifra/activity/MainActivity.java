@@ -245,6 +245,11 @@ public class MainActivity extends AppCompatActivity {
                 });
         tabLayoutMediator.attach();
         tabLayout.post(this::oneLinePerTab);
+        // And again whenever the strip is laid out. Asked once, it was asked
+        // before the tabs it was meant to fix had been built: switching a tab
+        // off in the settings rebuilds the strip, the labels came back able to
+        // wrap, and the bar stood a line taller with four tabs than with six.
+        tabLayout.addOnLayoutChangeListener((v, l, t, r, b2, ol, ot, orr, ob) -> oneLinePerTab());
     }
 
     /** Position of a tab by name, or -1 when it is not currently shown. */
