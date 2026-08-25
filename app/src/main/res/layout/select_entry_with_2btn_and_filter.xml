@@ -60,6 +60,15 @@
 					  a:maxLines="2" a:duplicateParentState="true"/>
 		</RelativeLayout>
 
+		<ToggleButton a:layout_width="wrap_content"
+					  a:id="@+id/filterToggle"
+					  a:textOn=""
+					  a:textOff=""
+					  a:layout_height="wrap_content"
+					  a:layout_gravity="center_vertical"
+					  style="@style/ListButton"
+					  a:background="@drawable/btn_toggle_filter"/>
+
 		<ImageView a:id="@+id/more"
 				   style="@style/MoreButton"
 					a:layout_width="wrap_content"
@@ -94,14 +103,6 @@
 	  the eye had two left margins to follow. Moved across it keeps its work
 	  and gives the field back its place.
 	-->
-	<ToggleButton a:layout_width="wrap_content"
-				  a:id="@+id/filterToggle"
-				  a:textOn=""
-				  a:textOff=""
-				  a:layout_height="wrap_content"
-				  a:layout_gravity="center_vertical"
-				  style="@style/ListButton"
-				  a:background="@drawable/btn_toggle_filter"/>
 
 
 </LinearLayout>

@@ -61,6 +61,29 @@
                 a:maxLines="2" a:duplicateParentState="true"/>
         </RelativeLayout>
 
+        <ImageView a:id="@+id/show_list"
+            style="@style/WhiteListButton"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:src="@drawable/menu" />
+
+    <ImageView a:id="@+id/hide_filter"
+            style="@style/WhiteListButton"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:visibility="gone"
+            a:src="@drawable/filter_alt_off" />
+
+    <ImageView style="@style/WhiteListButton"
+            a:src="@drawable/add"
+            a:id="@+id/create_entity"
+            a:visibility="gone"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:layout_gravity="center_vertical"
+            a:clickable="true"
+            a:focusable="true" />
+
         <ImageView a:id="@+id/more"
             style="@style/MoreButton"
             a:layout_width="wrap_content"
@@ -95,28 +118,8 @@
 	  the eye had two left margins to follow. Moved across it keeps its work
 	  and gives the field back its place.
 	-->
-    <ImageView a:id="@+id/show_list"
-        style="@style/WhiteListButton"
-        a:layout_width="wrap_content"
-        a:layout_height="wrap_content"
-        a:src="@drawable/menu" />
 
-    <ImageView a:id="@+id/hide_filter"
-        style="@style/WhiteListButton"
-        a:layout_width="wrap_content"
-        a:layout_height="wrap_content"
-        a:visibility="gone"
-        a:src="@drawable/filter_alt_off" />
 
-    <ImageView style="@style/WhiteListButton"
-        a:src="@drawable/add"
-        a:id="@+id/create_entity"
-        a:visibility="gone"
-        a:layout_width="wrap_content"
-        a:layout_height="wrap_content"
-        a:layout_gravity="center_vertical"
-        a:clickable="true"
-        a:focusable="true" />
 
 
 </LinearLayout>
