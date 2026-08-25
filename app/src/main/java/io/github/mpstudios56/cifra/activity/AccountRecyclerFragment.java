@@ -608,9 +608,10 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         java.util.Map<Long, io.github.mpstudios56.cifra.model.AccountSeparator> headings =
                 db.getAccountSeparators();
         a.setSeparators(headings, db.getSeparatorByAccount());
-        if (getActivity() != null) {
+        if (getActivity() instanceof MainActivity) {
             // The button belongs on this screen only while there is something
             // to fold: with no headings written there are no groups.
+            ((MainActivity) getActivity()).setAccountsHaveGroups(!headings.isEmpty());
             TodayButton.showSeparatorFold(getActivity(), !headings.isEmpty());
             TodayButton.showGroupsFolded(getActivity(), !anySeparatorOpen());
         }

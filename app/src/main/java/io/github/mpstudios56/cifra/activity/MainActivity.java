@@ -486,6 +486,20 @@ public class MainActivity extends AppCompatActivity {
      * down. Today jumps to a date, so it belongs only where there are dates in
      * a row: the summary and the movements.
      */
+    /**
+     * Whether the accounts screen has any headings written into it.
+     * <p>
+     * Said by that screen, since it is the one that knows, and remembered here
+     * because the button has to be put away when one leaves for another tab and
+     * found again on coming back.
+     */
+    private boolean accountsHaveGroups;
+
+    public void setAccountsHaveGroups(boolean any) {
+        accountsHaveGroups = any;
+        floatingButtonsFor(viewPager.getCurrentItem());
+    }
+
     private void floatingButtonsFor(int position) {
         String tag = position >= 0 && position < visibleTabs.size()
                 ? visibleTabs.get(position).tag : "";
@@ -514,6 +528,16 @@ public class MainActivity extends AppCompatActivity {
         View sort = findViewById(R.id.sort_button);
         if (sort != null) {
             sort.setVisibility("accounts".equals(tag) ? View.VISIBLE : View.GONE);
+        }
+        // The groups of accounts belong to the accounts screen and nowhere
+        // else. Turned on there and never turned off again, it followed one
+        // from tab to tab, where it did nothing at all - and on the movements
+        // it stood beside the button that folds the years, which does the same
+        // thing to something else.
+        View groups = findViewById(R.id.separator_fold_button);
+        if (groups != null) {
+            groups.setVisibility("accounts".equals(tag) && accountsHaveGroups
+                    ? View.VISIBLE : View.GONE);
         }
         TodayButton.stack(this);
         View awake = findViewById(R.id.privacy_button);

@@ -1606,11 +1606,11 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
     <string name="google_drive_unknown_app">Google non riconosce questa copia di Cifra e non le lascia raggiungere Drive (codice 10). Non dipende dal tuo account e non c’è impostazione del telefono che possa rimediare: va registrata presso Google l’impronta della firma con cui l’app è stata pubblicata. Il backup su file e su Dropbox non è toccato.</string>
     <string name="account_separator_add">Aggiungi un\u2019intestazione</string>
     <string name="account_separator_rename">Rinomina</string>
-    <string name="account_separator_delete">Togli l\u2019intestazione</string>
-    <string name="account_separator_accounts">Quali conti</string>
+    <string name="account_separator_delete">Elimina</string>
+    <string name="account_separator_accounts">Conti raggruppati</string>
     <string name="account_separator_name_hint">Casa, lavoro, risparmi\u2026</string>
     <string name="account_separator_fold_all">Chiudi tutti i gruppi</string>
-    <string name="account_separator_where">Dove si trova</string>
+    <string name="account_separator_where">Posizione</string>
     <string name="account_separator_where_first">Sopra il primo dei suoi conti</string>
     <string name="account_separator_where_above">Sopra %s</string>
 </resources>
