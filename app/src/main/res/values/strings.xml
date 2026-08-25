@@ -1719,4 +1719,6 @@ Any folder the picker offers will do, including one belonging to OneDrive, Nextc
   <string name="auto_read_notifications_summary">What Cifra reads by itself from other apps</string>
   <string name="section_rules">Rules</string>
   <string name="sms_templates_summary">The rules that turn a notification into a movement</string>
+    <string name="section_lists">Lists</string>
+    <string name="no_entities_yet">None yet</string>
 </resources>

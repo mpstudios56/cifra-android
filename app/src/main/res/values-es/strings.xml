@@ -1581,4 +1581,6 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
     <string name="section_app_settings">Ajustes de la aplicación</string>
     <string name="section_rules">Reglas de lectura</string>
     <string name="sms_templates_summary">Las reglas que convierten una notificación en un movimiento</string>
+    <string name="section_lists">Listas</string>
+    <string name="no_entities_yet">Ninguno todavía</string>
 </resources>

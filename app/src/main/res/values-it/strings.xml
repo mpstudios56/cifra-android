@@ -1235,7 +1235,7 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
   <string name="menu_categories_summary">Aggiungi, rinomina e riordina le categorie</string>
   <string name="menu_currencies">Periodi, valute e cambi</string>
   <string name="menu_currencies_summary">Valute dei conti, tassi di cambio, settimana e anno fiscale</string>
-  <string name="menu_records">Beneficiari, luoghi e progetti</string>
+  <string name="menu_records">Beneficiari, progetti e posizioni</string>
   <string name="menu_records_summary">I nomi che accompagnano un movimento accanto alla categoria</string>
   <string name="menu_backup_restore">Backup e ripristino</string>
   <string name="menu_backup_restore_summary">Su file, su Google Drive, su Dropbox, o da mandare altrove</string>
@@ -1599,4 +1599,6 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
   <string name="auto_read_notifications_summary">I movimenti registrati leggendo le notifiche di banche e pagamenti</string>
   <string name="section_rules">Regole di lettura</string>
   <string name="sms_templates_summary">Le regole che trasformano una notifica in un movimento</string>
+    <string name="section_lists">Elenchi</string>
+    <string name="no_entities_yet">Nessuno ancora</string>
 </resources>

@@ -1,7 +1,5 @@
 package io.github.mpstudios56.cifra.activity;
 
-import static android.Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -72,12 +70,17 @@ public enum MenuListItem implements SummaryEntityEnum {
                     "io.github.mpstudios56.cifra.preference.PeriodsCurrencyPreferencesFragment");
         }
     },
+    /**
+     * Payees, projects and places, each row saying what it holds.
+     * <p>
+     * It used to be a list of three rows that led to three lists: three taps to
+     * find out whether a project had ever been made.
+     */
     MENU_ENTITIES(R.string.menu_records, R.string.menu_records_summary, R.drawable.drawer_action_entities) {
         @Override
         public void call(Fragment fragment) {
-            Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
-            intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_ENTITIES);
-            fragment.startActivity(intent);
+            openSettingsScreen(fragment,
+                    "io.github.mpstudios56.cifra.preference.EntitiesPreferencesFragment");
         }
     },
     MENU_BACKUP_RESTORE(R.string.menu_backup_security, R.string.menu_backup_security_summary, R.drawable.actionbar_db_backup) {
@@ -242,56 +245,6 @@ public enum MenuListItem implements SummaryEntityEnum {
         ProgressDialog d = ProgressDialog.show(fragment.getContext(), null,
                 fragment.getContext().getString(R.string.backup_database_inprogress), true);
         new BackupExportTask(fragment.getContext(), d, true).execute();
-    }
-
-    enum MenuEntities implements ExecutableEntityEnum<Fragment> {
-
-        SMS_TEMPLATES(R.string.sms_templates, R.drawable.ic_action_sms, SmsDragListActivity.class, BIND_NOTIFICATION_LISTENER_SERVICE),
-        PAYEES(R.string.payees, R.drawable.ic_action_users, PayeeListActivity.class),
-        PROJECTS(R.string.projects, R.drawable.ic_action_gear, ProjectListActivity.class),
-        LOCATIONS(R.string.locations, R.drawable.ic_action_location_2, LocationsListActivity.class);
-
-        private final int titleId;
-        private final int iconId;
-        private final Class<?> actitivyClass;
-        private final String[] permissions;
-
-        MenuEntities(int titleId, int iconId, Class<?> activityClass) {
-            this(titleId, iconId, activityClass, (String[]) null);
-        }
-
-        MenuEntities(int titleId, int iconId, Class<?> activityClass, String... permissions) {
-            this.titleId = titleId;
-            this.iconId = iconId;
-            this.actitivyClass = activityClass;
-            this.permissions = permissions;
-        }
-
-        @Override
-        public int getTitleId() {
-            return titleId;
-        }
-
-        @Override
-        public int getIconId() {
-            return iconId;
-        }
-
-        public Class<?> getActivityClass() {
-            return actitivyClass;
-        }
-
-        public String[] getPermissions() {
-            return permissions;
-        }
-
-        @Override
-        public void execute(Fragment fragment) {
-            if (permissions == null
-                    || !RequestPermission.isRequestingPermissions(fragment.getContext(), permissions)) {
-                fragment.startActivity(new Intent(fragment.getContext(), actitivyClass));
-            }
-        }
     }
 
     /** Every way of getting the data out and back in, in one place. */
@@ -576,11 +529,4 @@ public enum MenuListItem implements SummaryEntityEnum {
         };
     }
 
-    static Object[] entitiesPage() {
-        return new Object[]{
-                MenuEntities.PAYEES,
-                MenuEntities.PROJECTS,
-                MenuEntities.LOCATIONS,
-        };
-    }
 }

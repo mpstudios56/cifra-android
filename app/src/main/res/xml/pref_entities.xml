@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The three lists a movement is written against, beside its category: who it
+  was with, what it belonged to, where it happened.
+
+  A list of three rows that only led to three other lists, saying nothing about
+  what was in them. Here each one says what it holds, so the question "have I
+  got a project for this yet" is answered without opening anything.
+-->
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="cat_entities"
+        android:layout="@layout/preference_category_bullet"
+        android:title="@string/section_lists">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_payees"
+            android:title="@string/payees" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_projects"
+            android:title="@string/projects" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false"
+            android:key="open_locations"
+            android:title="@string/locations" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

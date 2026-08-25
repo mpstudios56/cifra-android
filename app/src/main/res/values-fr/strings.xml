@@ -1581,4 +1581,6 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
     <string name="section_app_settings">Réglages de l’application</string>
     <string name="section_rules">Règles de lecture</string>
     <string name="sms_templates_summary">Les règles qui font d’une notification une opération</string>
+    <string name="section_lists">Listes</string>
+    <string name="no_entities_yet">Aucun pour l’instant</string>
 </resources>
