@@ -1244,7 +1244,7 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
   <string name="quick_bar_summary">Una notificación discreta con gasto rápido, movimiento y transferencia</string>
   <string name="quick_bar_title">Nueva operación</string>
   <string name="menu_backup_security">Copia, restauración y seguridad</string>
-  <string name="menu_backup_security_summary">Una copia a un archivo, a Drive o a Dropbox, y el bloqueo de la aplicación</string>
+  <string name="menu_backup_security_summary">La copia guardada en este teléfono, y el bloqueo de la aplicación</string>
   <string name="csv_map_title">Importar desde otra aplicación</string>
   <string name="csv_map_intro">Elige un archivo exportado por la aplicación que dejas. Cifra lo lee y te pregunta qué son sus columnas. No escribe nada hasta que se lo digas.</string>
   <string name="csv_map_choose_file">Elegir el archivo</string>
@@ -1573,4 +1573,12 @@ Sirve cualquier carpeta que ofrezca el selector del sistema, también de OneDriv
     <item>Siempre vertical</item>
     <item>Siempre horizontal</item>
   </string-array>
+    <string name="auto_read_notifications">Lectura automática de notificaciones</string>
+    <string name="auto_read_notifications_summary">Los movimientos que se anotan leyendo las notificaciones de bancos y pagos</string>
+    <string name="backup_online">Copia en línea</string>
+    <string name="backup_online_summary">Envía una copia a Drive o a Dropbox y la trae de vuelta</string>
+    <string name="section_local_backup">En este teléfono</string>
+    <string name="section_app_settings">Ajustes de la aplicación</string>
+    <string name="section_rules">Reglas de lectura</string>
+    <string name="sms_templates_summary">Las reglas que convierten una notificación en un movimiento</string>
 </resources>

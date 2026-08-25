@@ -1237,7 +1237,7 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
   <string name="quick_bar_summary">Une notification discrète portant saisie rapide, opération et virement</string>
   <string name="quick_bar_title">Nouvelle opération</string>
   <string name="menu_backup_security">Sauvegarde, restauration et sécurité</string>
-  <string name="menu_backup_security_summary">Une copie vers un fichier, Drive ou Dropbox, et le verrouillage de l’application</string>
+  <string name="menu_backup_security_summary">La copie conservée sur ce téléphone, et le verrouillage de l’application</string>
   <string name="csv_map_title">Importer depuis une autre application</string>
   <string name="csv_map_intro">Choisis un fichier exporté par l’application que tu quittes. Cifra le lit et te demande ce que sont ses colonnes. Rien n’est écrit tant que tu ne l’as pas dit.</string>
   <string name="csv_map_choose_file">Choisir le fichier</string>
@@ -1573,4 +1573,12 @@ N’importe quel dossier proposé par le sélecteur convient, y compris de OneDr
     <item>Toujours vertical</item>
     <item>Toujours horizontal</item>
   </string-array>
+    <string name="auto_read_notifications">Lecture automatique des notifications</string>
+    <string name="auto_read_notifications_summary">Les opérations inscrites en lisant les notifications des banques et des paiements</string>
+    <string name="backup_online">Sauvegarde en ligne</string>
+    <string name="backup_online_summary">Envoie une copie vers Drive ou Dropbox et la ramène</string>
+    <string name="section_local_backup">Sur ce téléphone</string>
+    <string name="section_app_settings">Réglages de l’application</string>
+    <string name="section_rules">Règles de lecture</string>
+    <string name="sms_templates_summary">Les règles qui font d’une notification une opération</string>
 </resources>

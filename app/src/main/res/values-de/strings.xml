@@ -1244,7 +1244,7 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
   <string name="quick_bar_summary">Eine stille Benachrichtigung mit Schnelleingabe, Buchung und Umbuchung</string>
   <string name="quick_bar_title">Neue Buchung</string>
   <string name="menu_backup_security">Sichern, Wiederherstellen und Sicherheit</string>
-  <string name="menu_backup_security_summary">Eine Kopie in eine Datei, zu Drive oder Dropbox, und die Sperre der App</string>
+  <string name="menu_backup_security_summary">Die Kopie auf diesem Telefon, und die Sperre der App</string>
   <string name="csv_map_title">Aus einer anderen App importieren</string>
   <string name="csv_map_intro">Wähle eine Datei, die die App exportiert hat, die du verlässt. Cifra liest sie und fragt, was ihre Spalten sind. Geschrieben wird nichts, bis du es sagst.</string>
   <string name="csv_map_choose_file">Datei wählen</string>
@@ -1573,4 +1573,12 @@ Jeder Ordner aus der Systemauswahl funktioniert, auch einer von OneDrive oder Ne
     <item>Immer hochkant</item>
     <item>Immer quer</item>
   </string-array>
+    <string name="auto_read_notifications">Benachrichtigungen automatisch lesen</string>
+    <string name="auto_read_notifications_summary">Buchungen, die aus den Benachrichtigungen von Banken und Zahlungen entstehen</string>
+    <string name="backup_online">Online-Sicherung</string>
+    <string name="backup_online_summary">Schickt eine Kopie zu Drive oder Dropbox und holt sie zurück</string>
+    <string name="section_local_backup">Auf diesem Telefon</string>
+    <string name="section_app_settings">Einstellungen der App</string>
+    <string name="section_rules">Leseregeln</string>
+    <string name="sms_templates_summary">Die Regeln, nach denen aus einer Benachrichtigung eine Buchung wird</string>
 </resources>

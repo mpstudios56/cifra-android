@@ -206,8 +206,8 @@
   <string name="sort_locations">Ordinamento posizioni</string>
   <string name="sort_locations_summary">Definisce l\'ordinamento della lista posizioni</string>
   <string name="more_products">Altri prodotti...</string>
-  <string name="pin_protection">Protezione PIN</string>
-  <string name="pin_protection_summary">Spunta per proteggere l\'accesso tramite PIN</string>
+  <string name="pin_protection">Blocco con PIN</string>
+  <string name="pin_protection_summary">Chiede un codice all’apertura dell’app</string>
   <string name="pin_protection_notify">Impostare il PIN dalle Preferenze</string>
   <string name="change_pin">Cambia PIN</string>
   <string name="change_pin_summary">Cambia numero PIN.</string>
@@ -215,13 +215,13 @@
   <string name="set_pin">Imposta PIN</string>
   <string name="confirm_pin">Conferma PIN</string>
   <string name="restore">Ripristina</string>
-  <string name="backup_database">Backup del Database</string>
+  <string name="backup_database">Fai un backup</string>
   <string name="backup_database_inprogress">Salvataggio database...</string>
   <string name="backup_database_gdocs">Backup su Google Drive</string>
   <string name="backup_database_gdocs_inprogress">Salvataggio database...</string>
   <string name="csv_export">Esporta CSV</string>
   <string name="csv_export_inprogress">Esportazione database in CSV...</string>
-  <string name="restore_database">Ripristino Database</string>
+  <string name="restore_database">Ripristina un backup</string>
   <string name="restore_database_inprogress">Ripristino database...</string>
   <string name="restore_database_gdocs">Ripristina da Google Drive</string>
   <string name="restore_database_inprogress_gdocs">Ripristino database...</string>
@@ -586,10 +586,10 @@
   <string name="show_running_balance_summary">Mostra saldo del conto in esecuzione (richiede riavvio)</string>
   <string name="new_currency">Nuova valuta...</string>
   <string name="lock_time">Tempo di blocco</string>
-  <string name="lock_time_summary">Tempo per mantenere lo schermo attivo prima di essere bloccato</string>
+  <string name="lock_time_summary">Quanto può restare aperta l’app prima di richiedere di nuovo il codice</string>
   <string name="date_format">Formato della data</string>
-  <string name="pin_protection_lock_transaction">Bloccare Transazione\\Trasferimento</string>
-  <string name="pin_protection_lock_transaction_summary">Bloccare \'Nuova transazione\' e \'Nuovo trasferimento\' con password</string>
+  <string name="pin_protection_lock_transaction">Chiedi il codice sui nuovi movimenti</string>
+  <string name="pin_protection_lock_transaction_summary">Il codice viene chiesto anche per aprire una nuova transazione o un nuovo trasferimento</string>
   <string name="split">[Suddivisione...]</string>
   <string name="split_transaction">[Suddivisione-Transazione]</string>
   <string name="split_transfer">[Suddivisione-Trasferimento]</string>
@@ -632,9 +632,9 @@
   <string name="show_category_in_transfer">Categoria del trasferimento</string>
   <string name="show_category_in_transfer_summary">Mostra la categoria selezionata nella schermata di Nuovo Trasferimento</string>
   <string name="auto_backup">Backup automatico</string>
-  <string name="auto_backup_enabled">Attivare il backup automatico</string>
-  <string name="auto_backup_enabled_summary">Backup del database ogni giorno all\'ora specificata</string>
-  <string name="auto_backup_time">Ora di backup automatico</string>
+  <string name="auto_backup_enabled">Backup automatico</string>
+  <string name="auto_backup_enabled_summary">Una copia dei dati ogni giorno, all’ora scelta qui sotto</string>
+  <string name="auto_backup_time">Ora del backup</string>
   <string name="auto_backup_time_summary" formatted="false">Fare un backup giornaliero alle %02d:%02d</string>
   <string name="select_folder">Seleziona la cartella corrente</string>
   <string name="create">Crea</string>
@@ -642,9 +642,9 @@
   <string name="create_new_folder_title">Crea nuova cartella</string>
   <string name="create_new_folder_fail">Impossibile creare la cartella</string>
   <string name="database_backup">Backup del database</string>
-  <string name="database_backup_folder">Cartella backup</string>
-  <string name="database_backup_folder_summary">Adesso: %s
-Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o altri servizi: i backup ci finiscono dentro ed è quell’app a sincronizzarli. Drive e Dropbox hanno i pulsanti qui sotto perché Cifra li carica da sola.</string>
+  <string name="database_backup_folder">Cartella dei backup</string>
+  <string name="database_backup_folder_summary">In uso: %s
+Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, Nextcloud o altri servizi: il backup viene scritto lì, e a sincronizzarlo pensa quell’app. Per Google Drive e Dropbox c’è invece la voce Backup online, perché a caricare è Cifra.</string>
   <string name="backup_database_to">Invia il backup a...</string>
   <string name="backup_database_to_title">Invia il backup del database a...</string>
   <string name="license">Licenza</string>
@@ -653,14 +653,14 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="quick_menu_transaction_enabled">Menu rapido nel registro</string>
   <string name="quick_menu_transaction_enabled_summary">Abilita menu rapido nel registro </string>
   <string name="dropbox">Dropbox</string>
-  <string name="dropbox_authorize">Autorizzare</string>
+  <string name="dropbox_authorize">Collega Dropbox</string>
   <string name="dropbox_authorize_summary">Permetti a Cifra di caricare i file sul tuo Dropbox</string>
-  <string name="dropbox_unlink">Scollegare</string>
+  <string name="dropbox_unlink">Scollega Dropbox</string>
   <string name="dropbox_unlink_summary">Impedisci a Cifra di caricare i file sul tuo Dropbox</string>
   <string name="dropbox_upload_backup">Carica i backup</string>
-  <string name="dropbox_upload_backup_summary">Carica i backup dei database su Dropbox</string>
+  <string name="dropbox_upload_backup_summary">Manda su Dropbox i backup fatti a mano</string>
   <string name="dropbox_upload_autobackup">Carica i backup automatici</string>
-  <string name="dropbox_upload_autobackup_summary">Carica i backup automatici del database su Dropbox</string>
+  <string name="dropbox_upload_autobackup_summary">Manda su Dropbox anche i backup automatici</string>
   <string name="dropbox_uploading_file">Caricamento del file su Dropbox...</string>
   <string name="exchange_rates">Tassi di cambio</string>
   <string name="no_exchange_rates">Nessun tasso di cambio</string>
@@ -793,10 +793,10 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <!-- Impostazioni: voci che erano rimaste in inglese -->
   <string name="account_list_date">Data nell\'elenco conti</string>
   <string name="account_list_date_summary">Scegli quale data mostrare sotto ai conti (richiede il riavvio)</string>
-  <string name="auto_backup_reminder_enabled">Ricorda il backup automatico</string>
-  <string name="auto_backup_reminder_enabled_summary">Avvisa se il backup automatico non viene attivato per qualche giorno</string>
+  <string name="auto_backup_reminder_enabled">Ricorda di attivarlo</string>
+  <string name="auto_backup_reminder_enabled_summary">Avvisa se passano alcuni giorni senza un backup automatico</string>
   <string name="auto_backup_warning_enabled">Avvisa in caso di errore</string>
-  <string name="auto_backup_warning_summary">Avvisa se l\'ultimo backup automatico non è riuscito</string>
+  <string name="auto_backup_warning_summary">Avvisa se l’ultimo backup automatico non è riuscito</string>
   <string name="backup_newlines">Mantieni gli a capo nelle note</string>
   <string name="backup_newlines_summary">Gli a capo verranno salvati come `\\n` e le barre rovesciate come `\\\\`. Se disattivato, gli a capo diventano spazi (come nelle versioni vecchie)</string>
   <string name="blotter_show_time_of_day">Mostra l\'ora</string>
@@ -821,15 +821,15 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="fiscal_year_start">Inizio dell\'anno fiscale</string>
   <string name="fiscal_year_start_summary">Primo giorno dell\'anno fiscale per periodi e report: %s</string>
   <string name="google_drive_backup_account">Account per il backup</string>
-  <string name="google_drive_backup_account_summary">Scegli il tuo account Google Drive</string>
+  <string name="google_drive_backup_account_summary">Il conto Google su cui finiscono le copie</string>
   <string name="google_drive_download_pictures">Scarica le foto</string>
   <string name="google_drive_download_pictures_summary">Scarica da Google Drive le foto allegate che non sono sul telefono</string>
   <string name="google_drive_sign_out">Disconnetti l\'account</string>
   <string name="google_drive_sign_out_summary">Esci per poterne scegliere un altro</string>
   <string name="google_drive_upload_autobackup">Carica i backup automatici</string>
-  <string name="google_drive_upload_autobackup_summary">Carica su Google Drive i backup automatici della banca dati</string>
+  <string name="google_drive_upload_autobackup_summary">Manda su Google Drive anche i backup automatici</string>
   <string name="google_drive_upload_backup">Carica i backup</string>
-  <string name="google_drive_upload_backup_summary">Carica su Google Drive i backup della banca dati</string>
+  <string name="google_drive_upload_backup_summary">Manda su Google Drive i backup fatti a mano</string>
   <string name="google_drive_upload_pictures">Carica le foto</string>
   <string name="google_drive_upload_pictures_summary">Carica su Google Drive le foto allegate ai movimenti</string>
   <string name="highlight_copied_unedited_transactions">Evidenzia le copie non ancora modificate</string>
@@ -847,7 +847,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="pin_protection_use_fingerprint">Sblocco con impronta</string>
   <string name="pin_protection_use_fingerprint_fallback_to_pin">Permetti di sbloccare l\'app anche con il codice quando l\'impronta è attiva</string>
   <string name="pin_protection_use_fingerprint_fallback_to_pin_summary">Ripiega sul codice</string>
-  <string name="pin_protection_use_fingerprint_summary">Usa l\'impronta digitale per sbloccare l\'app</string>
+  <string name="pin_protection_use_fingerprint_summary">Sblocca con l’impronta invece che con il codice</string>
   <string name="pin_warning">Assicurati di ricordare il codice. Se lo dimentichi o lo perdi non c\'è alcun modo di recuperare i tuoi dati né di togliere la protezione.</string>
   <string name="pref_google_wallet">Google Wallet</string>
   <string name="pref_google_wallet_transaction_status">Stato dei movimenti creati dalle notifiche di Google Wallet: %s</string>
@@ -1052,13 +1052,13 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="icon_text">Testo da mostrare come icona (prova un\'emoji)</string>
   <string name="image_pick_camera">Fotocamera</string>
   <string name="image_pick_images">Immagini</string>
-  <string name="import_export_summary">Importazione ed esportazione in CSV e QIF</string>
+  <string name="import_export_summary">Porta i movimenti fuori e dentro nei formati CSV e QIF</string>
   <string name="import_file_not_found_2">File da importare non trovato. Prova senza il prefisso\n\'<xliff:g id="path">%1$s</xliff:g>\'</string>
   <string name="import_wrong_currency_2">Valuta errata nel file da importare: <xliff:g id="currency">%1$s</xliff:g> (deve coincidere con la valuta del conto, che è <xliff:g id="currency">%2$s</xliff:g>)</string>
   <string name="include_tx_status">Includi lo stato del movimento</string>
   <string name="installed_on_sd_card_warning">Le transazioni programmate potrebbero non funzionare se l\'app è installata sulla scheda SD. Spostala nella memoria del telefono.</string>
   <string name="integrity_error_message">%s%n(Tocca per chiudere questo messaggio)</string>
-  <string name="integrity_fix_summary">Ricalcola saldi e totali dai movimenti. Nessun movimento viene modificato</string>
+  <string name="integrity_fix_summary">Rifà i saldi dei conti e i totali progressivi partendo dai movimenti stessi. Serve quando un saldo non torna con la somma delle sue righe, cosa che capita di solito dopo un ripristino o un’importazione. Nessun movimento viene eliminato né modificato.</string>
   <string name="invalid_rrule">Regola di ricorrenza non valida: %s</string>
   <string name="is_included_into_reports">Includi nei report</string>
   <string name="is_included_into_reports_summary">Includi nei report le transazioni di questo conto</string>
@@ -1103,10 +1103,10 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="period_this_year">Quest\'anno</string>
   <string name="period_tomorrow">Domani</string>
   <string name="permissions">Permessi</string>
-  <string name="permissions_summary">Permessi da concedere a mano</string>
+  <string name="permissions_summary">I permessi che vanno concessi a mano</string>
   <string name="planner">Pianificatore</string>
   <string name="planner_summary">Proiezione dei mesi successivi con il programmato</string>
-  <string name="preferences_summary">Impostazioni dell’app</string>
+  <string name="preferences_summary">Aspetto, movimenti, conti e widget</string>
   <string name="privacy_policy">Informativa sulla privacy</string>
   <string name="provided_by_other_app">(Fornito da un\'altra app)</string>
   <string name="rate_as_of">Cambio al %s, </string>
@@ -1207,8 +1207,8 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="show_summary_tab_summary">Mostra il mese a colpo d\'occhio come prima scheda</string>
   <string name="quick_entry_from_widget">Spesa veloce dal widget</string>
   <string name="quick_entry_from_widget_summary">Il tasto del widget apre la schermata veloce invece del modulo completo</string>
-  <string name="feedback">Invia un riscontro</string>
-  <string name="feedback_summary">Segnalazioni e suggerimenti</string>
+  <string name="feedback">Scrivi allo sviluppatore</string>
+  <string name="feedback_summary">Un suggerimento, una funzione che manca, o qualcosa che non ha funzionato</string>
   <string name="feedback_subject">Cifra %1$s - riscontro</string>
   <string name="feedback_body">Scrivi qui sotto quello che vuoi dire.\n\n---\nCifra %1$s\n%2$s\n%3$s</string>
   <string name="feedback_no_mail">Nessuna app di posta su questo telefono</string>
@@ -1236,7 +1236,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="menu_currencies">Periodi, valute e cambi</string>
   <string name="menu_currencies_summary">Valute dei conti, tassi di cambio, settimana e anno fiscale</string>
   <string name="menu_records">Beneficiari, luoghi e progetti</string>
-  <string name="menu_records_summary">Beneficiari, luoghi e progetti</string>
+  <string name="menu_records_summary">I nomi che accompagnano un movimento accanto alla categoria</string>
   <string name="menu_backup_restore">Backup e ripristino</string>
   <string name="menu_backup_restore_summary">Su file, su Google Drive, su Dropbox, o da mandare altrove</string>
   <string name="currency_already_exists">%1$s esiste già. Due valute con lo stesso codice non si distinguono.</string>
@@ -1247,7 +1247,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="quick_bar_summary">Una notifica silenziosa con spesa veloce, movimento e trasferimento</string>
   <string name="quick_bar_title">Nuova operazione</string>
   <string name="menu_backup_security">Backup, ripristino e sicurezza</string>
-  <string name="menu_backup_security_summary">Copia su file, Drive o Dropbox, e blocco dell’app</string>
+  <string name="menu_backup_security_summary">La copia dei dati su questo telefono e il blocco dell’app</string>
   <string name="csv_map_title">Importa da un\'altra app</string>
   <string name="csv_map_intro">Scegli un file esportato dall\'app che stai lasciando. Cifra lo legge e ti chiede cosa sono le sue colonne. Non scrive niente finché non glielo dici tu.</string>
   <string name="csv_map_choose_file">Scegli il file</string>
@@ -1585,7 +1585,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
     <item>Sempre in orizzontale</item>
   </string-array>
   <string name="backup_online">Backup online</string>
-  <string name="backup_online_summary">Manda una copia su Drive o Dropbox, e la riporta indietro</string>
+  <string name="backup_online_summary">Manda una copia su Drive o Dropbox e la riporta indietro</string>
   <string name="section_local_backup">Su questo telefono</string>
   <string name="section_app_settings">Impostazioni dell’app</string>
   <string name="section_from_other_apps">Da un’altra app</string>
@@ -1596,7 +1596,7 @@ Va bene qualunque cartella compaia nel selettore, anche di OneDrive, Nextcloud o
   <string name="section_period">Periodo</string>
   <string name="section_currencies_rates">Valute e cambi</string>
   <string name="auto_read_notifications">Lettura automatica notifiche</string>
-  <string name="auto_read_notifications_summary">Cosa Cifra legge da sola dalle notifiche di altre app</string>
+  <string name="auto_read_notifications_summary">I movimenti registrati leggendo le notifiche di banche e pagamenti</string>
   <string name="section_rules">Regole di lettura</string>
   <string name="sms_templates_summary">Le regole che trasformano una notifica in un movimento</string>
 </resources>
