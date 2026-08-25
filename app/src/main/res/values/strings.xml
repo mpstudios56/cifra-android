@@ -1733,4 +1733,8 @@ Any folder the picker offers will do, including one belonging to OneDrive, Nextc
     <string name="account_separator_where">Position</string>
     <string name="account_separator_where_first">Above the first of its accounts</string>
     <string name="account_separator_where_above">Above %s</string>
+    <string name="period_family_running">Running</string>
+    <string name="period_family_past">Past</string>
+    <string name="period_family_together">Taken together</string>
+    <string name="period_family_by_hand">Chosen by hand</string>
 </resources>

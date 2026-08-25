@@ -82,11 +82,7 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         totalText.setOnClickListener(v -> showTotals());
 
         bFilter = view.findViewById(R.id.bFilter);
-        bFilter.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), DateFilterActivity.class);
-            filter.toIntent(intent);
-            startActivityForResult(intent, FILTER_BUDGET_REQUEST);
-        });
+        bFilter.setOnClickListener(v -> showPeriodPicker());
 
         bSortOrder = view.findViewById(R.id.bSortOrder);
         bSortOrder.setOnClickListener(v -> {
@@ -118,6 +114,157 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         applyFilter();
     }
 
+    /**
+     * Which stretch of time the budgets are shown for.
+     * <p>
+     * The periods are laid out in the open rather than folded into a dropdown,
+     * and the foot of it carries the same three the movements filter does: set
+     * with the green button, cleared with the funnel beside it - all budgets,
+     * whatever their date - or left alone with the way out.
+     */
+    private void showPeriodPicker() {
+        final PeriodType[] periods = PeriodType.allRegular();
+
+        android.view.ContextThemeWrapper themed = new android.view.ContextThemeWrapper(
+                getContext(), R.style.CifraChoiceDialog);
+        final View view = android.view.LayoutInflater.from(themed)
+                .inflate(R.layout.budget_period, null);
+        final android.widget.RadioGroup group = view.findViewById(R.id.period_group);
+        final View customPeriod = view.findViewById(R.id.custom_period);
+        final android.widget.Button bFrom = view.findViewById(R.id.bPeriodFrom);
+        final android.widget.Button bTo = view.findViewById(R.id.bPeriodTo);
+
+        // The two dates a custom period is made of, filled in as they are picked.
+        final java.util.Calendar cFrom = java.util.Calendar.getInstance();
+        final java.util.Calendar cTo = java.util.Calendar.getInstance();
+        final java.text.DateFormat df =
+                io.github.mpstudios56.cifra.datetime.DateUtils.getShortDateFormat(getContext());
+
+        // What is set now, so the list opens on it.
+        DateTimeCriterion current = (DateTimeCriterion) filter.get(BlotterFilter.DATETIME);
+        PeriodType chosen = PeriodType.THIS_MONTH;
+        if (current != null && current.getPeriod() != null) {
+            chosen = current.getPeriod().type;
+        } else if (current != null) {
+            chosen = PeriodType.CUSTOM;
+        }
+        if (chosen == PeriodType.CUSTOM && current != null) {
+            cFrom.setTimeInMillis(current.getLongValue1());
+            cTo.setTimeInMillis(current.getLongValue2());
+        }
+
+        // Fifteen periods read as a wall. Gathered into the four families they
+        // actually belong to - what is running, what has finished, the two
+        // taken together, and one chosen by hand - the eye lands on the right
+        // handful straight away.
+        final int density = Math.round(getResources().getDisplayMetrics().density);
+        int lastFamily = -1;
+        for (int i = 0; i < periods.length; i++) {
+            int family = familyOf(periods[i]);
+            if (family != lastFamily) {
+                TextView heading = new TextView(themed);
+                heading.setText(getString(familyTitle(family)));
+                heading.setTextColor(0xFF4CAF7D);
+                heading.setTextSize(13);
+                heading.setPadding(0, (i == 0 ? 4 : 14) * density, 0, 2 * density);
+                group.addView(heading);
+                lastFamily = family;
+            }
+            android.widget.RadioButton row = new android.widget.RadioButton(themed);
+            row.setId(i);
+            row.setText(getString(periods[i].getTitleId()));
+            row.setTextColor(0xFFF4EFE4);
+            row.setPadding(row.getPaddingLeft(), 5 * density, row.getPaddingRight(), 5 * density);
+            group.addView(row);
+            if (periods[i] == chosen) {
+                group.check(i);
+            }
+        }
+
+        bFrom.setText(df.format(cFrom.getTime()));
+        bTo.setText(df.format(cTo.getTime()));
+        customPeriod.setVisibility(chosen == PeriodType.CUSTOM ? View.VISIBLE : View.GONE);
+        group.setOnCheckedChangeListener((g, id) -> customPeriod.setVisibility(
+                id >= 0 && periods[id] == PeriodType.CUSTOM ? View.VISIBLE : View.GONE));
+
+        bFrom.setOnClickListener(v -> new android.app.DatePickerDialog(getContext(),
+                (picker, y, m, d) -> {
+                    cFrom.set(y, m, d);
+                    io.github.mpstudios56.cifra.datetime.DateUtils.startOfDay(cFrom);
+                    bFrom.setText(df.format(cFrom.getTime()));
+                }, cFrom.get(java.util.Calendar.YEAR), cFrom.get(java.util.Calendar.MONTH),
+                cFrom.get(java.util.Calendar.DAY_OF_MONTH)).show());
+        bTo.setOnClickListener(v -> new android.app.DatePickerDialog(getContext(),
+                (picker, y, m, d) -> {
+                    cTo.set(y, m, d);
+                    io.github.mpstudios56.cifra.datetime.DateUtils.endOfDay(cTo);
+                    bTo.setText(df.format(cTo.getTime()));
+                }, cTo.get(java.util.Calendar.YEAR), cTo.get(java.util.Calendar.MONTH),
+                cTo.get(java.util.Calendar.DAY_OF_MONTH)).show());
+
+        final androidx.appcompat.app.AlertDialog dialog =
+                new androidx.appcompat.app.AlertDialog.Builder(getContext(), R.style.CifraChoiceDialog)
+                        .setTitle(R.string.period)
+                        .setView(view)
+                        .create();
+
+        view.findViewById(R.id.bOK).setOnClickListener(v -> {
+            int id = group.getCheckedRadioButtonId();
+            PeriodType period = id >= 0 && id < periods.length ? periods[id] : PeriodType.THIS_MONTH;
+            if (period == PeriodType.CUSTOM) {
+                filter.put(new DateTimeCriterion(cFrom.getTimeInMillis(), cTo.getTimeInMillis()));
+            } else {
+                filter.put(new DateTimeCriterion(period));
+            }
+            saveFilter();
+            recreateCursor();
+            dialog.dismiss();
+        });
+        // The funnel with the cross: no period at all, every budget shown.
+        view.findViewById(R.id.bNoFilter).setOnClickListener(v -> {
+            filter.clear();
+            saveFilter();
+            recreateCursor();
+            dialog.dismiss();
+        });
+        view.findViewById(R.id.bCancel).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+    /** Which of the four families a period belongs to. */
+    private static int familyOf(PeriodType period) {
+        switch (period) {
+            case LAST_WEEK:
+            case LAST_MONTH:
+            case LAST_YEAR:
+            case LAST_FISCAL_YEAR:
+                return 1;
+            case THIS_AND_LAST_WEEK:
+            case THIS_AND_LAST_MONTH:
+            case THIS_AND_LAST_YEAR:
+            case THIS_AND_LAST_FISCAL_YEAR:
+                return 2;
+            case CUSTOM:
+                return 3;
+            default:
+                return 0;
+        }
+    }
+
+    private static int familyTitle(int family) {
+        switch (family) {
+            case 1:
+                return R.string.period_family_past;
+            case 2:
+                return R.string.period_family_together;
+            case 3:
+                return R.string.period_family_by_hand;
+            default:
+                return R.string.period_family_running;
+        }
+    }
+
     private void showTotals() {
         Intent intent = new Intent(getContext(), BudgetListTotalsDetailsActivity.class);
         filter.toIntent(intent);
@@ -131,8 +278,22 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         recreateCursor();
     }
 
+    /**
+     * The calendar keeps its face and only changes colour.
+     * <p>
+     * It used to be handed to the same code that draws the funnel on the
+     * movements, which sets the picture as well as the colour - so the calendar
+     * was replaced by a funnel every time the list was refreshed, however it
+     * had been drawn in the layout.
+     */
     private void applyFilter() {
-        FilterState.updateFilterColor(getContext(), filter, bFilter);
+        if (bFilter == null) {
+            return;
+        }
+        bFilter.setImageResource(R.drawable.actionbar_calendar);
+        bFilter.setColorFilter(filter.isEmpty() ? null
+                : new android.graphics.PorterDuffColorFilter(0xFF4CAF7D,
+                        android.graphics.PorterDuff.Mode.SRC_IN));
     }
 
     @Override

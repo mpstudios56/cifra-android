@@ -159,8 +159,8 @@
   <string name="period_yesterday">Ieri</string>
   <string name="period_this_week">Questa settimana</string>
   <string name="period_this_month">Questo mese</string>
-  <string name="period_last_week">Ultima settimana</string>
-  <string name="period_last_month">Ultimo mese</string>
+  <string name="period_last_week">Settimana passata</string>
+  <string name="period_last_month">Mese passato</string>
   <string name="currency_name">Nome</string>
   <string name="currency_symbol">Simbolo</string>
   <string name="currency_code">Codice</string>
@@ -1090,13 +1090,13 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
   <string name="notification_copied">Contenuto della notifica copiato negli appunti</string>
   <string name="notification_list">Elenco delle notifiche</string>
   <string name="offline_rate">Nessuna connessione: applicato l\'ultimo cambio disponibile…</string>
-  <string name="period_last_fiscal_year">Anno fiscale scorso</string>
-  <string name="period_last_year">Anno scorso</string>
+  <string name="period_last_fiscal_year">Anno fiscale passato</string>
+  <string name="period_last_year">Anno passato</string>
   <string name="period_next_3_months">Prossimi 3 mesi</string>
   <string name="period_next_month">Mese prossimo</string>
   <string name="period_next_week">Settimana prossima</string>
-  <string name="period_this_and_last_fiscal_year">Questo e lo scorso anno fiscale</string>
-  <string name="period_this_and_last_year">Quest\'anno e lo scorso</string>
+  <string name="period_this_and_last_fiscal_year">Anno fiscale corrente e passato</string>
+  <string name="period_this_and_last_year">Quest\'anno e il passato</string>
   <string name="period_this_and_next_month">Questo mese e il prossimo</string>
   <string name="period_this_and_next_week">Questa settimana e la prossima</string>
   <string name="period_this_fiscal_year">Anno fiscale in corso</string>
@@ -1613,4 +1613,8 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
     <string name="account_separator_where">Posizione</string>
     <string name="account_separator_where_first">Sopra il primo dei suoi conti</string>
     <string name="account_separator_where_above">Sopra %s</string>
+    <string name="period_family_running">In corso</string>
+    <string name="period_family_past">Passati</string>
+    <string name="period_family_together">Presi insieme</string>
+    <string name="period_family_by_hand">Scelto a mano</string>
 </resources>
