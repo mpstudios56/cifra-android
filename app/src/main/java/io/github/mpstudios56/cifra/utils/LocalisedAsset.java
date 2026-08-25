@@ -71,8 +71,24 @@ public class LocalisedAsset {
      * that will be wrong in one of them.
      */
     public static String readStyled(Context context, String name) {
+        String page = read(context, name);
+        // Some of these pages are whole documents with a head of their own -
+        // the licence came from the Free Software Foundation as it stands -
+        // and wrapping one inside another leaves a document with two heads.
+        // The look goes into the head it already has.
+        int head = page.indexOf("</head>");
+        if (head >= 0) {
+            return page.substring(0, head) + style() + page.substring(head);
+        }
         return "<html><head><meta name=\"viewport\" "
-                + "content=\"width=device-width, initial-scale=1\"><style>"
+                + "content=\"width=device-width, initial-scale=1\">"
+                + style()
+                + "</head><body>" + page + "</body></html>";
+    }
+
+    /** The one set of rules every page kept as a file is read by. */
+    private static String style() {
+        return "<style>"
                 + "body{background:#141414;color:#F4EFE4;"
                 + "font-family:sans-serif;font-size:15px;line-height:1.5;"
                 + "margin:0;padding:4px 10px 16px 10px;}"
@@ -85,10 +101,14 @@ public class LocalisedAsset {
                 + "a{color:#4CAF7D;}"
                 + "ul,ol{margin:8px 0;padding-left:20px;}"
                 + "li{margin:6px 0;}"
+                // The licence holds blocks typed out with fixed spacing, which
+                // by rule are never broken: they ran off the right edge and had
+                // to be dragged into view a line at a time.
+                + "pre{white-space:pre-wrap;font-size:13px;}"
                 // Long addresses used to push the page sideways, so that the
                 // text had to be dragged left and right to be read.
                 + "*{word-wrap:break-word;overflow-wrap:break-word;}"
-                + "</style></head><body>" + read(context, name) + "</body></html>";
+                + "</style>";
     }
 
     private static String version(Context context) {

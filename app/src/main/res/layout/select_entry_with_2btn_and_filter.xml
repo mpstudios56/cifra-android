@@ -16,15 +16,6 @@
 	a:orientation="horizontal" a:gravity="center_vertical"
 	a:focusable="true" a:clickable="true">
 
-	<ToggleButton a:layout_width="wrap_content"
-				  a:id="@+id/filterToggle"
-				  a:textOn=""
-				  a:textOff=""
-				  a:layout_height="wrap_content"
-				  a:layout_gravity="center_vertical"
-				  style="@style/ListButton"
-				  a:background="@drawable/btn_toggle_filter"/>
-
 	<AutoCompleteTextView
 			a:id="@+id/autocomplete_filter"
 			a:imeOptions="flagNoExtractUi"
@@ -33,10 +24,20 @@
 			a:hint="@string/autocomplete_filter_hint"
 			a:visibility="gone"
 			a:completionThreshold="1"
+			a:background="@drawable/search_field"
+			a:paddingStart="14dp"
+			a:paddingEnd="14dp"
+			a:paddingTop="8dp"
+			a:paddingBottom="8dp"
+			a:textColor="#FFF4EFE4"
+			a:textColorHint="#8CF4EFE4"
+			a:textSize="15sp"
+			a:maxLines="1"
 			a:text=""/>
 
 	<LinearLayout a:orientation="horizontal"
-				  a:layout_width="match_parent"
+				  a:layout_width="0dp"
+				  a:layout_weight="1"
 				  a:layout_height="wrap_content"
 				  a:layout_margin="0dp"
 				  a:padding="0dp"
@@ -85,5 +86,22 @@
 			a:focusable="true" />
 
 	</LinearLayout>
+
+	<!--
+	  The button that opens the list sits at the end of the row, not at the
+	  head of it. At the head it pushed the field in from the edge, so on a
+	  screen of ten filters four of them began where the others left off, and
+	  the eye had two left margins to follow. Moved across it keeps its work
+	  and gives the field back its place.
+	-->
+	<ToggleButton a:layout_width="wrap_content"
+				  a:id="@+id/filterToggle"
+				  a:textOn=""
+				  a:textOff=""
+				  a:layout_height="wrap_content"
+				  a:layout_gravity="center_vertical"
+				  style="@style/ListButton"
+				  a:background="@drawable/btn_toggle_filter"/>
+
 
 </LinearLayout>

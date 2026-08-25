@@ -110,7 +110,13 @@ public class AboutActivity extends AppCompatActivity {
                         });
                         break;
                     case 2:
-                        vh.webView.loadUrl("file:///android_asset/gpl-2.0-standalone.htm");
+                        // The licence too: it arrived as a whole page of its
+                        // own, and unstyled it was black on white and too small
+                        // to read.
+                        vh.webView.loadDataWithBaseURL("file:///android_asset/",
+                                LocalisedAsset.readStyled(vh.webView.getContext(),
+                                        "gpl-2.0-standalone.htm"),
+                                "text/html", "UTF-8", null);
                         break;
                 }
             }
