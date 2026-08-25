@@ -56,12 +56,20 @@ public enum MenuListItem implements SummaryEntityEnum {
             fragment.startActivity(new Intent(fragment.getContext(), CategoryListActivity2.class));
         }
     },
+    /**
+     * The week, the fiscal year, the currencies and the rates, on one screen.
+     * <p>
+     * This used to open a list of two rows, Currencies and Rates, while the
+     * period settings sat three screens away under the general preferences.
+     * Moving them next to the currencies left them with nothing opening the
+     * screen they had been moved to: they were not in the settings any more,
+     * and not yet anywhere else.
+     */
     MENU_CURRENCIES(R.string.menu_currencies, R.string.menu_currencies_summary, R.drawable.ic_action_money) {
         @Override
         public void call(Fragment fragment) {
-            Intent intent = new Intent(fragment.getContext(), MenuPageActivity.class);
-            intent.putExtra(MenuPageActivity.PAGE_EXTRA, MenuPageActivity.PAGE_CURRENCIES);
-            fragment.startActivity(intent);
+            openSettingsScreen(fragment,
+                    "io.github.mpstudios56.cifra.preference.PeriodsCurrencyPreferencesFragment");
         }
     },
     MENU_ENTITIES(R.string.menu_records, R.string.menu_records_summary, R.drawable.drawer_action_entities) {
@@ -283,41 +291,6 @@ public enum MenuListItem implements SummaryEntityEnum {
                     || !RequestPermission.isRequestingPermissions(fragment.getContext(), permissions)) {
                 fragment.startActivity(new Intent(fragment.getContext(), actitivyClass));
             }
-        }
-    }
-
-    /** Currencies and the rates between them: one subject, two screens. */
-    enum CurrencyEntities implements ExecutableEntityEnum<Fragment> {
-
-        CURRENCIES(R.string.currencies, R.drawable.ic_action_money) {
-            @Override
-            public void execute(Fragment fragment) {
-                fragment.startActivity(new Intent(fragment.getContext(), CurrencyListActivity.class));
-            }
-        },
-        EXCHANGE_RATES(R.string.exchange_rates, R.drawable.ic_action_line_chart) {
-            @Override
-            public void execute(Fragment fragment) {
-                fragment.startActivity(new Intent(fragment.getContext(), ExchangeRatesListActivity.class));
-            }
-        };
-
-        private final int titleId;
-        private final int iconId;
-
-        CurrencyEntities(int titleId, int iconId) {
-            this.titleId = titleId;
-            this.iconId = iconId;
-        }
-
-        @Override
-        public int getTitleId() {
-            return titleId;
-        }
-
-        @Override
-        public int getIconId() {
-            return iconId;
         }
     }
 
@@ -600,13 +573,6 @@ public enum MenuListItem implements SummaryEntityEnum {
                 R.string.section_qif,
                 ImportExportEntities.QIF_EXPORT,
                 ImportExportEntities.QIF_IMPORT,
-        };
-    }
-
-    static Object[] currencyPage() {
-        return new Object[]{
-                CurrencyEntities.CURRENCIES,
-                CurrencyEntities.EXCHANGE_RATES,
         };
     }
 

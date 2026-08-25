@@ -26,7 +26,6 @@ public class MenuPageActivity extends AppCompatActivity {
 
     /** Which page to show: one of the names below. */
     public static final String PAGE_EXTRA = "page";
-    public static final String PAGE_CURRENCIES = "currencies";
     public static final String PAGE_ENTITIES = "entities";
     public static final String PAGE_IMPORT_EXPORT = "import_export";
 
@@ -34,20 +33,14 @@ public class MenuPageActivity extends AppCompatActivity {
         if (PAGE_ENTITIES.equals(page)) {
             return MenuListItem.entitiesPage();
         }
-        if (PAGE_IMPORT_EXPORT.equals(page)) {
-            return MenuListItem.importExportPage();
-        }
-        return MenuListItem.currencyPage();
+        return MenuListItem.importExportPage();
     }
 
     private static int titleFor(String page) {
         if (PAGE_ENTITIES.equals(page)) {
             return R.string.menu_records;
         }
-        if (PAGE_IMPORT_EXPORT.equals(page)) {
-            return R.string.import_export;
-        }
-        return R.string.menu_currencies;
+        return R.string.import_export;
     }
 
     @Override
