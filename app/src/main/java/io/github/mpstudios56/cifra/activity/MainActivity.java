@@ -174,10 +174,19 @@ public class MainActivity extends AppCompatActivity {
         };
         viewPager.setAdapter(pagerAdapter);
 
+        // One listener, registered once. The strip is rebuilt whenever the
+        // tabs change, and a listener added each time it was rebuilt piled up
+        // one on top of another - every page change then did the same work over
+        // and over, more of it after every rebuild.
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 refreshCurrentTab();
+                // After the pager has finished with the frame, not during it:
+                // changing the layout of anything in the window while the pager
+                // is settling makes it drop the page it was asked for, which is
+                // why a tab sometimes lit up while the screen stayed behind.
+                viewPager.post(() -> floatingButtonsFor(position));
             }
         });
 
@@ -236,18 +245,6 @@ public class MainActivity extends AppCompatActivity {
                 });
         tabLayoutMediator.attach();
         tabLayout.post(this::oneLinePerTab);
-
-        // The floating buttons follow the tab: see floatingButtonsFor.
-        viewPager.registerOnPageChangeCallback(new androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                // After the pager has finished with the frame, not during it:
-                // changing the layout of anything in the window while the pager
-                // is settling makes it drop the page it was asked for, which is
-                // why a tab sometimes lit up while the screen stayed behind.
-                viewPager.post(() -> floatingButtonsFor(position));
-            }
-        });
     }
 
     /** Position of a tab by name, or -1 when it is not currently shown. */
@@ -265,6 +262,9 @@ public class MainActivity extends AppCompatActivity {
      * dealt with, or a tab was switched off in the preferences. Keeps whichever tab
      * was open where possible, since positions shift underneath.
      */
+    /** How many times the strip has been put off while the pager was busy. */
+    private int waitedForTheStrip = 0;
+
     public void refreshTabs() {
         List<MainTab> wanted = buildVisibleTabs();
         if (wanted.equals(visibleTabs)) {
@@ -274,11 +274,22 @@ public class MainActivity extends AppCompatActivity {
         // placing its pages: the drafts screen asks for this from onResume,
         // which happens while the pager is still measuring itself, and Android
         // refuses. Asked again a moment later, when the pass is over.
+        //
+        // A moment later, and not for ever: waiting by putting the same request
+        // back at the end of the queue, again and again, fills the queue with
+        // itself. Nothing else gets a turn - which is a screen that lights up
+        // its tabs and never changes page. Twenty tries, then it goes ahead
+        // regardless; a strip drawn a frame early is a smaller fault than an
+        // app that stops answering.
         if (viewPager.isFakeDragging() || viewPager.getScrollState() != ViewPager2.SCROLL_STATE_IDLE
                 || isPagerBusy()) {
-            viewPager.post(this::refreshTabs);
-            return;
+            if (waitedForTheStrip < 20) {
+                waitedForTheStrip++;
+                viewPager.postDelayed(this::refreshTabs, 50);
+                return;
+            }
         }
+        waitedForTheStrip = 0;
         String current = visibleTabs.isEmpty() ? null
                 : visibleTabs.get(Math.min(viewPager.getCurrentItem(), visibleTabs.size() - 1)).tag;
         visibleTabs = wanted;
