@@ -25,6 +25,16 @@ public class AccountSeparator {
     public String title;
 
     /**
+     * The account it is drawn above, or zero for "wherever the first of mine
+     * falls".
+     * <p>
+     * A group follows its own accounts by default, which is what one wants
+     * nine times out of ten. This is for the tenth: a heading that has to stand
+     * at a particular point of the list whatever the order does.
+     */
+    public long beforeAccountId;
+
+    /**
      * Whether its accounts are folded away.
      * <p>
      * Kept with the heading itself, so it survives the list being rearranged

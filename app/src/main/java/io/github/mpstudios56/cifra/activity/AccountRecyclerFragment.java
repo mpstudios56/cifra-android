@@ -378,6 +378,33 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                 .create());
     }
 
+    /**
+     * Where the heading is drawn.
+     * <p>
+     * By itself it follows its own accounts, appearing above the first of them.
+     * This is for saying otherwise: above a particular account, wherever that
+     * account ends up. The first choice puts it back to following its own.
+     */
+    private void askWhereTheSeparatorGoes(final AccountSeparator separator) {
+        final List<Account> accounts = db.getAllAccountsList();
+        final String[] choices = new String[accounts.size() + 1];
+        choices[0] = getString(R.string.account_separator_where_first);
+        for (int i = 0; i < accounts.size(); i++) {
+            choices[i + 1] = getString(R.string.account_separator_where_above,
+                    accounts.get(i).title);
+        }
+        DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+                getContext(), R.style.CifraChoiceDialog)
+                .setTitle(R.string.account_separator_where)
+                .setItems(choices, (dialog, which) -> {
+                    separator.beforeAccountId = which == 0 ? 0 : accounts.get(which - 1).id;
+                    db.saveAccountSeparator(separator);
+                    recreateCursor();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create());
+    }
+
     /** Held down: rename it, or take it away. */
     private void askWhatToDoWithSeparator(final AccountSeparator separator) {
         DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
@@ -385,11 +412,14 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                 .setTitle(separator.title)
                 .setItems(new String[]{
                         getString(R.string.account_separator_accounts),
+                        getString(R.string.account_separator_where),
                         getString(R.string.account_separator_rename),
                         getString(R.string.account_separator_delete)}, (dialog, which) -> {
                     if (which == 0) {
                         askWhichAccountsAreUnder(separator);
                     } else if (which == 1) {
+                        askWhereTheSeparatorGoes(separator);
+                    } else if (which == 2) {
                         askForSeparatorName(separator);
                     } else {
                         db.deleteAccountSeparator(separator.id);
@@ -577,7 +607,7 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
         });
         java.util.Map<Long, io.github.mpstudios56.cifra.model.AccountSeparator> headings =
                 db.getAccountSeparators();
-        a.setSeparators(headings);
+        a.setSeparators(headings, db.getSeparatorByAccount());
         if (getActivity() != null) {
             // The button belongs on this screen only while there is something
             // to fold: with no headings written there are no groups.

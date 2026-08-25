@@ -80,6 +80,9 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     /** Headings by their own number. */
     private java.util.Map<Long, AccountSeparator> separators = java.util.Collections.emptyMap();
 
+    /** Which heading each account is gathered under, by account. */
+    private java.util.Map<Long, Long> under = java.util.Collections.emptyMap();
+
     private OnSeparatorAction onSeparatorAction;
 
     /** What the screen wants to happen when a heading is touched. */
@@ -105,8 +108,10 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      * hidden: a row that is not in the list cannot be measured, drawn or
      * counted by mistake.
      */
-    public void setSeparators(java.util.Map<Long, AccountSeparator> separators) {
+    public void setSeparators(java.util.Map<Long, AccountSeparator> separators,
+                              java.util.Map<Long, Long> under) {
         this.separators = separators != null ? separators : java.util.Collections.emptyMap();
+        this.under = under != null ? under : java.util.Collections.emptyMap();
         rebuildRows();
     }
 
@@ -117,20 +122,22 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         // ahead of itself.
         java.util.Map<Long, java.util.List<Integer>> gathered = new java.util.HashMap<>();
         java.util.List<Integer> loose = new java.util.ArrayList<>();
-        java.util.List<Long> headingOrder = new java.util.ArrayList<>();
-        // Asked of the cursor by name: this list is built by a query that
-        // chooses its own columns, so their places are not known in advance.
-        int underColumn = cursor.getColumnIndex("separator_id");
+        // Where a heading has been told to stand, by the account it goes above.
+        java.util.Map<Long, Long> anchors = new java.util.HashMap<>();
+        for (AccountSeparator heading : separators.values()) {
+            if (heading.beforeAccountId > 0) {
+                anchors.put(heading.beforeAccountId, heading.id);
+            }
+        }
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            long under = underColumn < 0 ? 0 : cursor.getLong(underColumn);
-            if (under > 0 && separators.containsKey(under)) {
-                java.util.List<Integer> members = gathered.get(under);
+            long id = cursor.getLong(DatabaseHelper.BlotterColumns._id.ordinal());
+            Long heading = under.get(id);
+            if (heading != null && separators.containsKey(heading)) {
+                java.util.List<Integer> members = gathered.get(heading);
                 if (members == null) {
                     members = new java.util.ArrayList<>();
-                    gathered.put(under, members);
-                    // First one seen decides where the heading is drawn.
-                    headingOrder.add(under);
+                    gathered.put(heading, members);
                 }
                 members.add(i);
             } else {
@@ -141,26 +148,27 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         // Walked in the order of the list: a heading takes its place the moment
         // the first of its accounts would have appeared.
         java.util.Set<Long> written = new java.util.HashSet<>();
-        int nextLoose = 0;
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            long under = underColumn < 0 ? 0 : cursor.getLong(underColumn);
-            if (under > 0 && separators.containsKey(under)) {
-                if (written.add(under)) {
-                    AccountSeparator heading = separators.get(under);
-                    java.util.List<Integer> members = gathered.get(under);
-                    rows.add(heading);
-                    heading.hidden = heading.folded ? members.size() : 0;
-                    if (!heading.folded) {
-                        rows.addAll(members);
-                    }
+            long id = cursor.getLong(DatabaseHelper.BlotterColumns._id.ordinal());
+
+            // A heading told to stand above this account takes its place here,
+            // whether or not this account is one of its own.
+            Long placedHere = anchors.get(id);
+            if (placedHere != null && written.add(placedHere)) {
+                writeHeading(placedHere, gathered);
+            }
+
+            Long heading = under.get(id);
+            if (heading != null && separators.containsKey(heading)) {
+                // Its group is written the first time one of its accounts comes
+                // round, unless it has already been placed somewhere.
+                if (written.add(heading)) {
+                    writeHeading(heading, gathered);
                 }
                 continue;
             }
-            if (nextLoose < loose.size() && loose.get(nextLoose) == i) {
-                rows.add(i);
-                nextLoose++;
-            }
+            rows.add(i);
         }
 
         // A heading with nothing ticked for it yet goes at the foot of the
@@ -172,6 +180,21 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         }
         notifyDataSetChanged();
+    }
+
+    /** The heading itself, and under it its accounts unless it is folded. */
+    private void writeHeading(long id, java.util.Map<Long, java.util.List<Integer>> gathered) {
+        AccountSeparator heading = separators.get(id);
+        if (heading == null) {
+            return;
+        }
+        java.util.List<Integer> members = gathered.get(id);
+        int count = members == null ? 0 : members.size();
+        rows.add(heading);
+        heading.hidden = heading.folded ? count : 0;
+        if (!heading.folded && members != null) {
+            rows.addAll(members);
+        }
     }
 
     public AccountRecyclerAdapter(Context context, Cursor c, boolean showSortOrder, View.OnClickListener onClickListener,

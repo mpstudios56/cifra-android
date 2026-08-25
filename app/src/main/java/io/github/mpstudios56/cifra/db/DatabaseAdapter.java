@@ -2307,13 +2307,14 @@ public class DatabaseAdapter extends MyEntityManager {
     public java.util.Map<Long, AccountSeparator> getAccountSeparators() {
         java.util.Map<Long, AccountSeparator> byId = new java.util.LinkedHashMap<>();
         try (Cursor c = db().query(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE,
-                new String[]{"_id", "title", "is_folded"},
+                new String[]{"_id", "title", "is_folded", "before_account_id"},
                 null, null, null, null, "_id asc")) {
             while (c.moveToNext()) {
                 AccountSeparator separator = new AccountSeparator();
                 separator.id = c.getLong(0);
                 separator.title = c.getString(1);
                 separator.folded = c.getInt(2) != 0;
+                separator.beforeAccountId = c.getLong(3);
                 byId.put(separator.id, separator);
             }
         }
@@ -2325,6 +2326,7 @@ public class DatabaseAdapter extends MyEntityManager {
         ContentValues values = new ContentValues();
         values.put("title", separator.title);
         values.put("is_folded", separator.folded ? 1 : 0);
+        values.put("before_account_id", separator.beforeAccountId);
         if (separator.id == AccountSeparator.NEW) {
             separator.id = db().insert(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, null, values);
         } else {
@@ -2353,6 +2355,25 @@ public class DatabaseAdapter extends MyEntityManager {
             db().update(DatabaseHelper.ACCOUNT_TABLE, gathered, "_id=?",
                     new String[]{String.valueOf(accountId)});
         }
+    }
+
+    /**
+     * Which heading each account is gathered under.
+     * <p>
+     * Asked of the table rather than read off the list: the list is built from
+     * a view of the accounts, and a view knows only the columns it was written
+     * with. A column added to the table afterwards is simply not there, which
+     * is why every account looked ungathered however many were ticked.
+     */
+    public java.util.Map<Long, Long> getSeparatorByAccount() {
+        java.util.Map<Long, Long> under = new java.util.HashMap<>();
+        try (Cursor c = db().query(DatabaseHelper.ACCOUNT_TABLE,
+                new String[]{"_id", "separator_id"}, "separator_id>0", null, null, null, null)) {
+            while (c.moveToNext()) {
+                under.put(c.getLong(0), c.getLong(1));
+            }
+        }
+        return under;
     }
 
     /** The accounts gathered under a heading, by their numbers. */

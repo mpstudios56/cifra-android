@@ -1610,4 +1610,7 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
     <string name="account_separator_accounts">Quali conti</string>
     <string name="account_separator_name_hint">Casa, lavoro, risparmi\u2026</string>
     <string name="account_separator_fold_all">Chiudi tutti i gruppi</string>
+    <string name="account_separator_where">Dove si trova</string>
+    <string name="account_separator_where_first">Sopra il primo dei suoi conti</string>
+    <string name="account_separator_where_above">Sopra %s</string>
 </resources>
