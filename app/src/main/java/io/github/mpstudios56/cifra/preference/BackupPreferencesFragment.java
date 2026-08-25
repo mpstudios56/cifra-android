@@ -358,6 +358,11 @@ public class BackupPreferencesFragment extends PreferenceFragmentBase {
         boolean online = isOnline();
         hide("cat_protection", online);
         hide("cat_backup_local", online);
+        // The settings written to a file belong with the copy made on this
+        // phone, and nowhere else: left visible on both screens they appeared
+        // twice, once under a heading about Drive and Dropbox that has nothing
+        // to do with them.
+        hide("cat_app_settings", online);
         hide("cat_dropbox", !online);
         hide("cat_drive", !online);
     }
