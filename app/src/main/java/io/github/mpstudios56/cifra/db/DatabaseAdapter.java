@@ -2303,29 +2303,27 @@ public class DatabaseAdapter extends MyEntityManager {
     // what every entity here is assumed to have - no active flag, no place in
     // any total, nothing pointing at them.
 
-    /** All of them, by the account each one stands above. */
+    /** All of them, by their own number. */
     public java.util.Map<Long, AccountSeparator> getAccountSeparators() {
-        java.util.Map<Long, AccountSeparator> byAccount = new java.util.LinkedHashMap<>();
+        java.util.Map<Long, AccountSeparator> byId = new java.util.LinkedHashMap<>();
         try (Cursor c = db().query(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE,
-                new String[]{"_id", "title", "before_account_id", "is_folded"},
+                new String[]{"_id", "title", "is_folded"},
                 null, null, null, null, "_id asc")) {
             while (c.moveToNext()) {
                 AccountSeparator separator = new AccountSeparator();
                 separator.id = c.getLong(0);
                 separator.title = c.getString(1);
-                separator.beforeAccountId = c.getLong(2);
-                separator.folded = c.getInt(3) != 0;
-                byAccount.put(separator.beforeAccountId, separator);
+                separator.folded = c.getInt(2) != 0;
+                byId.put(separator.id, separator);
             }
         }
-        return byAccount;
+        return byId;
     }
 
     /** @return the heading's number, given to it now if it had none */
     public long saveAccountSeparator(AccountSeparator separator) {
         ContentValues values = new ContentValues();
         values.put("title", separator.title);
-        values.put("before_account_id", separator.beforeAccountId);
         values.put("is_folded", separator.folded ? 1 : 0);
         if (separator.id == AccountSeparator.NEW) {
             separator.id = db().insert(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, null, values);
@@ -2337,13 +2335,50 @@ public class DatabaseAdapter extends MyEntityManager {
     }
 
     /**
+     * Says which accounts a heading gathers.
+     * <p>
+     * Written in one go rather than one account at a time: what arrives is the
+     * whole answer to "which of these", so anything that was in the group and
+     * is no longer ticked has to be let go in the same breath, or it would stay
+     * in two places at once.
+     */
+    public void setAccountsUnderSeparator(long separatorId, java.util.Set<Long> accountIds) {
+        ContentValues loose = new ContentValues();
+        loose.put("separator_id", 0);
+        db().update(DatabaseHelper.ACCOUNT_TABLE, loose, "separator_id=?",
+                new String[]{String.valueOf(separatorId)});
+        ContentValues gathered = new ContentValues();
+        gathered.put("separator_id", separatorId);
+        for (Long accountId : accountIds) {
+            db().update(DatabaseHelper.ACCOUNT_TABLE, gathered, "_id=?",
+                    new String[]{String.valueOf(accountId)});
+        }
+    }
+
+    /** The accounts gathered under a heading, by their numbers. */
+    public java.util.Set<Long> getAccountsUnderSeparator(long separatorId) {
+        java.util.Set<Long> ids = new java.util.LinkedHashSet<>();
+        try (Cursor c = db().query(DatabaseHelper.ACCOUNT_TABLE, new String[]{"_id"},
+                "separator_id=?", new String[]{String.valueOf(separatorId)},
+                null, null, null)) {
+            while (c.moveToNext()) {
+                ids.add(c.getLong(0));
+            }
+        }
+        return ids;
+    }
+
+    /**
      * Takes a heading away.
      * <p>
-     * Nothing else goes with it: the accounts under it were never held by it,
-     * they merely followed it, and they stay where they are - gathered under
-     * whatever heading now comes before them, or under none.
+     * Its accounts are let go rather than removed: they were gathered, not
+     * owned, and they go back to standing on their own in the list.
      */
     public void deleteAccountSeparator(long id) {
+        ContentValues loose = new ContentValues();
+        loose.put("separator_id", 0);
+        db().update(DatabaseHelper.ACCOUNT_TABLE, loose, "separator_id=?",
+                new String[]{String.valueOf(id)});
         db().delete(DatabaseHelper.ACCOUNT_SEPARATOR_TABLE, "_id=?",
                 new String[]{String.valueOf(id)});
     }

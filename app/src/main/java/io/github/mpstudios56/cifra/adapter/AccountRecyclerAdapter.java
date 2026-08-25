@@ -77,7 +77,7 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      */
     private final java.util.List<Object> rows = new java.util.ArrayList<>();
 
-    /** Headings by the account each one stands above. */
+    /** Headings by their own number. */
     private java.util.Map<Long, AccountSeparator> separators = java.util.Collections.emptyMap();
 
     private OnSeparatorAction onSeparatorAction;
@@ -96,9 +96,14 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     /**
      * Hands over the headings and works out what the list is made of.
      * <p>
-     * The cursor is walked once: before each account, the heading fastened to
-     * it if there is one; and while a heading is folded, the accounts that
-     * follow it are left out until the next heading opens the list again.
+     * Each heading is drawn where the first of its accounts falls, and the rest
+     * of its accounts are brought up under it - so a group can gather accounts
+     * that are nowhere near each other, and still reads as one block. What is
+     * left over keeps its own place among them.
+     * <p>
+     * A folded group is built without its accounts rather than with them
+     * hidden: a row that is not in the list cannot be measured, drawn or
+     * counted by mistake.
      */
     public void setSeparators(java.util.Map<Long, AccountSeparator> separators) {
         this.separators = separators != null ? separators : java.util.Collections.emptyMap();
@@ -107,29 +112,64 @@ public class AccountRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void rebuildRows() {
         rows.clear();
-        AccountSeparator folding = null;
-        int counted = 0;
+        // Which places in the cursor belong to which heading, and in what
+        // order: gathered in one pass, so the second pass never has to look
+        // ahead of itself.
+        java.util.Map<Long, java.util.List<Integer>> gathered = new java.util.HashMap<>();
+        java.util.List<Integer> loose = new java.util.ArrayList<>();
+        java.util.List<Long> headingOrder = new java.util.ArrayList<>();
+        // Asked of the cursor by name: this list is built by a query that
+        // chooses its own columns, so their places are not known in advance.
+        int underColumn = cursor.getColumnIndex("separator_id");
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            long accountId = cursor.getLong(DatabaseHelper.BlotterColumns._id.ordinal());
-            AccountSeparator heading = separators.get(accountId);
-            if (heading != null) {
-                // A heading closes the group before it and opens its own.
-                if (folding != null) {
-                    folding.hidden = counted;
+            long under = underColumn < 0 ? 0 : cursor.getLong(underColumn);
+            if (under > 0 && separators.containsKey(under)) {
+                java.util.List<Integer> members = gathered.get(under);
+                if (members == null) {
+                    members = new java.util.ArrayList<>();
+                    gathered.put(under, members);
+                    // First one seen decides where the heading is drawn.
+                    headingOrder.add(under);
                 }
-                rows.add(heading);
-                folding = heading.folded ? heading : null;
-                counted = 0;
+                members.add(i);
+            } else {
+                loose.add(i);
             }
-            if (folding != null) {
-                counted++;
+        }
+
+        // Walked in the order of the list: a heading takes its place the moment
+        // the first of its accounts would have appeared.
+        java.util.Set<Long> written = new java.util.HashSet<>();
+        int nextLoose = 0;
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            long under = underColumn < 0 ? 0 : cursor.getLong(underColumn);
+            if (under > 0 && separators.containsKey(under)) {
+                if (written.add(under)) {
+                    AccountSeparator heading = separators.get(under);
+                    java.util.List<Integer> members = gathered.get(under);
+                    rows.add(heading);
+                    heading.hidden = heading.folded ? members.size() : 0;
+                    if (!heading.folded) {
+                        rows.addAll(members);
+                    }
+                }
                 continue;
             }
-            rows.add(i);
+            if (nextLoose < loose.size() && loose.get(nextLoose) == i) {
+                rows.add(i);
+                nextLoose++;
+            }
         }
-        if (folding != null) {
-            folding.hidden = counted;
+
+        // A heading with nothing ticked for it yet goes at the foot of the
+        // list, where it can still be held down and given some accounts.
+        for (AccountSeparator heading : separators.values()) {
+            if (!written.contains(heading.id)) {
+                heading.hidden = 0;
+                rows.add(heading);
+            }
         }
         notifyDataSetChanged();
     }

@@ -329,29 +329,49 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                         db.saveAccountSeparator(existing);
                         recreateCursor();
                     } else {
-                        askWhereTheSeparatorBegins(name);
+                        AccountSeparator made = new AccountSeparator(name);
+                        db.saveAccountSeparator(made);
+                        // Straight on to which accounts it gathers: a heading
+                        // with nothing under it is a word on its own.
+                        askWhichAccountsAreUnder(made);
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .create());
     }
 
-    /** Which account the heading stands above - that is, where its group starts. */
-    private void askWhereTheSeparatorBegins(final String name) {
+    /**
+     * Which accounts the heading gathers.
+     * <p>
+     * Ticked off a list of them all, so a group can hold accounts that sit
+     * nowhere near each other - the current account, a card and a wallet, with
+     * others in between that belong elsewhere. An account ticked here leaves
+     * whatever group it was in: it belongs to one at a time.
+     */
+    private void askWhichAccountsAreUnder(final AccountSeparator separator) {
         final List<Account> accounts = db.getAllAccountsList();
         if (accounts.isEmpty()) {
             return;
         }
+        final java.util.Set<Long> already = db.getAccountsUnderSeparator(separator.id);
         final String[] titles = new String[accounts.size()];
+        final boolean[] chosen = new boolean[accounts.size()];
         for (int i = 0; i < accounts.size(); i++) {
             titles[i] = accounts.get(i).title;
+            chosen[i] = already.contains(accounts.get(i).id);
         }
         DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
                 getContext(), R.style.CifraChoiceDialog)
-                .setTitle(R.string.account_separator_before)
-                .setItems(titles, (dialog, which) -> {
-                    db.saveAccountSeparator(
-                            new AccountSeparator(name, accounts.get(which).id));
+                .setTitle(separator.title)
+                .setMultiChoiceItems(titles, chosen, (dialog, which, isChecked) -> chosen[which] = isChecked)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    java.util.Set<Long> wanted = new java.util.LinkedHashSet<>();
+                    for (int i = 0; i < accounts.size(); i++) {
+                        if (chosen[i]) {
+                            wanted.add(accounts.get(i).id);
+                        }
+                    }
+                    db.setAccountsUnderSeparator(separator.id, wanted);
                     recreateCursor();
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -364,9 +384,12 @@ public class AccountRecyclerFragment extends AbstractRecyclerViewFragment
                 getContext(), R.style.CifraChoiceDialog)
                 .setTitle(separator.title)
                 .setItems(new String[]{
+                        getString(R.string.account_separator_accounts),
                         getString(R.string.account_separator_rename),
                         getString(R.string.account_separator_delete)}, (dialog, which) -> {
                     if (which == 0) {
+                        askWhichAccountsAreUnder(separator);
+                    } else if (which == 1) {
                         askForSeparatorName(separator);
                     } else {
                         db.deleteAccountSeparator(separator.id);

@@ -77,6 +77,16 @@ public class Account extends MyEntity {
 	 */
 	@Column(name = "is_main")
 	public boolean isMain = false;
+
+	/**
+	 * The heading this account is gathered under, or zero for none.
+	 * <p>
+	 * Written on the account rather than kept in a list belonging to the
+	 * heading, because an account belongs to one group at most: asking the
+	 * account is then a single answer and cannot contradict itself.
+	 */
+	@Column(name = "separator_id")
+	public long separatorId = 0;
 	
 	@Column(name = "last_account_id")
 	public long lastAccountId;

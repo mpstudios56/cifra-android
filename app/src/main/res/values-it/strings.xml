@@ -1607,7 +1607,7 @@ Va bene qualunque cartella proposta dal telefono, comprese quelle di OneDrive, N
     <string name="account_separator_add">Aggiungi un\u2019intestazione</string>
     <string name="account_separator_rename">Rinomina</string>
     <string name="account_separator_delete">Togli l\u2019intestazione</string>
-    <string name="account_separator_before">Da dove comincia?</string>
+    <string name="account_separator_accounts">Quali conti</string>
     <string name="account_separator_name_hint">Casa, lavoro, risparmi\u2026</string>
     <string name="account_separator_fold_all">Chiudi tutti i gruppi</string>
 </resources>

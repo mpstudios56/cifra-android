@@ -1727,7 +1727,7 @@ Any folder the picker offers will do, including one belonging to OneDrive, Nextc
     <string name="account_separator_add">Add a heading</string>
     <string name="account_separator_rename">Rename</string>
     <string name="account_separator_delete">Remove the heading</string>
-    <string name="account_separator_before">Where does it begin?</string>
+    <string name="account_separator_accounts">Which accounts</string>
     <string name="account_separator_name_hint">Home, work, savings\u2026</string>
     <string name="account_separator_fold_all">Fold every group</string>
 </resources>
