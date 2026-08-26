@@ -161,15 +161,15 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         int lastFamily = -1;
         for (int i = 0; i < periods.length; i++) {
             int family = familyOf(periods[i]);
-            if (family != lastFamily) {
+            if (family != lastFamily && familyTitle(family) != 0) {
                 TextView heading = new TextView(themed);
                 heading.setText(getString(familyTitle(family)));
                 heading.setTextColor(0xFF4CAF7D);
                 heading.setTextSize(13);
                 heading.setPadding(0, (i == 0 ? 4 : 14) * density, 0, 2 * density);
                 group.addView(heading);
-                lastFamily = family;
             }
+            lastFamily = family;
             android.widget.RadioButton row = new android.widget.RadioButton(themed);
             row.setId(i);
             row.setText(getString(periods[i].getTitleId()));
@@ -252,16 +252,22 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         }
     }
 
+    /**
+     * The words over a family, or nothing where none are wanted.
+     * <p>
+     * The first handful and the last need no announcing: what is running is
+     * what the list opens on, and a period chosen by hand is the one entry that
+     * says what it is. Two headings in the middle are enough to break the wall
+     * without turning a short list into an index.
+     */
     private static int familyTitle(int family) {
         switch (family) {
             case 1:
                 return R.string.period_family_past;
             case 2:
                 return R.string.period_family_together;
-            case 3:
-                return R.string.period_family_by_hand;
             default:
-                return R.string.period_family_running;
+                return 0;
         }
     }
 

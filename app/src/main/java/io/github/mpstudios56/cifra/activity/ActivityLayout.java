@@ -410,12 +410,20 @@ public class ActivityLayout {
 		return view;
 	}
 
+	/**
+	 * One of a list, chosen from a box in the app's own dress.
+	 * <p>
+	 * These were built on the framework's own dialog, which takes no theme from
+	 * the app: a white-on-grey list with the chosen row marked in Android's
+	 * blue, opening out of a screen that is dark and green everywhere else.
+	 */
 	private void selectSingleChoice(Context context, int titleId, ListAdapter adapter, int checkedItem,
 									DialogInterface.OnClickListener onClickListener) {
-		new AlertDialog.Builder(context)
+		DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+				context, R.style.CifraChoiceDialog)
 				.setSingleChoiceItems(adapter, checkedItem, onClickListener)
 				.setTitle(titleId)
-				.show();
+				.create());
 	}
 
 	public void selectMultiChoice(Context context, final int id, int titleId, final List<? extends MultiChoiceItem> items) {
@@ -426,14 +434,13 @@ public class ActivityLayout {
 			titles[i] = items.get(i).getTitle();
 			checked[i] = items.get(i).isChecked();
 		}
-		new AlertDialog.Builder(context)
+		DialogAnswers.show(new androidx.appcompat.app.AlertDialog.Builder(
+				context, R.style.CifraChoiceDialog)
 				.setMultiChoiceItems(titles, checked, (dialog, which, isChecked) -> items.get(which).setChecked(isChecked))
 				.setPositiveButton(R.string.ok, (dialog, which) -> listener.onSelected(id, items))
-				.setNegativeButton(R.string.cancel, (dialog, which) -> {
-
-                })
+				.setNegativeButton(R.string.cancel, null)
 				.setTitle(titleId)
-				.show();
+				.create());
 	}
 
 	public void selectPosition(Context context, final int id, int titleId,

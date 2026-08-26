@@ -180,8 +180,20 @@ public class NodeInflater {
 				listener.onClick(v1);
 				boolean filterVisible = toggleBtn.isChecked();
 
+				// The name and its answer step aside, and the arrow with them -
+				// but the row itself stays, because the button that opened the
+				// search lives in it. Hiding the whole row took that button
+				// away with everything else, and there was then no way back
+				// except to type something and choose it.
 				autoCompleteTxt.setVisibility(filterVisible ? VISIBLE : GONE);
-				v.findViewById(R.id.list_node_row).setVisibility(filterVisible ? GONE : VISIBLE);
+				View text = v.findViewById(R.id.node_text);
+				if (text != null) {
+					text.setVisibility(filterVisible ? GONE : VISIBLE);
+				}
+				View more = v.findViewById(R.id.more);
+				if (more != null) {
+					more.setVisibility(filterVisible ? GONE : VISIBLE);
+				}
 				if (filterVisible) {
 					autoCompleteTxt.setText("");
 					Utils.openSoftKeyboard(autoCompleteTxt, layout.getContext());
