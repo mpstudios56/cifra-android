@@ -1,6 +1,6 @@
 # Privacy Policy for Cifra
 
-Last updated: 11 August 2026
+Last updated: 27 August 2026
 
 Cifra is a personal finance manager for Android. It is free software, released
 under the GNU General Public License v2.0, and its complete source code is public
