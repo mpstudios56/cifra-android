@@ -41,6 +41,24 @@ Google Drive credentials.
 **Sharing a backup.** If you choose to send a backup somewhere else, for instance by
 email, the destination is entirely your choice.
 
+## Keeping one set of books with another person
+
+Cifra+ can keep two phones in step, so that two people writing in the same
+accounts each see what the other has written. It works through a folder in a
+cloud account that already belongs to one of you - Google Drive, Dropbox, or any
+folder your phone can reach - and nowhere else.
+
+There is no server of ours in the middle. Nobody signs in to anything belonging
+to the maker of this app, no account is created, and no copy of your movements
+is ever sent to us: we could not read them if we wanted to, because they never
+pass through anything we run. What travels is one file, written into your own
+folder and read back by the other phone.
+
+The two phones recognise each other by a code the two of you choose and type in
+yourselves. Only the accounts you tick are shared; the rest stay on your phone
+alone. Switching the feature off stops it, and the file in the folder is yours
+to delete whenever you like.
+
 ## Files you open in Cifra
 
 You can hand Cifra a file exported by another finance app and have it read the
