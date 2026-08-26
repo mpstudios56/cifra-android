@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One row of a list inside a dialog.
+
+  Android's own row for this marks the chosen one with a solid electric blue,
+  and it takes that blue from the platform rather than from the app - a theme
+  set on the dialog never reaches it, because the row is built with the
+  activity's own context. Ours says the same thing in the app's green.
+-->
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_activated"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:textColor="#FFF4EFE4"
+    android:textSize="16sp" />

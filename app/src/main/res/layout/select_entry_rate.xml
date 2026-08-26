@@ -37,7 +37,9 @@
             android:fadingEdge="horizontal"
             android:singleLine="true"
             android:text="Rate"
-            style="@style/Caption" />
+            style="@style/Caption"
+			android:textColor="#FFF4EFE4"
+			android:textSize="14sp" />
 
         <ImageButton
             android:id="@+id/rateCalculator"
@@ -82,7 +84,7 @@
             android:layout_below="@+id/rate"
             android:duplicateParentState="true"
             android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+			android:textSize="16sp" />
 
     </RelativeLayout>
 

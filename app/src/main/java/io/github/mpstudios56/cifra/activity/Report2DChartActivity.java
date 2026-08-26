@@ -249,7 +249,7 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         reportFilterName.setOnClickListener((v) -> {
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(new ArrayAdapter<>(this,
-                                    android.R.layout.simple_list_item_activated_1,
+                                    R.layout.dialog_choice_row,
                                     android.R.id.text1,
                                     reportData.getFilterItemTitles()),
                             reportData.getSelectedFilter(),
@@ -479,7 +479,7 @@ public class Report2DChartActivity extends Activity implements OnChartValueSelec
         new AlertDialog.Builder(this)
                 .setTitle(R.string.report_reference_period)
                 .setSingleChoiceItems(
-                        new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1,
+                        new ArrayAdapter<>(this, R.layout.dialog_choice_row,
                                 android.R.id.text1,
                                 getResources().getStringArray(R.array.report_reference_period_entities)),
                         selectedPeriod,

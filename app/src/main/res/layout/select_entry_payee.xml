@@ -24,7 +24,9 @@
 			style="@style/Caption"
 			android:ellipsize="marquee" android:fadingEdge="horizontal"
 			android:duplicateParentState="true" android:layout_alignParentLeft="true"
-			android:layout_alignParentRight="true" />
+			android:layout_alignParentRight="true"
+			android:textColor="#FFF4EFE4"
+			android:textSize="14sp" />
 		<EditText android:id="@+id/payee" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_below="@+id/label" />
 		<ImageView style="@style/PlusButton" android:layout_width="wrap_content"
@@ -37,8 +39,9 @@
 			android:layout_alignTop="@+id/plus_minus" android:layout_toLeftOf="@+id/plus_minus"
             android:layout_alignBottom="@+id/payee" />
 		<TextView android:id="@+id/data" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content"
 			android:maxLines="2" android:duplicateParentState="true"
-			android:layout_below="@+id/payee" />
+			android:layout_below="@+id/payee"
+			android:textSize="16sp" />
 	</RelativeLayout>
 </LinearLayout>

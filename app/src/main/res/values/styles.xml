@@ -73,6 +73,13 @@
 	-->
 	<style name="CifraChoiceDialog" parent="@style/Theme.AppCompat.Dialog.Alert">
 		<item name="android:windowBackground">@drawable/dialog_background</item>
+		<!--
+		  The lists inside these boxes are built from Android's own row layout,
+		  which marks the chosen one with a solid electric blue of its own. Said
+		  here, where the whole box can hear it.
+		-->
+		<item name="android:activatedBackgroundIndicator">@drawable/row_activated</item>
+		<item name="android:colorActivatedHighlight">#334CAF7D</item>
 		<item name="colorAccent">#FF4CAF7D</item>
 		<item name="colorSecondary">#FF4CAF7D</item>
 		<item name="colorControlActivated">#FF4CAF7D</item>

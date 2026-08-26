@@ -46,7 +46,9 @@
                 android:ellipsize="marquee"
                 android:fadingEdge="horizontal"
                 android:singleLine="true"
-                style="@style/Caption" />
+                style="@style/Caption"
+			android:textColor="#FFF4EFE4"
+			android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/data"
@@ -54,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:duplicateParentState="true"
                 android:maxLines="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+			android:textSize="16sp" />
 
         </LinearLayout>
 

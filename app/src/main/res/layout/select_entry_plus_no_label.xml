@@ -17,10 +17,10 @@
 	android:focusable="true" android:clickable="true">
 	<TextView android:id="@+id/data" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="8dip" 
-		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_marginLeft="8dip"
 		android:maxLines="2" android:duplicateParentState="true"
-		android:layout_weight="1" />
+		android:layout_weight="1"
+			android:textSize="16sp" />
 	<ImageView style="@style/MoreButton" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
         android:layout_gravity="bottom" />

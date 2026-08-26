@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The row one is standing on, in a list inside a dialog.
+
+  Android's own mark for it is a solid electric blue, which arrives with the
+  platform layout these lists are built from and takes no notice of the colours
+  the app has chosen. A wash of the app's green says the same thing without
+  shouting it.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#334CAF7D" />
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#334CAF7D" />
+        </shape>
+    </item>
+    <item android:drawable="@android:color/transparent" />
+</selector>

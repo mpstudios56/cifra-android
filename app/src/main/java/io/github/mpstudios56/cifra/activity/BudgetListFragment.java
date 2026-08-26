@@ -89,7 +89,7 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
             new AlertDialog.Builder(getContext())
                     .setSingleChoiceItems(
                             new ArrayAdapter<>(getContext(),
-                                    android.R.layout.simple_list_item_activated_1,
+                                    R.layout.dialog_choice_row,
                                     android.R.id.text1,
                                     getResources().getStringArray(R.array.budget_sort_order)),
                             getActivity().getSharedPreferences(TAG, MODE_PRIVATE).getInt(PREF_SORT_ORDER, 0),
@@ -161,7 +161,8 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
         int lastFamily = -1;
         for (int i = 0; i < periods.length; i++) {
             int family = familyOf(periods[i]);
-            if (family != lastFamily && familyTitle(family) != 0) {
+            boolean newFamily = family != lastFamily;
+            if (newFamily && familyTitle(family) != 0) {
                 TextView heading = new TextView(themed);
                 heading.setText(getString(familyTitle(family)));
                 heading.setTextColor(0xFF4CAF7D);
@@ -174,7 +175,11 @@ public class BudgetListFragment extends AbstractListFragment<ArrayList<Budget>> 
             row.setId(i);
             row.setText(getString(periods[i].getTitleId()));
             row.setTextColor(0xFFF4EFE4);
-            row.setPadding(row.getPaddingLeft(), 5 * density, row.getPaddingRight(), 5 * density);
+            // A family with no heading of its own still needs to be told apart
+            // from the one above it: the one chosen by hand was reading as a
+            // fifth entry of the group before it.
+            int above = (newFamily && familyTitle(family) == 0 && i > 0 ? 14 : 5) * density;
+            row.setPadding(row.getPaddingLeft(), above, row.getPaddingRight(), 5 * density);
             group.addView(row);
             if (periods[i] == chosen) {
                 group.check(i);

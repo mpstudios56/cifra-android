@@ -164,7 +164,7 @@ public abstract class MyEntitySelector<T extends MyEntity, A extends AbstractAct
     }
 
     protected ListAdapter createAdapter(Activity activity, List<T> entities) {
-        return new MyEntityAdapter<>(activity, android.R.layout.simple_list_item_activated_1, android.R.id.text1, entities);
+        return new MyEntityAdapter<>(activity, R.layout.dialog_choice_row, android.R.id.text1, entities);
     }
 
     protected SimpleCursorAdapter createFilterAdapter() {

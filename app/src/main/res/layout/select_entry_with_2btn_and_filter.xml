@@ -53,12 +53,15 @@
 					  a:layout_height="wrap_content" a:singleLine="true"
 					  style="@style/Caption"
 					  a:ellipsize="marquee" a:fadingEdge="horizontal"
-					  a:duplicateParentState="true"/>
+					  a:duplicateParentState="true"
+			a:textColor="#FFF4EFE4"
+			a:textSize="14sp" />
 			<TextView a:id="@+id/data" a:layout_width="wrap_content"
 					  a:layout_height="wrap_content" a:layout_below="@+id/label"
-					  a:layout_alignLeft="@+id/label" a:textAppearance="?android:attr/textAppearanceMedium"
+					  a:layout_alignLeft="@+id/label"
 					  a:textColor="@android:color/primary_text_dark"
-					  a:maxLines="2" a:duplicateParentState="true"/>
+					  a:maxLines="2" a:duplicateParentState="true"
+			a:textSize="16sp" />
 		</RelativeLayout>
 
 		<ToggleButton a:layout_width="wrap_content"

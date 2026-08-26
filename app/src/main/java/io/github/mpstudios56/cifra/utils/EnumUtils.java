@@ -31,7 +31,7 @@ public abstract class EnumUtils {
 	
 	public static ArrayAdapter<String> createDropDownAdapter(Context context, LocalizableEnum[] values) {
 		String[] items = getLocalizedValues(context, values);
-		return new ArrayAdapter<>(context, android.R.layout.simple_list_item_activated_1, items);
+		return new ArrayAdapter<>(context, io.github.mpstudios56.cifra.R.layout.dialog_choice_row, items);
 	}
 	
 	public static <T extends EntityEnum> EntityEnumAdapter<T> createEntityEnumAdapter(Context context, T[] values) {

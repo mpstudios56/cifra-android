@@ -47,12 +47,12 @@ public class TransactionUtils {
     }
 
     public static SimpleCursorAdapter createCurrencyAdapter(Context context, Cursor currencyCursor) {
-        return new SimpleCursorAdapter(context, android.R.layout.simple_list_item_activated_1, currencyCursor,
+        return new SimpleCursorAdapter(context, R.layout.dialog_choice_row, currencyCursor,
                 new String[]{"e_name"}, new int[]{android.R.id.text1});
     }
 
     public static ListAdapter createCategoryAdapter(DatabaseAdapter db, Context context, Cursor categoryCursor) {
-        return new CategoryListAdapter(db, context, android.R.layout.simple_list_item_activated_1, categoryCursor);
+        return new CategoryListAdapter(db, context, R.layout.dialog_choice_row, categoryCursor);
     }
 
     public static ListAdapter createCategoryMultiChoiceAdapter(DatabaseAdapter db, Context context, Cursor categoryCursor) {
@@ -60,11 +60,11 @@ public class TransactionUtils {
     }
 
     public static ListAdapter createCurrencyAdapter(Context context, List<Currency> currencies) {
-        return new CurrencyEntityAdapter(context, android.R.layout.simple_list_item_activated_1, android.R.id.text1, currencies);
+        return new CurrencyEntityAdapter(context, R.layout.dialog_choice_row, android.R.id.text1, currencies);
     }
 
     public static ListAdapter createLocationAdapter(Context context, Cursor cursor) {
-        return new SimpleCursorAdapter(context, android.R.layout.simple_list_item_activated_1, cursor,
+        return new SimpleCursorAdapter(context, R.layout.dialog_choice_row, cursor,
                 new String[]{"e_name"}, new int[]{android.R.id.text1});
     }
 

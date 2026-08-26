@@ -49,7 +49,8 @@
                 a:ellipsize="marquee"
                 a:fadingEdge="horizontal"
                 a:singleLine="true"
-                a:textAppearance="?android:attr/textAppearanceMedium" />
+			a:textColor="#FFF4EFE4"
+			a:textSize="14sp" />
     
             <TextView
                 a:id="@+id/data"
@@ -59,7 +60,7 @@
                 a:layout_below="@+id/label"
                 a:duplicateParentState="true"
                 a:maxLines="2"
-                a:textAppearance="?android:attr/textAppearanceSmall" />
+			a:textSize="16sp" />
     
         </RelativeLayout>
     

@@ -18,11 +18,12 @@
 	android:focusable="false" android:clickable="false">
 	<TextView android:id="@+id/label" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:singleLine="true"
-		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:ellipsize="marquee" android:fadingEdge="horizontal"
 		android:duplicateParentState="true" android:layout_marginLeft="8dip"
 		android:layout_marginTop="3dip" android:layout_marginBottom="3dip" 
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+			android:textColor="#FFF4EFE4"
+			android:textSize="14sp" />
 	<ImageView style="@style/MoreButton" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
         android:layout_gravity="bottom" />

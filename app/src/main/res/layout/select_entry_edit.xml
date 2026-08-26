@@ -35,7 +35,9 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
-            style="@style/Caption" />
+            style="@style/Caption"
+			android:textColor="#FFF4EFE4"
+			android:textSize="14sp" />
     </RelativeLayout>
 
 </LinearLayout>
